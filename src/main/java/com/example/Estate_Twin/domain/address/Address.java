@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.domain.address;
 
-public class Address {
+import com.example.Estate_Twin.domain.BaseTimeEntity;
+
+public class Address extends BaseTimeEntity {
 
 }

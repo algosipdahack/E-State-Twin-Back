@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.domain.estate;
 
-import com.example.Estate_Twin.domain.photo.Photo;
+import com.example.Estate_Twin.domain.checklist.CheckList;
+import com.example.Estate_Twin.domain.media.Media;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,7 @@ public class Estate {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
-    private List<Photo> EstatePhoto = new ArrayList<>();
+    private List<Media> EstateMedia = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -32,7 +33,8 @@ public class Estate {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
-    private List<Photo> EstateVideo = new ArrayList<>();
+    private List<CheckList> checkList = new ArrayList<>();
+
 
     private Rank rank;
 

@@ -1,4 +1,4 @@
-package com.example.Estate_Twin.domain.photo;
+package com.example.Estate_Twin.domain.media;
 
 import com.example.Estate_Twin.domain.BaseTimeEntity;
 import com.example.Estate_Twin.domain.estate.Estate;
@@ -11,17 +11,13 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "file")
-public class Photo extends BaseTimeEntity {
+@Table(name = "media")
+public class Media extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "file_id")
+    @Column(name = "media_id")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "estate_id")
-    private Estate estate;
 
     @Column(nullable = false)
     private String origFileName;
@@ -31,19 +27,19 @@ public class Photo extends BaseTimeEntity {
 
     private Long fileSize;
 
+    private Type type;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estate_id")
+    private Estate estate;
+
     @Builder
-    public Photo(String origFileName, String filePath, Long fileSize) {
+    public Media(String origFileName, String filePath, Long fileSize, Type type) {
         this.origFileName = origFileName;
         this.filePath = filePath;
         this.fileSize = fileSize;
+        this.type = type;
     }
 
-    public void setEstate(Estate estate) {
-        this.estate = estate;
-
-        if(!estate.getEstatePhoto().contains(this)) {
-            estate.getEstatePhoto().add(this);
-        }
-    }
 
 }
