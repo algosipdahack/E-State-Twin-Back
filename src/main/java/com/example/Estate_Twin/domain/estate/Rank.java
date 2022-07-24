@@ -1,5 +1,5 @@
 package com.example.Estate_Twin.domain.estate;
 
 public enum Rank {
-    RANK_MANY, RANK_POPULAR, RANK_GOOD
+    RANK_MANY, RANK_POPULAR
 }
