@@ -1,7 +1,8 @@
 spring:
+  profiles: mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/local_idiot?serverTimezone=UTC&characterEncoding=UTF-8"
+    url: "jdbc:mysql://localhost:3306/mysql?serverTimezone=UTC&characterEncoding=UTF-8"
     username: root
     password: P@ssw0rd
   jpa:
@@ -9,5 +10,36 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        ddl-auto: create
     generate-ddl: false
     open-in-view: false
+    show-sql: true
+  output:
+    ansi:
+      enabled: always
+logging:
+  level:
+    org.hibernate.type: trace
+
+---
+spring:
+  profiles: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: "jdbc:h2:tcp://localhost/~/test"
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        ddl-auto: create
+        format_sql: true
+    generate-ddl: false
+    open-in-view: false
+    show-sql: true
+  output:
+    ansi:
+      enabled: always
+logging:
+  level:
+    org.hibernate.type: trace

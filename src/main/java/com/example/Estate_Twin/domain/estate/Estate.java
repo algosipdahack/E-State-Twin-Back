@@ -20,8 +20,8 @@ import java.util.List;
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_id")
+    //매물번호 202007070001 이런식으로 할 예정
     private long id;
 
     @OneToMany(
