@@ -1,5 +1,9 @@
 package com.example.Estate_Twin.domain.estate;
 
-public interface EstateRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+public interface EstateRepository extends JpaRepository<Estate,Long> {
+
 
 }

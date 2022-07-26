@@ -1,4 +1,8 @@
 package com.example.Estate_Twin.domain.asset;
 
-public interface AssetRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+
+public interface AssetRepository extends JpaRepository<Asset,Long> {
 }

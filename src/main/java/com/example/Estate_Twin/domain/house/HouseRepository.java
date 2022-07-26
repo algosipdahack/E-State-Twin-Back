@@ -1,4 +1,8 @@
 package com.example.Estate_Twin.domain.house;
 
-public interface HouseRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+public interface HouseRepository extends JpaRepository<House,Long> {
+
 }

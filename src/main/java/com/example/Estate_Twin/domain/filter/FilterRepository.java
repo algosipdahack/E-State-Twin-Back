@@ -1,4 +1,7 @@
 package com.example.Estate_Twin.domain.filter;
 
-public interface FilterRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+public interface FilterRepository extends JpaRepository<Filter,Long> {
 }
