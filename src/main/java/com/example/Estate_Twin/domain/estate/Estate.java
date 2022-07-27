@@ -19,10 +19,9 @@ import java.util.List;
 @Entity
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
-    @Id
-    @Column(name = "estate_id")
+    @EmbeddedId
     //매물번호 202007070001 이런식으로 할 예정
-    private long id;
+    private EstateNo number;
 
     @OneToMany(
             mappedBy = "estate",
@@ -31,13 +30,17 @@ public class Estate extends BaseTimeEntity {
     )
     private List<Media> estateMedia = new ArrayList<>();
 
+    //리스트에서 보여줄 썸네일
+    @Column
+    private String estateThumbNail;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @OneToMany(
             mappedBy = "estate",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            orphanRemoval = true
+            orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<CheckList> checkList = new ArrayList<>();
 

@@ -9,12 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "media")
-public class Media extends BaseTimeEntity {
+public class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +25,12 @@ public class Media extends BaseTimeEntity {
     @Column
     private String origFileName;
 
-    @Column
+    @Column(name = "image_path")
     private String filePath;
 
-    @Column
-    private Long fileSize;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "upload_time")
+    private Date uploadTime;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -46,12 +48,12 @@ public class Media extends BaseTimeEntity {
     private CheckList checkList;
 
     @Builder
-    public Media(String origFileName, String filePath, Long fileSize, Type type,
+    public Media(String origFileName, String filePath, Type type,
                  Estate estate, Asset asset, CheckList checkList
     ) {
         this.origFileName = origFileName;
         this.filePath = filePath;
-        this.fileSize = fileSize;
+        this.uploadTime = new Date();
         this.type = type;
         this.estate = estate;
         this.asset = asset;

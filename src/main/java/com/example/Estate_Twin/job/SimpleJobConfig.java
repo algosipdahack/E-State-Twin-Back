@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j//log 사용을 위함
 @RequiredArgsConstructor // 생성자 DI를 위함
 @Configuration
-public class SimpleJobConfiguration {
+public class SimpleJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
