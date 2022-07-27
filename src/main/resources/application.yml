@@ -21,9 +21,25 @@ spring:
     initialize-schema: always #batch 스키마 자동생성
     job:
       enabled: false #시작과 동시에 실행되는 건 방지
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 logging:
   level:
     org.hibernate.type: trace
+cloud:
+  aws:
+    credentials:
+      access-key: ${s3.accesskey}
+      secret-key: ${s3.secretkey}
+    region:
+      static: ${s3.region}
+    s3:
+      bucket: ${s3.bucket}
+    stack:
+      auto: false
+
 
 ---
 spring:
