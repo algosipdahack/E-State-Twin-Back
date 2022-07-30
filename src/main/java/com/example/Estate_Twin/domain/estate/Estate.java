@@ -6,6 +6,7 @@ import com.example.Estate_Twin.domain.asset.Category;
 import com.example.Estate_Twin.domain.checklist.CheckList;
 import com.example.Estate_Twin.domain.checklist.RepairType;
 import com.example.Estate_Twin.domain.media.Media;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,13 @@ import java.util.List;
 @Entity
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "estate_id")
     //매물번호 202007070001 이런식으로 할 예정
-    private EstateNo number;
+    private long id;
+
+    @Embedded private EstateNo estateNo;
 
     @OneToMany(
             mappedBy = "estate",

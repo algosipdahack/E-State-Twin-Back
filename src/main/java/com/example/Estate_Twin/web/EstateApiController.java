@@ -27,15 +27,15 @@ public class EstateApiController {
     }
 
     //리스트
-    @GetMapping("list")
-    public ResponseEntity<ApiResult<List<EstateResponseDto>>> getEstateList
+    //@GetMapping("list")
+
     //상세 페이지
-    @GetMapping("detail/{estateId}")
-    public
+    //@GetMapping("detail/{estateId}")
+
     //매물 영상
-    @GetMapping("/detail/{estateId}/video")
+    //@GetMapping("/detail/{estateId}/video")
 
     //3D model
-    @GetMapping("/detail/{estateId}/model")
+    //@GetMapping("/detail/{estateId}/model")
 
 }
