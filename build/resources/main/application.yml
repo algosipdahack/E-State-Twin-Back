@@ -30,6 +30,9 @@ logging:
     org.hibernate.type: trace
 cloud:
   aws:
+    credentials:
+      access-key:
+      secret-key:
     s3:
       bucket: idiot-model-bucket
     region:
