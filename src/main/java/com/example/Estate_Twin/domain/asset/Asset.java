@@ -41,9 +41,10 @@ public class Asset extends BaseTimeEntity {
     private String productName;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(String category, List<Media> assetPhoto, String assetName, String productName) {//생성자
+    public Asset(String category, House houseId, List<Media> assetPhoto, String assetName, String productName) {//생성자
         this.category = category;
-        //this.assetPhoto = assetPhoto;
+        this.assetPhoto = assetPhoto;
+        this.houseId = houseId;
         this.assetName = assetName;
         this.productName = productName;
     }

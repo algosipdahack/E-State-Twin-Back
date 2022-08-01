@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.domain.commoncode;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +27,13 @@ public class CommonCode {
 
     @Column
     private String parentNo;
+
+    @Builder // 빌더 형태로 만들어줌
+    public CommonCode(String codeType,String codeNo,String codeName,String parentNo
+    ) {//생성자
+        this.codeType = codeType;
+        this.codeNo = codeNo;
+        this.codeName = codeName;
+        this.parentNo = parentNo;
+    }
 }

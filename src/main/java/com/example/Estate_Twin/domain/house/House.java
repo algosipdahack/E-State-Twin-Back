@@ -1,8 +1,16 @@
 package com.example.Estate_Twin.domain.house;
 
+import com.example.Estate_Twin.domain.constractstate.ConstractState;
+import com.example.Estate_Twin.domain.estate.EstateHit;
+import com.example.Estate_Twin.domain.estate.EstateNo;
+import com.example.Estate_Twin.domain.estate.Rank;
+import com.example.Estate_Twin.domain.media.Media;
+import com.example.Estate_Twin.domain.user.Broker;
+import com.example.Estate_Twin.domain.user.User;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.domain.asset.Asset;
 import com.example.Estate_Twin.domain.estate.Estate;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,64 +30,64 @@ public class House extends BaseTimeEntity {
     private long id;
 
     @Column
-    private long Deposit;
+    private long deposit;
 
     @Column
-    private long MonthlyRent;
+    private long monthlyRent;
 
     @Column
-    private long SellingFee;
+    private long sellingFee;
 
     @Column
-    private long CurrentFloors;
+    private long currentFloors;
 
     @Column
-    private long TotalFloors;
+    private long totalFloors;
 
     @Column
-    private boolean ShortTermRent;
+    private boolean shortTermRent;
 
     @Column
-    private long MaintenanceFee;
+    private long maintenanceFee;
 
     @Column
-    private String ItemsIncludedMaintenanceFee;
+    private String itemsIncludedMaintenanceFee;
 
     @Column
-    private long NetRentableArea;
+    private long netRentableArea;
 
     @Column
-    private long RentableArea;
+    private long rentableArea;
 
     @Column
-    private boolean Parking;
+    private boolean parking;
 
     @Column
-    private long ParkingFee;
+    private long parkingFee;
 
     @Column
-    private Date MoveInAvailableDate;
+    private Date moveInAvailableDate;
 
     @Column
-    private long Size;
+    private long size;
 
     @Column
-    private String HeatType;
+    private String heatType;
 
     @Column
-    private String EstateType;
+    private String estateType;
 
     @Column
-    private long Household;
+    private long household;
 
     @Column
-    private Date UsageAvailableDate;
+    private Date usageAvailableDate;
 
     @Column
-    private long RoomCount;
+    private long roomCount;
 
     @Column
-    private long BathCount;
+    private long bathCount;
 
     @OneToMany(
             mappedBy = "houseId",
@@ -94,4 +102,36 @@ public class House extends BaseTimeEntity {
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<Estate> estates = new ArrayList<>();
+
+    @Builder // 빌더 형태로 만들어줌
+    public House(long deposit, long monthlyRent, long sellingFee, long currentFloors,
+                 long totalFloors, boolean shortTermRent, long maintenanceFee,
+                 String itemsIncludedMaintenanceFee, long netRentableArea,
+                 long rentableArea,boolean parking,long parkingFee,Date moveInAvailableDate,
+                 long size,String heatType,String estateType,long household,long roomCount,
+                 Date usageAvailableDate,long bathCount,List<Asset> assets,List<Estate> estates
+    ) {//생성자
+        this.deposit = deposit;
+        this.totalFloors = totalFloors;
+        this.size = size;
+        this.usageAvailableDate = usageAvailableDate;
+        this.itemsIncludedMaintenanceFee = itemsIncludedMaintenanceFee;
+        this.rentableArea = rentableArea;
+        this.parking = parking;
+        this.netRentableArea = netRentableArea;
+        this.monthlyRent = monthlyRent;
+        this.shortTermRent = shortTermRent;
+        this.heatType = heatType;
+        this.moveInAvailableDate = moveInAvailableDate;
+        this.assets = assets;
+        this.maintenanceFee = maintenanceFee;
+        this.currentFloors = currentFloors;
+        this.roomCount = roomCount;
+        this.estateType = estateType;
+        this.bathCount = bathCount;
+        this.household = household;
+        this.parkingFee = parkingFee;
+        this.sellingFee = sellingFee;
+        this.estates = estates;
+    }
 }

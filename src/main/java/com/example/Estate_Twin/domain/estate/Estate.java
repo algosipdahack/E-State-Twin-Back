@@ -57,7 +57,7 @@ public class Estate extends BaseTimeEntity {
     private EstateHit estateHit;
 
     @Column
-    private String TransactionType;
+    private String transactionType;
 
     //리스트에서 보여줄 썸네일
     @Column
@@ -87,12 +87,27 @@ public class Estate extends BaseTimeEntity {
 
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam
+    public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam,
+                  House house, Broker broker, User owner, EstateNo estateNo, ConstractState constractState,
+                  EstateHit estateHit, String transactionType, String estateThumbNail,
+                  String city, String distinct, String address
     ) {//생성자
-        //his.estateMedia = estateMedia;
+        //this.estateMedia = estateMedia;
+        this.estateMedia = estateMedia;
+        this.broker = broker;
+        this.estateHit = estateHit;
+        this.distinct = distinct;
         this.content = content;
         this.rank = rank;
         this.model = model;
         this.arCam = arCam;
+        this.house = house;
+        this.owner = owner;
+        this.city = city;
+        this.address = address;
+        this.transactionType = transactionType;
+        this.estateThumbNail = estateThumbNail;
+        this.estateNo = estateNo;
+        this.constractState = constractState;
     }
 }

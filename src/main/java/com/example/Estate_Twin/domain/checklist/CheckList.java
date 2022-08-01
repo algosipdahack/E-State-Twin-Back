@@ -64,10 +64,15 @@ public class CheckList extends BaseTimeEntity {
     private Boolean ownerConfirmYN;
 
     @Builder // 빌더 형태로 만들어줌
-    public CheckList(List<Media> checkListPhoto, String category, String checkListContent,
+    public CheckList(List<Media> checkListPhoto, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
+                     String category, String checkListContent, Date repairDate,
                      RepairType repairType, String manufacturer, Asset asset
-    ) {//생성자
+    ) {
         //this.checkListPhoto = checkListPhoto;
+        this.flawPart = flawPart;
+        this.brokerConfirmYN = brokerConfirmYN;
+        this.repairDate = repairDate;
+        this.ownerConfirmYN = ownerConfirmYN;
         this.category = category;
         this.checkListContent = checkListContent;
         this.repairType = repairType;

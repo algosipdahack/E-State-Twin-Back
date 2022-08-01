@@ -1,6 +1,10 @@
 package com.example.Estate_Twin.domain.house;
 
+import com.example.Estate_Twin.domain.estate.Estate;
+import lombok.Builder;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @DiscriminatorValue("O")
@@ -11,17 +15,27 @@ public class Officetel extends House {
     private long id;
 
     @Column
-    private Boolean Elevator;
+    private Boolean elevator;
 
     @Column
-    private Boolean Duplex;
+    private Boolean duplex;
 
     @Column
-    private Boolean Loft;
+    private Boolean loft;
 
     @Column
-    private Boolean BuiltIn;
+    private Boolean builtIn;
 
     @Column
-    private Boolean Veranda;
+    private Boolean veranda;
+
+    @Builder // 빌더 형태로 만들어줌
+    public Officetel(Boolean elevator,Boolean duplex,Boolean loft,Boolean builtIn,Boolean veranda
+    ) {//생성자
+        this.elevator = elevator;
+        this.duplex = duplex;
+        this.loft = loft;
+        this.builtIn = builtIn;
+        this.veranda = veranda;
+    }
 }

@@ -2,13 +2,17 @@ package com.example.Estate_Twin.domain.estate;
 
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+import java.util.Date;
 
 @Embeddable
 @NoArgsConstructor
 public class EstateNo {
-    @Column(name = "estate_number")
-    private String number;
+    @Id
+    @Temporal(TemporalType.DATE)
+    @Column(name = "estateno_id")
+    private Date date;
 
+    @Column
+    private int sequence;
 }

@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.domain.address;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,26 +23,38 @@ public class AddressDetail {
     private String town;
 
     @Column
-    private String ComplexName;
+    private String complexName;
 
     @Column
-    private String Block;
+    private String block;
 
     @Column
-    private String Unit;
+    private String unit;
 
     @Column
     private String roadName;
 
     @Column
-    private int MainBuildingNumber;
+    private int mainBuildingNumber;
 
     @Column
-    private int SubBuildingNumber;
+    private int subBuildingNumber;
 
     @Column
-    private String BuildingName;
+    private String buildingName;
 
-
-
+    @Builder // 빌더 형태로 만들어줌
+    public AddressDetail(String addressId,String town,String complexName,String block,String unit,String roadName,
+                         int mainBuildingNumber,int subBuildingNumber,String buildingName
+    ) {//생성자
+        this.addressId = addressId;
+        this.roadName = roadName;
+        this.mainBuildingNumber = mainBuildingNumber;
+        this.subBuildingNumber = subBuildingNumber;
+        this.buildingName = buildingName;
+        this.town = town;
+        this.complexName = complexName;
+        this.block = block;
+        this.unit = unit;
+    }
 }
