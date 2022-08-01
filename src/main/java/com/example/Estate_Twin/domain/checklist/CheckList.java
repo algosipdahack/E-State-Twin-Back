@@ -25,8 +25,8 @@ public class CheckList extends BaseTimeEntity {
     @MapsId("assetId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "ASSET_ID"),
-            @JoinColumn(name = "HOUSE_ID")
+            @JoinColumn(name = "HOUSE_ID"),
+            @JoinColumn(name = "ASSET_ID")
     })
     private Asset asset;
 

@@ -40,13 +40,13 @@ public class Estate extends BaseTimeEntity {
 
     @Embedded private EstateNo estateNo;
 
-    /*@OneToMany(
+    @OneToMany(
             mappedBy = "estate",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
     private List<Media> estateMedia = new ArrayList<>();
-*/
+
 
     @OneToOne
     @JoinColumn(name="constractstate_id")

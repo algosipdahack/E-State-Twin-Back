@@ -34,16 +34,27 @@ public class Media {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estate_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "ESTATEID", referencedColumnName = "ESTATEID"),
+            @JoinColumn(name = "ESTATE_HOUSE_ID", referencedColumnName = "HOUSE_ID"),
+            @JoinColumn(name = "BROKER_ID", referencedColumnName = "BROKER_ID"),
+            @JoinColumn(name = "OWNER_ID", referencedColumnName = "OWNER_ID")
+    })
     private Estate estate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
+    @JoinColumns({
+            @JoinColumn(name = "ASSETID", referencedColumnName = "ASSETID"),
+            @JoinColumn(name = "ASSET_HOUSE_ID", referencedColumnName = "HOUSE_ID"),
+    })
     private Asset asset;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "checklist_id")
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "CHECKLISTID", referencedColumnName = "CHECKLISTID"),
+            @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
+    })
     private CheckList checkList;*/
 
     @Builder
@@ -54,8 +65,8 @@ public class Media {
         this.filePath = filePath;
         this.uploadTime = new Date();
         this.type = type;
-        //this.estate = estate;
-        //this.asset = asset;
+        this.estate = estate;
+        this.asset = asset;
         //this.checkList = checkList;
     }
 

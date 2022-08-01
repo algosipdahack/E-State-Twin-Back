@@ -27,13 +27,13 @@ public class Asset extends BaseTimeEntity {
     @Column
     private String category;
 
-    /*@OneToMany(
+    @OneToMany(
             mappedBy = "asset",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
     private List<Media> assetPhoto = new ArrayList<>();
-*/
+
     @Column
     private String assetName;
 
