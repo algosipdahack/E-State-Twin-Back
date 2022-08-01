@@ -48,8 +48,8 @@ dependencies {
 	runtimeOnly('com.h2database:h2')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.batch:spring-batch-test')
-	implementation("org.springframework.cloud:spring-cloud-aws-context:${springCloudVersion}")
-	implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:${springCloudVersion}")cs
+	implementation("org.springframework.cloud:spring-cloud-aws-context:2.2.0.RELEASE")
+	implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.0.RELEASE")
 }
 
 
