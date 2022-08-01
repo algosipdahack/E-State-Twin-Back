@@ -40,13 +40,13 @@ public class Estate extends BaseTimeEntity {
 
     @Embedded private EstateNo estateNo;
 
-    @OneToMany(
+    /*@OneToMany(
             mappedBy = "estate",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
     private List<Media> estateMedia = new ArrayList<>();
-
+*/
 
     @OneToOne
     @JoinColumn(name="constractstate_id")
@@ -89,7 +89,7 @@ public class Estate extends BaseTimeEntity {
     @Builder // 빌더 형태로 만들어줌
     public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam
     ) {//생성자
-        this.estateMedia = estateMedia;
+        //his.estateMedia = estateMedia;
         this.content = content;
         this.rank = rank;
         this.model = model;

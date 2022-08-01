@@ -34,7 +34,7 @@ public class Media {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
 
@@ -44,7 +44,7 @@ public class Media {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checklist_id")
-    private CheckList checkList;
+    private CheckList checkList;*/
 
     @Builder
     public Media(String origFileName, String filePath, Type type,
@@ -54,9 +54,9 @@ public class Media {
         this.filePath = filePath;
         this.uploadTime = new Date();
         this.type = type;
-        this.estate = estate;
-        this.asset = asset;
-        this.checkList = checkList;
+        //this.estate = estate;
+        //this.asset = asset;
+        //this.checkList = checkList;
     }
 
 

@@ -28,9 +28,6 @@ public class Broker extends BaseEntity {
     private String BrokerageRegistrationNumber;
 
     @Column
-    private String Phone;
-
-    @Column
     private String BusinessRegistrationNumber;
 
     @Column

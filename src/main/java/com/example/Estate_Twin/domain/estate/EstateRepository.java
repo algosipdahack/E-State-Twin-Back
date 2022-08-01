@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 public interface EstateRepository extends JpaRepository<Estate,Long> {
-    Optional<Estate> findById(EstateNo id);
 
 
 }

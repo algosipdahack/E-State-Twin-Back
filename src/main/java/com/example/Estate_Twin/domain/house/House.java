@@ -82,7 +82,7 @@ public class House extends BaseTimeEntity {
     private long BathCount;
 
     @OneToMany(
-            mappedBy = "house",
+            mappedBy = "houseId",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true // DB에서 함께 삭제됨
     )

@@ -31,13 +31,13 @@ public class CheckList extends BaseTimeEntity {
     private Asset asset;
 
 
-    @OneToMany(
+    /*@OneToMany(
             mappedBy = "checkList",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
 
-    private List<Media> checkListPhoto = new ArrayList<>();
+    private List<Media> checkListPhoto = new ArrayList<>();*/
 
     @Column
     private String flawPart;
@@ -67,7 +67,7 @@ public class CheckList extends BaseTimeEntity {
     public CheckList(List<Media> checkListPhoto, String category, String checkListContent,
                      RepairType repairType, String manufacturer, Asset asset
     ) {//생성자
-        this.checkListPhoto = checkListPhoto;
+        //this.checkListPhoto = checkListPhoto;
         this.category = category;
         this.checkListContent = checkListContent;
         this.repairType = repairType;
