@@ -4,6 +4,7 @@ buildscript{
 	}
 	repositories{
 		mavenCentral()
+		maven { url 'https://repo.spring.io/libs-milestone'}
 		jcenter()
 	}
 	dependencies{
@@ -38,7 +39,7 @@ dependencies {
 	implementation('io.jsonwebtoken:jjwt-jackson:0.11.2')
 	implementation('org.jsoup:jsoup:1.13.1')
 	implementation('org.postgresql:postgresql')
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
@@ -48,8 +49,6 @@ dependencies {
 	runtimeOnly('com.h2database:h2')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.batch:spring-batch-test')
-	implementation("org.springframework.cloud:spring-cloud-aws-context:2.2.0.RELEASE")
-	implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.0.RELEASE")
 }
 
 
