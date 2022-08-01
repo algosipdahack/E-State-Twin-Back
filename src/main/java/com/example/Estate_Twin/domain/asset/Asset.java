@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.domain.asset;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
+import com.example.Estate_Twin.util.BaseTimeEntity;
+import com.example.Estate_Twin.domain.house.House;
 import com.example.Estate_Twin.domain.media.Media;
-import com.example.Estate_Twin.domain.media.Type;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +15,17 @@ import java.util.List;
 @Entity
 @Table(name = "asset")
 public class Asset extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
     @Column(name = "asset_id")
-    private long id;
+    private AssetId id;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @MapsId("houseId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_id")
+    private House houseId;
+
+    @Column
+    private String category;
 
     @OneToMany(
             mappedBy = "asset",
@@ -37,7 +41,7 @@ public class Asset extends BaseTimeEntity {
     private String productName;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, List<Media> assetPhoto, String assetName, String productName) {//생성자
+    public Asset(String category, List<Media> assetPhoto, String assetName, String productName) {//생성자
         this.category = category;
         this.assetPhoto = assetPhoto;
         this.assetName = assetName;

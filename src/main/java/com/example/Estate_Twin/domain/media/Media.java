@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.domain.media;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
 import com.example.Estate_Twin.domain.asset.Asset;
 import com.example.Estate_Twin.domain.checklist.CheckList;
 import com.example.Estate_Twin.domain.estate.Estate;
@@ -25,7 +24,7 @@ public class Media {
     @Column
     private String origFileName;
 
-    @Column(name = "image_path")
+    @Column
     private String filePath;
 
     @Temporal(TemporalType.TIMESTAMP)

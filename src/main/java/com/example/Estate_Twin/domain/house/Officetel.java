@@ -1,9 +1,5 @@
 package com.example.Estate_Twin.domain.house;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,4 +9,19 @@ public class Officetel extends House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_id")
     private long id;
+
+    @Column
+    private Boolean Elevator;
+
+    @Column
+    private Boolean Duplex;
+
+    @Column
+    private Boolean Loft;
+
+    @Column
+    private Boolean BuiltIn;
+
+    @Column
+    private Boolean Veranda;
 }

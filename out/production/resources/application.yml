@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  error:
+    whitelabel:
+      enabled: false
+spring:
+  profiles:
+    active: real
+  datasource:
+    url: jdbc:mariadb://13.124.201.93:3306/mysql_ec2?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&socketTimeout=10000&connectTimeout=10000
+    username: idiot
+    password: 1234
+  #    hikari:
+  #      connection-timeout: 250
+  #      max-lifetime: 500
+  mvc:
+    view:
+      suffix: .html
+
+#Devtool
+devtools:
+  livereload:
+    enabled: true
+
+#Logging
+logging.level:
+  root: info
+  org.springframework:
+    web: info
+    security: info
+    boot: info
+  org.hibernate:
+    SQL: debug
+  org.swmaestro.demo: debug
+
+# logging.level:
+#   root: warn
+#   org.springframework:
+#     web: warn
+#     security: warn
+#     boot: warn
+#   org.hibernate:
+#     SQL: warn
+#   org.swmaestro.demo: warn

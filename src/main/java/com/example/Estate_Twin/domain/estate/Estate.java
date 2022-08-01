@@ -1,12 +1,11 @@
 package com.example.Estate_Twin.domain.estate;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
-import com.example.Estate_Twin.domain.asset.Asset;
-import com.example.Estate_Twin.domain.asset.Category;
-import com.example.Estate_Twin.domain.checklist.CheckList;
-import com.example.Estate_Twin.domain.checklist.RepairType;
+import com.example.Estate_Twin.util.BaseTimeEntity;
+import com.example.Estate_Twin.domain.constractstate.ConstractState;
+import com.example.Estate_Twin.domain.house.House;
 import com.example.Estate_Twin.domain.media.Media;
-import lombok.AllArgsConstructor;
+import com.example.Estate_Twin.domain.user.Broker;
+import com.example.Estate_Twin.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +19,24 @@ import java.util.List;
 @Entity
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
     @Column(name = "estate_id")
-    //매물번호 202007070001 이런식으로 할 예정
-    private long id;
+    private EstateId estateId;
+
+    @MapsId("houseId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "house_id")
+    private House house;
+
+    @MapsId("brokerId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "broker_id")
+    private Broker broker;
+
+    @MapsId("ownerId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
     @Embedded private EstateNo estateNo;
 
@@ -35,19 +47,24 @@ public class Estate extends BaseTimeEntity {
     )
     private List<Media> estateMedia = new ArrayList<>();
 
+
+    @OneToOne
+    @JoinColumn(name="constractstate_id")
+    private ConstractState constractState;
+
+    @OneToOne
+    @JoinColumn(name="estatehit_id")
+    private EstateHit estateHit;
+
+    @Column
+    private String TransactionType;
+
     //리스트에서 보여줄 썸네일
     @Column
     private String estateThumbNail;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
-    @OneToMany(
-            mappedBy = "estate",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            orphanRemoval = true // DB에서 함께 삭제됨
-    )
-    private List<CheckList> checkList = new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -59,13 +76,21 @@ public class Estate extends BaseTimeEntity {
     @Column
     private String arCam;
 
+    @Column
+    private String city;
+
+    @Column
+    private String distinct;
+
+    @Column
+    private String address;
+
+
     @Builder // 빌더 형태로 만들어줌
-    public Estate(List<Media> estateMedia, String content, List<CheckList> checkList, Rank rank,
-                  String model, String arCam
+    public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam
     ) {//생성자
         this.estateMedia = estateMedia;
         this.content = content;
-        this.checkList = checkList;
         this.rank = rank;
         this.model = model;
         this.arCam = arCam;

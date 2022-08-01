@@ -12,9 +12,4 @@ import javax.transaction.Transactional;
 public class EstateService {
     private final EstateRepository estateRepository;
 
-    @Transactional
-    public Long save(EstateSaveRequestDto requestDto) {
-
-        return estateRepository.save(requestDto.toEntity()).getId();
-    }
 }

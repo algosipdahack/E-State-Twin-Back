@@ -1,18 +1,15 @@
 package com.example.Estate_Twin.domain.checklist;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
 import com.example.Estate_Twin.domain.asset.Asset;
-import com.example.Estate_Twin.domain.asset.Category;
-import com.example.Estate_Twin.domain.estate.Estate;
-import com.example.Estate_Twin.domain.estate.Rank;
+import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.domain.media.Media;
-import com.example.Estate_Twin.domain.media.Type;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -20,10 +17,19 @@ import java.util.List;
 @Entity
 @Table(name = "checklist")
 public class CheckList extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @EmbeddedId
     @Column(name = "checklist_id")
-    private long id;
+    private CheckListId id;
+
+    @MapsId("assetId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "ASSET_ID"),
+            @JoinColumn(name = "HOUSE_ID")
+    })
+    private Asset asset;
+
 
     @OneToMany(
             mappedBy = "checkList",
@@ -33,15 +39,17 @@ public class CheckList extends BaseTimeEntity {
 
     private List<Media> checkListPhoto = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    //하자부위
-    private Category category;
+    @Column
+    private String flawPart;
+
+    @Column
+    private String category;
 
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
 
     @Column
-    private String modelName;
+    private Date repairDate;
 
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
@@ -49,25 +57,21 @@ public class CheckList extends BaseTimeEntity {
     @Column
     private String manufacturer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estate_id")
-    private Estate estate;
+    @Column
+    private Boolean brokerConfirmYN;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset_id")
-    private Asset asset;
+    @Column
+    private Boolean ownerConfirmYN;
 
     @Builder // 빌더 형태로 만들어줌
-    public CheckList(List<Media> checkListPhoto, Category category, String checkListContent, String modelName,
-                     RepairType repairType, String manufacturer, Estate estate, Asset asset
+    public CheckList(List<Media> checkListPhoto, String category, String checkListContent,
+                     RepairType repairType, String manufacturer, Asset asset
     ) {//생성자
         this.checkListPhoto = checkListPhoto;
         this.category = category;
         this.checkListContent = checkListContent;
-        this.modelName = modelName;
         this.repairType = repairType;
         this.manufacturer = manufacturer;
-        this.estate = estate;
         this.asset = asset;
     }
 }

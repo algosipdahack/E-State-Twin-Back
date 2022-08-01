@@ -21,10 +21,10 @@ public class EstateApiController {
     private final EstateService estateService;
 
     //Estate posting upload
-    @PostMapping("")
-    public Long saveEstate(@RequestBody EstateSaveRequestDto requestDto) {
-        return estateService.save(requestDto);
-    }
+    //@PostMapping("")
+    //public Long saveEstate(@RequestBody EstateSaveRequestDto requestDto) {
+        //return estateService.save(requestDto);
+    //}
 
     //리스트
     //@GetMapping("list")

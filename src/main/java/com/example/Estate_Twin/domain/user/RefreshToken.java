@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.domain.user;
 
-import com.example.Estate_Twin.domain.BaseTimeEntity;
+import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

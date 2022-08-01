@@ -55,4 +55,5 @@ bootJar{
 	archiveBaseName = 'backend'
 	archiveFileName = 'backend.jar'
 	archiveVersion = "0.0.1"
+	enabled = false
 }
