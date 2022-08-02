@@ -3,9 +3,7 @@ package com.example.Estate_Twin.domain.media;
 import com.example.Estate_Twin.domain.asset.Asset;
 import com.example.Estate_Twin.domain.checklist.CheckList;
 import com.example.Estate_Twin.domain.estate.Estate;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,27 +33,16 @@ public class Media {
     private Type type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "ESTATEID", referencedColumnName = "ESTATEID"),
-            @JoinColumn(name = "ESTATE_HOUSE_ID", referencedColumnName = "HOUSE_ID"),
-            @JoinColumn(name = "BROKER_ID", referencedColumnName = "BROKER_ID"),
-            @JoinColumn(name = "OWNER_ID", referencedColumnName = "OWNER_ID")
-    })
+    @JoinColumn(name = "ESTATE_ID", referencedColumnName = "ESTATE_ID")
     private Estate estate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "ASSETID", referencedColumnName = "ASSETID"),
-            @JoinColumn(name = "ASSET_HOUSE_ID", referencedColumnName = "HOUSE_ID"),
-    })
+    @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
     private Asset asset;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "CHECKLISTID", referencedColumnName = "CHECKLISTID"),
-            @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
-    })
-    private CheckList checkList;*/
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")
+    private CheckList checkList;
 
     @Builder
     public Media(String origFileName, String filePath, Type type,
@@ -67,7 +54,7 @@ public class Media {
         this.type = type;
         this.estate = estate;
         this.asset = asset;
-        //this.checkList = checkList;
+        this.checkList = checkList;
     }
 
 

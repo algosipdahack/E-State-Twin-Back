@@ -6,39 +6,31 @@ import com.example.Estate_Twin.domain.house.House;
 import com.example.Estate_Twin.domain.media.Media;
 import com.example.Estate_Twin.domain.user.Broker;
 import com.example.Estate_Twin.domain.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
-    @EmbeddedId
+    @Id
     @Column(name = "estate_id")
-    private EstateId estateId;
+    private Long estateId;
 
-    @MapsId("houseId")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "house_id")
     private House house;
 
-    @MapsId("brokerId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_id")
     private Broker broker;
 
-    @MapsId("ownerId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
-
-    @Embedded private EstateNo estateNo;
 
     @OneToMany(
             mappedBy = "estate",
@@ -48,16 +40,14 @@ public class Estate extends BaseTimeEntity {
     private List<Media> estateMedia = new ArrayList<>();
 
 
-    @OneToOne
-    @JoinColumn(name="constractstate_id")
+    @OneToOne(mappedBy = "estate")
     private ConstractState constractState;
 
-    @OneToOne
-    @JoinColumn(name="estatehit_id")
+    @OneToOne(mappedBy = "estate")
     private EstateHit estateHit;
 
     @Column
-    private String transactionType;
+    private TransactionType transactionType;
 
     //리스트에서 보여줄 썸네일
     @Column
@@ -65,7 +55,6 @@ public class Estate extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-
 
     @Enumerated(EnumType.STRING)
     private Rank rank;
@@ -80,7 +69,7 @@ public class Estate extends BaseTimeEntity {
     private String city;
 
     @Column
-    private String distinct;
+    private String ad_distinct;
 
     @Column
     private String address;
@@ -88,15 +77,14 @@ public class Estate extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam,
-                  House house, Broker broker, User owner, EstateNo estateNo, ConstractState constractState,
-                  EstateHit estateHit, String transactionType, String estateThumbNail,
+                  House house, Broker broker, User owner, ConstractState constractState,
+                  EstateHit estateHit, TransactionType transactionType, String estateThumbNail,
                   String city, String distinct, String address
-    ) {//생성자
-        //this.estateMedia = estateMedia;
+    ) {
         this.estateMedia = estateMedia;
         this.broker = broker;
         this.estateHit = estateHit;
-        this.distinct = distinct;
+        this.ad_distinct = distinct;
         this.content = content;
         this.rank = rank;
         this.model = model;
@@ -107,7 +95,6 @@ public class Estate extends BaseTimeEntity {
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
-        this.estateNo = estateNo;
         this.constractState = constractState;
     }
 }

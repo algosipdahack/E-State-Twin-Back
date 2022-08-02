@@ -18,26 +18,21 @@ import java.util.List;
 @Table(name = "checklist")
 public class CheckList extends BaseTimeEntity {
 
-    @EmbeddedId
+    @Id
     @Column(name = "checklist_id")
-    private CheckListId id;
+    private Long id;
 
-    @MapsId("assetId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "HOUSE_ID"),
-            @JoinColumn(name = "ASSET_ID")
-    })
+    @JoinColumn(name = "ASSET_ID")
     private Asset asset;
 
 
-    /*@OneToMany(
+    @OneToMany(
             mappedBy = "checkList",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true
     )
-
-    private List<Media> checkListPhoto = new ArrayList<>();*/
+    private List<Media> checkListPhoto = new ArrayList<>();
 
     @Column
     private String flawPart;
@@ -68,7 +63,7 @@ public class CheckList extends BaseTimeEntity {
                      String category, String checkListContent, Date repairDate,
                      RepairType repairType, String manufacturer, Asset asset
     ) {
-        //this.checkListPhoto = checkListPhoto;
+        this.checkListPhoto = checkListPhoto;
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;

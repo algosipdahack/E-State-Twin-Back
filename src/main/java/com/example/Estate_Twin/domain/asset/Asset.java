@@ -15,14 +15,14 @@ import java.util.List;
 @Entity
 @Table(name = "asset")
 public class Asset extends BaseTimeEntity {
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "asset_id")
-    private AssetId id;
+    private Long id;
 
-    @MapsId("houseId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id")
-    private House houseId;
+    private House house;
 
     @Column
     private String category;
@@ -41,10 +41,10 @@ public class Asset extends BaseTimeEntity {
     private String productName;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(String category, House houseId, List<Media> assetPhoto, String assetName, String productName) {//생성자
+    public Asset(String category, House house, List<Media> assetPhoto, String assetName, String productName) {
         this.category = category;
         this.assetPhoto = assetPhoto;
-        this.houseId = houseId;
+        this.house = house;
         this.assetName = assetName;
         this.productName = productName;
     }

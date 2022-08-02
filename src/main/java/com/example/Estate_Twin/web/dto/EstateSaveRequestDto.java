@@ -22,12 +22,12 @@ public class EstateSaveRequestDto {
         this.arCam = arCam;
     }
 
-    public Estate toEntity() {
+    /*public Estate toEntity() {
         return Estate.builder()
                 .content(content)
                 .rank(rank)
                 .model(model)
                 .arCam(arCam)
                 .build();
-    }
+    }*/
 }

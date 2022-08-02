@@ -1,12 +1,10 @@
 package com.example.Estate_Twin.domain.user;
 
 import com.example.Estate_Twin.domain.estate.Estate;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor

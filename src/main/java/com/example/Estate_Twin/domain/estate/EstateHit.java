@@ -1,17 +1,9 @@
 package com.example.Estate_Twin.domain.estate;
 
-import com.example.Estate_Twin.domain.constractstate.ConstractState;
-import com.example.Estate_Twin.domain.house.House;
-import com.example.Estate_Twin.domain.media.Media;
-import com.example.Estate_Twin.domain.user.Broker;
-import com.example.Estate_Twin.domain.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -23,7 +15,8 @@ public class EstateHit {
     @Column(name = "estatehit_id")
     private Date date;
 
-    @OneToOne(mappedBy = "estateHit")
+    @OneToOne
+    @JoinColumn(name = "estate_id")
     private Estate estate;
 
     @Column

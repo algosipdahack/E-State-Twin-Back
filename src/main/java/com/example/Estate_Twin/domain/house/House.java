@@ -1,23 +1,13 @@
 package com.example.Estate_Twin.domain.house;
 
-import com.example.Estate_Twin.domain.constractstate.ConstractState;
-import com.example.Estate_Twin.domain.estate.EstateHit;
-import com.example.Estate_Twin.domain.estate.EstateNo;
-import com.example.Estate_Twin.domain.estate.Rank;
-import com.example.Estate_Twin.domain.media.Media;
-import com.example.Estate_Twin.domain.user.Broker;
-import com.example.Estate_Twin.domain.user.User;
+
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.domain.asset.Asset;
 import com.example.Estate_Twin.domain.estate.Estate;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
@@ -90,18 +80,15 @@ public class House extends BaseTimeEntity {
     private long bathCount;
 
     @OneToMany(
-            mappedBy = "houseId",
+            mappedBy = "house",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<Asset> assets = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "house",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            orphanRemoval = true // DB에서 함께 삭제됨
-    )
-    private List<Estate> estates = new ArrayList<>();
+    @OneToOne(mappedBy = "house")
+    private Estate estate;
+
 
     @Builder // 빌더 형태로 만들어줌
     public House(long deposit, long monthlyRent, long sellingFee, long currentFloors,
@@ -109,7 +96,7 @@ public class House extends BaseTimeEntity {
                  String itemsIncludedMaintenanceFee, long netRentableArea,
                  long rentableArea,boolean parking,long parkingFee,Date moveInAvailableDate,
                  long size,String heatType,String estateType,long household,long roomCount,
-                 Date usageAvailableDate,long bathCount,List<Asset> assets,List<Estate> estates
+                 Date usageAvailableDate,long bathCount,List<Asset> assets, Estate estate
     ) {//생성자
         this.deposit = deposit;
         this.totalFloors = totalFloors;
@@ -132,6 +119,6 @@ public class House extends BaseTimeEntity {
         this.household = household;
         this.parkingFee = parkingFee;
         this.sellingFee = sellingFee;
-        this.estates = estates;
+        this.estate = estate;
     }
 }
