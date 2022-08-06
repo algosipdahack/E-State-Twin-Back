@@ -15,12 +15,10 @@ import java.util.List;
 @Getter
 public class EstateResponseDto {
     private final Long id;
-    private final House house;
-    private final Broker broker;
     private final List<Media> estateMedia;
-    private final ConstractState constractState;
-    private final EstateHit estateHit;
-    private final TransactionType transactionType;
+    private final String state;
+    private final Long hit;
+    private final String transactionType;
     private final String estateThumbNail;
     private final String content;
     private final Rank rank;
@@ -33,12 +31,10 @@ public class EstateResponseDto {
 
     public EstateResponseDto(Estate estate) {
         this.id = estate.getEstateId();
-        this.house = estate.getHouse();
-        this.broker = estate.getBroker();
         this.estateMedia = estate.getEstateMedia();
-        this.constractState = estate.getConstractState();
-        this.estateHit = estate.getEstateHit();
-        this.transactionType = estate.getTransactionType();
+        this.state = estate.getConstractState().toString();
+        this.hit = estate.getEstateHit().getTotalHit();
+        this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();
         this.content = estate.getContent();
         this.rank = estate.getRank();

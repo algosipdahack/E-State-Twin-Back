@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.constractstate.domain.ConstractState;
+import com.example.Estate_Twin.constractstate.domain.State;
 import com.example.Estate_Twin.estate.domain.EstateHit;
 import com.example.Estate_Twin.estate.domain.Rank;
 import com.example.Estate_Twin.estate.domain.TransactionType;
@@ -20,15 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EstateUpdateRequestDto {
 
-    private Broker broker;
-
-    private List<Media> estateMedia;
-
-    private ConstractState constractState;
-
-    private EstateHit estateHit;
-
-    private TransactionType transactionType;
+    private State state;
 
     private String estateThumbNail;
 
@@ -46,12 +39,10 @@ public class EstateUpdateRequestDto {
 
     private String address;
     @Builder
-    public EstateUpdateRequestDto(Broker broker, List<Media> estateMedia, ConstractState constractState, EstateHit estateHit, TransactionType transactionType, String estateThumbNail, String content, Rank rank, String model, String arCam, String city, String ad_distinct, String address) {
-        this.broker = broker;
-        this.estateMedia = estateMedia;
-        this.constractState = constractState;
-        this.estateHit = estateHit;
-        this.transactionType = transactionType;
+    public EstateUpdateRequestDto(State state,
+                                  String estateThumbNail, String content, Rank rank, String model,
+                                  String arCam, String city, String ad_distinct, String address) {
+        this.state = state;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.rank = rank;

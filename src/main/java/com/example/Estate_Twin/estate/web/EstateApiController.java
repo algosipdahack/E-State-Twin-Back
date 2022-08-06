@@ -35,8 +35,10 @@ public class EstateApiController {
     }
 
     @PutMapping("detail/{estateId}")
-    public Long updateEstate(@PathVariable Long id, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
-        return estateService.update(id, estateUpdateRequestDto);
+    public Long updateEstate(@PathVariable Long id, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto,
+        @RequestParam(value = "transactionType") String transactionType
+    ) {
+        return estateService.update(id, estateUpdateRequestDto, transactionType);
 
     }
     //매물 영상

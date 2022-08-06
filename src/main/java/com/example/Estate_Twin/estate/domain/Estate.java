@@ -1,15 +1,19 @@
 package com.example.Estate_Twin.estate.domain;
 
+import com.example.Estate_Twin.constractstate.domain.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.constractstate.domain.ConstractState;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
 import com.example.Estate_Twin.user.domain.Broker;
 import com.example.Estate_Twin.user.domain.User;
+import com.example.Estate_Twin.util.converter.TransactionTypeConverter;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
+
+import static com.example.Estate_Twin.constractstate.domain.State.BEFORE;
 
 @Getter
 @NoArgsConstructor
@@ -46,7 +50,7 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(mappedBy = "estate")
     private EstateHit estateHit;
 
-    @Column
+    @Convert(converter = TransactionTypeConverter.class)
     private TransactionType transactionType;
 
     //리스트에서 보여줄 썸네일
@@ -74,6 +78,9 @@ public class Estate extends BaseTimeEntity {
     @Column
     private String address;
 
+    @Column
+    private State state = BEFORE;
+
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam,
@@ -98,14 +105,9 @@ public class Estate extends BaseTimeEntity {
         this.constractState = constractState;
     }
 
-    public void update(Broker broker, List<Media> estateMedia, ConstractState constractState, EstateHit estateHit,
-                       TransactionType transactionType, String estateThumbNail, String content, Rank rank,
+    public void update(String transactionType, String estateThumbNail, String content, Rank rank,
                        String model, String arCam, String city, String ad_distinct, String address) {
-        this.broker = broker;
-        this.estateMedia = estateMedia;
-        this.constractState = constractState;
-        this.estateHit = estateHit;
-        this.transactionType = transactionType;
+        this.transactionType = TransactionType.of(transactionType);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.rank = rank;
