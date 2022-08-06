@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.estate.service.EstateService;
+import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
 import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
@@ -21,7 +22,10 @@ public class EstateApiController {
     //}
 
     //리스트
-    //@GetMapping("list")
+    /*@GetMapping("list")
+    public EstateListResponseDto getList(@PathVariable Long id) {
+        return estateService.findById(id);
+    }*/
 
     //상세 페이지
     @GetMapping("detail/{estateId}")
