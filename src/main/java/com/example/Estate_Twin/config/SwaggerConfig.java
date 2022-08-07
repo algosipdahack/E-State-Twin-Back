@@ -20,7 +20,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.Estate_Twin"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.Estate_Twin"))
                 .paths(PathSelectors.any())
                 .build();
     }

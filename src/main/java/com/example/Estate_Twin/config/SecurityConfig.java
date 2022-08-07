@@ -35,8 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasRole("USER")
                 .antMatchers("/manager").hasRole("MANAGER")
                 .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers(
+                        "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",
+                        "/h2-console/**", "/favicion.ico"
+                ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();
+
     }
 }

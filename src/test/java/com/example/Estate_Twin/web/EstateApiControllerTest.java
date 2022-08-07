@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@RunWith(SpringRunner.class)
+/*@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EstateApiControllerTest {
     @LocalServerPort
@@ -28,7 +28,7 @@ public class EstateApiControllerTest {
     public void cleanup() throws Exception {
         estateRepository.deleteAll();
     }
-    @Test
+    /*@Test
     public void post_estate() throws Exception {
 
         EstateSaveRequestDto estateSaveRequestDto = EstateSaveRequestDto.builder()
@@ -37,8 +37,8 @@ public class EstateApiControllerTest {
                 .city("gda")
                 .content("asdf")
                 .estateThumbNail("Adf")
-                .transactionType("sdf")
+                .transactionType("monthlyrent")
                 .build();
     }
 
-}
+}*/
