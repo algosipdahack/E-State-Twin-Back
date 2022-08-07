@@ -25,17 +25,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-cloud:
-  aws:
-    credentials:
-      secret-key: ${s3.secretkey}
-      access-key: ${s3.accesskey}
-    region:
-      static: ${s3.region}
-    s3:
-      bucket: ${s3.bucket}
-    stack:
-      auto: false
 ---
 spring:
   profiles: dev
