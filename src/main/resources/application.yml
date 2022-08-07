@@ -61,6 +61,16 @@ server:
   error:
     whitelabel:
       enabled: false
+cloud:
+  aws:
+    s3:
+      bucket: idiot-bucket-model
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
 
 ---
 spring:

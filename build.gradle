@@ -44,6 +44,10 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-quartz')
 	implementation('org.springframework.boot:spring-boot-starter-jdbc')
 
+
+	// AWS S3
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-aws-core', version: '2.2.6.RELEASE'
+
 	runtimeOnly('mysql:mysql-connector-java')
 	runtimeOnly('com.h2database:h2')
 
