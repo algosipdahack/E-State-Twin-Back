@@ -1,8 +1,7 @@
 package com.example.Estate_Twin.media.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import com.example.Estate_Twin.media.domain.Media;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -28,8 +29,8 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
-                .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
+        File uploadFile = convert(multipartFile);  // 파일 변환할 수 없으면 에러
+
         log.info(bucket);
         return upload(uploadFile, dirName);
     }
@@ -51,7 +52,7 @@ public class S3Uploader {
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
-    private String getS3(String bucket, String fileName) {
+    public String getS3(String fileName) {
         return amazonS3Client.getUrl(bucket,fileName).toString();
     }
 
@@ -63,15 +64,38 @@ public class S3Uploader {
     }
 
     // 로컬에 파일 업로드 하기
-    private Optional<File> convert(MultipartFile file) throws IOException {
-        //s3에는 multipartfile 업로드가 불가능하기 때문이다.
-        File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
-        if (convertFile.createNewFile()) { // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) { // FileOutputStream 데이터를 파일에 바이트 스트림으로 저장하기 위함
-                fos.write(file.getBytes());
-            }
-            return Optional.of(convertFile); // convertFile이 null인 경우 예외를 던진다.
-        }
-        return Optional.empty();
+    private File convert(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
     }
+
+    public List<String> listFiles() {
+
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
+                        .withBucketName(bucket);
+
+        List<String> keys = new ArrayList<>();
+
+        ObjectListing objects = amazonS3Client.listObjects(listObjectsRequest);
+
+        while(true) {
+            List<S3ObjectSummary> objectSummaries = objects.getObjectSummaries();
+            if (objectSummaries.size() < 1) {
+                break;
+            }
+
+            for (S3ObjectSummary item : objectSummaries) {
+                if (!item.getKey().endsWith("/"))
+                    keys.add(item.getKey());
+            }
+
+            objects = amazonS3Client.listNextBatchOfObjects(objects);
+        }
+        return keys;
+    }
+
 }
