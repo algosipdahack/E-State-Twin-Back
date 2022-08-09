@@ -11,7 +11,7 @@ import java.util.Date;
 public abstract class BaseEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private Date birthday;

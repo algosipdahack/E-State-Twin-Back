@@ -21,13 +21,13 @@ public class EstateHit {
     private Estate estate;
 
     @Column
-    private long totalHit;
+    private Long totalHit;
 
     @Column
-    private long weeklyHit;
+    private Long weeklyHit;
 
     @Builder // 빌더 형태로 만들어줌
-    public EstateHit( Date date, Estate estate, long totalHit, long weeklyHit
+    public EstateHit( Date date, Estate estate, Long totalHit, Long weeklyHit
     ) {//생성자
         this.date = date;
         this.estate = estate;

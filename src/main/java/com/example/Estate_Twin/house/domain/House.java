@@ -17,49 +17,49 @@ public class House extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_id")
-    private long id;
+    private Long id;
 
     @Column
-    private long deposit;
+    private Long deposit;
 
     @Column
-    private long monthlyRent;
+    private Long monthlyRent;
 
     @Column
-    private long sellingFee;
+    private Long sellingFee;
 
     @Column
-    private long currentFloors;
+    private Long currentFloors;
 
     @Column
-    private long totalFloors;
+    private Long totalFloors;
 
     @Column
     private boolean shortTermRent;
 
     @Column
-    private long maintenanceFee;
+    private Long maintenanceFee;
 
     @Column
     private String itemsIncludedMaintenanceFee;
 
     @Column
-    private long netRentableArea;
+    private Long netRentableArea;
 
     @Column
-    private long rentableArea;
+    private Long rentableArea;
 
     @Column
     private boolean parking;
 
     @Column
-    private long parkingFee;
+    private Long parkingFee;
 
     @Column
     private Date moveInAvailableDate;
 
     @Column
-    private long size;
+    private Long size;
 
     @Column
     private String heatType;
@@ -68,16 +68,16 @@ public class House extends BaseTimeEntity {
     private String estateType;
 
     @Column
-    private long household;
+    private Long household;
 
     @Column
     private Date usageAvailableDate;
 
     @Column
-    private long roomCount;
+    private Long roomCount;
 
     @Column
-    private long bathCount;
+    private Long bathCount;
 
     @OneToMany(
             mappedBy = "house",
@@ -91,12 +91,12 @@ public class House extends BaseTimeEntity {
 
 
     @Builder // 빌더 형태로 만들어줌
-    public House(long deposit, long monthlyRent, long sellingFee, long currentFloors,
-                 long totalFloors, boolean shortTermRent, long maintenanceFee,
-                 String itemsIncludedMaintenanceFee, long netRentableArea,
-                 long rentableArea,boolean parking,long parkingFee,Date moveInAvailableDate,
-                 long size,String heatType,String estateType,long household,long roomCount,
-                 Date usageAvailableDate,long bathCount,List<Asset> assets, Estate estate
+    public House(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
+                 Long totalFloors, boolean shortTermRent, Long maintenanceFee,
+                 String itemsIncludedMaintenanceFee, Long netRentableArea,
+                 Long rentableArea,boolean parking,Long parkingFee,Date moveInAvailableDate,
+                 Long size,String heatType,String estateType,Long household,Long roomCount,
+                 Date usageAvailableDate,Long bathCount,Estate estate
     ) {//생성자
         this.deposit = deposit;
         this.totalFloors = totalFloors;
@@ -110,7 +110,6 @@ public class House extends BaseTimeEntity {
         this.shortTermRent = shortTermRent;
         this.heatType = heatType;
         this.moveInAvailableDate = moveInAvailableDate;
-        this.assets = assets;
         this.maintenanceFee = maintenanceFee;
         this.currentFloors = currentFloors;
         this.roomCount = roomCount;
@@ -120,5 +119,12 @@ public class House extends BaseTimeEntity {
         this.parkingFee = parkingFee;
         this.sellingFee = sellingFee;
         this.estate = estate;
+    }
+
+
+    public void addAsset(List<Asset> assets) {
+        for(Asset asset : assets) {
+            asset.setHouse(this);
+        }
     }
 }

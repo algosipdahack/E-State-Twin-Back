@@ -10,7 +10,7 @@ public class Officetel extends House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_id")
-    private long id;
+    private Long id;
 
     @Column
     private Boolean elevator;

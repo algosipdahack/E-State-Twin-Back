@@ -16,7 +16,7 @@ public class ApiResult<T> {
     protected  final T data;
 
     @ApiModelProperty(value = "요청 서버 시간", position = 5)
-    protected final long timestamp;
+    protected final Long timestamp;
 
     public ApiResult(String message, T data) {
         this.message = message;

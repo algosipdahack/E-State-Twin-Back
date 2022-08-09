@@ -17,7 +17,7 @@ public class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "media_id")
-    private int id;
+    private Long id;
 
     @Column
     private String origFileName;
@@ -46,16 +46,21 @@ public class Media {
 
     @Builder
     public Media(String origFileName, String filePath, Type type,
-                 Estate estate, Asset asset, CheckList checkList
+                 Asset asset, CheckList checkList
     ) {
         this.origFileName = origFileName;
         this.filePath = filePath;
         this.uploadTime = new Date();
         this.type = type;
-        this.estate = estate;
         this.asset = asset;
         this.checkList = checkList;
     }
+    public void setEstate(Estate estate) {
+        this.estate = estate;
+    }
 
+    public void setAsset(Asset asset) {
+        this.asset = asset;
+    }
 
 }

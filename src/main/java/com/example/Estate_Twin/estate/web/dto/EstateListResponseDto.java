@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 public class EstateListResponseDto {
-    private final Long id;
+    private final Long  id;
     private final House house;
     private final ConstractState constractState;
     private final TransactionType transactionType;

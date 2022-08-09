@@ -29,8 +29,8 @@ public class EstateApiController {
 
     //상세 페이지
     @GetMapping("detail/{estateId}")
-    public EstateResponseDto getDetail(@PathVariable Long id) {
-        return estateService.findById(id);
+    public EstateResponseDto getDetail(@PathVariable Long estateId) {
+        return estateService.findById(estateId);
     }
 
     @PostMapping("detail")
@@ -39,10 +39,10 @@ public class EstateApiController {
     }
 
     @PutMapping("detail/{estateId}")
-    public Long updateEstate(@PathVariable Long id, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto,
+    public Long updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto,
         @RequestParam(value = "transactionType") String transactionType
     ) {
-        return estateService.update(id, estateUpdateRequestDto, transactionType);
+        return estateService.update(estateId, estateUpdateRequestDto, transactionType);
 
     }
     //매물 영상

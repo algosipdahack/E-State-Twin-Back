@@ -83,7 +83,7 @@ public class Estate extends BaseTimeEntity {
 
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(List<Media> estateMedia, String content, Rank rank, String model, String arCam,
+    public Estate(String content, Rank rank, String model, String arCam,
                   House house, Broker broker, User owner, ConstractState constractState,
                   EstateHit estateHit, TransactionType transactionType, String estateThumbNail,
                   String city, String ad_distinct, String address
@@ -116,5 +116,11 @@ public class Estate extends BaseTimeEntity {
         this.city = city;
         this.ad_distinct = ad_distinct;
         this.address = address;
+    }
+
+    public void addEstateMedia(List<Media> estateMedia) {
+        for(Media media : estateMedia) {
+            media.setEstate(this);
+        }
     }
 }

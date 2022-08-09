@@ -16,10 +16,11 @@ public class ConstractState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "constractstate_id")
-    private long id;
+    private Long id;
 
     @Column
-    private State state;
+    @Enumerated(value = EnumType.ORDINAL)
+    private State state = State.BEFORE;
 
     @Column
     private Date date;
@@ -34,4 +35,9 @@ public class ConstractState {
         this.estate = estate;
         this.state = state;
     }
+    public void updateState() {
+        /*this.state.ordinal()
+        this.state.ordinal() += 1;*/
+    }
+
 }
