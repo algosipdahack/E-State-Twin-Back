@@ -32,14 +32,15 @@ public class HouseService {
                 .orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다. id = "+id));
         house.update(houseUpdateRequestDto.getDeposit(), houseUpdateRequestDto.getMonthlyRent(),
                 houseUpdateRequestDto.getSellingFee(),houseUpdateRequestDto.getCurrentFloors(),
-                houseUpdateRequestDto.getTotalFloors(), houseUpdateRequestDto.isParking(),
+                houseUpdateRequestDto.getTotalFloors(), houseUpdateRequestDto.isShortTermRent(),
                 houseUpdateRequestDto.getMaintenanceFee(), houseUpdateRequestDto.getItemsIncludedMaintenanceFee(),
-                houseUpdateRequestDto.getRentableArea(), houseUpdateRequestDto.getRentableArea(),
+                houseUpdateRequestDto.getNetRentableArea(), houseUpdateRequestDto.getRentableArea(),
                 houseUpdateRequestDto.isParking(), houseUpdateRequestDto.getParkingFee(),
                 houseUpdateRequestDto.getMoveInAvailableDate(), houseUpdateRequestDto.getSize(),
                 houseUpdateRequestDto.getHeatType(), houseUpdateRequestDto.getEstateType(),
                 houseUpdateRequestDto.getHousehold(), houseUpdateRequestDto.getRoomCount(),
-                houseUpdateRequestDto.getUsageAvailableDate(), houseUpdateRequestDto.getBathCount());
+                houseUpdateRequestDto.getUsageAvailableDate(), houseUpdateRequestDto.getBathCount()
+                );
         return id;
     }
 }

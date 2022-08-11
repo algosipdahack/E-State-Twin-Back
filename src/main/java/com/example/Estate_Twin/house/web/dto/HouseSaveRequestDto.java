@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.EstateType;
 import com.example.Estate_Twin.house.domain.House;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -36,7 +37,7 @@ public class HouseSaveRequestDto {
 
     private Long parkingFee;
 
-    private Date moveInAvailableDate;
+    private LocalDateTime moveInAvailableDate;
 
     private Long size;
 
@@ -46,7 +47,7 @@ public class HouseSaveRequestDto {
 
     private Long household;
 
-    private Date usageAvailableDate;
+    private LocalDateTime usageAvailableDate;
 
     private Long roomCount;
 
@@ -62,8 +63,8 @@ public class HouseSaveRequestDto {
                                boolean shortTermRent, Long maintenanceFee,
                                String itemsIncludedMaintenanceFee, Long netRentableArea,
                                Long rentableArea, boolean parking, Long parkingFee,
-                               Date moveInAvailableDate, Date usageAvailableDate, Long size, String heatType,
-                               EstateType estateType, Long household,
+                               LocalDateTime moveInAvailableDate, LocalDateTime usageAvailableDate,
+                               Long size, String heatType, EstateType estateType, Long household,
                                Long roomCount, Long bathCount, List<Asset> assets,
                                Estate estate) {
         this.deposit = deposit;

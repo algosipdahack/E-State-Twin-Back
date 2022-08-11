@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -23,14 +24,14 @@ public class ConstractState {
     private State state = State.BEFORE;
 
     @Column
-    private Date date;
+    private LocalDateTime date;
 
     @OneToOne
     @JoinColumn(name = "estate_id")
     private Estate estate;
 
     @Builder // 빌더 형태로 만들어줌
-    public ConstractState(State state, Date date, Estate estate) {
+    public ConstractState(State state, LocalDateTime date, Estate estate) {
         this.date = date;
         this.estate = estate;
         this.state = state;

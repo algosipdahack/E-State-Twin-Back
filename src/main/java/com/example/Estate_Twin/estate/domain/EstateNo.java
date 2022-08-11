@@ -3,15 +3,15 @@ package com.example.Estate_Twin.estate.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Embeddable
 @NoArgsConstructor
 public class EstateNo {
     @Id
-    @Temporal(TemporalType.DATE)
     @Column(name = "estateno_id")
-    private Date date;
+    private LocalDateTime date;
 
     @Column
     private int sequence;

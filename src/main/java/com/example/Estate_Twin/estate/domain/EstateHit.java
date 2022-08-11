@@ -1,9 +1,9 @@
 package com.example.Estate_Twin.estate.domain;
 
-import com.example.Estate_Twin.estate.domain.Estate;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -12,9 +12,8 @@ import java.util.Date;
 @Table(name = "estatehit")
 public class EstateHit {
     @Id
-    @Temporal(TemporalType.DATE)
     @Column(name = "estatehit_id")
-    private Date date;
+    private LocalDateTime date;
 
     @OneToOne
     @JoinColumn(name = "estate_id")
@@ -27,7 +26,7 @@ public class EstateHit {
     private Long weeklyHit;
 
     @Builder // 빌더 형태로 만들어줌
-    public EstateHit( Date date, Estate estate, Long totalHit, Long weeklyHit
+    public EstateHit(LocalDateTime date, Estate estate, Long totalHit, Long weeklyHit
     ) {//생성자
         this.date = date;
         this.estate = estate;

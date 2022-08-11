@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.Estate;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -25,9 +26,8 @@ public class Media {
     @Column
     private String filePath;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "upload_time")
-    private Date uploadTime;
+    private LocalDateTime uploadTime;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -50,7 +50,7 @@ public class Media {
     ) {
         this.origFileName = origFileName;
         this.filePath = filePath;
-        this.uploadTime = new Date();
+        this.uploadTime = LocalDateTime.now();
         this.type = type;
         this.asset = asset;
         this.checkList = checkList;

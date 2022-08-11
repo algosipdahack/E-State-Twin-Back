@@ -4,8 +4,10 @@ import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.estate.domain.Estate;
 import com.example.Estate_Twin.estate.domain.EstateType;
 import com.example.Estate_Twin.house.domain.House;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class HouseResponseDto {
 
     private final Long parkingFee;
 
-    private final Date moveInAvailableDate;
+    private final LocalDateTime moveInAvailableDate;
 
     private final Long size;
 
@@ -48,7 +50,8 @@ public class HouseResponseDto {
 
     private final Long household;
 
-    private final Date usageAvailableDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private final LocalDateTime usageAvailableDate;
 
     private final Long roomCount;
 

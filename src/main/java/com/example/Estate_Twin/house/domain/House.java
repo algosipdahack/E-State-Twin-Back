@@ -8,6 +8,7 @@ import com.example.Estate_Twin.estate.domain.Estate;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -57,7 +58,7 @@ public class House extends BaseTimeEntity {
     private Long parkingFee;
 
     @Column
-    private Date moveInAvailableDate;
+    private LocalDateTime moveInAvailableDate;
 
     @Column
     private Long size;
@@ -72,7 +73,7 @@ public class House extends BaseTimeEntity {
     private Long household;
 
     @Column
-    private Date usageAvailableDate;
+    private LocalDateTime usageAvailableDate;
 
     @Column
     private Long roomCount;
@@ -95,9 +96,9 @@ public class House extends BaseTimeEntity {
     public House(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
                  Long totalFloors, boolean shortTermRent, Long maintenanceFee,
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
-                 Long rentableArea,boolean parking,Long parkingFee,Date moveInAvailableDate,
+                 Long rentableArea,boolean parking,Long parkingFee,LocalDateTime moveInAvailableDate,
                  Long size,String heatType,EstateType estateType,Long household,Long roomCount,
-                 Date usageAvailableDate,Long bathCount,Estate estate
+                 LocalDateTime usageAvailableDate,Long bathCount,Estate estate
     ) {//생성자
         this.deposit = deposit;
         this.totalFloors = totalFloors;
@@ -125,9 +126,9 @@ public class House extends BaseTimeEntity {
     public void update(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
                        Long totalFloors, boolean shortTermRent, Long maintenanceFee,
                        String itemsIncludedMaintenanceFee, Long netRentableArea,
-                       Long rentableArea, boolean parking, Long parkingFee, Date moveInAvailableDate,
+                       Long rentableArea,boolean parking, Long parkingFee, LocalDateTime moveInAvailableDate,
                        Long size, String heatType, EstateType estateType, Long household, Long roomCount,
-                       Date usageAvailableDate, Long bathCount) {
+                       LocalDateTime usageAvailableDate, Long bathCount) {
         this.deposit = deposit;
         this.totalFloors = totalFloors;
         this.size = size;

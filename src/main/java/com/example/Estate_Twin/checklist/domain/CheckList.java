@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,13 +20,13 @@ import java.util.List;
 public class CheckList extends BaseTimeEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "checklist_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
-
 
     @OneToMany(
             mappedBy = "checkList",
@@ -44,7 +45,7 @@ public class CheckList extends BaseTimeEntity {
     private String checkListContent;
 
     @Column
-    private Date repairDate;
+    private LocalDateTime repairDate;
 
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
@@ -60,10 +61,25 @@ public class CheckList extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public CheckList(List<Media> checkListPhoto, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     String category, String checkListContent, Date repairDate,
+                     String category, String checkListContent, LocalDateTime repairDate,
                      RepairType repairType, String manufacturer, Asset asset
     ) {
         this.checkListPhoto = checkListPhoto;
+        this.flawPart = flawPart;
+        this.brokerConfirmYN = brokerConfirmYN;
+        this.repairDate = repairDate;
+        this.ownerConfirmYN = ownerConfirmYN;
+        this.category = category;
+        this.checkListContent = checkListContent;
+        this.repairType = repairType;
+        this.manufacturer = manufacturer;
+        this.asset = asset;
+    }
+
+    public void update(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
+                     String category, String checkListContent, LocalDateTime repairDate,
+                     RepairType repairType, String manufacturer, Asset asset
+    ) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;

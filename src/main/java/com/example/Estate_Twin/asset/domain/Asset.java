@@ -57,4 +57,11 @@ public class Asset extends BaseTimeEntity {
     public void setHouse(House house) {
         this.house = house;
     }
+
+    public void update(String category, House house, String assetName, String productName) {
+        this.category = category;
+        this.house = house;
+        this.assetName = assetName;
+        this.productName = productName;
+    }
 }
