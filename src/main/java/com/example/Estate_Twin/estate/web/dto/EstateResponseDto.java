@@ -4,10 +4,7 @@ import com.example.Estate_Twin.constractstate.domain.ConstractState;
 import com.example.Estate_Twin.estate.domain.Estate;
 import com.example.Estate_Twin.estate.domain.EstateHit;
 import com.example.Estate_Twin.estate.domain.Rank;
-import com.example.Estate_Twin.estate.domain.TransactionType;
-import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
-import com.example.Estate_Twin.user.domain.Broker;
 import lombok.Getter;
 
 import java.util.List;

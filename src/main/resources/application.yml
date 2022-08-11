@@ -2,40 +2,12 @@ spring:
   profiles: real
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://idiot-database.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: admin
+    url: jdbc:mariadb://mysql-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
     password: h13001212!
   jpa:
     hibernate:
       ddl-auto: create
-cloud:
-  aws:
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-    credentials:
-      instanceProfile: true
----
-spring:
-  profiles: prod
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://idiot-database.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot"
-    username: idiot
-    password: h13001212!
-  jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    properties:
-      hibernate:
-        format_sql: true
-        ddl-auto: update
-    generate-ddl: false
-    open-in-view: false
-    show-sql: true
-  output:
-    ansi:
-      enabled: always
   batch:
     initialize-schema: always #batch 스키마 자동생성
     job:
@@ -44,6 +16,42 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
+
+---
+spring:
+  profiles: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://idiot-root.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: h13001212!
+  jpa:
+    hibernate:
+      ddl-auto: create
+  batch:
+    initialize-schema: always #batch 스키마 자동생성
+    job:
+      enabled: false #시작과 동시에 실행되는 건 방지
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
 ---
 spring:
   profiles: dev

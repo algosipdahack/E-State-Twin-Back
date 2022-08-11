@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.house.domain;
 
 
+import com.example.Estate_Twin.estate.domain.EstateType;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.estate.domain.Estate;
@@ -65,7 +66,7 @@ public class House extends BaseTimeEntity {
     private String heatType;
 
     @Column
-    private String estateType;
+    private EstateType estateType;
 
     @Column
     private Long household;
@@ -95,7 +96,7 @@ public class House extends BaseTimeEntity {
                  Long totalFloors, boolean shortTermRent, Long maintenanceFee,
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
                  Long rentableArea,boolean parking,Long parkingFee,Date moveInAvailableDate,
-                 Long size,String heatType,String estateType,Long household,Long roomCount,
+                 Long size,String heatType,EstateType estateType,Long household,Long roomCount,
                  Date usageAvailableDate,Long bathCount,Estate estate
     ) {//생성자
         this.deposit = deposit;
@@ -120,6 +121,35 @@ public class House extends BaseTimeEntity {
         this.sellingFee = sellingFee;
         this.estate = estate;
     }
+
+    public void update(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
+                       Long totalFloors, boolean shortTermRent, Long maintenanceFee,
+                       String itemsIncludedMaintenanceFee, Long netRentableArea,
+                       Long rentableArea, boolean parking, Long parkingFee, Date moveInAvailableDate,
+                       Long size, String heatType, EstateType estateType, Long household, Long roomCount,
+                       Date usageAvailableDate, Long bathCount) {
+        this.deposit = deposit;
+        this.totalFloors = totalFloors;
+        this.size = size;
+        this.usageAvailableDate = usageAvailableDate;
+        this.itemsIncludedMaintenanceFee = itemsIncludedMaintenanceFee;
+        this.rentableArea = rentableArea;
+        this.parking = parking;
+        this.netRentableArea = netRentableArea;
+        this.monthlyRent = monthlyRent;
+        this.shortTermRent = shortTermRent;
+        this.heatType = heatType;
+        this.moveInAvailableDate = moveInAvailableDate;
+        this.maintenanceFee = maintenanceFee;
+        this.currentFloors = currentFloors;
+        this.roomCount = roomCount;
+        this.estateType = estateType;
+        this.bathCount = bathCount;
+        this.household = household;
+        this.parkingFee = parkingFee;
+        this.sellingFee = sellingFee;
+    }
+
 
 
     public void addAsset(List<Asset> assets) {

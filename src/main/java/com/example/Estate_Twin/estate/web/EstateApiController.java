@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateService estateService;
@@ -39,10 +39,9 @@ public class EstateApiController {
     }
 
     @PutMapping("detail/{estateId}")
-    public Long updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto,
-        @RequestParam(value = "transactionType") String transactionType
+    public Long updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
     ) {
-        return estateService.update(estateId, estateUpdateRequestDto, transactionType);
+        return estateService.update(estateId, estateUpdateRequestDto);
 
     }
     //매물 영상

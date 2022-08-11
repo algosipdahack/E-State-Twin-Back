@@ -21,6 +21,7 @@ import static com.example.Estate_Twin.constractstate.domain.State.BEFORE;
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_id")
     private Long estateId;
 
@@ -105,9 +106,9 @@ public class Estate extends BaseTimeEntity {
         this.constractState = constractState;
     }
 
-    public void update(String transactionType, String estateThumbNail, String content, Rank rank,
+    public void update(TransactionType transactionType, String estateThumbNail, String content, Rank rank,
                        String model, String arCam, String city, String ad_distinct, String address) {
-        this.transactionType = TransactionType.of(transactionType);
+        this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.rank = rank;

@@ -4,6 +4,8 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -16,13 +18,14 @@ public abstract class BaseEntity extends BaseTimeEntity {
     @Column
     private Date birthday;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Email
+    @NotNull(message = "아이디는 null일 수 없습니다!")
     private String email;
 
 }

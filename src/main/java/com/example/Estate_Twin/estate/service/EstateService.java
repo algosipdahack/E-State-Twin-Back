@@ -17,7 +17,7 @@ public class EstateService {
 
     public EstateResponseDto findById(Long id) {
         Estate entity = estateRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id = "+ id));
+                .orElseThrow(()-> new IllegalArgumentException("해당 매물이 없습니다. id = "+ id));
         return new EstateResponseDto(entity);
     }
     @Transactional
@@ -26,11 +26,11 @@ public class EstateService {
     }
 
     @Transactional
-    public Long update(Long id, EstateUpdateRequestDto estateUpdateRequestDto, String transactionType) {
+    public Long update(Long id, EstateUpdateRequestDto estateUpdateRequestDto) {
         Estate estate = estateRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시물이 없습니다. id = "+id));
 
-        estate.update(transactionType,
+        estate.update(estateUpdateRequestDto.getTransactionType(),
                 estateUpdateRequestDto.getEstateThumbNail(),estateUpdateRequestDto.getContent(),estateUpdateRequestDto.getRank(),
                 estateUpdateRequestDto.getModel(),estateUpdateRequestDto.getArCam(),estateUpdateRequestDto.getCity(),
                 estateUpdateRequestDto.getAd_distinct(),estateUpdateRequestDto.getAddress()
