@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.estate.domain;
 
-import com.example.Estate_Twin.constractstate.domain.State;
+import com.example.Estate_Twin.contractstate.domain.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import com.example.Estate_Twin.constractstate.domain.ConstractState;
+import com.example.Estate_Twin.contractstate.domain.ContractState;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
 import com.example.Estate_Twin.user.domain.Broker;
@@ -13,7 +13,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-import static com.example.Estate_Twin.constractstate.domain.State.BEFORE;
+import static com.example.Estate_Twin.contractstate.domain.State.BEFORE;
 
 @Getter
 @NoArgsConstructor
@@ -46,7 +46,7 @@ public class Estate extends BaseTimeEntity {
 
 
     @OneToOne(mappedBy = "estate")
-    private ConstractState constractState;
+    private ContractState contractState;
 
     @OneToOne(mappedBy = "estate")
     private EstateHit estateHit;
@@ -85,7 +85,7 @@ public class Estate extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(String content, Rank rank, String model, String arCam,
-                  House house, Broker broker, User owner, ConstractState constractState,
+                  House house, Broker broker, User owner, ContractState contractState,
                   EstateHit estateHit, TransactionType transactionType, String estateThumbNail,
                   String city, String ad_distinct, String address
     ) {
@@ -103,7 +103,7 @@ public class Estate extends BaseTimeEntity {
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
-        this.constractState = constractState;
+        this.contractState = contractState;
     }
 
     public void update(TransactionType transactionType, String estateThumbNail, String content, Rank rank,

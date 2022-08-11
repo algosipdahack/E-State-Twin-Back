@@ -1,30 +1,29 @@
-package com.example.Estate_Twin.constractstate.web.dto;
+package com.example.Estate_Twin.contractstate.web.dto;
 
-import com.example.Estate_Twin.constractstate.domain.ConstractState;
-import com.example.Estate_Twin.constractstate.domain.State;
+import com.example.Estate_Twin.contractstate.domain.ContractState;
+import com.example.Estate_Twin.contractstate.domain.State;
 import com.example.Estate_Twin.estate.domain.Estate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-public class ConstractStateSaveRequestDto {
+public class ContractStateSaveRequestDto {
     private State state;
     private LocalDateTime date;
     private Estate estate;
     @Builder
-    public ConstractStateSaveRequestDto(State state, LocalDateTime date, Estate estate) {
+    public ContractStateSaveRequestDto(State state, LocalDateTime date, Estate estate) {
         this.state = state;
         this.date = date;
         this.estate = estate;
     }
 
-    public ConstractState toEntity() {
-        return ConstractState.builder()
+    public ContractState toEntity() {
+        return ContractState.builder()
                 .date(date)
                 .estate(estate)
                 .state(state)

@@ -1,4 +1,4 @@
-package com.example.Estate_Twin.constractstate.domain;
+package com.example.Estate_Twin.contractstate.domain;
 
 import com.example.Estate_Twin.estate.domain.Estate;
 import lombok.Builder;
@@ -7,13 +7,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "constractstate")
-public class ConstractState {
+public class ContractState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "constractstate_id")
@@ -31,14 +30,15 @@ public class ConstractState {
     private Estate estate;
 
     @Builder // 빌더 형태로 만들어줌
-    public ConstractState(State state, LocalDateTime date, Estate estate) {
+    public ContractState(State state, LocalDateTime date, Estate estate) {
         this.date = date;
         this.estate = estate;
         this.state = state;
     }
-    public void updateState() {
+    public void updateState(String state) {
         /*this.state.ordinal()
         this.state.ordinal() += 1;*/
     }
+
 
 }

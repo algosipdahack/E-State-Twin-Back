@@ -1,8 +1,7 @@
-package com.example.Estate_Twin.constractstate.domain;
+package com.example.Estate_Twin.contractstate.domain;
 
 import lombok.Getter;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 @Getter
 public enum State {

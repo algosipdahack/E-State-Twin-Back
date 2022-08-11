@@ -1,8 +1,6 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.constractstate.domain.ConstractState;
 import com.example.Estate_Twin.estate.domain.Estate;
-import com.example.Estate_Twin.estate.domain.EstateHit;
 import com.example.Estate_Twin.estate.domain.Rank;
 import com.example.Estate_Twin.media.domain.Media;
 import lombok.Getter;
@@ -29,7 +27,7 @@ public class EstateResponseDto {
     public EstateResponseDto(Estate estate) {
         this.id = estate.getEstateId();
         this.estateMedia = estate.getEstateMedia();
-        this.state = estate.getConstractState().toString();
+        this.state = estate.getContractState().toString();
         this.hit = estate.getEstateHit().getTotalHit();
         this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();
