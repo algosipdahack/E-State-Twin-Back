@@ -5,6 +5,7 @@ import com.example.Estate_Twin.estate.domain.EstateType;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.estate.domain.Estate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -86,6 +87,7 @@ public class House extends BaseTimeEntity {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             orphanRemoval = true // DB에서 함께 삭제됨
     )
+    @JsonIgnore
     private List<Asset> assets = new ArrayList<>();
 
     @OneToOne(mappedBy = "house")

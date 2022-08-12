@@ -2,9 +2,7 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.estate.domain.Estate;
 import com.example.Estate_Twin.estate.domain.TransactionType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor

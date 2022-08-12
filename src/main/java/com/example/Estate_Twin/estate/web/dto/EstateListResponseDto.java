@@ -20,7 +20,7 @@ public class EstateListResponseDto {
 
 
     public EstateListResponseDto(Estate estate) {
-        this.id = estate.getEstateId();
+        this.id = estate.getId();
         this.house = estate.getHouse();
         this.contractState = estate.getContractState();
         this.transactionType = estate.getTransactionType();

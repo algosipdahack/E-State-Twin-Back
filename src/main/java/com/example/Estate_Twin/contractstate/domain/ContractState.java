@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.contractstate.domain;
 
 import com.example.Estate_Twin.estate.domain.Estate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

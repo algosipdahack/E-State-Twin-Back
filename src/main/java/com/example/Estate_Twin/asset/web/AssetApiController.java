@@ -18,9 +18,9 @@ public class AssetApiController {
         return assetService.findById(assetId);
     }
 
-    @PostMapping("")
-    public Long saveAsset(@RequestBody AssetSaveRequestDto assetSaveRequestDto) {
-        return assetService.save(assetSaveRequestDto);
+    @PostMapping("/{houseId}")
+    public Long saveAsset(@PathVariable Long houseId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
+        return assetService.save(houseId, assetSaveRequestDto);
     }
 
     @PutMapping("/{assetId}")

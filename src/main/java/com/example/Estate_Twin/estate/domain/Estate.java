@@ -8,6 +8,7 @@ import com.example.Estate_Twin.media.domain.Media;
 import com.example.Estate_Twin.user.domain.Broker;
 import com.example.Estate_Twin.user.domain.User;
 import com.example.Estate_Twin.util.converter.TransactionTypeConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Estate extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_id")
-    private Long estateId;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "house_id")
@@ -46,6 +47,7 @@ public class Estate extends BaseTimeEntity {
 
 
     @OneToOne(mappedBy = "estate")
+    @JsonIgnore
     private ContractState contractState;
 
     @OneToOne(mappedBy = "estate")
@@ -89,7 +91,6 @@ public class Estate extends BaseTimeEntity {
                   EstateHit estateHit, TransactionType transactionType, String estateThumbNail,
                   String city, String ad_distinct, String address
     ) {
-        this.estateMedia = estateMedia;
         this.broker = broker;
         this.estateHit = estateHit;
         this.ad_distinct = ad_distinct;

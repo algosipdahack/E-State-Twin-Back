@@ -1,12 +1,8 @@
 package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.estate.service.EstateService;
-import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
-import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
-import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
+import com.example.Estate_Twin.estate.web.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

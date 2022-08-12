@@ -3,9 +3,7 @@ package com.example.Estate_Twin.estate.web.dto;
 import com.example.Estate_Twin.contractstate.domain.State;
 import com.example.Estate_Twin.estate.domain.Rank;
 import com.example.Estate_Twin.estate.domain.TransactionType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +27,7 @@ public class EstateUpdateRequestDto {
     private String ad_distinct;
 
     private String address;
+
     private LocalDateTime modifiedDate;
     @Builder
     public EstateUpdateRequestDto(String transactionType, String state,

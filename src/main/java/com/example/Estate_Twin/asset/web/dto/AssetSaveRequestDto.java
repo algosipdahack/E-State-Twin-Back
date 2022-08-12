@@ -18,8 +18,7 @@ public class AssetSaveRequestDto {
     private String productName;
 
     @Builder
-    public AssetSaveRequestDto(House house, String category, String assetName, String productName) {
-        this.house = house;
+    public AssetSaveRequestDto(String category, String assetName, String productName) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;
@@ -32,5 +31,9 @@ public class AssetSaveRequestDto {
                 .house(house)
                 .productName(productName)
                 .build();
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 }

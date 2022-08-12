@@ -3,6 +3,7 @@ package com.example.Estate_Twin.asset.domain;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

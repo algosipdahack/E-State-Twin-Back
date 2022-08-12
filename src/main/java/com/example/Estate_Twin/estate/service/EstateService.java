@@ -6,23 +6,26 @@ import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
 import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class EstateService {
     private final EstateRepository estateRepository;
 
     public EstateResponseDto findById(Long id) {
         Estate entity = estateRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 매물이 없습니다. id = "+ id));
+
         return new EstateResponseDto(entity);
     }
     @Transactional
     public Long save(EstateSaveRequestDto estateSaveRequestDto) {
-        return estateRepository.save(estateSaveRequestDto.toEntity()).getEstateId();
+        return estateRepository.save(estateSaveRequestDto.toEntity()).getId();
     }
 
     @Transactional

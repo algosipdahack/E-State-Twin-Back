@@ -13,20 +13,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ContractStateSaveRequestDto {
     private State state;
-    private LocalDateTime date;
     private Estate estate;
+    private LocalDateTime date;
+
     @Builder
-    public ContractStateSaveRequestDto(State state, LocalDateTime date, Estate estate) {
+    public ContractStateSaveRequestDto(State state, LocalDateTime date) {
         this.state = state;
         this.date = date;
-        this.estate = estate;
     }
 
     public ContractState toEntity() {
         return ContractState.builder()
                 .date(date)
-                .estate(estate)
                 .state(state)
+                .estate(estate)
                 .build();
+    }
+
+    public void setEstate(Estate estate) {
+        this.estate = estate;
     }
 }
