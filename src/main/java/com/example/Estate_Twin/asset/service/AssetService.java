@@ -25,9 +25,9 @@ public class AssetService {
     }
 
     @Transactional
-    public Long save(Long id, AssetSaveRequestDto assetSaveRequestDto) {
-        House house = houseRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다. id = "+id));
+    public Long save(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
+        House house = houseRepository.findById(houseId)
+                .orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다. id = "+houseId));
         assetSaveRequestDto.setHouse(house);
         return assetRepository.save(assetSaveRequestDto.toEntity()).getId();
     }

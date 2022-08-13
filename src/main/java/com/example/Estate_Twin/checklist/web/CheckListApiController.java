@@ -18,9 +18,9 @@ public class CheckListApiController {
         return checkListService.findById(checklistId);
     }
 
-    @PostMapping("")
-    public Long saveCheckList(@RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
-        return checkListService.save(checkListSaveRequestDto);
+    @PostMapping("/{assetId}")
+    public Long saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+        return checkListService.save(checkListSaveRequestDto, assetId);
     }
 
     @PutMapping("/{checklistId}")

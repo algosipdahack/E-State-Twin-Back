@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.checklist.service;
 
+import com.example.Estate_Twin.asset.domain.Asset;
+import com.example.Estate_Twin.asset.domain.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.domain.CheckList;
 import com.example.Estate_Twin.checklist.domain.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
@@ -14,6 +16,8 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class CheckListService {
     private final CheckListRepository checkListRepository;
+    private final AssetRepository assetRepository;
+
     public CheckListResponseDto findById(Long id) {
         CheckList checkList = checkListRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
@@ -21,7 +25,10 @@ public class CheckListService {
     }
 
     @Transactional
-    public Long save(CheckListSaveRequestDto checkListSaveRequestDto) {
+    public Long save(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
+        Asset asset = assetRepository.findById(assetId)
+                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId));
+        checkListSaveRequestDto.setAsset(asset);
         return checkListRepository.save(checkListSaveRequestDto.toEntity()).getId();
     }
 
@@ -33,7 +40,7 @@ public class CheckListService {
                 checkListUpdateRequestDto.getBrokerConfirmYN(),checkListUpdateRequestDto.getOwnerConfirmYN(),
                 checkListUpdateRequestDto.getCheckListContent(),checkListUpdateRequestDto.getCheckListContent(),
                 checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType(),
-                checkListUpdateRequestDto.getCheckListContent(),checkListUpdateRequestDto.getAsset());
+                checkListUpdateRequestDto.getCheckListContent());
         return id;
     }
 }

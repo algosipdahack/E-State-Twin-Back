@@ -78,7 +78,7 @@ public class CheckList extends BaseTimeEntity {
 
     public void update(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                      String category, String checkListContent, LocalDateTime repairDate,
-                     RepairType repairType, String manufacturer, Asset asset
+                     RepairType repairType, String manufacturer
     ) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
@@ -88,6 +88,13 @@ public class CheckList extends BaseTimeEntity {
         this.checkListContent = checkListContent;
         this.repairType = repairType;
         this.manufacturer = manufacturer;
+    }
+
+    public void setAsset(Asset asset) {
+        if (this.asset != null) {
+            this.asset.getCheckList().remove(this);
+        }
         this.asset = asset;
+        this.asset.getCheckList().add(this);
     }
 }

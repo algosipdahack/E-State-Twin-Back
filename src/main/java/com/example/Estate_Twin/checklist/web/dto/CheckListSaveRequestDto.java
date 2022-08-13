@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class CheckListSaveRequestDto {
-
     private Asset asset;
 
     private String flawPart;
@@ -32,18 +31,21 @@ public class CheckListSaveRequestDto {
     private Boolean brokerConfirmYN;
 
     private Boolean ownerConfirmYN;
+
     @Builder
-    public CheckListSaveRequestDto(Asset asset, String flawPart, String category, String checkListContent, LocalDateTime repairDate, RepairType repairType, String manufacturer, Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
-        this.asset = asset;
+    public CheckListSaveRequestDto(String flawPart, String category, String checkListContent,
+                                   LocalDateTime repairDate, String repairType, String manufacturer,
+                                   Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
         this.flawPart = flawPart;
         this.category = category;
         this.checkListContent = checkListContent;
         this.repairDate = repairDate;
-        this.repairType = repairType;
+        this.repairType = RepairType.of(repairType);
         this.manufacturer = manufacturer;
         this.brokerConfirmYN = brokerConfirmYN;
         this.ownerConfirmYN = ownerConfirmYN;
     }
+
     public CheckList toEntity() {
         return CheckList.builder()
                 .checkListContent(checkListContent)
@@ -56,5 +58,9 @@ public class CheckListSaveRequestDto {
                 .repairDate(repairDate)
                 .repairType(repairType)
                 .build();
+    }
+
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 }

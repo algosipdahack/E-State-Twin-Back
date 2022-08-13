@@ -14,8 +14,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class CheckListUpdateRequestDto {
-    private Asset asset;
-
     private String flawPart;
 
     private String category;
@@ -33,10 +31,9 @@ public class CheckListUpdateRequestDto {
     private Boolean ownerConfirmYN;
 
     @Builder
-    public CheckListUpdateRequestDto(Asset asset, String flawPart, String category, String checkListContent,
+    public CheckListUpdateRequestDto(String flawPart, String category, String checkListContent,
                                      LocalDateTime repairDate, RepairType repairType,
                                      String manufacturer, Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
-        this.asset = asset;
         this.flawPart = flawPart;
         this.category = category;
         this.checkListContent = checkListContent;

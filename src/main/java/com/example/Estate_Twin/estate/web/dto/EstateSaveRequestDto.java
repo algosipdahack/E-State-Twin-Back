@@ -2,6 +2,7 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.estate.domain.Estate;
 import com.example.Estate_Twin.estate.domain.TransactionType;
+import com.example.Estate_Twin.house.domain.House;
 import lombok.*;
 
 @Getter
@@ -13,6 +14,8 @@ public class EstateSaveRequestDto {
     private String city;
     private String ad_distinct;
     private String address;
+
+    private House house;
 
     @Builder
     public EstateSaveRequestDto(String transactionType,
@@ -34,7 +37,12 @@ public class EstateSaveRequestDto {
                 .ad_distinct(ad_distinct)
                 .address(address)
                 .city(city)
+                .house(house)
                 .build();
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 
 }

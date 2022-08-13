@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.asset.domain;
 
+import com.example.Estate_Twin.checklist.domain.CheckList;
+import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
@@ -23,6 +25,7 @@ public class Asset extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id")
+    @JsonIgnore
     private House house;
 
     @Column
@@ -34,6 +37,14 @@ public class Asset extends BaseTimeEntity {
             orphanRemoval = true
     )
     private List<Media> assetPhoto = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "asset",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    @JsonIgnore
+    private List<CheckList> checkList = new ArrayList<>();
 
     @Column
     private String assetName;
@@ -55,8 +66,18 @@ public class Asset extends BaseTimeEntity {
         }
     }
 
+    public void addCheckList(List<CheckList> checkLists) {
+        for(CheckList checkList: checkLists) {
+            checkList.setAsset(this);
+        }
+    }
+
     public void setHouse(House house) {
+        if(this.house != null) {
+            this.house.getAssets().remove(this);
+        }
         this.house = house;
+        this.house.getAssets().add(this);
     }
 
     public void update(String category, House house, String assetName, String productName) {

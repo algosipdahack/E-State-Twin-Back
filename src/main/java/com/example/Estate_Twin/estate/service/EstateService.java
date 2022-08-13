@@ -5,6 +5,8 @@ import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
 import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
+import com.example.Estate_Twin.house.domain.House;
+import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import javax.transaction.Transactional;
 @Slf4j
 public class EstateService {
     private final EstateRepository estateRepository;
+    private final HouseRepository houseRepository;
 
     public EstateResponseDto findById(Long id) {
         Estate entity = estateRepository.findById(id)
@@ -24,7 +27,10 @@ public class EstateService {
         return new EstateResponseDto(entity);
     }
     @Transactional
-    public Long save(EstateSaveRequestDto estateSaveRequestDto) {
+    public Long save(EstateSaveRequestDto estateSaveRequestDto, Long houseId) {
+        House house = houseRepository.findById(houseId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 집이 없습니다. id = "+ houseId));
+        estateSaveRequestDto.setHouse(house);
         return estateRepository.save(estateSaveRequestDto.toEntity()).getId();
     }
 

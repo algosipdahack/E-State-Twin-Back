@@ -29,9 +29,9 @@ public class EstateApiController {
         return estateService.findById(estateId);
     }
 
-    @PostMapping("detail")
-    public Long saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
-        return estateService.save(estateSaveRequestDto);
+    @PostMapping("detail/{houseId}")
+    public Long saveEstate(@PathVariable Long houseId, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+        return estateService.save(estateSaveRequestDto, houseId);
     }
 
     @PutMapping("detail/{estateId}")

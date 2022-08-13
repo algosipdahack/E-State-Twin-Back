@@ -1,5 +1,8 @@
 spring:
   profiles: real
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://mysql-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -38,7 +41,7 @@ spring:
     password: h13001212!
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   batch:
     initialize-schema: always #batch 스키마 자동생성
     job:

@@ -60,7 +60,11 @@ public class Media {
     }
 
     public void setAsset(Asset asset) {
+        if(this.asset != null) {
+            this.asset.getAssetPhoto().remove(this);
+        }
         this.asset = asset;
+        this.asset.getAssetPhoto().add(this);
     }
 
 }
