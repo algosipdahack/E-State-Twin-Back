@@ -9,6 +9,7 @@ import com.example.Estate_Twin.user.domain.Broker;
 import com.example.Estate_Twin.user.domain.User;
 import com.example.Estate_Twin.util.converter.TransactionTypeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,34 +21,37 @@ import static com.example.Estate_Twin.contractstate.domain.State.BEFORE;
 @NoArgsConstructor
 @Entity
 @Table(name = "estate")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Estate extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
+    @JsonIgnore
     private House house;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_id")
+    @JsonIgnore
     private Broker broker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
+    @JsonIgnore
     private User owner;
 
     @OneToMany(
             mappedBy = "estate",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
     private List<Media> estateMedia = new ArrayList<>();
 
 
     @OneToOne(mappedBy = "estate")
-    @JsonIgnore
     private ContractState contractState;
 
     @OneToOne(mappedBy = "estate")

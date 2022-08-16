@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.domain;
 
 import com.example.Estate_Twin.user.domain.User;
 import com.example.Estate_Twin.util.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,8 +17,9 @@ public class RefreshToken extends BaseTimeEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false)

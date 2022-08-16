@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,8 +15,9 @@ public class EstateHit {
     @Column(name = "estatehit_id")
     private LocalDateTime date;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "estate_id")
+    @JsonIgnore
     private Estate estate;
 
     @Column

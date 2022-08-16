@@ -26,8 +26,9 @@ public class ContractState {
     @Column
     private LocalDateTime date;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "estate_id")
+    @JsonIgnore
     private Estate estate;
 
     @Builder // 빌더 형태로 만들어줌

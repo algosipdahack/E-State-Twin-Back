@@ -6,6 +6,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "asset")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Asset extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +35,14 @@ public class Asset extends BaseTimeEntity {
 
     @OneToMany(
             mappedBy = "asset",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
     private List<Media> assetPhoto = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "asset",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
     @JsonIgnore

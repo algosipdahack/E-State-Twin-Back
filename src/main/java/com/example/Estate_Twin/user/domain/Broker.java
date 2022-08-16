@@ -39,7 +39,7 @@ public class Broker extends BaseEntity {
 
     @OneToMany(
             mappedBy = "broker",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<Estate> estates = new ArrayList<>();

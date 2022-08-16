@@ -3,6 +3,7 @@ package com.example.Estate_Twin.media.domain;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.checklist.domain.CheckList;
 import com.example.Estate_Twin.estate.domain.Estate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,14 +35,17 @@ public class Media {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ESTATE_ID", referencedColumnName = "ESTATE_ID")
+    @JsonIgnore
     private Estate estate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
+    @JsonIgnore
     private Asset asset;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")
+    @JsonIgnore
     private CheckList checkList;
 
     @Builder

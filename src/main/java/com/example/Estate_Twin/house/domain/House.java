@@ -6,6 +6,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.estate.domain.Estate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Table(name = "house")
 public class House extends BaseTimeEntity {
     @Id
@@ -84,7 +86,7 @@ public class House extends BaseTimeEntity {
 
     @OneToMany(
             mappedBy = "house",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     @JsonIgnore

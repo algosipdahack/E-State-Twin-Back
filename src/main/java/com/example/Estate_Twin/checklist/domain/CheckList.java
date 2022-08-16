@@ -3,6 +3,8 @@ package com.example.Estate_Twin.checklist.domain;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.media.domain.Media;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Table(name = "checklist")
 public class CheckList extends BaseTimeEntity {
 
@@ -26,11 +29,12 @@ public class CheckList extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID")
+    @JsonIgnore
     private Asset asset;
 
     @OneToMany(
             mappedBy = "checkList",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
     private List<Media> checkListPhoto = new ArrayList<>();
