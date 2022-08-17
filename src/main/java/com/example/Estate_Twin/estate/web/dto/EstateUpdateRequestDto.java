@@ -24,7 +24,7 @@ public class EstateUpdateRequestDto {
 
     private String city;
 
-    private String ad_distinct;
+    private String borough;
 
     private String address;
 
@@ -32,7 +32,7 @@ public class EstateUpdateRequestDto {
     @Builder
     public EstateUpdateRequestDto(String transactionType, String state,
                                   String estateThumbNail, String content, String rank, String model,
-                                  String arCam, String city, String ad_distinct, String address) {
+                                  String arCam, String city, String borough, String address) {
         this.transactionType = TransactionType.of(transactionType);
         this.state = State.of(state);
         this.estateThumbNail = estateThumbNail;
@@ -41,7 +41,7 @@ public class EstateUpdateRequestDto {
         this.model = model;
         this.arCam = arCam;
         this.city = city;
-        this.ad_distinct = ad_distinct;
+        this.borough = borough;
         this.address = address;
         this.modifiedDate = LocalDateTime.now();
     }

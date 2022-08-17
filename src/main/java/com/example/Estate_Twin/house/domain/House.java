@@ -16,7 +16,6 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Table(name = "house")
 public class House extends BaseTimeEntity {
     @Id
@@ -87,6 +86,7 @@ public class House extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "house",
             cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     @JsonIgnore

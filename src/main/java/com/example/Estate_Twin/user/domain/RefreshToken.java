@@ -17,7 +17,10 @@ public class RefreshToken extends BaseTimeEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;

@@ -36,11 +36,9 @@ public class CheckListService {
     public Long update(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
         CheckList checkList = checkListRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
-        checkList.update(checkListUpdateRequestDto.getCheckListContent(),
-                checkListUpdateRequestDto.getBrokerConfirmYN(),checkListUpdateRequestDto.getOwnerConfirmYN(),
-                checkListUpdateRequestDto.getCheckListContent(),checkListUpdateRequestDto.getCheckListContent(),
-                checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType(),
-                checkListUpdateRequestDto.getCheckListContent());
+        checkList.update(checkListUpdateRequestDto.getFlawPart(), checkListUpdateRequestDto.getBrokerConfirmYN(), checkListUpdateRequestDto.getOwnerConfirmYN().booleanValue(),
+        checkListUpdateRequestDto.getCategory(), checkListUpdateRequestDto.getCheckListContent(), checkListUpdateRequestDto.getRepairDate(),
+        checkListUpdateRequestDto.getRepairType(), checkListUpdateRequestDto.getManufacturer());
         return id;
     }
 }

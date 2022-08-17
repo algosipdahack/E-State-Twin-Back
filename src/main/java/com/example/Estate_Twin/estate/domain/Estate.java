@@ -20,25 +20,34 @@ import static com.example.Estate_Twin.contractstate.domain.State.BEFORE;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "estate")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Table(name = "estate")
 public class Estate extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estate_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
     @JoinColumn(name = "house_id")
     @JsonIgnore
     private House house;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
     @JoinColumn(name = "broker_id")
     @JsonIgnore
     private Broker broker;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
     @JoinColumn(name = "owner_id")
     @JsonIgnore
     private User owner;
@@ -46,6 +55,7 @@ public class Estate extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "estate",
             cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     private List<Media> estateMedia = new ArrayList<>();
@@ -80,7 +90,7 @@ public class Estate extends BaseTimeEntity {
     private String city;
 
     @Column
-    private String ad_distinct;
+    private String borough;
 
     @Column
     private String address;
@@ -93,11 +103,11 @@ public class Estate extends BaseTimeEntity {
     public Estate(String content, Rank rank, String model, String arCam,
                   House house, Broker broker, User owner, ContractState contractState,
                   EstateHit estateHit, TransactionType transactionType, String estateThumbNail,
-                  String city, String ad_distinct, String address
+                  String city, String borough, String address
     ) {
         this.broker = broker;
         this.estateHit = estateHit;
-        this.ad_distinct = ad_distinct;
+        this.borough = borough;
         this.content = content;
         this.rank = rank;
         this.model = model;
@@ -112,7 +122,7 @@ public class Estate extends BaseTimeEntity {
     }
 
     public void update(TransactionType transactionType, String estateThumbNail, String content, Rank rank,
-                       String model, String arCam, String city, String ad_distinct, String address) {
+                       String model, String arCam, String city, String borough, String address) {
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
@@ -120,7 +130,7 @@ public class Estate extends BaseTimeEntity {
         this.model = model;
         this.arCam = arCam;
         this.city = city;
-        this.ad_distinct = ad_distinct;
+        this.borough = borough;
         this.address = address;
     }
 

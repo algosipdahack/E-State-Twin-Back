@@ -2,6 +2,7 @@ package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.house.domain.House;
+import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.example.Estate_Twin.media.domain.Media;
 import lombok.Getter;
 

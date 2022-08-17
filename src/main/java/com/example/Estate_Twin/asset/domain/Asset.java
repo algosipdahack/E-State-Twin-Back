@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.asset.domain;
 
 import com.example.Estate_Twin.checklist.domain.CheckList;
-import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.media.domain.Media;
@@ -18,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "asset")
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Asset extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

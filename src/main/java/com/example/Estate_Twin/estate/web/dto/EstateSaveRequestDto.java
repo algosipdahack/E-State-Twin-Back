@@ -12,7 +12,7 @@ public class EstateSaveRequestDto {
     private String estateThumbNail;
     private String content;
     private String city;
-    private String ad_distinct;
+    private String borough;
     private String address;
 
     private House house;
@@ -20,11 +20,11 @@ public class EstateSaveRequestDto {
     @Builder
     public EstateSaveRequestDto(String transactionType,
                                 String estateThumbNail, String content,
-                                String ad_distinct, String address, String city) {
+                                String borough, String address, String city) {
         this.transactionType = TransactionType.of(transactionType);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
-        this.ad_distinct = ad_distinct;
+        this.borough = borough;
         this.address = address;
         this.city = city;
     }
@@ -34,7 +34,7 @@ public class EstateSaveRequestDto {
                 .content(content)
                 .estateThumbNail(estateThumbNail)
                 .transactionType(transactionType)
-                .ad_distinct(ad_distinct)
+                .borough(borough)
                 .address(address)
                 .city(city)
                 .house(house)

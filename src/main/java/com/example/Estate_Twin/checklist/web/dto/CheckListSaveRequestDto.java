@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
 import com.example.Estate_Twin.asset.domain.Asset;
+import com.example.Estate_Twin.checklist.domain.Category;
 import com.example.Estate_Twin.checklist.domain.CheckList;
 import com.example.Estate_Twin.checklist.domain.RepairType;
 import com.example.Estate_Twin.media.domain.Media;
@@ -18,7 +19,7 @@ public class CheckListSaveRequestDto {
 
     private String flawPart;
 
-    private String category;
+    private Category category;
 
     private String checkListContent;
 
@@ -33,7 +34,7 @@ public class CheckListSaveRequestDto {
     private Boolean ownerConfirmYN;
 
     @Builder
-    public CheckListSaveRequestDto(String flawPart, String category, String checkListContent,
+    public CheckListSaveRequestDto(String flawPart, Category category, String checkListContent,
                                    LocalDateTime repairDate, String repairType, String manufacturer,
                                    Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
         this.flawPart = flawPart;

@@ -3,22 +3,16 @@ package com.example.Estate_Twin.checklist.domain;
 import com.example.Estate_Twin.asset.domain.Asset;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.media.domain.Media;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Table(name = "checklist")
 public class CheckList extends BaseTimeEntity {
 
@@ -35,6 +29,7 @@ public class CheckList extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "checkList",
             cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     private List<Media> checkListPhoto = new ArrayList<>();
@@ -42,8 +37,8 @@ public class CheckList extends BaseTimeEntity {
     @Column
     private String flawPart;
 
-    @Column
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
@@ -65,7 +60,7 @@ public class CheckList extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public CheckList(List<Media> checkListPhoto, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     String category, String checkListContent, LocalDateTime repairDate,
+                     Category category, String checkListContent, LocalDateTime repairDate,
                      RepairType repairType, String manufacturer, Asset asset
     ) {
         this.checkListPhoto = checkListPhoto;
@@ -81,7 +76,7 @@ public class CheckList extends BaseTimeEntity {
     }
 
     public void update(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     String category, String checkListContent, LocalDateTime repairDate,
+                     Category category, String checkListContent, LocalDateTime repairDate,
                      RepairType repairType, String manufacturer
     ) {
         this.flawPart = flawPart;

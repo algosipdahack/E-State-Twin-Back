@@ -41,7 +41,9 @@ spring:
     password: h13001212!
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+      show_sql: true
+      format_sql: true
   batch:
     initialize-schema: always #batch 스키마 자동생성
     job:
@@ -67,14 +69,15 @@ spring:
     username: root
     password: P@ssw0rd
   jpa:
+    show_sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
-        ddl-auto: create
     generate-ddl: false
     open-in-view: false
-    show-sql: true
   output:
     ansi:
       enabled: always

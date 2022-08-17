@@ -23,6 +23,7 @@ public class User extends BaseEntity {
     @OneToMany(
             mappedBy = "owner",
             cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<Estate> estates = new ArrayList<>();
@@ -30,6 +31,7 @@ public class User extends BaseEntity {
     @OneToMany(
             mappedBy = "tanent",
             cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY,
             orphanRemoval = true // DB에서 함께 삭제됨
     )
     private List<DipRecentEstate> dipRecentEstates = new ArrayList<>();

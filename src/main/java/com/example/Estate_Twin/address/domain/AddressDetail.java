@@ -15,7 +15,10 @@ public class AddressDetail {
     private Long id;
 
     @Column
-    private String addressId;
+    private String city;
+
+    @Column
+    private String borough;
 
     @Column
     private String town;
@@ -42,10 +45,11 @@ public class AddressDetail {
     private String buildingName;
 
     @Builder // 빌더 형태로 만들어줌
-    public AddressDetail(String addressId,String town,String complexName,String block,String unit,String roadName,
+    public AddressDetail(String city, String borough,String town,String complexName,String block,String unit,String roadName,
                          int mainBuildingNumber,int subBuildingNumber,String buildingName
     ) {//생성자
-        this.addressId = addressId;
+        this.city = city;
+        this.borough = borough;
         this.roadName = roadName;
         this.mainBuildingNumber = mainBuildingNumber;
         this.subBuildingNumber = subBuildingNumber;

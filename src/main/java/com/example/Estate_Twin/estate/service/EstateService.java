@@ -42,7 +42,7 @@ public class EstateService {
         estate.update(estateUpdateRequestDto.getTransactionType(),
                 estateUpdateRequestDto.getEstateThumbNail(),estateUpdateRequestDto.getContent(),estateUpdateRequestDto.getRank(),
                 estateUpdateRequestDto.getModel(),estateUpdateRequestDto.getArCam(),estateUpdateRequestDto.getCity(),
-                estateUpdateRequestDto.getAd_distinct(),estateUpdateRequestDto.getAddress()
+                estateUpdateRequestDto.getBorough(),estateUpdateRequestDto.getAddress()
         );
         return id;
     }

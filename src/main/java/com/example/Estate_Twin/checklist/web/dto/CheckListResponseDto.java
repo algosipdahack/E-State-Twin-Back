@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
 import com.example.Estate_Twin.asset.domain.Asset;
+import com.example.Estate_Twin.checklist.domain.Category;
 import com.example.Estate_Twin.checklist.domain.CheckList;
 import com.example.Estate_Twin.checklist.domain.RepairType;
 import com.example.Estate_Twin.media.domain.Media;
@@ -20,7 +21,7 @@ public class CheckListResponseDto {
 
     private final String flawPart;
 
-    private final String category;
+    private final Category category;
 
     private final String checkListContent;
 

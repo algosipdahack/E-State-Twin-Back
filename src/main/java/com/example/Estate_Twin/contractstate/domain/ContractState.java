@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "constractstate")
+@Table(name = "contractstate")
 public class ContractState {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "constractstate_id")
+    @Column(name = "contractstate_id")
     private Long id;
 
     @Column
@@ -26,7 +26,10 @@ public class ContractState {
     @Column
     private LocalDateTime date;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "estate_id")
     @JsonIgnore
     private Estate estate;

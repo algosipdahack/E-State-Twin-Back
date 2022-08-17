@@ -12,7 +12,7 @@ public class EstateResponseDto {
     private final String estateThumbNail;
     private final String content;
     private final String city;
-    private final String ad_distinct;
+    private final String borough;
     private final String address;
 
     public EstateResponseDto(Estate estate) {
@@ -22,7 +22,7 @@ public class EstateResponseDto {
         this.estateThumbNail = estate.getEstateThumbNail();
         this.content = estate.getContent();
         this.city = estate.getCity();
-        this.ad_distinct = estate.getAd_distinct();
+        this.borough = estate.getBorough();
         this.address = estate.getAddress();
     }
 }
