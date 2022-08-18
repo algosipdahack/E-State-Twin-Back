@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class EStateTwinApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(EStateTwinApplication.class, args);
 	}
 

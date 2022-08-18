@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.contractstate.domain.State;
-import com.example.Estate_Twin.estate.domain.Rank;
-import com.example.Estate_Twin.estate.domain.TransactionType;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.entity.Rank;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import lombok.*;
 
 import java.time.LocalDateTime;

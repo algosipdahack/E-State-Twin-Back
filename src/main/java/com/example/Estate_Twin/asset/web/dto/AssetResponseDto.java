@@ -1,13 +1,11 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.asset.domain.Asset;
-import com.example.Estate_Twin.house.domain.House;
-import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
-import com.example.Estate_Twin.media.domain.Media;
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.Getter;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,7 +15,7 @@ public class AssetResponseDto {
 
     private final House house;
 
-    private final String category;
+    private final Category category;
 
     private final List<Media> assetPhoto;
 

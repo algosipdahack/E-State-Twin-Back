@@ -1,10 +1,10 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.asset.domain.Asset;
-import com.example.Estate_Twin.checklist.domain.Category;
-import com.example.Estate_Twin.checklist.domain.CheckList;
-import com.example.Estate_Twin.checklist.domain.RepairType;
-import com.example.Estate_Twin.media.domain.Media;
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.checklist.data.entity.RepairType;
+import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

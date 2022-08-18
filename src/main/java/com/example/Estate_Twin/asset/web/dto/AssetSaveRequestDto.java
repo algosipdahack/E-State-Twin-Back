@@ -1,7 +1,7 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.asset.domain.Asset;
-import com.example.Estate_Twin.house.domain.House;
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.house.domain.entity.House;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

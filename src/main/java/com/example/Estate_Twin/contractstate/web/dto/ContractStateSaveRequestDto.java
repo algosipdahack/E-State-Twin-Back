@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.contractstate.web.dto;
 
-import com.example.Estate_Twin.contractstate.domain.ContractState;
-import com.example.Estate_Twin.contractstate.domain.State;
-import com.example.Estate_Twin.estate.domain.Estate;
+import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

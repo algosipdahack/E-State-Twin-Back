@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.estate.domain.Estate;
-import com.example.Estate_Twin.estate.domain.TransactionType;
-import com.example.Estate_Twin.house.domain.House;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.house.domain.entity.House;
 import lombok.*;
 
 @Getter

@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.house.web.dto;
 
-import com.example.Estate_Twin.estate.domain.EstateType;
+import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

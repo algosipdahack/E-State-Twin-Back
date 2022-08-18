@@ -1,4 +1,8 @@
 spring:
+  config:
+    import: 'aws-parameterstore:'
+    activate:
+      on-profile: real
   profiles: real
   jackson:
     serialization:
@@ -9,8 +13,12 @@ spring:
     username: root
     password: h13001212!
   jpa:
+    show_sql: true
     hibernate:
       ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
   batch:
     initialize-schema: always #batch 스키마 자동생성
     job:
@@ -19,6 +27,12 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+aws:
+  paramstore:
+    enabled: true
+    prefix: /config
+    profile-separator: _
+    name: chosoyeon
 cloud:
   aws:
     region:
@@ -40,10 +54,12 @@ spring:
     username: root
     password: h13001212!
   jpa:
+    show_sql: true
     hibernate:
-      ddl-auto: update
-      show_sql: true
-      format_sql: true
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
   batch:
     initialize-schema: always #batch 스키마 자동생성
     job:
@@ -69,8 +85,8 @@ spring:
     username: root
     password: P@ssw0rd
   jpa:
-    show_sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show_sql: true
     hibernate:
       ddl-auto: create
     properties:

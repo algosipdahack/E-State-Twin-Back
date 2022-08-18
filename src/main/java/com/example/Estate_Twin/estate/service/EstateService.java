@@ -1,11 +1,11 @@
 package com.example.Estate_Twin.estate.service;
 
-import com.example.Estate_Twin.estate.domain.Estate;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
 import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
-import com.example.Estate_Twin.house.domain.House;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class EstateService {
+public interface EstateService {
     private final EstateRepository estateRepository;
     private final HouseRepository houseRepository;
 

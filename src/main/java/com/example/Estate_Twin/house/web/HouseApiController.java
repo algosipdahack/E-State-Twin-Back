@@ -1,12 +1,10 @@
 package com.example.Estate_Twin.house.web;
 
-import com.example.Estate_Twin.house.domain.House;
 import com.example.Estate_Twin.house.service.HouseService;
 import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
