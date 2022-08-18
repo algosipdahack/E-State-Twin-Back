@@ -17,30 +17,28 @@ import javax.transaction.Transactional;
 public class HouseServiceImpl implements HouseService {
     private final HouseDAO houseDAO;
 
+    @Override
     public HouseResponseDto getHouse(Long id) {
         return new HouseResponseDto(houseDAO.findHouse(id));
     }
 
-    @Transactional
-    public Long saveHouse(HouseSaveRequestDto houseSaveRequestDto) {
-        return houseRepository.save(houseSaveRequestDto.toEntity()).getId();
+    @Override
+    public HouseResponseDto saveHouse(HouseSaveRequestDto houseSaveRequestDto) {
+        return new HouseResponseDto(houseSaveRequestDto.toEntity());
     }
 
-    @Transactional
-    public Long updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto) {
-        House house = houseRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다. id = "+id));
-        house.update(houseUpdateRequestDto.getDeposit(), houseUpdateRequestDto.getMonthlyRent(),
-                houseUpdateRequestDto.getSellingFee(),houseUpdateRequestDto.getCurrentFloors(),
-                houseUpdateRequestDto.getTotalFloors(), houseUpdateRequestDto.isShortTermRent(),
-                houseUpdateRequestDto.getMaintenanceFee(), houseUpdateRequestDto.getItemsIncludedMaintenanceFee(),
+    @Override
+    public HouseResponseDto updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto) {
+        House house = houseDAO.updateHouse(id, houseUpdateRequestDto.getDeposit(), houseUpdateRequestDto.getMonthlyRent(),
+                houseUpdateRequestDto.getSellingFee(), houseUpdateRequestDto.getCurrentFloors(),
+                houseUpdateRequestDto.getTotalFloors(), houseUpdateRequestDto.isParking(),
+                houseUpdateRequestDto.getMaintenanceFee(), houseUpdateRequestDto.getHeatType(),
                 houseUpdateRequestDto.getNetRentableArea(), houseUpdateRequestDto.getRentableArea(),
                 houseUpdateRequestDto.isParking(), houseUpdateRequestDto.getParkingFee(),
                 houseUpdateRequestDto.getMoveInAvailableDate(), houseUpdateRequestDto.getSize(),
                 houseUpdateRequestDto.getHeatType(), houseUpdateRequestDto.getEstateType(),
                 houseUpdateRequestDto.getHousehold(), houseUpdateRequestDto.getRoomCount(),
-                houseUpdateRequestDto.getUsageAvailableDate(), houseUpdateRequestDto.getBathCount()
-        );
-        return id;
+                houseUpdateRequestDto.getUsageAvailableDate(), houseUpdateRequestDto.getBathCount());
+        return new HouseResponseDto(house);
     }
 }

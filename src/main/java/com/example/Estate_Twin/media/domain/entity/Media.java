@@ -3,6 +3,8 @@ package com.example.Estate_Twin.media.domain.entity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.user.domain.entity.BaseEntity;
+import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,8 +26,14 @@ public class Media {
     @Column
     private String filePath;
 
-    @Enumerated(EnumType.STRING)
-    private Type type;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")
+    private CheckList checkList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ESTATE_ID", referencedColumnName = "ESTATE_ID")
@@ -35,15 +43,11 @@ public class Media {
     @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
     private Asset asset;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")
-    private CheckList checkList;
 
     @Builder
-    public Media(String origFileName, String filePath, Type type) {
+    public Media(String origFileName, String filePath) {
         this.origFileName = origFileName;
         this.filePath = filePath;
-        this.type = type;
     }
 
 }

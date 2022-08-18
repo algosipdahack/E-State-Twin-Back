@@ -5,10 +5,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
-import com.example.Estate_Twin.user.domain.entity.Broker;
-import com.example.Estate_Twin.user.domain.entity.User;
-import com.example.Estate_Twin.util.converter.TransactionTypeConverter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,6 +54,7 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(mappedBy = "estate")
     private ContractState contractState;
 
+
     @OneToOne(mappedBy = "estate")
     private EstateHit estateHit;
 
@@ -90,7 +88,6 @@ public class Estate extends BaseTimeEntity {
     @OneToMany(
             mappedBy = "estate",
             cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
     private List<Media> estateMedia = new ArrayList<>();

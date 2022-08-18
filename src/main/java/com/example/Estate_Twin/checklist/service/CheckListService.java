@@ -14,6 +14,6 @@ import javax.transaction.Transactional;
 
 public interface CheckListService {
     CheckListResponseDto getCheckList(Long id);
-    Long saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
-    Long updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
+    CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
+    CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
 }

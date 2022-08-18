@@ -17,9 +17,10 @@ public class ContractStateSaveRequestDto {
     private LocalDateTime date;
 
     @Builder
-    public ContractStateSaveRequestDto(State state, LocalDateTime date) {
+    public ContractStateSaveRequestDto(State state, LocalDateTime date, Estate estate) {
         this.state = state;
         this.date = date;
+        this.estate = estate;
     }
 
     public ContractState toEntity() {

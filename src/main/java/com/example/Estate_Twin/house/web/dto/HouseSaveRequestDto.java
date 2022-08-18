@@ -95,7 +95,6 @@ public class HouseSaveRequestDto {
                 .bathCount(bathCount)
                 .currentFloors(currentFloors)
                 .deposit(deposit)
-                .estate(estate)
                 .estateType(estateType)
                 .heatType(heatType)
                 .household(household)

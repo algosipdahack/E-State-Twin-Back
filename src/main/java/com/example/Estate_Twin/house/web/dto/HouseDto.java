@@ -9,9 +9,10 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Getter
-public class HouseResponseDto {
+public class HouseDto {
+    private final Long id;
+
     private final Long deposit;
 
     private final Long monthlyRent;
@@ -57,7 +58,8 @@ public class HouseResponseDto {
 
     private final Estate estate;
 
-    public HouseResponseDto(House house) {
+    public HouseDto(House house) {
+        this.id = house.getId();
         this.assets = house.getAssets();
         this.deposit = house.getDeposit();
         this.monthlyRent = house.getMonthlyRent();

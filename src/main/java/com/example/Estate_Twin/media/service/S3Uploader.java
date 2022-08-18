@@ -2,6 +2,9 @@ package com.example.Estate_Twin.media.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.example.Estate_Twin.media.domain.dao.MediaDAO;
+import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,11 +21,20 @@ import java.util.*;
 @Slf4j
 public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
+    private final MediaDAO mediaDAO;
 
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+    public String upload(List<MultipartFile> multipartFile, MediaResponseDto mediaResponseDto, String dirName) throws IOException {
+        Media uploadMedia = mediaDAO.saveMedia(new Media()
+                .builder()
+                .filePath(mediaResponseDto.getFilePath())
+                .origFileName(mediaResponseDto.getOrigFileName())
+                .build());
+
+        mediaDAO.saveMedia(mediaResponseDto);
+
         File uploadFile = convert(multipartFile);  // 파일 변환할 수 없으면 에러
         return upload(uploadFile, dirName);
     }

@@ -4,9 +4,7 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.Category;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.data.entity.RepairType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,21 +12,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CheckListSaveRequestDto {
     private Asset asset;
-
     private String flawPart;
-
     private Category category;
-
     private String checkListContent;
-
     private LocalDateTime repairDate;
-
     private RepairType repairType;
-
     private String manufacturer;
-
     private Boolean brokerConfirmYN;
-
     private Boolean ownerConfirmYN;
 
     @Builder
@@ -50,7 +40,6 @@ public class CheckListSaveRequestDto {
                 .checkListContent(checkListContent)
                 .ownerConfirmYN(ownerConfirmYN)
                 .brokerConfirmYN(brokerConfirmYN)
-                .asset(asset)
                 .category(category)
                 .flawPart(flawPart)
                 .manufacturer(manufacturer)

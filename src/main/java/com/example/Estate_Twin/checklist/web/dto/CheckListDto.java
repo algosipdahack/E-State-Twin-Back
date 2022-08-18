@@ -5,13 +5,12 @@ import com.example.Estate_Twin.checklist.data.entity.Category;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.data.entity.RepairType;
 import com.example.Estate_Twin.media.domain.entity.Media;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-public class CheckListResponseDto {
+public class CheckListDto {
+    private final Long id;
     private final Asset asset;
     private final List<Media> checkListPhoto;
     private final String flawPart;
@@ -23,7 +22,8 @@ public class CheckListResponseDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
 
-    public CheckListResponseDto(CheckList checkList) {
+    public CheckListDto(CheckList checkList) {
+        this.id = checkList.getId();
         this.asset = checkList.getAsset();
         this.checkListPhoto = checkList.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();

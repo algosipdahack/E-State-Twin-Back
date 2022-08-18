@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.checklist.service.impl;
 
+import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
@@ -20,6 +21,7 @@ import javax.transaction.Transactional;
 public class CheckListServiceImpl implements CheckListService {
 
     private final CheckListDAO checkListDAO;
+    private final AssetDAO assetDAO;
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
@@ -27,20 +29,17 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public Long saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        Asset asset = assetRepository.findById(assetId)
-                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId));
+    public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
+        Asset asset = assetDAO.findAsset(assetId);
         checkListSaveRequestDto.setAsset(asset);
-        return checkListRepository.save(checkListSaveRequestDto.toEntity()).getId();
+        return new CheckListResponseDto(checkListSaveRequestDto.toEntity());
     }
 
     @Override
-    public Long updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
-        CheckList checkList = checkListRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
-        checkList.update(checkListUpdateRequestDto.getFlawPart(), checkListUpdateRequestDto.getBrokerConfirmYN(), checkListUpdateRequestDto.getOwnerConfirmYN().booleanValue(),
-                checkListUpdateRequestDto.getCategory(), checkListUpdateRequestDto.getCheckListContent(), checkListUpdateRequestDto.getRepairDate(),
-                checkListUpdateRequestDto.getRepairType(), checkListUpdateRequestDto.getManufacturer());
-        return id;
+    public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
+        CheckList checkList = checkListDAO.updateCheckList(id,checkListUpdateRequestDto.getFlawPart(),checkListUpdateRequestDto.getBrokerConfirmYN(),
+                checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCategory(),checkListUpdateRequestDto.getCheckListContent(),
+                checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType(),checkListUpdateRequestDto.getManufacturer());
+        return new CheckListResponseDto(checkList);
     }
 }

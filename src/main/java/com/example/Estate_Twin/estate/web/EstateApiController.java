@@ -3,6 +3,8 @@ package com.example.Estate_Twin.estate.web;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -25,20 +27,22 @@ public class EstateApiController {
 
     //상세 페이지
     @GetMapping("detail/{estateId}")
-    public EstateResponseDto getDetail(@PathVariable Long estateId) {
-        return estateService.findById(estateId);
+    public ResponseEntity<EstateResponseDto> getEstate(@PathVariable Long estateId) {
+        EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
     @PostMapping("detail/{houseId}")
-    public Long saveEstate(@PathVariable Long houseId, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
-        return estateService.save(estateSaveRequestDto, houseId);
+    public ResponseEntity<EstateResponseDto> saveEstate(@PathVariable Long houseId, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+        EstateResponseDto estateResponseDto = estateService.saveEstate(estateSaveRequestDto,houseId);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
     @PutMapping("detail/{estateId}")
-    public Long updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
     ) {
-        return estateService.update(estateId, estateUpdateRequestDto);
-
+        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
     //매물 영상
     //@GetMapping("/detail/{estateId}/video")

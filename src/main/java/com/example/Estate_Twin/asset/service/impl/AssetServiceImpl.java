@@ -7,6 +7,7 @@ import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
 import com.example.Estate_Twin.asset.web.dto.AssetUpdateRequestDto;
+import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,28 +18,24 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
-
     private final AssetDAO assetDAO;
-
+    private final HouseDAO houseDAO;
     @Override
     public AssetResponseDto getAsset(Long id) {
         return new AssetResponseDto(assetDAO.findAsset(id));
     }
 
     @Override
-    public Long saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
-        House house = houseRepository.findById(houseId)
-                .orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다. id = "+houseId));
+    public AssetResponseDto saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
+        House house = houseDAO.findHouse(houseId);
         assetSaveRequestDto.setHouse(house);
-        return assetRepository.save(assetSaveRequestDto.toEntity()).getId();
+        return new AssetResponseDto(assetSaveRequestDto.toEntity());
     }
 
     @Override
-    public Long updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto) {
-        Asset asset = assetRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 어셋이 없습니다. id = "+id));
-        asset.update(assetUpdateRequestDto.getCategory(), assetUpdateRequestDto.getHouse(),
-                assetUpdateRequestDto.getAssetName(), assetUpdateRequestDto.getProductName());
-        return id;
+    public AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto) {
+        Asset asset = assetDAO.updateAsset(id, assetUpdateRequestDto.getCategory(),
+                assetUpdateRequestDto.getAssetName(),assetUpdateRequestDto.getProductName());
+        return new AssetResponseDto(asset);
     }
 }

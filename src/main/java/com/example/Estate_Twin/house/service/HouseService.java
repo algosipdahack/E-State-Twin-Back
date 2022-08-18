@@ -12,6 +12,6 @@ import javax.transaction.Transactional;
 
 public interface HouseService {
     HouseResponseDto getHouse(Long id);
-    Long saveHouse(HouseSaveRequestDto houseSaveRequestDto);
-    Long updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto);
+    HouseResponseDto saveHouse(HouseSaveRequestDto houseSaveRequestDto);
+    HouseResponseDto updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto);
 }
