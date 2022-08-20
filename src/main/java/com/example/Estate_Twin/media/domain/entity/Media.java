@@ -3,7 +3,6 @@ package com.example.Estate_Twin.media.domain.entity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.user.domain.entity.BaseEntity;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 
@@ -48,6 +47,18 @@ public class Media {
     public Media(String origFileName, String filePath) {
         this.origFileName = origFileName;
         this.filePath = filePath;
+    }
+
+    public void setCheckList(CheckList checkList) {
+        this.checkList = checkList;
+    }
+
+    public void setEstate(Estate estate) {
+        this.estate = estate;
+    }
+
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 
 }

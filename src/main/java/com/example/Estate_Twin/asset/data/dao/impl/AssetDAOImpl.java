@@ -4,11 +4,12 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class AssetDAOImpl implements AssetDAO {
@@ -34,6 +35,13 @@ public class AssetDAOImpl implements AssetDAO {
 
     @Override
     public Asset saveAsset(Asset asset) {
+        return assetRepository.save(asset);
+    }
+
+    @Override
+    public Asset addAssetMedia(Long id, List<Media> mediaList) {
+        Asset asset = findAsset(id);
+        asset.addMedia(mediaList);
         return assetRepository.save(asset);
     }
 }

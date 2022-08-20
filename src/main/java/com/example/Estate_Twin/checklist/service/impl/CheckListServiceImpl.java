@@ -1,20 +1,17 @@
 package com.example.Estate_Twin.checklist.service.impl;
 
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.Estate_Twin.media.domain.entity.Media;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -30,9 +27,9 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        Asset asset = assetDAO.findAsset(assetId);
-        checkListSaveRequestDto.setAsset(asset);
-        return new CheckListResponseDto(checkListSaveRequestDto.toEntity());
+        checkListSaveRequestDto.setAsset(assetDAO.findAsset(assetId));
+        checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity());
+        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity()));
     }
 
     @Override
@@ -41,5 +38,10 @@ public class CheckListServiceImpl implements CheckListService {
                 checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCategory(),checkListUpdateRequestDto.getCheckListContent(),
                 checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType(),checkListUpdateRequestDto.getManufacturer());
         return new CheckListResponseDto(checkList);
+    }
+
+    @Override
+    public CheckList addMedia(Long checklistId, List<Media> mediaList) {
+        return checkListDAO.addCheckListMedia(checklistId,mediaList);
     }
 }

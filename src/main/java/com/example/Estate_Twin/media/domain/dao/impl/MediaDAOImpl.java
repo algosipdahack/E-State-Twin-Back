@@ -1,5 +1,8 @@
 package com.example.Estate_Twin.media.domain.dao.impl;
 
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.dao.MediaDAO;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.media.domain.repository.MediaRepository;
@@ -31,5 +34,29 @@ public class MediaDAOImpl implements MediaDAO {
                 .filePath(filepath)
                 .build();
         return mediaRepository.save(newMedia);
+    }
+
+    @Override
+    public Media updateEstate(Long id, Estate estate) {
+        Media media = mediaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
+        media.setEstate(estate);
+        return media;
+    }
+
+    @Override
+    public Media updateAsset(Long id, Asset asset) {
+        Media media = mediaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
+        media.setAsset(asset);
+        return media;
+    }
+
+    @Override
+    public Media updateCheckList(Long id, CheckList checkList) {
+        Media media = mediaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
+        media.setCheckList(checkList);
+        return media;
     }
 }

@@ -1,8 +1,7 @@
 package com.example.Estate_Twin.house.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

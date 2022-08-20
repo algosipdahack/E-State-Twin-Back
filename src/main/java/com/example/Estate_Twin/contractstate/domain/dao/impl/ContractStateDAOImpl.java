@@ -1,10 +1,9 @@
 package com.example.Estate_Twin.contractstate.domain.dao.impl;
 
 import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
-import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 @Component

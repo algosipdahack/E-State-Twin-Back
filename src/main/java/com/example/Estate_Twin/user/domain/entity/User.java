@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.user.domain.entity;
 
-import com.example.Estate_Twin.estate.domain.entity.DipRecentEstate;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import lombok.*;
 
 import javax.persistence.*;

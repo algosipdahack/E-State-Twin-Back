@@ -1,7 +1,5 @@
 package com.example.Estate_Twin.house.domain.dao.impl;
 
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;

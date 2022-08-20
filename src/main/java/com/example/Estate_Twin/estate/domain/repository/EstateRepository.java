@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import org.springframework.data.jpa.repository.JpaRepository;
 

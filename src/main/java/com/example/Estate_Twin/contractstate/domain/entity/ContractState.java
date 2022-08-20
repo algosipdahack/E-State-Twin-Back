@@ -1,10 +1,7 @@
 package com.example.Estate_Twin.contractstate.domain.entity;
 
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

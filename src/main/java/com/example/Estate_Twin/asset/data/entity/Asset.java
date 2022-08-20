@@ -1,18 +1,14 @@
 package com.example.Estate_Twin.asset.data.entity;
 
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -55,6 +51,10 @@ public class Asset extends BaseTimeEntity {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;
+    }
+
+    public void addMedia(List<Media> mediaList) {
+        this.assetPhoto = mediaList;
     }
 
 }

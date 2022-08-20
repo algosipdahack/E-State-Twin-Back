@@ -3,7 +3,6 @@ package com.example.Estate_Twin.checklist.data.entity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.media.domain.entity.Media;
-import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -69,6 +68,10 @@ public class CheckList extends BaseTimeEntity {
         this.checkListContent = checkListContent;
         this.repairType = repairType;
         this.manufacturer = manufacturer;
+    }
+
+    public void addMedia(List<Media> mediaList) {
+        this.checkListPhoto = mediaList;
     }
 
 }

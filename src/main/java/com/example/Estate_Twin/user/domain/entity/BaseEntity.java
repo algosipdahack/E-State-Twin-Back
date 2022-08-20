@@ -4,8 +4,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Getter

@@ -2,12 +2,9 @@ package com.example.Estate_Twin.contractstate.web;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.service.ContractStateService;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateSaveRequestDto;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
+import com.example.Estate_Twin.contractstate.web.dto.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 

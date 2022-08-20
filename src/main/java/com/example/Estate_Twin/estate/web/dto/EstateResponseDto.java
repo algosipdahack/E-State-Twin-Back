@@ -23,4 +23,5 @@ public class EstateResponseDto {
         this.borough = estate.getBorough();
         this.address = estate.getAddress();
     }
+
 }

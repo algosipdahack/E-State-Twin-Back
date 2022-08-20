@@ -1,22 +1,24 @@
 package com.example.Estate_Twin.media.web.dto;
 
 import com.example.Estate_Twin.media.domain.entity.Media;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
-public class MediaResponseDto {
-    private final String origFileName;
-    private final String filePath;
+@NoArgsConstructor
+public class MediaSaveRequestDto {
+    private String origFileName;
+    private String filePath;
 
-    public MediaResponseDto(Media media) {
-        this.origFileName = media.getOrigFileName();
-        this.filePath = media.getFilePath();
+    @Builder
+    public MediaSaveRequestDto(String origFileName, String filePath) {
+        this.origFileName = origFileName;
+        this.filePath = filePath;
     }
+
     public Media toEntity() {
         return Media.builder()
                 .origFileName(origFileName)
                 .filePath(filePath)
                 .build();
     }
-
 }

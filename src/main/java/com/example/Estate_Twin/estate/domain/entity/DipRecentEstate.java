@@ -3,8 +3,7 @@ package com.example.Estate_Twin.estate.domain.entity;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 

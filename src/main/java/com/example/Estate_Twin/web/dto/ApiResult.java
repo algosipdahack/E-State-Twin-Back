@@ -1,8 +1,7 @@
 package com.example.Estate_Twin.web.dto;
 
 import com.example.Estate_Twin.message.ResponseMessage;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.*;
 import lombok.Getter;
 
 

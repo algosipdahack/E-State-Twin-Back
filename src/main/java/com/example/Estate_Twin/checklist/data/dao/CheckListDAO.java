@@ -1,10 +1,10 @@
 package com.example.Estate_Twin.checklist.data.dao;
 
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.entity.RepairType;
+import com.example.Estate_Twin.checklist.data.entity.*;
+import com.example.Estate_Twin.media.domain.entity.Media;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface CheckListDAO {
     CheckList saveCheckList(CheckList checkList);
@@ -12,4 +12,5 @@ public interface CheckListDAO {
     CheckList updateCheckList(Long id, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                               Category category, String checkListContent, LocalDateTime repairDate,
                               RepairType repairType, String manufacturer);
+    CheckList addCheckListMedia(Long id, List<Media> mediaList);
 }

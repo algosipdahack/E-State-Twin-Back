@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.contractstate.domain.entity.State;
-import com.example.Estate_Twin.estate.domain.entity.Rank;
+import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import lombok.*;
 
@@ -12,12 +11,10 @@ import java.time.LocalDateTime;
 public class EstateUpdateRequestDto {
 
     private TransactionType transactionType;
-    private State state;
     private String estateThumbNail;
     private String content;
-
-    private Rank rank;
-
+    private String thumbNail3D;
+    private ContractState contractState;
     private String model;
 
     private String arCam;
@@ -26,23 +23,18 @@ public class EstateUpdateRequestDto {
 
     private String borough;
 
-    private String address;
-
-    private LocalDateTime modifiedDate;
     @Builder
-    public EstateUpdateRequestDto(String transactionType, String state,
-                                  String estateThumbNail, String content, String rank, String model,
-                                  String arCam, String city, String borough, String address) {
+    public EstateUpdateRequestDto(String transactionType, ContractState contractState,
+                                  String estateThumbNail, String content, String model,
+                                  String arCam, String city, String borough, String thumbNail3D) {
         this.transactionType = TransactionType.of(transactionType);
-        this.state = State.of(state);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
-        this.rank = Rank.of(rank);
         this.model = model;
         this.arCam = arCam;
+        this.contractState = contractState;
         this.city = city;
         this.borough = borough;
-        this.address = address;
-        this.modifiedDate = LocalDateTime.now();
+        this.thumbNail3D = thumbNail3D;
     }
 }

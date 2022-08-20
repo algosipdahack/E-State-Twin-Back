@@ -1,9 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.Rank;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 
 import lombok.Getter;

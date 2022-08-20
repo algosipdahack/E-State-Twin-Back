@@ -1,15 +1,14 @@
 package com.example.Estate_Twin.checklist.data.dao.impl;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.entity.RepairType;
+import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
-import lombok.AllArgsConstructor;
+import com.example.Estate_Twin.media.domain.entity.Media;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Component
@@ -42,5 +41,12 @@ public class CheckListDAOImpl implements CheckListDAO {
                 .manufacturer(manufacturer)
                 .build();
         return checkListRepository.save(newCheckList);
+    }
+
+    @Override
+    public CheckList addCheckListMedia(Long id, List<Media> mediaList) {
+        CheckList checkList = findCheckList(id);
+        checkList.addMedia(mediaList);
+        return checkListRepository.save(checkList);
     }
 }

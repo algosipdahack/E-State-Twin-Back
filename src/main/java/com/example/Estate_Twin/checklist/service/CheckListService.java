@@ -1,19 +1,14 @@
 package com.example.Estate_Twin.checklist.service;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
-import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
-import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
-import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.Estate_Twin.checklist.web.dto.*;
+import com.example.Estate_Twin.media.domain.entity.Media;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 public interface CheckListService {
     CheckListResponseDto getCheckList(Long id);
     CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
     CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
+    CheckList addMedia(Long checklistId, List<Media> mediaList);
 }

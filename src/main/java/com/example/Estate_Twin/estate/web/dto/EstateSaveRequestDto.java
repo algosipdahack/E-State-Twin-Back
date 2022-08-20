@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import lombok.*;
 
@@ -14,7 +13,6 @@ public class EstateSaveRequestDto {
     private String city;
     private String borough;
     private String address;
-
     private House house;
 
     @Builder

@@ -1,10 +1,7 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.checklist.data.entity.RepairType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.Estate_Twin.checklist.data.entity.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
