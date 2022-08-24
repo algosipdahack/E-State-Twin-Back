@@ -1,58 +1,33 @@
 package com.example.Estate_Twin.house.web.dto;
 
-import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.*;
 
 @Getter
 public class HouseResponseDto {
     private final Long deposit;
-
     private final Long monthlyRent;
-
     private final Long sellingFee;
-
     private final Long currentFloors;
-
     private final Long totalFloors;
-
     private final boolean shortTermRent;
-
     private final Long maintenanceFee;
-
     private final String itemsIncludedMaintenanceFee;
-
     private final Long netRentableArea;
-
     private final Long rentableArea;
-
     private final boolean parking;
-
     private final Long parkingFee;
-
     private final LocalDateTime moveInAvailableDate;
-
     private final Long size;
-
     private final String heatType;
-
     private final EstateType estateType;
-
     private final Long household;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime usageAvailableDate;
-
     private final Long roomCount;
-
     private final Long bathCount;
-
 
     public HouseResponseDto(House house) {
         this.deposit = house.getDeposit();

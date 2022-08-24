@@ -1,16 +1,16 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
+import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Getter
 public class CheckListDto {
     private final Long id;
-    private final AssetResponseDto asset;
+    private final AssetDto asset;
     private final List<Media> checkListPhoto;
     private final String flawPart;
     private final Category category;
@@ -23,7 +23,7 @@ public class CheckListDto {
 
     public CheckListDto(CheckList checkList) {
         this.id = checkList.getId();
-        this.asset = new AssetResponseDto(checkList.getAsset());
+        this.asset = new AssetDto(checkList.getAsset());
         this.checkListPhoto = checkList.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();
         this.category = checkList.getCategory();

@@ -8,11 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 public class AssetUpdateRequestDto {
     private House house;
-
     private Category category;
-
     private String assetName;
-
     private String productName;
 
     @Builder

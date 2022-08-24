@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
@@ -16,8 +17,10 @@ import java.util.List;
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     @Override
-    public Estate saveEstate(Estate estate, House house) {
+    public Estate saveEstate(Estate estate, House house, Address address) {
         estate.setHouse(house);
+        estate.setAddress(address);
+        address.setEstate(estate);
         return estateRepository.save(estate);
     }
 

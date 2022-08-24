@@ -16,11 +16,8 @@ public class EstateUpdateRequestDto {
     private String thumbNail3D;
     private ContractState contractState;
     private String model;
-
     private String arCam;
-
     private String city;
-
     private String borough;
 
     @Builder

@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.address.data.entity;
 
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,11 +8,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "addressdetail")
+@Table(name = "address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "addressdetail_id")
+    @Column(name = "address_id")
     private Long id;
 
     @Column
@@ -44,6 +45,14 @@ public class Address {
     @Column
     private String buildingName;
 
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "estate_id")
+    private Estate estate;
+
     @Builder // 빌더 형태로 만들어줌
     public Address(String city, String borough, String town, String complexName, String block, String unit, String roadName,
                    int mainBuildingNumber, int subBuildingNumber, String buildingName
@@ -58,5 +67,8 @@ public class Address {
         this.complexName = complexName;
         this.block = block;
         this.unit = unit;
+    }
+    public void setEstate(Estate estate) {
+        this.estate = estate;
     }
 }

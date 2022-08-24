@@ -1,6 +1,8 @@
 package com.example.Estate_Twin.estate.web.dto;
 
+import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.house.web.dto.HouseDto;
 import lombok.Getter;
 
 
@@ -12,7 +14,8 @@ public class EstateResponseDto {
     private final String content;
     private final String city;
     private final String borough;
-    private final String address;
+    private final AddressDto address;
+    private final HouseDto house;
 
     public EstateResponseDto(Estate estate) {
         this.state = estate.getState().toString();
@@ -21,7 +24,8 @@ public class EstateResponseDto {
         this.content = estate.getContent();
         this.city = estate.getCity();
         this.borough = estate.getBorough();
-        this.address = estate.getAddress();
+        this.address = new AddressDto(estate.getAddress());
+        this.house = new HouseDto(estate.getHouse());
     }
 
 }

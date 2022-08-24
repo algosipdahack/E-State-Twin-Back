@@ -19,7 +19,6 @@ public class ContractState {
     @Column
     @Enumerated(value = EnumType.ORDINAL)
     private State state = State.BEFORE;
-
     @Column
     private LocalDateTime date;
 
@@ -35,10 +34,6 @@ public class ContractState {
         this.date = date;
         this.estate = estate;
         this.state = state;
-    }
-    public void updateState(String state) {
-        /*this.state.ordinal()
-        this.state.ordinal() += 1;*/
     }
 
 

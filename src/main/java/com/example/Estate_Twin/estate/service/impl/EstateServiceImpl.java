@@ -1,5 +1,9 @@
 package com.example.Estate_Twin.estate.service.impl;
 
+import com.example.Estate_Twin.address.data.dao.AddressDAO;
+import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.web.dto.AddressResponseDto;
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
@@ -16,6 +20,7 @@ import java.util.List;
 public class EstateServiceImpl implements EstateService {
     private final EstateDAO estateDAO;
     private final HouseDAO houseDAO;
+    private final AddressDAO addressDAO;
 
     @Override
     public EstateResponseDto getEstate(Long id) {
@@ -23,8 +28,9 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto, Long houseId) {
-        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId)));
+    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
+        Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
+        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
     }
 
     @Override

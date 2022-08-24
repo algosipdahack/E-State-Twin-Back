@@ -1,7 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.house.domain.entity.House;
 import lombok.*;
 
 @Getter
@@ -12,12 +12,12 @@ public class EstateSaveRequestDto {
     private String content;
     private String city;
     private String borough;
-    private String address;
+    private AddressSaveRequestDto address;
 
     @Builder
     public EstateSaveRequestDto(String transactionType,
                                 String estateThumbNail, String content,
-                                String borough, String address, String city) {
+                                String borough, AddressSaveRequestDto address, String city) {
         this.transactionType = TransactionType.of(transactionType);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
@@ -32,7 +32,6 @@ public class EstateSaveRequestDto {
                 .estateThumbNail(estateThumbNail)
                 .transactionType(transactionType)
                 .borough(borough)
-                .address(address)
                 .city(city)
                 .build();
     }

@@ -5,7 +5,6 @@ import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,7 +56,6 @@ public class House extends BaseTimeEntity {
 
     @Column
     private Long parkingFee;
-
     @Column
     private LocalDateTime moveInAvailableDate;
 

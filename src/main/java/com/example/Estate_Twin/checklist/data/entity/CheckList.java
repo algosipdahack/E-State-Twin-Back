@@ -28,7 +28,6 @@ public class CheckList extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
-
     @Column
     private LocalDateTime repairDate;
 

@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.domain.entity;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import lombok.*;
 
@@ -16,8 +17,8 @@ public class User extends BaseEntity {
     @Column
     private String estateType;
 
-    @Column
-    private String address;
+    @OneToOne(mappedBy = "estate")
+    private Address broker_address;
 
     @OneToMany(
             mappedBy = "owner",

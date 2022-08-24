@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.domain.entity;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 
@@ -14,28 +15,28 @@ import java.util.*;
 public class Broker extends BaseEntity {
     // broker column
     @Column
-    private String BrokerPhoto;
+    private String brokerPhoto;
 
     @Column
-    private String BusinessName;
+    private String businessName;
 
     @Column
-    private String AgentName;
+    private String agentName;
 
     @Column
-    private String BrokerageRegistrationNumber;
+    private String brokerageRegistrationNumber;
 
     @Column
-    private String BusinessRegistrationNumber;
+    private String businessRegistrationNumber;
 
     @Column
-    private String BusinessLicense;
+    private String businessLicense;
 
     @Column
-    private String BrokerageRegistrationLicense;
+    private String brokerageRegistrationLicense;
 
-    @Column
-    private String Broker_address;
+    @OneToOne(mappedBy = "estate")
+    private Address broker_address;
 
     @OneToMany(
             mappedBy = "broker",

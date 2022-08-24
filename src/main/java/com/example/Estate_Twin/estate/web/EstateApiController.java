@@ -1,5 +1,8 @@
 package com.example.Estate_Twin.estate.web;
 
+import com.example.Estate_Twin.address.service.AddressService;
+import com.example.Estate_Twin.address.web.dto.AddressResponseDto;
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateService estateService;
-
     //Estate posting upload
     //@PostMapping("")
     //public Long saveEstate(@RequestBody EstateSaveRequestDto requestDto) {

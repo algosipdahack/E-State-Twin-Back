@@ -9,19 +9,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CheckListUpdateRequestDto {
     private String flawPart;
-
     private Category category;
-
     private String checkListContent;
-
     private LocalDateTime repairDate;
-
     private RepairType repairType;
-
     private String manufacturer;
-
     private Boolean brokerConfirmYN;
-
     private Boolean ownerConfirmYN;
 
     @Builder

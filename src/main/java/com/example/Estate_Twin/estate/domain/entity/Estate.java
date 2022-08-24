@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
@@ -43,13 +44,13 @@ public class Estate extends BaseTimeEntity {
     private String borough;
 
     @Column
-    private String address;
-
-    @Column
     private State state = BEFORE;
 
     @Column
     private String thumbnail3D;
+
+    @OneToOne(mappedBy = "estate")
+    private Address address;
 
     @OneToOne(mappedBy = "estate")
     private ContractState contractState;
@@ -95,7 +96,7 @@ public class Estate extends BaseTimeEntity {
     @Builder // 빌더 형태로 만들어줌
     public Estate(String content, Rank rank, String model, String arCam,
                   ContractState contractState, TransactionType transactionType, String estateThumbNail,
-                  String city, String borough, String address, String thumbnail3D, House house
+                  String city, String borough,String thumbnail3D, Address address
     ) {
         this.borough = borough;
         this.content = content;
@@ -104,7 +105,6 @@ public class Estate extends BaseTimeEntity {
         this.arCam = arCam;
         this.thumbnail3D = thumbnail3D;
         this.city = city;
-        this.house = house;
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
@@ -119,5 +119,9 @@ public class Estate extends BaseTimeEntity {
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

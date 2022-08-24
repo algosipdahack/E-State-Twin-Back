@@ -1,4 +1,7 @@
 package com.example.Estate_Twin.address.data.repository;
 
-public class AddressRepository {
+import com.example.Estate_Twin.address.data.entity.Address;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AddressRepository extends JpaRepository<Address,Long> {
 }
