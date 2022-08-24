@@ -1,13 +1,14 @@
 package com.example.Estate_Twin.house.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 @Getter
 public class HouseResponseDto {
@@ -52,12 +53,8 @@ public class HouseResponseDto {
 
     private final Long bathCount;
 
-    private final List<Asset> assets;
-
-    private final Estate estate;
 
     public HouseResponseDto(House house) {
-        this.assets = house.getAssets();
         this.deposit = house.getDeposit();
         this.monthlyRent = house.getMonthlyRent();
         this.sellingFee = house.getSellingFee();
@@ -78,6 +75,5 @@ public class HouseResponseDto {
         this.usageAvailableDate = house.getUsageAvailableDate();
         this.roomCount = house.getRoomCount();
         this.bathCount = house.getBathCount();
-        this.estate = house.getEstate();
     }
 }

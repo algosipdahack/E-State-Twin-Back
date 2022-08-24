@@ -4,6 +4,7 @@ import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,8 @@ import java.util.List;
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     @Override
-    public Estate saveEstate(Estate estate) {
+    public Estate saveEstate(Estate estate, House house) {
+        estate.setHouse(house);
         return estateRepository.save(estate);
     }
 

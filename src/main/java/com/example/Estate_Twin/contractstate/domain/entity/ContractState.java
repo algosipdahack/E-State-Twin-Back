@@ -42,4 +42,7 @@ public class ContractState {
     }
 
 
+    public void setEstate(Estate estate) {
+        this.estate = estate;
+    }
 }

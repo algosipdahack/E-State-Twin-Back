@@ -88,7 +88,6 @@ public class House extends BaseTimeEntity {
             fetch = FetchType.LAZY,
             orphanRemoval = true // DB에서 함께 삭제됨
     )
-    @JsonIgnore
     private List<Asset> assets = new ArrayList<>();
 
     @OneToOne(mappedBy = "house")

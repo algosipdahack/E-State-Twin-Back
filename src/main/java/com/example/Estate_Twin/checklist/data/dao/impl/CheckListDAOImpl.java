@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.checklist.data.dao.impl;
 
+import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
@@ -16,7 +17,8 @@ public class CheckListDAOImpl implements CheckListDAO {
     private CheckListRepository checkListRepository;
 
     @Override
-    public CheckList saveCheckList(CheckList checkList) {
+    public CheckList saveCheckList(CheckList checkList, Asset asset) {
+        checkList.setAsset(asset);
         return checkListRepository.save(checkList);
     }
 

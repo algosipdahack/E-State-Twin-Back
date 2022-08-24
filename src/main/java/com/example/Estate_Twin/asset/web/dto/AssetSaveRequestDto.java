@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class AssetSaveRequestDto {
-    private House house;
     private Category category;
     private String assetName;
     private String productName;
@@ -26,9 +25,5 @@ public class AssetSaveRequestDto {
                 .category(category)
                 .productName(productName)
                 .build();
-    }
-
-    public void setHouse(House house) {
-        this.house = house;
     }
 }

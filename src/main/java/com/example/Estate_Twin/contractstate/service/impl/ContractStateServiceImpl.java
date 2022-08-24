@@ -22,9 +22,7 @@ public class ContractStateServiceImpl implements ContractStateService {
 
     @Override
     public ContractStateResponseDto saveContractState(Long estateId, ContractStateSaveRequestDto contractStateSaveRequestDto) {
-        Estate estate = estateDAO.findEstate(estateId);
-        contractStateSaveRequestDto.setEstate(estate);
-        return new ContractStateResponseDto(contractStateDAO.saveContractState(contractStateSaveRequestDto.toEntity()));
+        return new ContractStateResponseDto(contractStateDAO.saveContractState(contractStateSaveRequestDto.toEntity(),estateDAO.findEstate(estateId)));
 
     }
 

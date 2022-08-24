@@ -71,7 +71,11 @@ public class CheckList extends BaseTimeEntity {
     }
 
     public void addMedia(List<Media> mediaList) {
-        this.checkListPhoto = mediaList;
+        this.checkListPhoto.clear();
+        this.checkListPhoto.addAll(mediaList);
     }
 
+    public void setAsset(Asset asset) {
+        this.asset = asset;
+    }
 }

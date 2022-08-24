@@ -113,6 +113,11 @@ public class Estate extends BaseTimeEntity {
 
     //아예 초기화한 후 대입
     public void addMedia(List<Media> mediaList) {
-        this.estateMedia = mediaList;
+        this.estateMedia.clear();
+        this.estateMedia.addAll(mediaList);
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 }

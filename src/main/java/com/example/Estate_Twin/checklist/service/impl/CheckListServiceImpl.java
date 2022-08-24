@@ -27,9 +27,7 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        checkListSaveRequestDto.setAsset(assetDAO.findAsset(assetId));
-        checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity());
-        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity()));
+        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
     }
 
     @Override

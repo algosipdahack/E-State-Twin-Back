@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import lombok.*;
 
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class CheckListSaveRequestDto {
-    private Asset asset;
     private String flawPart;
     private Category category;
     private String checkListContent;
@@ -46,7 +44,4 @@ public class CheckListSaveRequestDto {
                 .build();
     }
 
-    public void setAsset(Asset asset) {
-        this.asset = asset;
-    }
 }

@@ -47,14 +47,20 @@ public class Asset extends BaseTimeEntity {
     private List<CheckList> checkList = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, String assetName, String productName) {
+    public Asset(Category category, String assetName, String productName,House house) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;
+        this.house = house;
     }
 
     public void addMedia(List<Media> mediaList) {
-        this.assetPhoto = mediaList;
+        this.assetPhoto.clear();
+        this.assetPhoto.addAll(mediaList);
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 
 }

@@ -13,7 +13,6 @@ public class EstateSaveRequestDto {
     private String city;
     private String borough;
     private String address;
-    private House house;
 
     @Builder
     public EstateSaveRequestDto(String transactionType,
@@ -35,12 +34,7 @@ public class EstateSaveRequestDto {
                 .borough(borough)
                 .address(address)
                 .city(city)
-                .house(house)
                 .build();
-    }
-
-    public void setHouse(House house) {
-        this.house = house;
     }
 
 }

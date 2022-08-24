@@ -18,7 +18,7 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public HouseResponseDto saveHouse(HouseSaveRequestDto houseSaveRequestDto) {
-        return new HouseResponseDto(houseSaveRequestDto.toEntity());
+        return new HouseResponseDto(houseDAO.saveHouse(houseSaveRequestDto.toEntity()));
     }
 
     @Override

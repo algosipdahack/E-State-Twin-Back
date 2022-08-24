@@ -3,6 +3,7 @@ package com.example.Estate_Twin.contractstate.domain.dao.impl;
 import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,8 @@ public class ContractStateDAOImpl implements ContractStateDAO {
     private ContractStateRepository contractStateRepository;
 
     @Override
-    public ContractState saveContractState(ContractState contractState) {
+    public ContractState saveContractState(ContractState contractState, Estate estate) {
+        contractState.setEstate(estate);
         return contractStateRepository.save(contractState);
     }
 

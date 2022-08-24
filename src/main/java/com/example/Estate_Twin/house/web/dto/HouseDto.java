@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 @Getter
 public class HouseDto {
-    private final Long id;
-
     private final Long deposit;
 
     private final Long monthlyRent;
@@ -58,7 +56,6 @@ public class HouseDto {
     private final Estate estate;
 
     public HouseDto(House house) {
-        this.id = house.getId();
         this.assets = house.getAssets();
         this.deposit = house.getDeposit();
         this.monthlyRent = house.getMonthlyRent();

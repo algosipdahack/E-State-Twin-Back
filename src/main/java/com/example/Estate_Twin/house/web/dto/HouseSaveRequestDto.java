@@ -52,10 +52,6 @@ public class HouseSaveRequestDto {
 
     private Long bathCount;
 
-    private List<Asset> assets = new ArrayList<>();
-
-    private Estate estate;
-
     @Builder
     public HouseSaveRequestDto(Long deposit, Long monthlyRent, Long sellingFee,
                                Long currentFloors, Long totalFloors,
@@ -64,8 +60,7 @@ public class HouseSaveRequestDto {
                                Long rentableArea, boolean parking, Long parkingFee,
                                LocalDateTime moveInAvailableDate, LocalDateTime usageAvailableDate,
                                Long size, String heatType, EstateType estateType, Long household,
-                               Long roomCount, Long bathCount, List<Asset> assets,
-                               Estate estate) {
+                               Long roomCount, Long bathCount) {
         this.deposit = deposit;
         this.monthlyRent = monthlyRent;
         this.sellingFee = sellingFee;
@@ -86,8 +81,6 @@ public class HouseSaveRequestDto {
         this.usageAvailableDate = usageAvailableDate;
         this.roomCount = roomCount;
         this.bathCount = bathCount;
-        this.assets = assets;
-        this.estate = estate;
     }
     public House toEntity() {
         return House.builder()
