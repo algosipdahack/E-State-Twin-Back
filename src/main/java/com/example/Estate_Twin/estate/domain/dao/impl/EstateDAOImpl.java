@@ -48,14 +48,7 @@ public class EstateDAOImpl implements EstateDAO {
 
     @Override
     public List<Estate> findEstateCustomized(String borough) {
-        /*QEstate estate = QEstate.estate;
-        List<Estate> estateList = jpaQueryFactory
-                .select(estate)
-                .from(estate)
-                .where(estate.borough.eq(borough))
-                .orderBy(estate.estateHit.weeklyHit.desc())
-                .fetch();*/
-        return null;
+        return estateRepository.findByBoroughOrderByWeeklyHit(borough);
     }
 
     @Override
