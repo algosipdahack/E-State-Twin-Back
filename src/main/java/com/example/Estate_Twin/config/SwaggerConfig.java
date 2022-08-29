@@ -1,32 +1,26 @@
 package com.example.Estate_Twin.config;
 
+
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.OpenAPI;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import springfox.documentation.builders.*;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableSwagger2
-@EnableWebMvc
 public class SwaggerConfig {
+
     @Bean
-    public Docket restAPI() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.Estate_Twin"))
-                .paths(PathSelectors.any())
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("v1-definition")
+                .pathsToMatch("/api/**")
                 .build();
     }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Idiot Spring Boot REST API")
-                .version("1.0.0")
-                .description("Estate_Twin swagger api")
-                .build();
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Idiot API")
+                        .description("E-state Twin 프로젝트 API 명세서입니다.")
+                        .version("v0.0.1"));
     }
 }

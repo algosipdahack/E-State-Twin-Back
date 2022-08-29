@@ -8,6 +8,7 @@ import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.*;
@@ -35,35 +36,34 @@ public class Estate extends BaseTimeEntity {
     private String model;
 
     @Column
-    private String arCam;
-
-    @Column
     private String city;
 
     @Column
     private String borough;
 
     @Column
-    private State state = BEFORE;
+    private String town;
+
+    @Column
+    private State state;
 
     @Column
     private String thumbnail3D;
-
-    @OneToOne(mappedBy = "estate")
-    private Address address;
-
-    @OneToOne(mappedBy = "estate")
-    private ContractState contractState;
-
-
-    @OneToOne(mappedBy = "estate")
-    private EstateHit estateHit;
 
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
 
     @Enumerated(EnumType.STRING)
     private Rank rank;
+
+    @OneToOne(mappedBy = "estate")
+    private EstateHit estateHit;
+
+    @OneToOne(mappedBy = "estate")
+    private Address address;
+
+    @OneToOne(mappedBy = "estate")
+    private ContractState contractState;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -91,10 +91,10 @@ public class Estate extends BaseTimeEntity {
             cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
-    private List<Media> estateMedia = new ArrayList<>();
+    private List<Media> estateMedia;
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(String content, Rank rank, String model, String arCam,
+    public Estate(String content, Rank rank, String model, String town,
                   ContractState contractState, TransactionType transactionType, String estateThumbNail,
                   String city, String borough,String thumbnail3D, Address address
     ) {
@@ -102,13 +102,13 @@ public class Estate extends BaseTimeEntity {
         this.content = content;
         this.rank = rank;
         this.model = model;
-        this.arCam = arCam;
         this.thumbnail3D = thumbnail3D;
         this.city = city;
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
         this.contractState = contractState;
+        this.town = town;
     }
 
     //아예 초기화한 후 대입
@@ -119,9 +119,23 @@ public class Estate extends BaseTimeEntity {
 
     public void setHouse(House house) {
         this.house = house;
+        house.setEstate(this);
     }
 
     public void setAddress(Address address) {
         this.address = address;
+        address.setEstate(this);
     }
+
+    public void setEstateHit(EstateHit estateHit) {
+        this.estateHit = estateHit;
+        estateHit.setEstate(this);
+    }
+    //insert 되기 전 실행된다
+    @PrePersist
+    public void prePersist() {
+        this.estateMedia = new ArrayList<>();
+        this.state = this.state == null ? BEFORE : this.state;
+    }
+
 }

@@ -12,18 +12,20 @@ public class EstateSaveRequestDto {
     private String content;
     private String city;
     private String borough;
+    private String town;
     private AddressSaveRequestDto address;
 
     @Builder
     public EstateSaveRequestDto(String transactionType,
                                 String estateThumbNail, String content,
-                                String borough, AddressSaveRequestDto address, String city) {
+                                AddressSaveRequestDto address) {
         this.transactionType = TransactionType.of(transactionType);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
-        this.borough = borough;
         this.address = address;
-        this.city = city;
+        this.city = address.getCity();
+        this.borough = address.getBorough();
+        this.town = address.getTown();
     }
 
     public Estate toEntity() {
@@ -31,8 +33,9 @@ public class EstateSaveRequestDto {
                 .content(content)
                 .estateThumbNail(estateThumbNail)
                 .transactionType(transactionType)
-                .borough(borough)
+                .town(town)
                 .city(city)
+                .borough(borough)
                 .build();
     }
 

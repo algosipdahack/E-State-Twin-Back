@@ -11,8 +11,10 @@ import java.util.List;
 public interface EstateDAO {
     Estate saveEstate(Estate estate, House house, Address address);
     Estate findEstate(Long id);
-    Estate updateEstate(Long id, String content, String model, String arCam,
+    Estate updateEstate(Long id, String content, String model,
                         ContractState contractState, TransactionType transactionType, String estateThumbNail,
                         String city, String borough, String thumbnail3D);
     Estate addEstateMedia(Long id, List<Media> mediaList);
+    List<Estate> findEstateCustomized(String borough);
+    List<Estate> findAllEstate();
 }

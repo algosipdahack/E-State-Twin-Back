@@ -4,34 +4,67 @@ import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
+import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 @AllArgsConstructor
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
+    private EstateHitRepository estateHitRepository;
+
     @Override
     public Estate saveEstate(Estate estate, House house, Address address) {
         estate.setHouse(house);
         estate.setAddress(address);
-        address.setEstate(estate);
+
+        EstateHit estateHit = new EstateHit();
+        estateHitRepository.save(estateHit);
+        estate.setEstateHit(estateHit);
+
         return estateRepository.save(estate);
     }
 
     @Override
     public Estate findEstate(Long id) {
-        return estateRepository.findById(id)
+        Estate estate = estateRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
+
+        EstateHit estateHit = estate.getEstateHit();
+        //조회수 증가
+        estateHit.updateHit();
+        estateHitRepository.save(estateHit);
+        return estate;
     }
 
     @Override
-    public Estate updateEstate(Long id, String content, String model, String arCam, ContractState contractState,
+    public List<Estate> findEstateCustomized(String borough) {
+        /*QEstate estate = QEstate.estate;
+        List<Estate> estateList = jpaQueryFactory
+                .select(estate)
+                .from(estate)
+                .where(estate.borough.eq(borough))
+                .orderBy(estate.estateHit.weeklyHit.desc())
+                .fetch();*/
+        return null;
+    }
+
+    @Override
+    public List<Estate> findAllEstate() {
+        return estateRepository.findAll();
+    }
+
+    @Override
+    public Estate updateEstate(Long id, String content, String model,ContractState contractState,
                                TransactionType transactionType, String estateThumbNail, String city, String borough,
                                String thumbNail3D) {
         Estate newEstate = estateRepository.findById(id)
@@ -39,7 +72,6 @@ public class EstateDAOImpl implements EstateDAO {
                 .builder()
                 .content(content)
                 .model(model)
-                .arCam(arCam)
                 .contractState(contractState)
                 .transactionType(transactionType)
                 .estateThumbNail(estateThumbNail)

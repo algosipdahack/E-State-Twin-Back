@@ -12,4 +12,6 @@ public interface EstateService {
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto, Long houseId);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     Estate addMedia(Long id, List<Media> mediaList);
+    List<EstateListResponseDto> getAllEstate();
+    List<EstateListResponseDto> getEstateCustomized(String borough);
 }

@@ -14,8 +14,10 @@ public class EstateDto {
     private final String content;
     private final String city;
     private final String borough;
+    private final String town;
     private final AddressDto address;
     private final HouseDto house;
+    private final String model;
 
     public EstateDto(Estate estate) {
         this.id = estate.getId();
@@ -25,6 +27,8 @@ public class EstateDto {
         this.content = estate.getContent();
         this.city = estate.getCity();
         this.borough = estate.getBorough();
+        this.town = estate.getTown();
+        this.model = estate.getModel();
         this.address = new AddressDto(estate.getAddress());
         this.house = new HouseDto(estate.getHouse());
     }
