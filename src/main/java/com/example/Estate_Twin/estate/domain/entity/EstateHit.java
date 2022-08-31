@@ -4,10 +4,6 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import static com.example.Estate_Twin.contractstate.domain.entity.State.BEFORE;
 
 @Getter
 @NoArgsConstructor

@@ -1,10 +1,11 @@
 package com.example.Estate_Twin.user.domain.entity;
 
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Getter
@@ -25,7 +26,7 @@ public abstract class BaseEntity extends BaseTimeEntity {
     private String name;
 
     @Email
-    @NotNull(message = "아이디는 null일 수 없습니다!")
+    @NotBlank(message = "아이디는 null일 수 없습니다!")
     private String email;
 
 }
