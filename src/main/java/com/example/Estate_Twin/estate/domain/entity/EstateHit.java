@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "estatehit")
 public class EstateHit extends BaseTimeEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estatehit_id")
     private Long id;
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class EstateListResponseDto {
+    private final Long id;
     private final TransactionType transactionType;
     private final String estateThumbNail;
     private final String town;
@@ -15,6 +16,7 @@ public class EstateListResponseDto {
     private final Long rentableArea;
 
     public EstateListResponseDto(Estate estate) {
+        this.id = estate.getId();
         House house = estate.getHouse();
         this.transactionType = estate.getTransactionType();
         this.estateThumbNail = estate.getEstateThumbNail();
