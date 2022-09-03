@@ -5,6 +5,8 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class EstateDto {
     private final Long id;
@@ -18,6 +20,7 @@ public class EstateDto {
     private final AddressDto address;
     private final HouseDto house;
     private final String model;
+    private final LocalDateTime createdAt;
 
     public EstateDto(Estate estate) {
         this.id = estate.getId();
@@ -29,6 +32,7 @@ public class EstateDto {
         this.borough = estate.getBorough();
         this.town = estate.getTown();
         this.model = estate.getModel();
+        this.createdAt = estate.getCreatedDate();
         this.address = new AddressDto(estate.getAddress());
         this.house = new HouseDto(estate.getHouse());
     }

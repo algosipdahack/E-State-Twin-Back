@@ -5,6 +5,8 @@ import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.web.dto.AddressResponseDto;
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
+import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
+import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
@@ -32,7 +34,6 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
         Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
-
         return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
     }
 

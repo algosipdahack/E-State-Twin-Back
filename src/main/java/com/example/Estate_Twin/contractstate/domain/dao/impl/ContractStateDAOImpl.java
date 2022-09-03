@@ -4,31 +4,30 @@ import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import lombok.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class ContractStateDAOImpl implements ContractStateDAO {
     private ContractStateRepository contractStateRepository;
+    private EstateRepository estateRepository;
 
     @Override
-    public ContractState saveContractState(ContractState contractState, Estate estate) {
+    public ContractState updateState(ContractState contractState, Estate estate) {
         contractState.setEstate(estate);
+
+        estate.setState(contractState.getState());
+        estateRepository.save(estate);
+        
         return contractStateRepository.save(contractState);
     }
 
     @Override
-    public ContractState findContractState(Long id) {
-        return contractStateRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 거래 상태가 존재하지 않습니다. id = "+id));
-    }
-
-    @Override
-    public ContractState updateState(Long id, State state) {
-        ContractState contractState = contractStateRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 거래 상태가 존재하지 않습니다. id = "+ id))
-                .builder()
-                .state(state)
-                .build();
-        return contractStateRepository.save(contractState);
+    public List<ContractState> findContractState(Long estateId) {
+        return contractStateRepository.findByEstateIdOrderByDate(estateId);
     }
 }

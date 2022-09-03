@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
+import com.example.Estate_Twin.contractstate.web.dto.ContractStateUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import lombok.*;
 
@@ -14,15 +15,17 @@ public class EstateSaveRequestDto {
     private String borough;
     private String town;
     private AddressSaveRequestDto address;
-
+    private ContractStateUpdateRequestDto contractState;
     @Builder
     public EstateSaveRequestDto(String transactionType,
                                 String estateThumbNail, String content,
-                                AddressSaveRequestDto address) {
+                                AddressSaveRequestDto address,
+                                ContractStateUpdateRequestDto contractState) {
         this.transactionType = TransactionType.of(transactionType);
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.address = address;
+        this.contractState = contractState;
         this.city = address.getCity();
         this.borough = address.getBorough();
         this.town = address.getTown();

@@ -5,9 +5,11 @@ import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.service.ContractStateService;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,18 +18,17 @@ public class ContractStateServiceImpl implements ContractStateService {
     private final EstateDAO estateDAO;
 
     @Override
-    public ContractStateResponseDto getContractState(Long id) {
-        return new ContractStateResponseDto(contractStateDAO.findContractState(id));
+    public List<ContractStateResponseDto> getContractState(Long estateId) {
+        List<ContractStateResponseDto> contractStateResponseDtos = new ArrayList<>();
+        contractStateDAO.findContractState(estateId).forEach(contractState -> {
+            contractStateResponseDtos.add(new ContractStateResponseDto(contractState));
+        });
+        return contractStateResponseDtos;
     }
 
-    @Override
-    public ContractStateResponseDto saveContractState(Long estateId, ContractStateSaveRequestDto contractStateSaveRequestDto) {
-        return new ContractStateResponseDto(contractStateDAO.saveContractState(contractStateSaveRequestDto.toEntity(),estateDAO.findEstate(estateId)));
-
-    }
 
     @Override
-    public ContractStateResponseDto updateState(Long id, State state) {
-        return new ContractStateResponseDto(contractStateDAO.updateState(id,state));
+    public ContractStateResponseDto updateState(Long estateId, ContractStateUpdateRequestDto contractStateUpdateRequestDto) {
+        return new ContractStateResponseDto(contractStateDAO.updateState(contractStateUpdateRequestDto.toEntity(),estateDAO.findEstate(estateId)));
     }
 }

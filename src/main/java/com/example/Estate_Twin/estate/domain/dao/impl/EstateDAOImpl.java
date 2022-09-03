@@ -2,6 +2,7 @@ package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
+import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
@@ -21,7 +22,7 @@ import java.util.function.Predicate;
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
-
+    private ContractStateRepository contractStateRepository;
     @Override
     public Estate saveEstate(Estate estate, House house, Address address) {
         estate.setHouse(house);
@@ -30,6 +31,10 @@ public class EstateDAOImpl implements EstateDAO {
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
         estate.setEstateHit(estateHit);
+
+        ContractState contractState = new ContractState();
+        contractState.setEstate(estate);
+        contractStateRepository.save(contractState);
 
         return estateRepository.save(estate);
     }
@@ -65,7 +70,6 @@ public class EstateDAOImpl implements EstateDAO {
                 .builder()
                 .content(content)
                 .model(model)
-                .contractState(contractState)
                 .transactionType(transactionType)
                 .estateThumbNail(estateThumbNail)
                 .city(city)

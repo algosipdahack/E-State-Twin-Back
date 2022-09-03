@@ -20,7 +20,7 @@ public class CheckListResponseDto {
     private final String manufacturer;
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
-
+    private final LocalDateTime createdAt;
     public CheckListResponseDto(CheckList checkList) {
         this.asset = new AssetDto(checkList.getAsset());
         this.checkListPhoto = checkList.getCheckListPhoto();
@@ -32,5 +32,6 @@ public class CheckListResponseDto {
         this.manufacturer = checkList.getManufacturer();
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
+        this.createdAt = checkList.getCreatedDate();
     }
 }

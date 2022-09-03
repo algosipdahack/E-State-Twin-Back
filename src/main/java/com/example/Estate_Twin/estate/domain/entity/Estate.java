@@ -62,8 +62,6 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(mappedBy = "estate")
     private Address address;
 
-    @OneToOne(mappedBy = "estate")
-    private ContractState contractState;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -95,7 +93,7 @@ public class Estate extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(String content, Rank rank, String model, String town,
-                  ContractState contractState, TransactionType transactionType, String estateThumbNail,
+                  TransactionType transactionType, String estateThumbNail,
                   String city, String borough,String thumbnail3D, Address address
     ) {
         this.borough = borough;
@@ -107,7 +105,6 @@ public class Estate extends BaseTimeEntity {
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
-        this.contractState = contractState;
         this.town = town;
     }
 
@@ -130,6 +127,10 @@ public class Estate extends BaseTimeEntity {
     public void setEstateHit(EstateHit estateHit) {
         this.estateHit = estateHit;
         estateHit.setEstate(this);
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
     //insert 되기 전 실행된다
     @PrePersist
