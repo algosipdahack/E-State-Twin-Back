@@ -1,0 +1,89 @@
+0000000000000000000000000000000000000000 c7a345bc0c2a28f7b91cfceebaee0bc961c63fb1 Cho Soyeon <sophia5460@naver.com> 1656567856 +0900	commit (initial): first commit
+c7a345bc0c2a28f7b91cfceebaee0bc961c63fb1 c7a345bc0c2a28f7b91cfceebaee0bc961c63fb1 Cho Soyeon <sophia5460@naver.com> 1656568040 +0900	Branch: renamed refs/heads/master to refs/heads/main
+c7a345bc0c2a28f7b91cfceebaee0bc961c63fb1 97e681171acefe9f00990424eaa538433a90fe87 algosipdahack <sophia5460@ewhain.net> 1658213796 +0900	commit: ✅ build: add gitignore
+97e681171acefe9f00990424eaa538433a90fe87 71f33ef27a2eabff8c0088fb470dd5eff23d9dc7 algosipdahack <sophia5460@ewhain.net> 1658223331 +0900	commit: make spring boot structure setting
+71f33ef27a2eabff8c0088fb470dd5eff23d9dc7 28080a44dbe6e0a6db16110a12b5264fc395022d algosipdahack <sophia5460@ewhain.net> 1658553730 +0900	commit: 🎉build :entity structure
+28080a44dbe6e0a6db16110a12b5264fc395022d cbcf90ce7788191c8993d8cd027b7f54dd3dc9bc algosipdahack <sophia5460@ewhain.net> 1658553743 +0900	merge github/main: Merge made by the 'recursive' strategy.
+cbcf90ce7788191c8993d8cd027b7f54dd3dc9bc ef1fe9edacacc8667fcb39ec2e6d9c3952c91433 algosipdahack <sophia5460@ewhain.net> 1658653239 +0900	commit: 🐛 fix: entitiy mapping error
+ef1fe9edacacc8667fcb39ec2e6d9c3952c91433 2eba5eb0e7f41eae15f97e39593156fdd335bb86 algosipdahack <sophia5460@ewhain.net> 1658662605 +0900	commit: 🖌feat : complete filter domain
+2eba5eb0e7f41eae15f97e39593156fdd335bb86 8d3fbe75edec553e75b069a3c3d8b40cb1135217 algosipdahack <sophia5460@ewhain.net> 1658812314 +0900	commit: 🖌feat : complete mysql connection
+8d3fbe75edec553e75b069a3c3d8b40cb1135217 d5710baf5476a364ae53c5112c6887d8c0e5d903 algosipdahack <sophia5460@ewhain.net> 1658848283 +0900	commit: 🖌feat : complete batch test
+d5710baf5476a364ae53c5112c6887d8c0e5d903 49ca632c16f1051cfedfdccc58292474f0ff94a4 algosipdahack <sophia5460@ewhain.net> 1658848410 +0900	commit: 🖌feat : add git ignore
+49ca632c16f1051cfedfdccc58292474f0ff94a4 1ffe0a7e0f7ed688e91d61d5c12448ffcb287234 algosipdahack <sophia5460@ewhain.net> 1658903400 +0900	commit: ⚒doing : make estate dto
+1ffe0a7e0f7ed688e91d61d5c12448ffcb287234 8eae8331c97a24b5345e738e4a850990884145be algosipdahack <sophia5460@ewhain.net> 1658905439 +0900	commit: ⛏fix : change gitignore
+8eae8331c97a24b5345e738e4a850990884145be b5c17a0fd47a6c0daf1d6a7b0a178f04cd60e347 algosipdahack <sophia5460@ewhain.net> 1659169681 +0900	commit (merge): 🎨 feat: complete s3 file upload
+b5c17a0fd47a6c0daf1d6a7b0a178f04cd60e347 58477b80872f70de03c1209689d7b117570edd0c algosipdahack <sophia5460@ewhain.net> 1659170197 +0900	commit: 🐛 fix: ignore
+58477b80872f70de03c1209689d7b117570edd0c 13e0cf3150bc4ed4c661a48b8ea91015f22b9fdd algosipdahack <sophia5460@ewhain.net> 1659170201 +0900	merge github/main: Merge made by the 'recursive' strategy.
+13e0cf3150bc4ed4c661a48b8ea91015f22b9fdd a7081f381648a05135abcf2e5ed473f0448b98c7 algosipdahack <sophia5460@ewhain.net> 1659328040 +0900	commit: remove history
+a7081f381648a05135abcf2e5ed473f0448b98c7 0d3be21aac2d10a2165f44f12df7cdc2f6ecdeb5 algosipdahack <sophia5460@ewhain.net> 1659328091 +0900	commit: 🐛 fix: ignore
+0d3be21aac2d10a2165f44f12df7cdc2f6ecdeb5 39f1353d8a2ffd848315a00d1c6030d1ee7b700d algosipdahack <sophia5460@ewhain.net> 1659332069 +0900	commit: 🐛 fix: domain error
+39f1353d8a2ffd848315a00d1c6030d1ee7b700d c9ecde400ddd09ca2aa27bc1a73502f2a42920d4 algosipdahack <sophia5460@ewhain.net> 1659332177 +0900	commit: 🐛 fix: application.yml
+c9ecde400ddd09ca2aa27bc1a73502f2a42920d4 39f1353d8a2ffd848315a00d1c6030d1ee7b700d algosipdahack <sophia5460@ewhain.net> 1659332220 +0900	rebase (finish): refs/heads/main onto 39f1353d8a2ffd848315a00d1c6030d1ee7b700d
+39f1353d8a2ffd848315a00d1c6030d1ee7b700d 0d3be21aac2d10a2165f44f12df7cdc2f6ecdeb5 algosipdahack <sophia5460@ewhain.net> 1659332227 +0900	rebase (finish): refs/heads/main onto 0d3be21aac2d10a2165f44f12df7cdc2f6ecdeb5
+0d3be21aac2d10a2165f44f12df7cdc2f6ecdeb5 378adcd01fcad1819319d4bcee0a841a48672985 algosipdahack <sophia5460@ewhain.net> 1659332475 +0900	commit: 🐛 fix: domain error
+378adcd01fcad1819319d4bcee0a841a48672985 488a6722c52e03b2ea86f9f64b62ee504ef46423 algosipdahack <sophia5460@ewhain.net> 1659332568 +0900	commit: 🐛 fix: gitigore
+488a6722c52e03b2ea86f9f64b62ee504ef46423 6b25883555a6341f4877eee80e99223f605e86a1 algosipdahack <sophia5460@ewhain.net> 1659335720 +0900	commit: 🐛 fix: error
+6b25883555a6341f4877eee80e99223f605e86a1 a13454d9997adf6f81eb4a10ef398e99a96760ac algosipdahack <sophia5460@ewhain.net> 1659336742 +0900	commit: modify ignore
+a13454d9997adf6f81eb4a10ef398e99a96760ac 9092751562f9ad10c1c4cadaaca18d8d0a49f154 algosipdahack <sophia5460@ewhain.net> 1659337367 +0900	commit: modify ignore
+9092751562f9ad10c1c4cadaaca18d8d0a49f154 19789e67c5b14dca908f7b57bd94a7d89ee531ef algosipdahack <sophia5460@ewhain.net> 1659337859 +0900	commit: 🐛 fix: gitignore
+19789e67c5b14dca908f7b57bd94a7d89ee531ef eeef4da879ff0b327ab2bcff2770d193361d03b1 algosipdahack <sophia5460@ewhain.net> 1659337917 +0900	commit (merge): Merge remote-tracking branch 'github/main'
+eeef4da879ff0b327ab2bcff2770d193361d03b1 1c99a0471c7206e508ebef28ec42689ad8760aca algosipdahack <sophia5460@ewhain.net> 1659338259 +0900	commit: 🐛 fix: gitignore
+1c99a0471c7206e508ebef28ec42689ad8760aca a3f703789d22fa90eed87a3989bad9a1d2041354 algosipdahack <sophia5460@ewhain.net> 1659338264 +0900	commit: 🐛 fix: gitignore
+a3f703789d22fa90eed87a3989bad9a1d2041354 6ed12eb842b0bf49a90d61f1937cdf24fdf0d623 algosipdahack <sophia5460@ewhain.net> 1659342296 +0900	commit: 🐛 fix: remove s3 connection
+6ed12eb842b0bf49a90d61f1937cdf24fdf0d623 580fe6d64f25bf71395e5ce96bc090c26fc216bd algosipdahack <sophia5460@ewhain.net> 1659357374 +0900	commit: 🎨 refactor : domain structure finished
+580fe6d64f25bf71395e5ce96bc090c26fc216bd af3d3648ba715f07308175cf35d4ed1e3851c2b9 algosipdahack <sophia5460@ewhain.net> 1659359792 +0900	commit: 🎨 refactor : domain structure finished with builder
+af3d3648ba715f07308175cf35d4ed1e3851c2b9 580fe6d64f25bf71395e5ce96bc090c26fc216bd algosipdahack <sophia5460@ewhain.net> 1659403470 +0900	reset: moving to 580fe6d64f25bf71395e5ce96bc090c26fc216bd
+580fe6d64f25bf71395e5ce96bc090c26fc216bd af3d3648ba715f07308175cf35d4ed1e3851c2b9 algosipdahack <sophia5460@ewhain.net> 1659404237 +0900	reset: moving to af3d3648ba715f07308175cf35d4ed1e3851c2b9
+af3d3648ba715f07308175cf35d4ed1e3851c2b9 63eb588255eb88896b91905669ee4e4f80e6e83f algosipdahack <sophia5460@ewhain.net> 1659440750 +0900	commit: 🎨 refactor : domain dev finished completely
+63eb588255eb88896b91905669ee4e4f80e6e83f 09bd1c807af1a9f2f95e3988d754d0fef3eaefc9 algosipdahack <sophia5460@ewhain.net> 1659441567 +0900	commit: 🐛 fix : build error
+09bd1c807af1a9f2f95e3988d754d0fef3eaefc9 24d0c22902b3ea4a7859075239cd13c53f0af6cf algosipdahack <sophia5460@ewhain.net> 1659450997 +0900	commit: add gitignore
+24d0c22902b3ea4a7859075239cd13c53f0af6cf a9c4afaad6ec25a44f32fa937dfce0ce509fda01 algosipdahack <sophia5460@ewhain.net> 1659451024 +0900	commit: 🐛 fix : gitignore error
+a9c4afaad6ec25a44f32fa937dfce0ce509fda01 a8c114139800e3f06608e7b2bedc535cc8cc7c4c algosipdahack <sophia5460@ewhain.net> 1659451577 +0900	commit: fixed untracked files
+a8c114139800e3f06608e7b2bedc535cc8cc7c4c 7911400b16319e9d13f767d1f3039dc5e602885a algosipdahack <sophia5460@ewhain.net> 1659451610 +0900	commit: 🐛 fix : gitignore error
+7911400b16319e9d13f767d1f3039dc5e602885a 2f27ef2975bb69d6b0330016cfea75992adc33f3 algosipdahack <sophia5460@ewhain.net> 1659451873 +0900	commit: fixed untracked files
+2f27ef2975bb69d6b0330016cfea75992adc33f3 6f1624b00df0c5d8e5f12a95cfda3a9ca6a38347 algosipdahack <sophia5460@ewhain.net> 1659451879 +0900	commit: 🐛 fix : gitignore error
+6f1624b00df0c5d8e5f12a95cfda3a9ca6a38347 f6baefb6481146e7f5d07415222228a9afeccce8 algosipdahack <sophia5460@ewhain.net> 1659451883 +0900	merge github/main: Merge made by the 'recursive' strategy.
+f6baefb6481146e7f5d07415222228a9afeccce8 1d222b8c518db9aa7575d89665f2673d13b6fd9f algosipdahack <sophia5460@ewhain.net> 1659520662 +0900	commit: ✨feat : make CRU estate_detail
+1d222b8c518db9aa7575d89665f2673d13b6fd9f 59c68624139690c16b891023e8abd15010ff6d59 algosipdahack <sophia5460@ewhain.net> 1659779867 +0900	commit: 🎨 refactor: remove enum & array type arguement
+59c68624139690c16b891023e8abd15010ff6d59 f6cf67c8e3e97c7c95a19d4ffdc7715555f98d88 algosipdahack <sophia5460@ewhain.net> 1659779871 +0900	merge github/main: Merge made by the 'recursive' strategy.
+f6cf67c8e3e97c7c95a19d4ffdc7715555f98d88 a59f43fd2e0a49f702b5191a157f4989e0eee5ec algosipdahack <sophia5460@ewhain.net> 1659795325 +0900	commit: ✨feat : make spring security config
+a59f43fd2e0a49f702b5191a157f4989e0eee5ec 517c0abae7bdf96ebf9ac5f2f4567fe4cccd3bbc algosipdahack <sophia5460@ewhain.net> 1659803060 +0900	commit: ✨feat : make aws parameter
+517c0abae7bdf96ebf9ac5f2f4567fe4cccd3bbc 75e937f775f27ea1197f4946f630e1483753da0f algosipdahack <sophia5460@ewhain.net> 1659803088 +0900	commit: ✨feat : make aws parameter
+75e937f775f27ea1197f4946f630e1483753da0f cf4fd5d88325d768973455763cbfeb45738ef71b algosipdahack <sophia5460@ewhain.net> 1659845684 +0900	commit: 🐛fix : build error by remove testing code
+cf4fd5d88325d768973455763cbfeb45738ef71b bccdd5a87e87becc184b4371cde54151e5e436c5 algosipdahack <sophia5460@ewhain.net> 1659847524 +0900	commit: add resources dir
+bccdd5a87e87becc184b4371cde54151e5e436c5 a357cd54f1ee4b49d0ba357b889d31069e5f538c algosipdahack <sophia5460@ewhain.net> 1659847550 +0900	commit: add resource dir
+a357cd54f1ee4b49d0ba357b889d31069e5f538c c71babe681989d79311df372641496d7595fa8ba algosipdahack <sophia5460@ewhain.net> 1659854344 +0900	commit: temporary(not tested)
+c71babe681989d79311df372641496d7595fa8ba cf4fd5d88325d768973455763cbfeb45738ef71b algosipdahack <sophia5460@ewhain.net> 1659854373 +0900	reset: moving to cf4fd5d88325d768973455763cbfeb45738ef71b
+cf4fd5d88325d768973455763cbfeb45738ef71b c71babe681989d79311df372641496d7595fa8ba algosipdahack <sophia5460@ewhain.net> 1659858383 +0900	reset: moving to c71babe681989d79311df372641496d7595fa8ba
+c71babe681989d79311df372641496d7595fa8ba a357cd54f1ee4b49d0ba357b889d31069e5f538c algosipdahack <sophia5460@ewhain.net> 1659887549 +0900	reset: moving to a357cd54f1ee4b49d0ba357b889d31069e5f538c
+a357cd54f1ee4b49d0ba357b889d31069e5f538c f253809fdc9e3fbcdbfc101e43caba34dec17504 algosipdahack <sophia5460@ewhain.net> 1659888456 +0900	commit: 🎉feat : make s3 upload function
+f253809fdc9e3fbcdbfc101e43caba34dec17504 7bdd95f1ade9a0f24c1273a6832fba85bb8a248b algosipdahack <sophia5460@ewhain.net> 1659888542 +0900	revert: Revert "🎉feat : make s3 upload function"
+7bdd95f1ade9a0f24c1273a6832fba85bb8a248b a357cd54f1ee4b49d0ba357b889d31069e5f538c algosipdahack <sophia5460@ewhain.net> 1659888916 +0900	reset: moving to a357cd54f1ee4b49d0ba357b889d31069e5f538c
+a357cd54f1ee4b49d0ba357b889d31069e5f538c 752bf76452abb72e7a25033e527b22ebce5a9cb0 algosipdahack <sophia5460@ewhain.net> 1659889262 +0900	commit: 🎉feat : make S3 upload function
+752bf76452abb72e7a25033e527b22ebce5a9cb0 151b5d343d7aabd418bcae5cd0409f53dce4b137 algosipdahack <sophia5460@ewhain.net> 1659889278 +0900	commit (merge): Merge remote-tracking branch 'github/main'
+151b5d343d7aabd418bcae5cd0409f53dce4b137 3c45dea112ab445cbadaf74065e3754411d096ff algosipdahack <sophia5460@ewhain.net> 1659889369 +0900	commit: Revert "temporary(not tested)"
+3c45dea112ab445cbadaf74065e3754411d096ff 7f6b82973b48ec7cad1d0ca991a8dfce16ac60ca algosipdahack <sophia5460@ewhain.net> 1659952300 +0900	commit: ✅ test: upload file test
+7f6b82973b48ec7cad1d0ca991a8dfce16ac60ca 71fafa0708a5b9d7dba596b133a7ec16e7f7c59a algosipdahack <sophia5460@ewhain.net> 1660051737 +0900	commit: ✅ connect : rds
+71fafa0708a5b9d7dba596b133a7ec16e7f7c59a 7f6b82973b48ec7cad1d0ca991a8dfce16ac60ca algosipdahack <sophia5460@ewhain.net> 1660051807 +0900	reset: moving to 7f6b82973b48ec7cad1d0ca991a8dfce16ac60ca
+7f6b82973b48ec7cad1d0ca991a8dfce16ac60ca 71fafa0708a5b9d7dba596b133a7ec16e7f7c59a algosipdahack <sophia5460@ewhain.net> 1660051972 +0900	reset: moving to 71fafa0708a5b9d7dba596b133a7ec16e7f7c59a
+71fafa0708a5b9d7dba596b133a7ec16e7f7c59a 653ac676be50ce73846d7ae957e0cb81604fe8c7 algosipdahack <sophia5460@ewhain.net> 1660053187 +0900	commit: 🎉finish : GET file list in s3
+653ac676be50ce73846d7ae957e0cb81604fe8c7 f05108087283c48f6a701f2f6e971f0e00deabd3 algosipdahack <sophia5460@ewhain.net> 1660211322 +0900	commit: 🎉complete : house CRUD api
+f05108087283c48f6a701f2f6e971f0e00deabd3 b9c91b5215b26640d9eb2fb8c82fc4aeaa8c0b8a algosipdahack <sophia5460@ewhain.net> 1660232156 +0900	commit: 🎉complete : Asset & Checklist CRUD api
+b9c91b5215b26640d9eb2fb8c82fc4aeaa8c0b8a b9774a30ecd416d9b950e9b515bdd1a3c4be5063 algosipdahack <sophia5460@ewhain.net> 1660233054 +0900	commit: 🎉complete : Contract CRUD api
+b9774a30ecd416d9b950e9b515bdd1a3c4be5063 b5ae6d98e3b545c4a49cfc4764fad86347392cac algosipdahack <sophia5460@ewhain.net> 1660290825 +0900	commit: ✅TestComplete : ContractState CRUD api
+b5ae6d98e3b545c4a49cfc4764fad86347392cac 1019de3ff20c112a6ac42ae8249490a7b06e7783 algosipdahack <sophia5460@ewhain.net> 1660290830 +0900	merge github/main: Merge made by the 'recursive' strategy.
+1019de3ff20c112a6ac42ae8249490a7b06e7783 f44b55946930da1a2eca219796c980fc165b382f algosipdahack <sophia5460@ewhain.net> 1660373943 +0900	commit: ⛏feat : open security api
+f44b55946930da1a2eca219796c980fc165b382f 623e65b0ed4ae2e40e416e05d30df490467659c7 algosipdahack <sophia5460@ewhain.net> 1660631354 +0900	commit: 🐛 fix: circular error
+623e65b0ed4ae2e40e416e05d30df490467659c7 f44b55946930da1a2eca219796c980fc165b382f algosipdahack <sophia5460@ewhain.net> 1660631379 +0900	reset: moving to f44b55946930da1a2eca219796c980fc165b382f
+f44b55946930da1a2eca219796c980fc165b382f 623e65b0ed4ae2e40e416e05d30df490467659c7 algosipdahack <sophia5460@ewhain.net> 1660631693 +0900	reset: moving to 623e65b0ed4ae2e40e416e05d30df490467659c7
+623e65b0ed4ae2e40e416e05d30df490467659c7 d7e6de472d136f0a4e4572349e6b40ce67344304 algosipdahack <sophia5460@ewhain.net> 1660731885 +0900	commit: 🐛 fix: circular error by fetch join
+d7e6de472d136f0a4e4572349e6b40ce67344304 9ef54de666094dfb9655e7b7165cd00955a6d185 algosipdahack <sophia5460@ewhain.net> 1660813986 +0900	commit: 🎨 refactor: make file structure effieciently
+9ef54de666094dfb9655e7b7165cd00955a6d185 6c29cff48713f954b2962e49ac0237d6a7885242 algosipdahack <sophia5460@ewhain.net> 1660826016 +0900	commit: ⚡️ refactor: complete refactoring without media
+6c29cff48713f954b2962e49ac0237d6a7885242 02e832780c8beffab0a8548297f9ce7a50088ea5 algosipdahack <sophia5460@ewhain.net> 1660985025 +0900	commit: ✨ feat: complete make media entity + 객체 연관관계 마무리
+02e832780c8beffab0a8548297f9ce7a50088ea5 505d85c8a0f16ca54d3d5d35802a9c70ce03f080 algosipdahack <sophia5460@ewhain.net> 1661322341 +0900	commit: 🎨 refactor: 구조 단순화
+505d85c8a0f16ca54d3d5d35802a9c70ce03f080 71ec4f873cd91d47a0f5d63b22623f04785e95a7 algosipdahack <sophia5460@ewhain.net> 1661330790 +0900	commit: ✨ feat: Address entity CRU 완성
+71ec4f873cd91d47a0f5d63b22623f04785e95a7 c683fb67f76372e80040fd09d3580e656ab4b1a9 algosipdahack <sophia5460@ewhain.net> 1661758549 +0900	commit: ✨ feat: EstateList Get 완성
+c683fb67f76372e80040fd09d3580e656ab4b1a9 7ebc625d1c1866ec8170ca347348b234db1c5eba algosipdahack <sophia5460@ewhain.net> 1661758914 +0900	commit: ✨ feat: main page 00동 추천매물 getAPI 완성
+7ebc625d1c1866ec8170ca347348b234db1c5eba 518a80b849ef9dc210ebe11eb30fdc6f62341113 algosipdahack <sophia5460@ewhain.net> 1661763310 +0900	commit: ✨ feat: finished redis connect
+518a80b849ef9dc210ebe11eb30fdc6f62341113 bbb935b4670f6c143bcc44777f3c9b3e09b97a50 algosipdahack <sophia5460@ewhain.net> 1661960004 +0900	commit: 🩹 fix: swagger security issue
+bbb935b4670f6c143bcc44777f3c9b3e09b97a50 0f4c1fea7aa3c81ce6cb0a8806767948942f41bd algosipdahack <sophia5460@ewhain.net> 1662181444 +0900	commit: 🩹 fix: swagger security issue
