@@ -5,9 +5,14 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @Slf4j
@@ -29,20 +34,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
-                .csrf().disable()
-                .authorizeRequests()
+                .cors()
+                        .configurationSource(corsConfigurationSource())
+                        .and()
+                    .httpBasic().disable()
+                    .csrf().disable()
+
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                        .and()
+                    .authorizeRequests()
 //                .antMatchers("/user").hasRole("USER")
 //                .antMatchers("/manager").hasRole("MANAGER")
 //                .antMatchers("/admin").hasRole("ADMIN")
 //                .antMatchers(
 //                        "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",
 //                        "/h2-console/**", "/favicion.ico", "api/estate/detail/**", "/upload"
-                .antMatchers("/swagger-resources/**").permitAll()
-                .anyRequest().permitAll()
+                    .antMatchers("/swagger-resources/**").permitAll()
+                    .anyRequest().permitAll()
 //                .anyRequest().authenticated()
-                .and()
-                .formLogin();
+                        .and()
+                    .formLogin();
 
+    }
+
+    @Override
+    public void configure(WebSecurity webSecurity) {
+        webSecurity.ignoring().antMatchers("/swagger-ui/index.html");
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("https://estatetwin.net");
+        configuration.addAllowedOrigin("http://localhost:8080");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+
+        configuration.setMaxAge(7200L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
     }
 }
