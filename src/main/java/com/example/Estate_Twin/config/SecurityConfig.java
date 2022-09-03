@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.config;
 
+import com.amazonaws.HttpMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @Slf4j
@@ -37,16 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .cors()
-                        .configurationSource(corsConfigurationSource())
-                        .and()
-                    .httpBasic().disable()
-                    .csrf().disable()
+                    .and()
+                .csrf().disable()
+                .httpBasic().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-                        .and()
-                    .authorizeRequests()
+                .and()
+                .authorizeRequests()
 //                .antMatchers("/user").hasRole("USER")
 //                .antMatchers("/manager").hasRole("MANAGER")
 //                .antMatchers("/admin").hasRole("ADMIN")

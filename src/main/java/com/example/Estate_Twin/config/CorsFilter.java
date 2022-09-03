@@ -14,7 +14,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods","*");
         response.setHeader("Access-Control-Max-Age","3600");
         response.setHeader("Access-Control-Allow-Credentials","true"); // 쿠키를 요청시에 포함하고 싶을 시 사용
-        response.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        response.setHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, api_key, Accept, Authorization");
         chain.doFilter(req,res);
     }
     @Override
