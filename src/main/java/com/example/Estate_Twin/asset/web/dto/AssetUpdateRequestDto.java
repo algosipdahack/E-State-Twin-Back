@@ -7,14 +7,12 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class AssetUpdateRequestDto {
-    private House house;
     private Category category;
     private String assetName;
     private String productName;
 
     @Builder
-    public AssetUpdateRequestDto(House house, Category category, String assetName, String productName) {
-        this.house = house;
+    public AssetUpdateRequestDto(Category category, String assetName, String productName) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;

@@ -62,8 +62,8 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public Estate updateEstate(Long id, String content, String model,ContractState contractState,
-                               TransactionType transactionType, String estateThumbNail, String city, String borough,
+    public Estate updateEstate(Long id, String content, String model, TransactionType transactionType,
+                               String estateThumbNail, String city, String borough,
                                String thumbNail3D) {
         Estate newEstate = estateRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id))

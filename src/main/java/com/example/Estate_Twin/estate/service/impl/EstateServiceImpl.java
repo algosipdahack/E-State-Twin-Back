@@ -60,7 +60,7 @@ public class EstateServiceImpl implements EstateService {
                 addressUpdateRequestDto.getSubBuildingNumber(), addressUpdateRequestDto.getBuildingName());
 
         return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto.getContent(), estateUpdateRequestDto.getModel(),
-                estateUpdateRequestDto.getContractState(), estateUpdateRequestDto.getTransactionType(), estateUpdateRequestDto.getEstateThumbNail(),
+                estateUpdateRequestDto.getTransactionType(), estateUpdateRequestDto.getEstateThumbNail(),
                 estateUpdateRequestDto.getCity(), estateUpdateRequestDto.getBorough(),
                 estateUpdateRequestDto.getThumbNail3D()));
     }

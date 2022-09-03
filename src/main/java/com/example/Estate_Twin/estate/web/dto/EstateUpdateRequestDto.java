@@ -12,7 +12,6 @@ public class EstateUpdateRequestDto {
     private String estateThumbNail;
     private String content;
     private String thumbNail3D;
-    private ContractState contractState;
     private String model;
     private String arCam;
     private String city;
@@ -21,7 +20,7 @@ public class EstateUpdateRequestDto {
     private AddressUpdateRequestDto address;
 
     @Builder
-    public EstateUpdateRequestDto(String transactionType, ContractState contractState,
+    public EstateUpdateRequestDto(String transactionType,
                                   String estateThumbNail, String content, String model,
                                   String arCam, String thumbNail3D, AddressUpdateRequestDto address) {
         this.transactionType = TransactionType.of(transactionType);
@@ -29,7 +28,6 @@ public class EstateUpdateRequestDto {
         this.content = content;
         this.model = model;
         this.arCam = arCam;
-        this.contractState = contractState;
         this.thumbNail3D = thumbNail3D;
         this.address = address;
         this.city = address.getCity();
