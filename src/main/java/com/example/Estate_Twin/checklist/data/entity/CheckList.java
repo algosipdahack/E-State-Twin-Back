@@ -28,6 +28,7 @@ public class CheckList extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
+
     @Column
     private LocalDateTime repairDate;
 
@@ -39,6 +40,9 @@ public class CheckList extends BaseTimeEntity {
 
     @Column
     private Boolean brokerConfirmYN;
+
+    @Column
+    private Boolean tanentConfirmYN;
 
     @Column
     private Boolean ownerConfirmYN;
@@ -58,7 +62,7 @@ public class CheckList extends BaseTimeEntity {
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                      Category category, String checkListContent, LocalDateTime repairDate,
-                     RepairType repairType, String manufacturer) {
+                     RepairType repairType, String manufacturer, Boolean tanentConfirmYN) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;
@@ -67,6 +71,7 @@ public class CheckList extends BaseTimeEntity {
         this.checkListContent = checkListContent;
         this.repairType = repairType;
         this.manufacturer = manufacturer;
+        this.tanentConfirmYN = tanentConfirmYN;
     }
 
     public void addMedia(List<Media> mediaList) {
@@ -76,5 +81,6 @@ public class CheckList extends BaseTimeEntity {
 
     public void setAsset(Asset asset) {
         this.asset = asset;
+        this.asset.getCheckList().add(this);
     }
 }

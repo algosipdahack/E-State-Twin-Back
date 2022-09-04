@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.user.domain.entity;
 
-import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 
@@ -11,8 +10,17 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "broker")
-@AttributeOverride(name = "id", column = @Column(name = "BROKER_ID"))
-public class Broker extends BaseEntity {
+public class Broker {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "broker_id")
+    private Long id;
+
+    //단방향
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     // broker column
     @Column
     private String brokerPhoto;
@@ -35,14 +43,10 @@ public class Broker extends BaseEntity {
     @Column
     private String brokerageRegistrationLicense;
 
-    @OneToOne(mappedBy = "estate")
-    private Address broker_address;
-
     @OneToMany(
             mappedBy = "broker",
             cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
-            orphanRemoval = true // DB에서 함께 삭제됨
+            orphanRemoval = true
     )
     private List<Estate> estates = new ArrayList<>();
 

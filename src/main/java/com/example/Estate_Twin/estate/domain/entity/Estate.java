@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
@@ -81,8 +82,15 @@ public class Estate extends BaseTimeEntity {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}
     )
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "user_id")
     private User owner;
+
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
+    @JoinColumn(name = "user_id")
+    private User tanent;
 
     @OneToMany(
             mappedBy = "estate",
@@ -91,11 +99,13 @@ public class Estate extends BaseTimeEntity {
     )
     private List<Media> estateMedia;
 
+    @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL)
+    private Set<DipEstate> dipEstates = new HashSet<>();
+
     @Builder // 빌더 형태로 만들어줌
     public Estate(String content, Rank rank, String model, String town,
                   TransactionType transactionType, String estateThumbNail,
-                  String city, String borough,String thumbnail3D, Address address
-    ) {
+                  String city, String borough, String thumbnail3D, Address address) {
         this.borough = borough;
         this.content = content;
         this.rank = rank;
@@ -107,7 +117,14 @@ public class Estate extends BaseTimeEntity {
         this.estateThumbNail = estateThumbNail;
         this.town = town;
     }
-
+    public void setOwner(User owner) {
+        this.owner = owner;
+        this.owner.getOwnEstate().add(this);
+    }
+    public void setBroker(Broker broker) {
+        this.broker = broker;
+        this.broker.getEstates().add(this);
+    }
     //아예 초기화한 후 대입
     public void addMedia(List<Media> mediaList) {
         this.estateMedia.clear();
@@ -117,6 +134,11 @@ public class Estate extends BaseTimeEntity {
     public void setHouse(House house) {
         this.house = house;
         house.setEstate(this);
+    }
+
+    public void setTanent(User tanent) {
+        this.tanent = tanent;
+        tanent.setEstate(this);
     }
 
     public void setAddress(Address address) {
@@ -132,6 +154,7 @@ public class Estate extends BaseTimeEntity {
     public void setState(State state) {
         this.state = state;
     }
+
     //insert 되기 전 실행된다
     @PrePersist
     public void prePersist() {

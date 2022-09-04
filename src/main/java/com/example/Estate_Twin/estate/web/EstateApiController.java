@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.web;
 
+import com.example.Estate_Twin.estate.service.DipEstateService;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateService estateService;
-
+    private final DipEstateService dipEstateService;
     //리스트
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
     @ApiResponses({
@@ -85,10 +86,17 @@ public class EstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
-    //매물 영상
-    //@GetMapping("/detail/{estateId}/video")
-
-    //3D model
-    //@GetMapping("/detail/{estateId}/model")
+    /*@Operation(summary = "dip of Estate", description = "매물 찜하기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = DipEstateResponseDto.class)))
+    })
+    @Parameters({
+            @Parameter(name = "estateId", description = "Estate Id", example = "1")
+    })
+    @PostMapping("detail/{estateId}/dip")
+    public ResponseEntity<DipEstateResponseDto> dipEstate(@PathVariable Long estateId) {
+        DipEstateResponseDto dipEstateResponseDto = DipEstateService.dipEstate(estateId);
+        return ResponseEntity.status(HttpStatus.OK).body(dipEstateResponseDto);
+    }*/
 
 }

@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.address.data.entity;
 
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,6 +53,13 @@ public class Address {
     )
     @JoinColumn(name = "estate_id")
     private Estate estate;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder // 빌더 형태로 만들어줌
     public Address(String city, String borough, String town, String complexName, String block, String unit, String roadName,

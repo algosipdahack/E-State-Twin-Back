@@ -3,7 +3,7 @@ package com.example.Estate_Twin.media.domain.entity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.user.domain.entity.Broker;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,8 +27,8 @@ public class Media {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-    private User user;
+    @JoinColumn(name = "BROKER_ID", referencedColumnName = "BROKER_ID")
+    private Broker broker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")

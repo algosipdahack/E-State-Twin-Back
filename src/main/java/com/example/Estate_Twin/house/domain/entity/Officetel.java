@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("O")
+// coach처럼 다 바꾸기
 public class Officetel extends House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

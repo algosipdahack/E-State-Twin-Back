@@ -58,7 +58,6 @@ public class Asset extends BaseTimeEntity {
         this.assetPhoto.clear();
         this.assetPhoto.addAll(mediaList);
     }
-
     public void setHouse(House house) {
         this.house = house;
     }

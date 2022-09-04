@@ -1,6 +1,8 @@
 package com.example.Estate_Twin.config;
 
 import com.amazonaws.HttpMethod;
+import com.example.Estate_Twin.config.auth.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,7 +23,9 @@ import java.util.Arrays;
 @Slf4j
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final CustomOAuth2UserService customOAuth2UserService;
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         String password = passwordEncoder().encode("1111");
@@ -46,20 +50,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()
+                    .and()
                 .authorizeRequests()
-//                .antMatchers("/user").hasRole("USER")
-//                .antMatchers("/manager").hasRole("MANAGER")
-//                .antMatchers("/admin").hasRole("ADMIN")
-//                .antMatchers(
-//                        "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",
-//                        "/h2-console/**", "/favicion.ico", "api/estate/detail/**", "/upload"
-                    .antMatchers("/swagger-resources/**").permitAll()
-                    .anyRequest().permitAll()
-//                .anyRequest().authenticated()
-                        .and()
-                    .formLogin();
-
+                .antMatchers("/swagger-resources/**").permitAll()
+                .anyRequest().permitAll()
+                    .and()
+                        .oauth2Login()
+                            .userInfoEndpoint()
+                                .userService(customOAuth2UserService);
     }
 
     @Override
