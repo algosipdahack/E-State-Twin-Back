@@ -74,9 +74,8 @@ public class CheckList extends BaseTimeEntity {
         this.tanentConfirmYN = tanentConfirmYN;
     }
 
-    public void addMedia(List<Media> mediaList) {
-        this.checkListPhoto.clear();
-        this.checkListPhoto.addAll(mediaList);
+    public void addMedia(Media media) {
+        this.checkListPhoto.add(media);
     }
 
     public void setAsset(Asset asset) {

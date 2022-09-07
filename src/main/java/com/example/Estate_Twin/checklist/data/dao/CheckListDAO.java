@@ -13,5 +13,6 @@ public interface CheckListDAO {
     CheckList updateCheckList(Long id, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                               Category category, String checkListContent, LocalDateTime repairDate,
                               RepairType repairType, String manufacturer);
-    CheckList addCheckListMedia(Long id, List<Media> mediaList);
+    CheckList addCheckListMedia(Long id, Media media);
+    void clearMedia(CheckList checkList);
 }

@@ -28,7 +28,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public final StringPath brokerageRegistrationNumber = createString("brokerageRegistrationNumber");
 
-    public final StringPath brokerPhoto = createString("brokerPhoto");
+    public final ListPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> brokerPhoto = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createList("brokerPhoto", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
 
     public final StringPath businessLicense = createString("businessLicense");
 

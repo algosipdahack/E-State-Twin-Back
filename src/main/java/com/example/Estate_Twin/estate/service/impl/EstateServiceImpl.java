@@ -38,8 +38,13 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public Estate addMedia(Long id, List<Media> mediaList) {
-        return estateDAO.addEstateMedia(id, mediaList);
+    public Estate addMedia(Long id, Media media) {
+        return estateDAO.addEstateMedia(id, media);
+    }
+
+    @Override
+    public void clearMedia(Long id) {
+        estateDAO.clearMedia(estateDAO.findEstate(id));
     }
 
     @Override

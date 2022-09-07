@@ -35,15 +35,20 @@ public class AssetDAOImpl implements AssetDAO {
     }
 
     @Override
-    public Asset saveAsset(Asset asset, House house) {
-        asset.setHouse(house);
+    public Asset addAssetMedia(Long id, Media media) {
+        Asset asset = findAsset(id);
+        asset.addMedia(media);
         return assetRepository.save(asset);
     }
 
     @Override
-    public Asset addAssetMedia(Long id, List<Media> mediaList) {
-        Asset asset = findAsset(id);
-        asset.addMedia(mediaList);
+    public void clearMedia(Asset asset) {
+        asset.getAssetPhoto().clear();;
+    }
+
+    @Override
+    public Asset saveAsset(Asset asset, House house) {
+        asset.setHouse(house);
         return assetRepository.save(asset);
     }
 }

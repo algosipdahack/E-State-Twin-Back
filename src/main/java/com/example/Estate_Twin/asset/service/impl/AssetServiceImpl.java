@@ -36,7 +36,13 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public Asset addMedia(Long assetId, List<Media> mediaList) {
-        return assetDAO.addAssetMedia(assetId,mediaList);
+    public Asset addMedia(Long assetId, Media media) {
+        return assetDAO.addAssetMedia(assetId,media);
     }
+
+    @Override
+    public void clearMedia(Long id) {
+        assetDAO.clearMedia(assetDAO.findAsset(id));
+    }
+
 }

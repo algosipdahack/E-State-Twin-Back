@@ -39,7 +39,12 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckList addMedia(Long checklistId, List<Media> mediaList) {
-        return checkListDAO.addCheckListMedia(checklistId,mediaList);
+    public CheckList addMedia(Long checklistId, Media media) {
+        return checkListDAO.addCheckListMedia(checklistId,media);
+    }
+
+    @Override
+    public void clearMedia(Long id) {
+        checkListDAO.clearMedia(checkListDAO.findCheckList(id));
     }
 }

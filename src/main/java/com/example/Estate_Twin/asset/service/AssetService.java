@@ -10,5 +10,6 @@ public interface AssetService {
     AssetResponseDto getAsset(Long id);
     AssetResponseDto saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto);
     AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto);
-    Asset addMedia(Long assetId, List<Media> mediaList);
+    Asset addMedia(Long assetId, Media media);
+    void clearMedia(Long id);
 }

@@ -62,6 +62,11 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
+    public void clearMedia(Estate estate) {
+        estate.getEstateMedia().clear();
+    }
+
+    @Override
     public Estate updateEstate(Long id, String content, String model, TransactionType transactionType,
                                String estateThumbNail, String city, String borough,
                                String thumbNail3D) {
@@ -81,9 +86,9 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public Estate addEstateMedia(Long id, List<Media> mediaList) {
+    public Estate addEstateMedia(Long id, Media media) {
         Estate estate = findEstate(id);
-        estate.addMedia(mediaList);
+        estate.addMedia(media);
         return estateRepository.save(estate);
     }
 }

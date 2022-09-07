@@ -2,6 +2,7 @@ package com.example.Estate_Twin.media.web;
 
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.media.service.impl.AwsS3ServiceImpl;
+import com.example.Estate_Twin.media.web.dto.MediaDto;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,16 +27,9 @@ import java.util.List;
 public class MediaApiController {
     private final AwsS3ServiceImpl awsS3ServiceImpl;
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
-    //TODO 로그인 구성 완료 후 사용자 이름에 맞는 폴더 구성하기
-    //TODO 리턴 값 함수화
     @Operation(summary = "post Photo of Estate", description = "매물 사진 업로드")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaResponseDto.class)))
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
     })
     @Parameters({
             @Parameter(name = "estateId", description = "Estate Id", example = "1")
@@ -43,13 +37,13 @@ public class MediaApiController {
     @PostMapping(value = "/estate/{estateId}/photo", consumes = {"multipart/form-data"})
     @ResponseBody()
     //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<MediaResponseDto>> estatePhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long estateId) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, estateId, "idiot/estate/photo"));
+    public ResponseEntity<List<MediaDto>> estatePhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long estateId) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, estateId, "estate/photo"));
     }
 
     @Operation(summary = "post Video of Estate", description = "매물 동영상 업로드")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaResponseDto.class)))
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
     })
     @Parameters({
             @Parameter(name = "estateId", description = "Estate Id", example = "1")
@@ -57,13 +51,13 @@ public class MediaApiController {
     @PostMapping(value = "/estate/{estateId}/video", consumes = {"multipart/form-data"})
     @ResponseBody()
     //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<MediaResponseDto>> estateVideo(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long estateId) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, estateId, "idiot/estate/video"));
+    public ResponseEntity<List<MediaDto>> estateVideo(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long estateId) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, estateId, "estate/video"));
     }
 
     @Operation(summary = "post Photo of Asset", description = "에셋 사진 업로드")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaResponseDto.class)))
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
     })
     @Parameters({
             @Parameter(name = "assetId", description = "Asset Id", example = "1")
@@ -71,13 +65,13 @@ public class MediaApiController {
     @PostMapping(value = "/asset/{assetId}", consumes = {"multipart/form-data"})
     @ResponseBody()
     //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<MediaResponseDto>> assetPhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long assetId) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, assetId, "idiot/asset"));
+    public ResponseEntity<List<MediaDto>> assetPhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long assetId) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadAsset(multipartFile, assetId, "asset"));
     }
 
     @Operation(summary = "post Photo of CheckList", description = "체크리스트 사진 업로드")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaResponseDto.class)))
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
     })
     @Parameters({
             @Parameter(name = "checklistId", description = "CheckList Id", example = "1")
@@ -85,8 +79,8 @@ public class MediaApiController {
     @PostMapping(value = "/checklist/{checklistId}", consumes = {"multipart/form-data"})
     @ResponseBody()
     //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<MediaResponseDto>> checklistPhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long checklistId) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, checklistId, "idiot/checklist"));
+    public ResponseEntity<List<MediaDto>> checklistPhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long checklistId) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadCheckList(multipartFile, checklistId, "checklist"));
     }
 
 

@@ -61,4 +61,8 @@ public class Media {
         this.asset = asset;
     }
 
+    public void setBroker(Broker broker) {
+        this.asset = asset;
+    }
+
 }

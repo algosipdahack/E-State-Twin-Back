@@ -23,8 +23,8 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaResponseDto saveMedia(MediaSaveRequestDto mediaSaveRequestDto) {
-        return new MediaResponseDto(mediaSaveRequestDto.toEntity());
+    public MediaDto saveMedia(MediaSaveRequestDto mediaSaveRequestDto) {
+        return new MediaDto(mediaDAO.saveMedia(mediaSaveRequestDto.toEntity()));
     }
 
     @Override

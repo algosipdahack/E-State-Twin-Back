@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-//변동사항이 많으므로 따로 빼둠
 @Getter
 @NoArgsConstructor
 @Entity

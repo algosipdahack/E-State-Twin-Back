@@ -1,15 +1,12 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
 import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.*;
@@ -109,7 +106,7 @@ public class Estate extends BaseTimeEntity {
     )
     private List<Media> estateMedia;
 
-
+    //찜한 매물
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL)
     private Set<DipEstate> dipEstates = new HashSet<>();
 
@@ -128,18 +125,25 @@ public class Estate extends BaseTimeEntity {
         this.estateThumbNail = estateThumbNail;
         this.town = town;
     }
+
     public void setOwner(User owner) {
         this.owner = owner;
         this.owner.getOwnEstate().add(this);
     }
+
     public void setBroker(Broker broker) {
         this.broker = broker;
         this.broker.getEstates().add(this);
     }
+
+    public void setTanent(User tanent) {
+        this.tanent = tanent;
+        tanent.setEstate(this);
+    }
+
     //아예 초기화한 후 대입
-    public void addMedia(List<Media> mediaList) {
-        this.estateMedia.clear();
-        this.estateMedia.addAll(mediaList);
+    public void addMedia(Media media) {
+        this.estateMedia.add(media);
     }
 
     public void setHouse(House house) {
@@ -147,10 +151,6 @@ public class Estate extends BaseTimeEntity {
         house.setEstate(this);
     }
 
-    public void setTanent(User tanent) {
-        this.tanent = tanent;
-        tanent.setEstate(this);
-    }
 
     public void setAddress(Address address) {
         this.address = address;

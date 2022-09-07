@@ -41,6 +41,7 @@ public class MediaDAOImpl implements MediaDAO {
         Media media = mediaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
         media.setEstate(estate);
+        estate.addMedia(media);
         return media;
     }
 

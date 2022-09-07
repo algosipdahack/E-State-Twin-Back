@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.user.domain.entity;
 
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,12 @@ public class Broker {
     private User user;
 
     // broker column
-    @Column
-    private String brokerPhoto;
+    @OneToMany(
+            mappedBy = "broker",
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true
+    )
+    private List<Media> brokerPhoto;
 
     @Column
     private String businessName;
@@ -50,4 +55,9 @@ public class Broker {
     )
     private List<Estate> estates = new ArrayList<>();
 
+
+    public void addMedia(List<Media> mediaList) {
+        this.brokerPhoto.clear();
+        this.brokerPhoto.addAll(mediaList);
+    }
 }
