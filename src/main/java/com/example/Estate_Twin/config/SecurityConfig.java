@@ -1,7 +1,12 @@
 package com.example.Estate_Twin.config;
 
-import com.amazonaws.HttpMethod;
-import com.example.Estate_Twin.config.auth.CustomOAuth2UserService;
+import com.example.Estate_Twin.auth.OAuth2FailureHandler;
+import com.example.Estate_Twin.auth.jwt.JwtAccessDeniedHandler;
+import com.example.Estate_Twin.auth.jwt.JwtAuthenticationEntryPoint;
+import com.example.Estate_Twin.auth.jwt.JwtAuthenticationFilter;
+import com.example.Estate_Twin.auth.repository.CookieAuthorizationRequestRepository;
+import com.example.Estate_Twin.auth.service.CustomOAuth2UserService;
+import com.example.Estate_Twin.auth.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
@@ -13,11 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @Slf4j
@@ -26,6 +27,15 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2SuccessHandler successHandler;
+    private final OAuth2FailureHandler failureHandler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    //401 error
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    //403 error
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         String password = passwordEncoder().encode("1111");
@@ -44,20 +54,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .cors()
-                    .and()
+                .and()
+
                 .csrf().disable()
                 .httpBasic().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
 
-                    .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/oauth2/**","/auth/**").permitAll()
                 .anyRequest().permitAll()
-                    .and()
-                        .oauth2Login()
-                            .userInfoEndpoint()
-                                .userService(customOAuth2UserService);
+
+                .and()
+                .formLogin().disable()
+                .oauth2Login()
+                .authorizationEndpoint() // front -> back으로 요청 보내는 URL
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+
+                .and()
+                .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL
+                .baseUri("/oauth2/callback/*")
+
+                .and()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+
+                .and()
+                .successHandler(successHandler)
+                .failureHandler(failureHandler);
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler);
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -65,17 +97,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/swagger-ui/index.html");
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("https://estatetwin.net");
-        configuration.addAllowedOrigin("http://localhost:8080");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-
-        configuration.setMaxAge(7200L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
-        return source;
-    }
 }

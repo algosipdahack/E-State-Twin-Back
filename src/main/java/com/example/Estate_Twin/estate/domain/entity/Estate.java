@@ -33,6 +33,7 @@ public class Estate extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    //s3에 올려진 model src
     @Column
     private String model;
 
@@ -48,8 +49,18 @@ public class Estate extends BaseTimeEntity {
     @Column
     private State state;
 
+    //s3에 올려진 3D 모델의 썸네일
     @Column
     private String thumbnail3D;
+
+    @Column
+    private boolean isPosted;
+
+    @Column
+    private boolean ownerConfirmYN;
+
+    @Column
+    private boolean brokerConfirmYN;
 
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
@@ -62,7 +73,6 @@ public class Estate extends BaseTimeEntity {
 
     @OneToOne(mappedBy = "estate")
     private Address address;
-
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -82,14 +92,14 @@ public class Estate extends BaseTimeEntity {
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}
     )
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}
     )
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "tanent_id")
     private User tanent;
 
     @OneToMany(
@@ -98,6 +108,7 @@ public class Estate extends BaseTimeEntity {
             orphanRemoval = true
     )
     private List<Media> estateMedia;
+
 
     @OneToMany(mappedBy = "estate", cascade = CascadeType.ALL)
     private Set<DipEstate> dipEstates = new HashSet<>();
@@ -160,6 +171,9 @@ public class Estate extends BaseTimeEntity {
     public void prePersist() {
         this.estateMedia = new ArrayList<>();
         this.state = this.state == null ? BEFORE : this.state;
+        this.isPosted = false;
+        this.ownerConfirmYN = false;
+        this.brokerConfirmYN = false;
     }
 
 }

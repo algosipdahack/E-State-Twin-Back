@@ -22,14 +22,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public static final QBroker broker = new QBroker("broker");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
-
     public final StringPath agentName = createString("agentName");
-
-    //inherited
-    public final DateTimePath<java.util.Date> birthday = _super.birthday;
-
-    public final com.example.Estate_Twin.address.data.entity.QAddress broker_address;
 
     public final StringPath brokerageRegistrationLicense = createString("brokerageRegistrationLicense");
 
@@ -43,25 +36,11 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public final StringPath businessRegistrationNumber = createString("businessRegistrationNumber");
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
-
-    //inherited
-    public final StringPath email = _super.email;
-
     public final ListPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> estates = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createList("estates", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
 
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
-
-    //inherited
-    public final StringPath name = _super.name;
-
-    //inherited
-    public final StringPath phone = _super.phone;
+    public final QUser user;
 
     public QBroker(String variable) {
         this(Broker.class, forVariable(variable), INITS);
@@ -81,7 +60,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public QBroker(Class<? extends Broker> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.broker_address = inits.isInitialized("broker_address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("broker_address"), inits.get("broker_address")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

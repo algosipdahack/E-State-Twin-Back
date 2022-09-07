@@ -30,12 +30,16 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.user.domain.entity.QBroker broker;
 
+    public final BooleanPath brokerConfirmYN = createBoolean("brokerConfirmYN");
+
     public final StringPath city = createString("city");
 
     public final StringPath content = createString("content");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
+
+    public final SetPath<DipEstate, QDipEstate> dipEstates = this.<DipEstate, QDipEstate>createSet("dipEstates", DipEstate.class, QDipEstate.class, PathInits.DIRECT2);
 
     public final QEstateHit estateHit;
 
@@ -47,6 +51,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isPosted = createBoolean("isPosted");
+
     public final StringPath model = createString("model");
 
     //inherited
@@ -54,9 +60,13 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.user.domain.entity.QUser owner;
 
+    public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
+
     public final EnumPath<Rank> rank = createEnum("rank", Rank.class);
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
+
+    public final com.example.Estate_Twin.user.domain.entity.QUser tanent;
 
     public final StringPath thumbnail3D = createString("thumbnail3D");
 
@@ -87,6 +97,7 @@ public class QEstate extends EntityPathBase<Estate> {
         this.estateHit = inits.isInitialized("estateHit") ? new QEstateHit(forProperty("estateHit"), inits.get("estateHit")) : null;
         this.house = inits.isInitialized("house") ? new com.example.Estate_Twin.house.domain.entity.QHouse(forProperty("house"), inits.get("house")) : null;
         this.owner = inits.isInitialized("owner") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("owner"), inits.get("owner")) : null;
+        this.tanent = inits.isInitialized("tanent") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("tanent"), inits.get("tanent")) : null;
     }
 
 }

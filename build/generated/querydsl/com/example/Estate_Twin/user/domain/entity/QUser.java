@@ -22,36 +22,39 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final com.example.Estate_Twin.util.QBaseTimeEntity _super = new com.example.Estate_Twin.util.QBaseTimeEntity(this);
 
-    //inherited
-    public final DateTimePath<java.util.Date> birthday = _super.birthday;
+    public final com.example.Estate_Twin.address.data.entity.QAddress address;
 
-    public final com.example.Estate_Twin.address.data.entity.QAddress broker_address;
+    public final EnumPath<AuthProvider> authProvider = createEnum("authProvider", AuthProvider.class);
+
+    public final DatePath<java.time.LocalDate> birthday = createDate("birthday", java.time.LocalDate.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final ListPath<com.example.Estate_Twin.estate.domain.entity.DipRecentEstate, com.example.Estate_Twin.estate.domain.entity.QDipRecentEstate> dipRecentEstates = this.<com.example.Estate_Twin.estate.domain.entity.DipRecentEstate, com.example.Estate_Twin.estate.domain.entity.QDipRecentEstate>createList("dipRecentEstates", com.example.Estate_Twin.estate.domain.entity.DipRecentEstate.class, com.example.Estate_Twin.estate.domain.entity.QDipRecentEstate.class, PathInits.DIRECT2);
+    public final SetPath<com.example.Estate_Twin.estate.domain.entity.DipEstate, com.example.Estate_Twin.estate.domain.entity.QDipEstate> dipEstates = this.<com.example.Estate_Twin.estate.domain.entity.DipEstate, com.example.Estate_Twin.estate.domain.entity.QDipEstate>createSet("dipEstates", com.example.Estate_Twin.estate.domain.entity.DipEstate.class, com.example.Estate_Twin.estate.domain.entity.QDipEstate.class, PathInits.DIRECT2);
 
-    //inherited
-    public final StringPath email = _super.email;
+    public final StringPath email = createString("email");
 
-    public final ListPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> estates = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createList("estates", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
+    public final EnumPath<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType = createEnum("estateType", com.example.Estate_Twin.estate.domain.entity.EstateType.class);
 
-    public final StringPath estateType = createString("estateType");
-
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
 
-    //inherited
-    public final StringPath name = _super.name;
+    public final StringPath name = createString("name");
 
-    //inherited
-    public final StringPath phone = _super.phone;
+    public final ListPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> ownEstate = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createList("ownEstate", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
+
+    public final StringPath phone = createString("phone");
+
+    public final StringPath refreshToken = createString("refreshToken");
+
+    public final EnumPath<Role> role = createEnum("role", Role.class);
+
+    public final com.example.Estate_Twin.estate.domain.entity.QEstate tanentEstate;
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
@@ -71,7 +74,8 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.broker_address = inits.isInitialized("broker_address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("broker_address"), inits.get("broker_address")) : null;
+        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address"), inits.get("address")) : null;
+        this.tanentEstate = inits.isInitialized("tanentEstate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("tanentEstate"), inits.get("tanentEstate")) : null;
     }
 
 }

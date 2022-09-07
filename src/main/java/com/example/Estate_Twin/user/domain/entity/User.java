@@ -1,15 +1,12 @@
 package com.example.Estate_Twin.user.domain.entity;
 
 import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.estate.domain.entity.DipEstate;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -36,6 +33,12 @@ public class User extends BaseTimeEntity {
     @Email
     @NotBlank(message = "아이디는 null일 수 없습니다!")
     private String email;
+
+    @Column
+    private String refreshToken;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
     @OneToOne(mappedBy = "user")
     private Address address;
@@ -69,7 +72,8 @@ public class User extends BaseTimeEntity {
 
     @Builder
     public User(LocalDate birthday, String phone, String name, String email,
-                Address address, EstateType estateType, Role role) {
+                Address address, EstateType estateType, Role role,
+                AuthProvider authProvider, String refreshToken) {
         this.birthday = birthday;
         this.phone = phone;
         this.name = name;
@@ -77,6 +81,8 @@ public class User extends BaseTimeEntity {
         this.address = address;
         this.estateType = estateType;
         this.role = role;
+        this.authProvider = authProvider;
+        this.refreshToken = refreshToken;
     }
     public void setEstate(Estate estate) {
         this.tanentEstate = estate;
@@ -87,7 +93,4 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public String getRoleKey() {
-        return this.role.getKey();
-    }
 }

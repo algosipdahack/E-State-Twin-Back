@@ -24,6 +24,8 @@ public class QMedia extends EntityPathBase<Media> {
 
     public final com.example.Estate_Twin.asset.data.entity.QAsset asset;
 
+    public final com.example.Estate_Twin.user.domain.entity.QBroker broker;
+
     public final com.example.Estate_Twin.checklist.data.entity.QCheckList checkList;
 
     public final com.example.Estate_Twin.estate.domain.entity.QEstate estate;
@@ -33,8 +35,6 @@ public class QMedia extends EntityPathBase<Media> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath origFileName = createString("origFileName");
-
-    public final com.example.Estate_Twin.user.domain.entity.QUser user;
 
     public QMedia(String variable) {
         this(Media.class, forVariable(variable), INITS);
@@ -55,9 +55,9 @@ public class QMedia extends EntityPathBase<Media> {
     public QMedia(Class<? extends Media> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.asset = inits.isInitialized("asset") ? new com.example.Estate_Twin.asset.data.entity.QAsset(forProperty("asset"), inits.get("asset")) : null;
+        this.broker = inits.isInitialized("broker") ? new com.example.Estate_Twin.user.domain.entity.QBroker(forProperty("broker"), inits.get("broker")) : null;
         this.checkList = inits.isInitialized("checkList") ? new com.example.Estate_Twin.checklist.data.entity.QCheckList(forProperty("checkList"), inits.get("checkList")) : null;
         this.estate = inits.isInitialized("estate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("estate"), inits.get("estate")) : null;
-        this.user = inits.isInitialized("user") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }

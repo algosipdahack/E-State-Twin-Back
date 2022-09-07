@@ -46,6 +46,8 @@ public class QAddress extends EntityPathBase<Address> {
 
     public final StringPath unit = createString("unit");
 
+    public final com.example.Estate_Twin.user.domain.entity.QUser user;
+
     public QAddress(String variable) {
         this(Address.class, forVariable(variable), INITS);
     }
@@ -65,6 +67,7 @@ public class QAddress extends EntityPathBase<Address> {
     public QAddress(Class<? extends Address> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.estate = inits.isInitialized("estate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("estate"), inits.get("estate")) : null;
+        this.user = inits.isInitialized("user") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("user"), inits.get("user")) : null;
     }
 
 }
