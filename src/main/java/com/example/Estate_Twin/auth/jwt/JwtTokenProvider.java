@@ -6,15 +6,12 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.ResponseCookie;
+import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.*;
@@ -38,8 +35,7 @@ public class JwtTokenProvider {
         this.SECRET_KEY = Base64.getEncoder().encodeToString(secretKey.getBytes());
         this.COOKIE_REFRESH_TOKEN_KEY = cookieKey;
     }
-
-    public String createAccessToken(Authentication authentication) {
+    public Token createToken(Authentication authentication) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
 
@@ -51,7 +47,7 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
         Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
                 .signWith(key,SignatureAlgorithm.HS512)
                 .setSubject(userId)
                 .claim(AUTHORITIES_KEY, role)
@@ -59,32 +55,19 @@ public class JwtTokenProvider {
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
-    }
 
-    public void createRefreshToken(Authentication authentication, HttpServletResponse response) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
-        Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-
+        validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
         String refreshToken = Jwts.builder()
                 .signWith(key,SignatureAlgorithm.HS512)
                 .setIssuer("debrains")
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
-
         saveRefreshToken(authentication, refreshToken);
 
-        ResponseCookie cookie = ResponseCookie.from(COOKIE_REFRESH_TOKEN_KEY,refreshToken)
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("Lax")
-                .maxAge(REFRESH_TOKEN_EXPIRE_LENGTH/1000)
-                .path("/")
-                .build();
-
-        response.addHeader("Set-Cookie", cookie.toString());
+        return new Token(accessToken,refreshToken);
     }
+
 
     public void saveRefreshToken(Authentication authentication, String refreshToken) {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();

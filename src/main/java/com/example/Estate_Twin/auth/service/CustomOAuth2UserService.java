@@ -18,7 +18,6 @@ import java.util.Optional;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
 
-
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -55,7 +54,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = User.builder()
                 .email(oAuth2UserInfo.getEmail())
                 .authProvider(authProvider)
-                .role(Role.TANENT)
+                .role(Role.USER)
                 .name(oAuth2UserInfo.getName())
                 .build();
         return userRepository.save(user);

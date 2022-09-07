@@ -4,8 +4,7 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import javax.servlet.http.*;
 import java.io.Serializable;
-import java.util.Base64;
-import java.util.Optional;
+import java.util.*;
 
 public class CookieUtil {
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {

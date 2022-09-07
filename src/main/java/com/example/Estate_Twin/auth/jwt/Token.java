@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.auth.jwt;
 
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 @ToString
 @Getter

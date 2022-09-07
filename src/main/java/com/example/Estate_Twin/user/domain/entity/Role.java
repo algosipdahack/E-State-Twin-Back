@@ -1,13 +1,12 @@
 package com.example.Estate_Twin.user.domain.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.Arrays;
 @Getter
 @RequiredArgsConstructor
 public enum Role {
-    OWNER("ROLE_OWNER","집주인"), TANENT("ROLE_TANENT","세입자");
+    USER("ROLE_USER","회원"), ADMIN("ROLE_ADMIN","관리자");
     private final String key;
     private final String title;
 

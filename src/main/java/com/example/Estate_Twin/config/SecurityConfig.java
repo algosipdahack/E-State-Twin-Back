@@ -1,9 +1,6 @@
 package com.example.Estate_Twin.config;
 
-import com.example.Estate_Twin.auth.OAuth2FailureHandler;
-import com.example.Estate_Twin.auth.jwt.JwtAccessDeniedHandler;
-import com.example.Estate_Twin.auth.jwt.JwtAuthenticationEntryPoint;
-import com.example.Estate_Twin.auth.jwt.JwtAuthenticationFilter;
+import com.example.Estate_Twin.auth.jwt.*;
 import com.example.Estate_Twin.auth.repository.CookieAuthorizationRequestRepository;
 import com.example.Estate_Twin.auth.service.CustomOAuth2UserService;
 import com.example.Estate_Twin.auth.OAuth2SuccessHandler;
@@ -12,8 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
-    private final OAuth2FailureHandler failureHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     //401 error
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -78,12 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .baseUri("/oauth2/callback/*")
 
                 .and()
-                .userInfoEndpoint()
+                .userInfoEndpoint() // Provider로부터 획득한 유저정보를 다룰 service class를 지정
                 .userService(customOAuth2UserService)
 
                 .and()
-                .successHandler(successHandler)
-                .failureHandler(failureHandler);
+                .successHandler(successHandler);
 
         http.exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)

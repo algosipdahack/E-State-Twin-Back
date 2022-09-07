@@ -1,11 +1,9 @@
 package com.example.Estate_Twin.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 @Configuration
 public class QueryDSLConfiguration {
