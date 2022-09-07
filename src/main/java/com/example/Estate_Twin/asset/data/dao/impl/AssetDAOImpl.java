@@ -9,7 +9,6 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 @AllArgsConstructor

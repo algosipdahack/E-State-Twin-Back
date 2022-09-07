@@ -128,17 +128,17 @@ public class Estate extends BaseTimeEntity {
 
     public void setOwner(User owner) {
         this.owner = owner;
-        this.owner.getOwnEstate().add(this);
+        this.owner.addOwnEstate(this);
     }
 
     public void setBroker(Broker broker) {
         this.broker = broker;
-        this.broker.getEstates().add(this);
+        this.broker.addEstate(this);
     }
 
     public void setTanent(User tanent) {
         this.tanent = tanent;
-        tanent.setEstate(this);
+        tanent.setTanentEstate(this);
     }
 
     //아예 초기화한 후 대입

@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.house.domain.entity.House;
 import lombok.*;
 
 @Getter

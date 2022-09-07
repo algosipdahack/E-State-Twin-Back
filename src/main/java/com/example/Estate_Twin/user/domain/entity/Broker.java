@@ -17,18 +17,7 @@ public class Broker {
     @Column(name = "broker_id")
     private Long id;
 
-    //단방향
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     // broker column
-    @OneToMany(
-            mappedBy = "broker",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
-    private List<Media> brokerPhoto;
 
     @Column
     private String businessName;
@@ -48,6 +37,11 @@ public class Broker {
     @Column
     private String brokerageRegistrationLicense;
 
+    //단방향
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(
             mappedBy = "broker",
             cascade = {CascadeType.ALL},
@@ -55,9 +49,23 @@ public class Broker {
     )
     private List<Estate> estates = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "broker",
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true
+    )
+    private List<Media> brokerPhoto;
 
-    public void addMedia(List<Media> mediaList) {
-        this.brokerPhoto.clear();
-        this.brokerPhoto.addAll(mediaList);
+
+    public void addMedia(Media media) {
+        this.brokerPhoto.add(media);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addEstate(Estate estate) {
+        this.estates.add(estate);
     }
 }

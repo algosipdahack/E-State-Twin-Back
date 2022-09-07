@@ -40,15 +40,15 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
-    @OneToOne(mappedBy = "user")
-    private Address address;
-
     @Column
     private EstateType estateType;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToOne(mappedBy = "user")
+    private Address address;
 
     //세입중인 매물
     @OneToOne(mappedBy = "tanent")
@@ -60,7 +60,7 @@ public class User extends BaseTimeEntity {
             cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
-    private List<Estate> ownEstate = new ArrayList<>();
+    private List<Estate> ownEstates = new ArrayList<>();
 
     //찜한 매물
     @OneToMany(
@@ -84,13 +84,18 @@ public class User extends BaseTimeEntity {
         this.authProvider = authProvider;
         this.refreshToken = refreshToken;
     }
-    public void setEstate(Estate estate) {
+    public void setTanentEstate(Estate estate) {
         this.tanentEstate = estate;
     }
-
-    public User setName(String name) {
-        this.name = name;
-        return this;
+    public void setAddress(Address address) {
+        this.address = address;
+        this.address.setUser(this);
+    }
+    public void addOwnEstate(Estate estate) {
+        this.ownEstates.add(estate);
     }
 
+    public void addDipEstate(DipEstate dipEstate) {
+        this.dipEstates.add(dipEstate);
+    }
 }

@@ -8,14 +8,10 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @Component
 @AllArgsConstructor

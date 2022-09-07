@@ -1,11 +1,9 @@
 package com.example.Estate_Twin.address.service.impl;
 
 import com.example.Estate_Twin.address.data.dao.AddressDAO;
-import com.example.Estate_Twin.address.data.repository.AddressRepository;
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.service.AddressService;
-import com.example.Estate_Twin.address.web.dto.AddressResponseDto;
-import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
-import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
+import com.example.Estate_Twin.address.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +19,15 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponseDto saveAddress(AddressSaveRequestDto addressSaveRequestDto) {
-        return null;
+        return new AddressResponseDto(addressDAO.saveAddress(addressSaveRequestDto.toEntity()));
     }
 
     @Override
     public AddressResponseDto updateAddress(Long id, AddressUpdateRequestDto addressUpdateRequestDto) {
-        return null;
+        Address address = addressDAO.updateAddress(id, addressUpdateRequestDto.getCity(), addressUpdateRequestDto.getBorough(),
+                addressUpdateRequestDto.getTown(), addressUpdateRequestDto.getComplexName(), addressUpdateRequestDto.getBlock(),
+                addressUpdateRequestDto.getUnit(), addressUpdateRequestDto.getRoadName(), addressUpdateRequestDto.getMainBuildingNumber(),
+                addressUpdateRequestDto.getSubBuildingNumber(), addressUpdateRequestDto.getBuildingName());
+        return new AddressResponseDto(address);
     }
 }

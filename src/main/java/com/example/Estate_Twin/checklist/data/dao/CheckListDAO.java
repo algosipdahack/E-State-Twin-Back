@@ -5,7 +5,6 @@ import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface CheckListDAO {
     CheckList saveCheckList(CheckList checkList, Asset asset);

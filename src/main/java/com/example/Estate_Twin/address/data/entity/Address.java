@@ -79,4 +79,7 @@ public class Address {
     public void setEstate(Estate estate) {
         this.estate = estate;
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

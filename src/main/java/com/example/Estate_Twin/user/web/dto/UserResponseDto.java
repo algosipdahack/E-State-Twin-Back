@@ -34,7 +34,7 @@ public class UserResponseDto {
         this.role = user.getRole();
         this.tanentEstate = new EstateDto(user.getTanentEstate());
         this.ownEstate = new ArrayList<>();
-        user.getOwnEstate().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
+        user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
         this.dipEstates = new HashSet<>();
         user.getDipEstates().forEach(dipEstate -> this.dipEstates.add(new DipEstateDto(dipEstate)));
     }
