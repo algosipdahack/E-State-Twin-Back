@@ -61,9 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/oauth2/**","/auth/**").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().permitAll();
 
-                .and()
+                /*.and()
                 .formLogin().disable()
                 .oauth2Login()
                 .authorizationEndpoint() // front -> back으로 요청 보내는 URL
@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler);
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);*/
     }
 
     @Override
