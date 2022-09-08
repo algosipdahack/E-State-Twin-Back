@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.config;
 
+import com.example.Estate_Twin.auth.OAuth2FailureHandler;
 import com.example.Estate_Twin.auth.jwt.*;
 import com.example.Estate_Twin.auth.repository.CookieAuthorizationRequestRepository;
 import com.example.Estate_Twin.auth.service.CustomOAuth2UserService;
@@ -24,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
+    private final OAuth2FailureHandler failureHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     //401 error
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -77,7 +79,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService)
 
                 .and()
-                .successHandler(successHandler);
+                .successHandler(successHandler)
+                .failureHandler(failureHandler);
 
         http.exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)

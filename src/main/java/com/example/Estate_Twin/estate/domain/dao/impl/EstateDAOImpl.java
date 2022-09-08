@@ -19,6 +19,7 @@ public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
     private ContractStateRepository contractStateRepository;
+
     @Override
     public Estate saveEstate(Estate estate, House house, Address address) {
         estate.setHouse(house);

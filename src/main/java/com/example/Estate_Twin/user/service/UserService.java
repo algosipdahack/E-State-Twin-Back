@@ -1,9 +1,8 @@
 package com.example.Estate_Twin.user.service;
 
-import com.example.Estate_Twin.user.web.dto.UserResponseDto;
-import com.example.Estate_Twin.user.web.dto.UserSignUpDto;
+import com.example.Estate_Twin.user.web.dto.*;
 
 public interface UserService {
     UserResponseDto getUser(Long id);
-    UserResponseDto signUp(Long id, UserSignUpDto userSignUpDto);
+    UserResponseDto signUp(Long userId, UserSignUpDto userSignUpDto);
 }

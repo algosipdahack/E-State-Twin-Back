@@ -56,6 +56,16 @@ public class Broker {
     )
     private List<Media> brokerPhoto;
 
+    @Builder
+    public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
+                  String businessLicense, String brokerageRegistrationLicense) {
+        this.businessName = businessName;
+        this.agentName = agentName;
+        this.brokerageRegistrationNumber = brokerageRegistrationNumber;
+        this.businessRegistrationNumber = businessRegistrationNumber;
+        this.businessLicense = businessLicense;
+        this.brokerageRegistrationLicense = brokerageRegistrationLicense;
+    }
 
     public void addMedia(Media media) {
         this.brokerPhoto.add(media);

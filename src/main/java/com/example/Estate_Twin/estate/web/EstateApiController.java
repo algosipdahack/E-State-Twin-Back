@@ -20,6 +20,7 @@ import java.util.List;
 public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
+
     //리스트
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
     @ApiResponses({
@@ -85,6 +86,50 @@ public class EstateApiController {
         EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
+
+    //TODO
+    @Operation(summary = "Allow broker of estate", description = "중개인의 매물 등록 확인")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
+    })
+    @Parameters({
+            @Parameter(name = "estateId", description = "Estate Id", example = "1")
+    })
+    @PutMapping("detail/{estateId}")
+    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    ) {
+        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
+    }
+
+    @Operation(summary = "Allow owner of estate", description = "집주인의 매물 등록 확인")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
+    })
+    @Parameters({
+            @Parameter(name = "estateId", description = "Estate Id", example = "1")
+    })
+    @PutMapping("detail/{estateId}")
+    public ResponseEntity<EstateResponseDto> allowOwner(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    ) {
+        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
+    }
+
+    @Operation(summary = "enroll tanent of estate", description = "세입자 등록")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
+    })
+    @Parameters({
+            @Parameter(name = "estateId", description = "Estate Id", example = "1")
+    })
+    @PutMapping("detail/{estateId}")
+    public ResponseEntity<EstateResponseDto> enrollTanent(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    ) {
+        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
+    }
+
 
     /*@Operation(summary = "dip of Estate", description = "매물 찜하기")
     @ApiResponses({

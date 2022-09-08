@@ -31,6 +31,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(user.getId()));
     }
 
+    @Operation(summary = "signup of user", description = "회원가입")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))
+    })
+    @GetMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, UserSignUpDto userSignUpDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(user.getId(),userSignUpDto));
     }
