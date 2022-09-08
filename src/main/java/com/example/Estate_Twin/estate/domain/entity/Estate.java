@@ -141,6 +141,13 @@ public class Estate extends BaseTimeEntity {
         tanent.setTanentEstate(this);
     }
 
+    public void setBrokerConfirmY() {
+        this.brokerConfirmYN = true;
+    }
+    public void setOwnerConfirmY() {
+        this.ownerConfirmYN = true;
+    }
+
     //아예 초기화한 후 대입
     public void addMedia(Media media) {
         this.estateMedia.add(media);

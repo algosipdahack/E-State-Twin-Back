@@ -10,6 +10,8 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
 
+import static com.example.Estate_Twin.contractstate.domain.entity.State.BEFORE;
+
 @Getter
 @NoArgsConstructor
 @Entity
@@ -36,6 +38,9 @@ public class User extends BaseTimeEntity {
 
     @Column
     private String refreshToken;
+
+    @Column
+    private boolean isBroker;
 
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
@@ -97,5 +102,12 @@ public class User extends BaseTimeEntity {
 
     public void addDipEstate(DipEstate dipEstate) {
         this.dipEstates.add(dipEstate);
+    }
+    public void setIsBroker() {
+        this.isBroker = true;
+    }
+    @PrePersist
+    public void prePersist() {
+        this.isBroker = false;
     }
 }

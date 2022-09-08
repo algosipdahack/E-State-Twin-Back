@@ -3,13 +3,17 @@ package com.example.Estate_Twin.estate.web;
 import com.example.Estate_Twin.estate.service.DipEstateService;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.media.service.AwsS3Service;
+import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
 public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
+    private final AwsS3Service awsS3Service;
 
     //리스트
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
@@ -68,9 +73,10 @@ public class EstateApiController {
             @Parameter(name = "houseId", description = "House Id", example = "1")
     })
     @PostMapping("detail/{houseId}")
-    public ResponseEntity<EstateResponseDto> saveEstate(@PathVariable Long houseId, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
-        EstateResponseDto estateResponseDto = estateService.saveEstate(estateSaveRequestDto,houseId);
-        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
+    public ResponseEntity<EstateDto> saveEstate(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+        EstateDto estateDto = estateService.saveEstate(estateSaveRequestDto,houseId);
+        awsS3Service.uploadEstate(multipartFiles,estateDto.getId(),"estate");
+        return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 수정하기")
@@ -95,10 +101,11 @@ public class EstateApiController {
     @Parameters({
             @Parameter(name = "estateId", description = "Estate Id", example = "1")
     })
-    @PutMapping("detail/{estateId}")
-    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    @PutMapping("detail/{estateId}/postBroker")
+    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user
     ) {
-        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        //user가 해당 매물의 broker가 맞는지 확인
+        EstateResponseDto estateResponseDto = estateService.allowPost(estateId,user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
@@ -109,13 +116,14 @@ public class EstateApiController {
     @Parameters({
             @Parameter(name = "estateId", description = "Estate Id", example = "1")
     })
-    @PutMapping("detail/{estateId}")
-    public ResponseEntity<EstateResponseDto> allowOwner(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
+    @PutMapping("detail/{estateId}/postOwner")
+    public ResponseEntity<EstateResponseDto> allowOwner(@PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user
     ) {
-        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        //user가 해당 매물의 집주인이 맞는지 확인
+        EstateResponseDto estateResponseDto = estateService.allowPost(estateId,user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
-
+/*
     @Operation(summary = "enroll tanent of estate", description = "세입자 등록")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))

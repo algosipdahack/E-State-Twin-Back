@@ -4,14 +4,10 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.service.CheckListService;
-import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
-import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
-import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
+import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -26,8 +22,8 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
+    public CheckListDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
+        return new CheckListDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
     }
 
     @Override

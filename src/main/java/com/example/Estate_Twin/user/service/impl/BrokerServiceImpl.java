@@ -12,8 +12,8 @@ public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAO brokerDAO;
     private final UserDAO userDAO;
     @Override
-    public BrokerResponseDto getBroker(Long brokerId) {
-        return new BrokerResponseDto(brokerDAO.findBroker(brokerId));
+    public BrokerResponseDto getBroker(Long userId) {
+        return new BrokerResponseDto(brokerDAO.findBroker(userId));
     }
 
     @Override

@@ -9,10 +9,11 @@ import java.util.List;
 
 public interface EstateService {
     EstateResponseDto getEstate(Long id);
-    EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto, Long houseId);
+    EstateDto saveEstate(EstateSaveRequestDto estateSaveRequestDto, Long houseId);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     Estate addMedia(Long id, Media media);
     void clearMedia(Long id);
     List<EstateListResponseDto> getAllEstate();
     List<EstateListResponseDto> getEstateCustomized(String borough);
+    EstateResponseDto allowPost(Long estateId, Long userId);
 }

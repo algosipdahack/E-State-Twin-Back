@@ -83,6 +83,18 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
+    public Estate allowBroker(Estate estate) {
+        estate.setBrokerConfirmY();
+        return estateRepository.save(estate);
+    }
+
+    @Override
+    public Estate allowOwner(Estate estate) {
+        estate.setOwnerConfirmY();
+        return estateRepository.save(estate);
+    }
+
+    @Override
     public Estate addEstateMedia(Long id, Media media) {
         Estate estate = findEstate(id);
         estate.addMedia(media);

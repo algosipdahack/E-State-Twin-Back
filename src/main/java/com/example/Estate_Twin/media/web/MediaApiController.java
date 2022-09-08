@@ -27,7 +27,7 @@ import java.util.List;
 public class MediaApiController {
     private final AwsS3ServiceImpl awsS3ServiceImpl;
 
-    @Operation(summary = "post Photo of Estate", description = "매물 사진 업로드")
+    /*@Operation(summary = "post Photo of Estate", description = "매물 사진 업로드")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
     })

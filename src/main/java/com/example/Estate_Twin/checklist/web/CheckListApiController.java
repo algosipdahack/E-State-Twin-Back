@@ -2,6 +2,7 @@ package com.example.Estate_Twin.checklist.web;
 
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
+import com.example.Estate_Twin.media.service.AwsS3Service;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -9,6 +10,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Tag(name = "CheckList", description = "체크리스트 API")
 @RequiredArgsConstructor
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/checklist")
 public class CheckListApiController {
     private final CheckListService checkListService;
-
+    private final AwsS3Service awsS3Service;
     @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
@@ -38,9 +42,10 @@ public class CheckListApiController {
             @Parameter(name = "assetId", description = "Asset Id", example = "1")
     })
     @PostMapping("/{assetId}")
-    public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
-        CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
-        return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
+    public ResponseEntity<CheckListDto> saveCheckList(@PathVariable Long assetId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+        CheckListDto checkListDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
+        awsS3Service.uploadCheckList(multipartFiles,checkListDto.getId(),"checklist");
+        return ResponseEntity.status(HttpStatus.OK).body(checkListDto);
     }
 
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")

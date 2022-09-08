@@ -2,8 +2,7 @@ package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.UserService;
-import com.example.Estate_Twin.user.web.dto.UserResponseDto;
-import com.example.Estate_Twin.user.web.dto.UserSignUpDto;
+import com.example.Estate_Twin.user.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -27,7 +26,7 @@ public class UserController {
     })
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getcurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(user.getId()));
     }
 

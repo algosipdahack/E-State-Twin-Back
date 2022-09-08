@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.*;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.estate.service.EstateService;
-import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.media.service.MediaService;
 import com.example.Estate_Twin.media.web.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @PropertySource("classpath:application-s3.properties")
 @Slf4j
-public class AwsS3ServiceImpl {
+public class AwsS3ServiceImpl implements AwsS3Service {
     private final AmazonS3Client amazonS3Client;
     private final MediaService mediaService;
     private final EstateService estateService;
@@ -70,7 +70,7 @@ public class AwsS3ServiceImpl {
         return mediaDtoList;
     }
 
-    public List<MediaDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName) throws IOException {
+    public List<MediaDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName) {
         //파일 이름 받아오기
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaDto> mediaDtoList = new ArrayList<>();
@@ -123,14 +123,18 @@ public class AwsS3ServiceImpl {
 
         List<String> fileNameList = new ArrayList<>();
         multipartFiles.forEach(file -> {
+            //파일 확장자 검증
             String fileName = createFileName(file.getOriginalFilename());
+            boolean flag = checkExt(fileName); //사진이면 true, 동영상이면 false
+            String newDirName = flag ? dirName +"photo" : dirName +"video";
+
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
             fileNameList.add(fileName);
             //S3 upload
             try(InputStream inputStream = file.getInputStream()) {
-                amazonS3Client.putObject(new PutObjectRequest(bucket, dirName+"/"+fileName, inputStream, objectMetadata)
+                amazonS3Client.putObject(new PutObjectRequest(bucket, newDirName+"/"+fileName, inputStream, objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead)); // file permission
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
@@ -138,5 +142,19 @@ public class AwsS3ServiceImpl {
 
         });
         return fileNameList;
+    }
+
+    public boolean checkExt(String fileName) {
+        String ext = getFileExtension(fileName);
+        boolean flag;
+        // 사진일 때
+        if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "bmp") {
+            flag = true;
+        } else if (ext == "mp4") { //동영상일 때
+            flag = false;
+        } else { // 이상한 확장자일 때
+            throw new IllegalArgumentException("사진은 jpg, png, jpeg, bmp 확장자만 가능하고 동영상은 mp4 확장자만 가능합니다!");
+        }
+        return flag;
     }
 }

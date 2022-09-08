@@ -2,22 +2,19 @@ package com.example.Estate_Twin.estate.service.impl;
 
 import com.example.Estate_Twin.address.data.dao.AddressDAO;
 import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.address.web.dto.AddressResponseDto;
-import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
-import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
-import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.user.domain.dao.UserDAO;
+import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +22,7 @@ public class EstateServiceImpl implements EstateService {
     private final EstateDAO estateDAO;
     private final HouseDAO houseDAO;
     private final AddressDAO addressDAO;
+    private final UserDAO userDAO;
 
     @Override
     public EstateResponseDto getEstate(Long id) {
@@ -32,9 +30,9 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
+    public EstateDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
         Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
-        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
+        return new EstateDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
     }
 
     @Override
@@ -77,5 +75,19 @@ public class EstateServiceImpl implements EstateService {
             estateListResponseDtos.add(new EstateListResponseDto(estate));
         });
         return estateListResponseDtos;
+    }
+
+    @Override
+    public EstateResponseDto allowPost(Long estateId, Long userId) {
+        User user = userDAO.findUser(userId);
+        //유저 role 검증
+        //broker라면
+        if (user.isBroker()) {
+            //TODO 진짜 매물의 broker인지 확인
+
+            return new EstateResponseDto(estateDAO.allowBroker(estateDAO.findEstate(estateId)));
+        } else{
+            return new EstateResponseDto(estateDAO.allowOwner(estateDAO.findEstate(estateId)));
+        }
     }
 }

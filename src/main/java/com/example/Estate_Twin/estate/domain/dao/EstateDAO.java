@@ -17,4 +17,6 @@ public interface EstateDAO {
     List<Estate> findEstateCustomized(String borough);
     List<Estate> findAllEstate();
     void clearMedia(Estate estate);
+    Estate allowBroker(Estate estate);
+    Estate allowOwner(Estate estate);
 }
