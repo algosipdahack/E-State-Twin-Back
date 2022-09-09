@@ -52,24 +52,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors()
                 .and()
+
                 .csrf().disable()
                 .httpBasic().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+
+                .authorizeRequests()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/oauth2/**","/auth/**").permitAll()
+                .anyRequest().permitAll()
 
                 .and()
-                .authorizeRequests()
-//                .antMatchers("/user").hasRole("USER")
-//                .antMatchers("/manager").hasRole("MANAGER")
-//                .antMatchers("/admin").hasRole("ADMIN")
-//                .antMatchers(
-//                        "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",
-//                        "/h2-console/**", "/favicion.ico", "api/estate/detail/**", "/upload"
-                .antMatchers("/swagger-resources/**").permitAll()
-                .anyRequest().permitAll()
-//                .anyRequest().authenticated()
+                .formLogin().disable()
+                .oauth2Login()
+                .authorizationEndpoint() // front -> back으로 요청 보내는 URL
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
+
                 .and()
-                .formLogin();
+                .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL
+                .baseUri("/oauth2/callback/*")
+
+                .and()
+                .userInfoEndpoint() // Provider로부터 획득한 유저정보를 다룰 service class를 지정
+                .userService(customOAuth2UserService)
+
+                .and()
+                .successHandler(successHandler)
+                .failureHandler(failureHandler);
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler);
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
