@@ -54,7 +54,7 @@ public class Broker {
             cascade = {CascadeType.ALL},
             orphanRemoval = true
     )
-    private List<Media> brokerPhoto;
+    private List<Media> brokerPhoto = new ArrayList<>();
 
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
