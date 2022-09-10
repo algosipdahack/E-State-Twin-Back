@@ -20,7 +20,7 @@ plugins {
 }
 group 'com.example'
 version '1.0-SNAPSHOT'
-sourceCompatibility = b1.8
+sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
