@@ -13,20 +13,18 @@ public class CheckListSaveRequestDto {
     private String checkListContent;
     private LocalDateTime repairDate;
     private RepairType repairType;
-    private String manufacturer;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
 
     @Builder
     public CheckListSaveRequestDto(String flawPart, Category category, String checkListContent,
-                                   LocalDateTime repairDate, String repairType, String manufacturer,
+                                   LocalDateTime repairDate, String repairType,
                                    Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
         this.flawPart = flawPart;
         this.category = category;
         this.checkListContent = checkListContent;
         this.repairDate = repairDate;
         this.repairType = RepairType.of(repairType);
-        this.manufacturer = manufacturer;
         this.brokerConfirmYN = brokerConfirmYN;
         this.ownerConfirmYN = ownerConfirmYN;
     }
@@ -38,7 +36,6 @@ public class CheckListSaveRequestDto {
                 .brokerConfirmYN(brokerConfirmYN)
                 .category(category)
                 .flawPart(flawPart)
-                .manufacturer(manufacturer)
                 .repairDate(repairDate)
                 .repairType(repairType)
                 .build();

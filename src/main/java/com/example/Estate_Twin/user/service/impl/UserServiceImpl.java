@@ -18,6 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto signUp(Long userId, UserSignUpDto userSignUpDto) {
-        return new UserResponseDto(userDAO.signUp(userId, userSignUpDto.getBirthday(), userSignUpDto.getPhone(),  userSignUpDto.getEstateType()));
+        return new UserResponseDto(userDAO.signUp(userId, userSignUpDto.getBirthday(), userSignUpDto.getPhone(), userSignUpDto.getEstateType(), userSignUpDto.getTransactionType()));
     }
 }

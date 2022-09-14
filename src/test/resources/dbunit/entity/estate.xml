@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <estate id="1" estateThumbNail="src" content="1"
+            model="src" city="서울특별시" borough="강남구" town="개포동"
+            thumbnail3D="src" isPosted="false" ownerConfirmYN="false" brokerConfirmYN="false" transactionType="MONTHLYRENT"
+            state="BEFORE" house_id="1" broker_id="1" owner_id="2" tanent_id="3"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estate id="2" estateThumbNail="src" content="2"
+            model="src" city="서울특별시" borough="강남구" town="개포동"
+            thumbnail3D="src" isPosted="true" ownerConfirmYN="true" brokerConfirmYN="true" transactionType="LEASE"
+            state="BEFORE" grade="RANK_POPULAR" house_id="2" broker_id="1" owner_id="2" tanent_id="3"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estate id="3" estateThumbNail="src" content="3"
+            model="src" city="서울특별시" borough="강남구" town="개포동"
+            thumbnail3D="src" isPosted="false" ownerConfirmYN="true" brokerConfirmYN="false" transactionType="TRADING"
+            state="BEFORE" house_id="3" broker_id="1" owner_id="2" tanent_id="3"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estate id="4" estateThumbNail="src" content="4"
+            model="src" city="서울특별시" borough="강남구" town="개포동"
+            thumbnail3D="src" isPosted="true" ownerConfirmYN="false" brokerConfirmYN="false" transactionType="MONTHLYRENT"
+            state="BEFORE" grade="RANK_MANY" house_id="4" broker_id="1" owner_id="2" tanent_id="3"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estate id="5" estateThumbNail="src" content="5"
+            model="src" city="서울특별시" borough="강남구" town="개포동"
+            thumbnail3D="src" isPosted="false" ownerConfirmYN="false" brokerConfirmYN="true" transactionType="LEASE"
+            state="BEFORE" house_id="5" broker_id="1" owner_id="2" tanent_id="3"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+</dataset>

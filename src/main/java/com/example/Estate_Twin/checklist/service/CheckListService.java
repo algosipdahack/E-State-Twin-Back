@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CheckListService {
     CheckListResponseDto getCheckList(Long id);
-    CheckListDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
+    CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
     CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
     CheckList addMedia(Long checklistId, Media media);
     void clearMedia(Long id);

@@ -43,13 +43,12 @@ public class Estate extends BaseTimeEntity {
     @Column
     private String town;
 
-    @Column
-    private State state;
 
     //s3에 올려진 3D 모델의 썸네일
     @Column
     private String thumbnail3D;
 
+    //TODO 밑의 두개가 confirm되는 순간 true로 바뀜
     @Column
     private boolean isPosted;
 
@@ -63,7 +62,11 @@ public class Estate extends BaseTimeEntity {
     private TransactionType transactionType;
 
     @Enumerated(EnumType.STRING)
-    private Rank rank;
+    private State state;
+
+    //TODO isposted가 false일때는 null값
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
     @OneToOne(mappedBy = "estate")
     private EstateHit estateHit;
@@ -111,12 +114,12 @@ public class Estate extends BaseTimeEntity {
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(String content, Rank rank, String model, String town,
+    public Estate(String content, Grade grade, String model, String town,
                   TransactionType transactionType, String estateThumbNail,
                   String city, String borough, String thumbnail3D, Address address) {
         this.borough = borough;
         this.content = content;
-        this.rank = rank;
+        this.grade = grade;
         this.model = model;
         this.thumbnail3D = thumbnail3D;
         this.city = city;

@@ -73,8 +73,8 @@ public class EstateApiController {
             @Parameter(name = "houseId", description = "House Id", example = "1")
     })
     @PostMapping("detail/{houseId}")
-    public ResponseEntity<EstateDto> saveEstate(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
-        EstateDto estateDto = estateService.saveEstate(estateSaveRequestDto,houseId);
+    public ResponseEntity<EstateResponseDto> saveEstate(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+        EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto,houseId);
         awsS3Service.uploadEstate(multipartFiles,estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }

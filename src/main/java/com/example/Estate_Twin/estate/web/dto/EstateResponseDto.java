@@ -16,6 +16,7 @@ import java.util.List;
 
 @Getter
 public class EstateResponseDto {
+    private final Long id;
     private final String state;
     private final String transactionType;
     private final String estateThumbNail;
@@ -31,6 +32,7 @@ public class EstateResponseDto {
     private final EstateHitDto estatehit;
 
     public EstateResponseDto(Estate estate) {
+        this.id = estate.getId();
         this.state = estate.getState().toString();
         this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();

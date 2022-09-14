@@ -42,10 +42,10 @@ public class CheckListApiController {
             @Parameter(name = "assetId", description = "Asset Id", example = "1")
     })
     @PostMapping("/{assetId}")
-    public ResponseEntity<CheckListDto> saveCheckList(@PathVariable Long assetId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
-        CheckListDto checkListDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
-        awsS3Service.uploadCheckList(multipartFiles,checkListDto.getId(),"checklist");
-        return ResponseEntity.status(HttpStatus.OK).body(checkListDto);
+    public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+        CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
+        awsS3Service.uploadCheckList(multipartFiles,checkListResponseDto.getId(),"checklist");
+        return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")

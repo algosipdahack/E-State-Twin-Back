@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@EnableBatchProcessing
 @EnableScheduling
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableBatchProcessing
 public class EStateTwinApplication {
 
 	public static void main(String[] args) {

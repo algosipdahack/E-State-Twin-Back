@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/idiot?serverTimezone=UTC&characterEncoding=UTF-8"
+    username: root
+    password: P@ssw0rd
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show_sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    generate-ddl: false
+    open-in-view: false
+  output:
+    ansi:
+      enabled: always
+  batch:
+    job:
+      enabled: false #시작과 동시에 실행되는 건 방지
+    jdbc:
+      initialize-schema: always
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+logging:
+  level:
+    org.hibernate.type: trace
+server:
+  port: ${PORT:8080}
+  error:
+    whitelabel:
+      enabled: false

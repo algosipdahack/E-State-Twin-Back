@@ -14,14 +14,16 @@ public class EstateSaveRequestDto {
     private String city;
     private String borough;
     private String town;
+    private String model;
     private AddressSaveRequestDto address;
     private ContractStateUpdateRequestDto contractState;
     @Builder
-    public EstateSaveRequestDto(String transactionType,
+    public EstateSaveRequestDto(String transactionType, String model,
                                 String estateThumbNail, String content,
                                 AddressSaveRequestDto address,
                                 ContractStateUpdateRequestDto contractState) {
         this.transactionType = TransactionType.of(transactionType);
+        this.model = model;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.address = address;
@@ -35,6 +37,7 @@ public class EstateSaveRequestDto {
         return Estate.builder()
                 .content(content)
                 .estateThumbNail(estateThumbNail)
+                .model(model)
                 .transactionType(transactionType)
                 .town(town)
                 .city(city)

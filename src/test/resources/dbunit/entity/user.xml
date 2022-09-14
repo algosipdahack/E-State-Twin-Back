@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user id="1" birthday="2022-06-12" phone="1" name="조씨" email="ss@naver.com"
+          refreshToken="가나다" isBroker="true" authProvider="GOOGLE"
+          role="USER" createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <user id="2" birthday="2022-06-12" phone="2" name="이씨" email="ss@google.com"
+          refreshToken="가나다" isBroker="false" authProvider="KAKAO" estateType="APARTMENT" transactionType="MONTHLYRENT"
+          role="USER" createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <user id="3" birthday="2022-06-12" phone="3" name="강씨" email="ss@daum.net"
+          refreshToken="가나다" isBroker="true" authProvider="GOOGLE"
+          role="USER" createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <user id="4" birthday="2022-06-12" phone="4" name="정씨" email="ss@ewhain.net"
+          refreshToken="가나다" isBroker="false" authProvider="NAVER" estateType="OFFICETELS" transactionType="LEASE"
+          role="USER" createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <user id="5" birthday="2022-06-12" phone="5" name="전씨" email="s23r23@nis.net"
+          refreshToken="가나다" isBroker="true" authProvider="GOOGLE"
+          role="USER" createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+</dataset>

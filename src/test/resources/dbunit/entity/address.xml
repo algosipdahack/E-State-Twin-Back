@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <address id="1" city="서울특별시" borough="강남구" town="개포동" complexName="1단지" block="1동"
+             unit="1호" roadName="1로" mainBuildingNumber="1" subBuildingNumber="1"
+             buildingName="1건물"/>
+    <address id="2" city="경기도" borough="고양시" town="화정동" complexName="2단지" block="2동"
+             unit="2호" roadName="2로" mainBuildingNumber="2" subBuildingNumber="2"
+             buildingName="2건물"/>
+    <address id="3" city="강원도" borough="고성군" town="간성읍" complexName="3단지" block="3동"
+             unit="3호" roadName="3로" mainBuildingNumber="3" subBuildingNumber="3"
+             buildingName="3건물"/>
+    <address id="4" city="부산광역시" borough="강서구" town="강동동" complexName="4단지" block="4동"
+             unit="4호" roadName="4로" mainBuildingNumber="4" subBuildingNumber="4"
+             buildingName="4건물"/>
+    <address id="5" city="인천광역시" borough="계양구" town="갈현동" complexName="5단지" block="5동"
+             unit="5호" roadName="5로" mainBuildingNumber="5" subBuildingNumber="5"
+             buildingName="5건물"/>
+</dataset>

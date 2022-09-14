@@ -9,19 +9,19 @@ import lombok.Getter;
 import java.util.List;
 @Getter
 public class AssetDto {
-    private final Long id;
     private final HouseResponseDto house;
     private final Category category;
     private final List<Media> assetPhoto;
     private final String assetName;
     private final String productName;
+    private final String manufacturer;
 
     public AssetDto(Asset asset) {
-        this.id = asset.getId();
         this.house = new HouseResponseDto(asset.getHouse());
         this.category = asset.getCategory();
         this.assetPhoto = asset.getAssetPhoto();
         this.assetName = asset.getAssetName();
         this.productName = asset.getProductName();
+        this.manufacturer = asset.getManufacturer();
     }
 }

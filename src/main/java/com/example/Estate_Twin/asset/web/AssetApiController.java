@@ -42,8 +42,8 @@ public class AssetApiController {
             @Parameter(name = "houseId", description = "House Id", example = "1")
     })
     @PostMapping("/{houseId}")
-    public ResponseEntity<AssetDto> saveAsset(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
-        AssetDto assetDto = assetService.saveAsset(houseId,assetSaveRequestDto);
+    public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
+        AssetResponseDto assetDto = assetService.saveAsset(houseId,assetSaveRequestDto);
         awsS3Service.uploadAsset(multipartFiles,assetDto.getId(),"asset");
         return ResponseEntity.status(HttpStatus.OK).body(assetDto);
     }

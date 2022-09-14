@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <estatehit id="1" estate_id="1" totalHit="1" weeklyHit="2"
+            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estatehit id="2" estate_id="2" totalHit="2" weeklyHit="3"
+               createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estatehit id="3" estate_id="3" totalHit="3" weeklyHit="4"
+               createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estatehit id="4" estate_id="4" totalHit="4" weeklyHit="5"
+               createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <estatehit id="5" estate_id="5" totalHit="5" weeklyHit="6"
+               createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+</dataset>

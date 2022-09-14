@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter
 public class CheckListResponseDto {
+    private final Long id;
     private final AssetDto asset;
     private final List<Media> checkListPhoto;
     private final String flawPart;
@@ -17,11 +18,11 @@ public class CheckListResponseDto {
     private final String checkListContent;
     private final LocalDateTime repairDate;
     private final RepairType repairType;
-    private final String manufacturer;
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
     private final LocalDateTime createdAt;
     public CheckListResponseDto(CheckList checkList) {
+        this.id = checkList.getId();
         this.asset = new AssetDto(checkList.getAsset());
         this.checkListPhoto = checkList.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();
@@ -29,7 +30,6 @@ public class CheckListResponseDto {
         this.checkListContent = checkList.getCheckListContent();
         this.repairDate = checkList.getRepairDate();
         this.repairType = checkList.getRepairType();
-        this.manufacturer = checkList.getManufacturer();
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
         this.createdAt = checkList.getCreatedDate();

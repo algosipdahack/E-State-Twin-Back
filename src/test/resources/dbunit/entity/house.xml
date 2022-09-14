@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <house id="1" deposit="1" monthlyRent="1"
+           sellingFee="1" currentFloors="1" totalFloors="1" shortTermRent="true"
+           maintenanceFee="1" itemsIncludedMaintenanceFee="1fee" netRentableArea="1"
+           rentableArea="1" parking="false" size="1" bathCount="1" estateType="APARTMENT" household="1"
+           parkingFee="1" moveInAvailableDate="2022-06-12 22:44:10" heatType="1히트"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <house id="2" deposit="2" monthlyRent="2"
+           sellingFee="2" currentFloors="2" totalFloors="2" shortTermRent="false"
+           maintenanceFee="2" itemsIncludedMaintenanceFee="2fee" netRentableArea="2"
+           rentableArea="2" parking="true" size="2" bathCount="2" estateType="OFFICETELS" household="2"
+           parkingFee="2" moveInAvailableDate="2022-06-12 22:44:10" heatType="2히트"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <house id="3" deposit="3" monthlyRent="3"
+           sellingFee="3" currentFloors="3" totalFloors="3" shortTermRent="false "
+           maintenanceFee="3" itemsIncludedMaintenanceFee="3fee" netRentableArea="3"
+           rentableArea="3" parking="false" size="3" bathCount="3" estateType="APARTMENT" household="3"
+           parkingFee="3" moveInAvailableDate="2022-06-12 22:44:10" heatType="3히트"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <house id="4" deposit="4" monthlyRent="4"
+           sellingFee="4" currentFloors="1" totalFloors="4" shortTermRent="true"
+           maintenanceFee="4" itemsIncludedMaintenanceFee="4fee" netRentableArea="4"
+           rentableArea="4" parking="true" size="4" bathCount="4" estateType="OFFICETELS" household="4"
+           parkingFee="4" moveInAvailableDate="2022-06-12 22:44:10" heatType="4히트"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+    <house id="5" deposit="5" monthlyRent="5"
+           sellingFee="5" currentFloors="5" totalFloors="5" shortTermRent="true"
+           maintenanceFee="5" itemsIncludedMaintenanceFee="5fee" netRentableArea="5"
+           rentableArea="5" parking="false" size="5" bathCount="5" estateType="APARTMENT" household="5"
+           parkingFee="5" moveInAvailableDate="2022-06-12 22:44:10" heatType="5히트"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
+</dataset>

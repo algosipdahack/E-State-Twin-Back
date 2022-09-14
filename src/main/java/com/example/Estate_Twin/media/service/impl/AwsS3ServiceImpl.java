@@ -34,17 +34,17 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
 
-    public List<MediaDto> uploadEstate(List<MultipartFile> multipartFile, Long estateId, String dirName) {
+    public List<MediaResponseDto> uploadEstate(List<MultipartFile> multipartFile, Long estateId, String dirName) {
         //파일 이름 받아오기
         List<String> fileNameList = uploadFile(multipartFile,dirName);
-        List<MediaDto> mediaDtoList = new ArrayList<>();
+        List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
         //파일 초기화
         estateService.clearMedia(estateId);
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            MediaResponseDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
             mediaDtoList.add(mediaDto);
             mediaService.updateEstate(mediaDto.getId(),estateId);
         });
@@ -52,35 +52,35 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return mediaDtoList;
     }
 
-    public List<MediaDto> uploadAsset(List<MultipartFile> multipartFile, Long assetId, String dirName) {
+    public List<MediaResponseDto> uploadAsset(List<MultipartFile> multipartFile, Long assetId, String dirName) {
         //파일 이름 받아오기
         List<String> fileNameList = uploadFile(multipartFile,dirName);
-        List<MediaDto> mediaDtoList = new ArrayList<>();
+        List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
         //파일 초기화
         assetService.clearMedia(assetId);
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
-            mediaDtoList.add(mediaDto);
-            mediaService.updateAsset(mediaDto.getId(),assetId);
+            MediaResponseDto mediaResponseDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            mediaDtoList.add(mediaResponseDto);
+            mediaService.updateAsset(mediaResponseDto.getId(),assetId);
         });
 
         return mediaDtoList;
     }
 
-    public List<MediaDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName) {
+    public List<MediaResponseDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName) {
         //파일 이름 받아오기
         List<String> fileNameList = uploadFile(multipartFile,dirName);
-        List<MediaDto> mediaDtoList = new ArrayList<>();
+        List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
         //파일 초기화
         checkListService.clearMedia(checklistId);
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            MediaResponseDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
             mediaDtoList.add(mediaDto);
             mediaService.updateCheckList(mediaDto.getId(),checklistId);
         });

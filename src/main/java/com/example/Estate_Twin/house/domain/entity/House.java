@@ -121,7 +121,7 @@ public class House extends BaseTimeEntity {
         this.parkingFee = parkingFee;
         this.sellingFee = sellingFee;
     }
-
+    public void setId(Long id) { this.id = id; }
     public void setEstate(Estate estate) {
         this.estate = estate;
     }

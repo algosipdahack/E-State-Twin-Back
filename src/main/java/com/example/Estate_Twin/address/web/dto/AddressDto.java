@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class AddressDto {
-    private final Long id;
     private final String city;
     private final String borough;
     private final String town;
@@ -18,7 +17,6 @@ public class AddressDto {
     private final String buildingName;
 
     public AddressDto(Address address) {
-        this.id = address.getId();
         this.city = address.getCity();
         this.borough = address.getBorough();
         this.town = address.getTown();

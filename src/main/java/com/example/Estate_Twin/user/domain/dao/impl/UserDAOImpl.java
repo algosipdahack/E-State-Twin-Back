@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.domain.dao.impl;
 
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
@@ -21,12 +22,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User signUp(Long id, LocalDate birthday, String phone, EstateType estateType) {
+    public User signUp(Long id, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = "+id))
                 .builder()
                 .birthday(birthday)
                 .phone(phone)
                 .estateType(estateType)
+                .transactionType(transactionType)
                 .build();
         return userRepository.save(user);
     }

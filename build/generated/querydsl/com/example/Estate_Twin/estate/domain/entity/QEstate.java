@@ -62,7 +62,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
 
-    public final EnumPath<Rank> rank = createEnum("rank", Rank.class);
+    public final EnumPath<Grade> rank = createEnum("rank", Grade.class);
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
 

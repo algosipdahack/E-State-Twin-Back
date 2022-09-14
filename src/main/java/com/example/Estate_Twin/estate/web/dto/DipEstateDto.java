@@ -4,7 +4,6 @@ import com.example.Estate_Twin.estate.domain.entity.DipEstate;
 import com.example.Estate_Twin.user.web.dto.UserDto;
 import lombok.Getter;
 
-
 @Getter
 public class DipEstateDto {
     private Long id;

@@ -45,7 +45,9 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
+    @Enumerated(EnumType.STRING)
     private EstateType estateType;
 
     @Enumerated(EnumType.STRING)
@@ -77,7 +79,7 @@ public class User extends BaseTimeEntity {
 
     @Builder
     public User(LocalDate birthday, String phone, String name, String email,
-                Address address, EstateType estateType, Role role,
+                Address address, EstateType estateType, TransactionType transactionType, Role role,
                 AuthProvider authProvider, String refreshToken) {
         this.birthday = birthday;
         this.phone = phone;
@@ -86,6 +88,7 @@ public class User extends BaseTimeEntity {
         this.address = address;
         this.estateType = estateType;
         this.role = role;
+        this.transactionType = transactionType;
         this.authProvider = authProvider;
         this.refreshToken = refreshToken;
     }

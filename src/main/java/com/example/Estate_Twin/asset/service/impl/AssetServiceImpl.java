@@ -22,8 +22,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetDto saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
-        return new AssetDto(assetDAO.saveAsset(assetSaveRequestDto.toEntity(),houseDAO.findHouse(houseId)));
+    public AssetResponseDto saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
+        return new AssetResponseDto(assetDAO.saveAsset(assetSaveRequestDto.toEntity(),houseDAO.findHouse(houseId)));
     }
 
     @Override

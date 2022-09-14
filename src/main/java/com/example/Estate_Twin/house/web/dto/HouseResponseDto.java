@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class HouseResponseDto {
+    private final Long id;
     private final Long deposit;
     private final Long monthlyRent;
     private final Long sellingFee;
@@ -30,6 +31,7 @@ public class HouseResponseDto {
     private final Long bathCount;
 
     public HouseResponseDto(House house) {
+        this.id = house.getId();
         this.deposit = house.getDeposit();
         this.monthlyRent = house.getMonthlyRent();
         this.sellingFee = house.getSellingFee();

@@ -23,7 +23,7 @@ public class CheckList extends BaseTimeEntity {
     @Column
     private String flawPart;
 
-    @Enumerated(EnumType.STRING)
+    @Column
     private Category category;
 
     @Column(columnDefinition = "TEXT")
@@ -34,9 +34,6 @@ public class CheckList extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
-
-    @Column
-    private String manufacturer;
 
     @Column
     private Boolean brokerConfirmYN;
@@ -62,7 +59,7 @@ public class CheckList extends BaseTimeEntity {
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                      Category category, String checkListContent, LocalDateTime repairDate,
-                     RepairType repairType, String manufacturer, Boolean tanentConfirmYN) {
+                     RepairType repairType, Boolean tanentConfirmYN) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;
@@ -70,7 +67,6 @@ public class CheckList extends BaseTimeEntity {
         this.category = category;
         this.checkListContent = checkListContent;
         this.repairType = repairType;
-        this.manufacturer = manufacturer;
         this.tanentConfirmYN = tanentConfirmYN;
     }
 

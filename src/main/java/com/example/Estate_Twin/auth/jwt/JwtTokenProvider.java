@@ -102,7 +102,7 @@ public class JwtTokenProvider {
     }
 
     //Access Token 만료 시 갱신 때 사용할 정보를 얻기 위해
-    private Claims parseClaims(String accessToken) {
+    public Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJwt(accessToken).getBody();
         } catch(ExpiredJwtException e) {

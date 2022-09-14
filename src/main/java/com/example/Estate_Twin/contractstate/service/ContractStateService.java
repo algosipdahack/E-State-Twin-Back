@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.contractstate.service;
 
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 
 import java.util.List;

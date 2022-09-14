@@ -25,6 +25,9 @@ public class Asset extends BaseTimeEntity {
     @Column
     private String productName;
 
+    @Column
+    private String manufacturer;
+
     @Enumerated(EnumType.STRING)
     private Category category;
 
@@ -47,10 +50,11 @@ public class Asset extends BaseTimeEntity {
     private List<CheckList> checkList = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, String assetName, String productName,House house) {
+    public Asset(Category category, String assetName, String productName, String manufacturer, House house) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;
+        this.manufacturer = manufacturer;
         this.house = house;
     }
 

@@ -5,10 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class MediaResponseDto {
+    private final Long id;
     private final String origFileName;
     private final String filePath;
 
     public MediaResponseDto(Media media) {
+        this.id = media.getId();
         this.origFileName = media.getOrigFileName();
         this.filePath = media.getFilePath();
     }

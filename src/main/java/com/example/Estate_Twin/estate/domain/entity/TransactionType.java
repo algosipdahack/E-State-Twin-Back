@@ -7,7 +7,7 @@ import java.util.Arrays;
 @Getter
 public enum TransactionType {
     //월세, 전세, 매매
-    MONTHLYRENT("monthlyrent"), LEASE("lease"), TRADING("trading");
+    MONTHLYRENT("MONTHLYRENT"), LEASE("LEASE"), TRADING("TRADING");
     private final String type;
     TransactionType(String type) {
         this.type = type;

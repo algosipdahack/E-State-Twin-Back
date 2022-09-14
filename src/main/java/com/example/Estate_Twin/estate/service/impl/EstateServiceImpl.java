@@ -30,9 +30,9 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public EstateDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
+    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
         Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
-        return new EstateDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
+        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address));
     }
 
     @Override

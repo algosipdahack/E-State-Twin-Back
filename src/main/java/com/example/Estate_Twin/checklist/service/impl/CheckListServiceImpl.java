@@ -22,15 +22,15 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckListDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        return new CheckListDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
+    public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
+        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
     }
 
     @Override
     public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
         CheckList checkList = checkListDAO.updateCheckList(id,checkListUpdateRequestDto.getFlawPart(),checkListUpdateRequestDto.getBrokerConfirmYN(),
                 checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCategory(),checkListUpdateRequestDto.getCheckListContent(),
-                checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType(),checkListUpdateRequestDto.getManufacturer());
+                checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType());
         return new CheckListResponseDto(checkList);
     }
 

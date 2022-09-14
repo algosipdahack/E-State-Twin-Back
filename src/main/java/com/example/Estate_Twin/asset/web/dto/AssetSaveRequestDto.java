@@ -10,12 +10,14 @@ public class AssetSaveRequestDto {
     private Category category;
     private String assetName;
     private String productName;
+    private String manufacturer;
 
     @Builder
-    public AssetSaveRequestDto(Category category, String assetName, String productName) {
+    public AssetSaveRequestDto(Category category, String assetName, String productName, String manufacturer) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;
+        this.manufacturer = manufacturer;
     }
 
     public Asset toEntity() {
@@ -23,6 +25,7 @@ public class AssetSaveRequestDto {
                 .assetName(assetName)
                 .category(category)
                 .productName(productName)
+                .manufacturer(manufacturer)
                 .build();
     }
 }

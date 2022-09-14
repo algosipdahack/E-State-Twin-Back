@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <contractstate id="1" state="BEFORE" estate_id="1" createdDate="2022-06-12 22:44:10"
+               modifiedDate="2022-06-12 23:44:54"/>
+    <contractstate id="2" state="AFTER" estate_id="2" createdDate="2022-06-12 22:44:10"
+                   modifiedDate="2022-06-12 23:44:54"/>
+    <contractstate id="3" state="DOING" estate_id="3" createdDate="2022-06-12 22:44:10"
+                   modifiedDate="2022-06-12 23:44:54"/>
+    <contractstate id="4" state="DONE" estate_id="4" createdDate="2022-06-12 22:44:10"
+                   modifiedDate="2022-06-12 23:44:54"/>
+    <contractstate id="5" state="BEFORE" estate_id="5" createdDate="2022-06-12 22:44:10"
+                   modifiedDate="2022-06-12 23:44:54"/>
+</dataset>

@@ -9,6 +9,7 @@ import java.util.*;
 
 @Getter
 public class BrokerResponseDto {
+    private final Long id;
     private final String businessName;
     private final String agentName;
     private final String brokerageRegistrationNumber;
@@ -20,6 +21,8 @@ public class BrokerResponseDto {
     private List<MediaDto> brokerPhotos;
 
     public BrokerResponseDto(Broker broker) {
+        this.id = broker.getId();
+
         this.businessName = broker.getBusinessName();
         this.agentName = broker.getAgentName();
         this.brokerageRegistrationNumber = broker.getBrokerageRegistrationNumber();
