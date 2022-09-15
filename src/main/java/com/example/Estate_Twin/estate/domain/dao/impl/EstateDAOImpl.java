@@ -1,6 +1,8 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
@@ -19,21 +21,25 @@ public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
     private ContractStateRepository contractStateRepository;
-
     @Override
-    public Estate saveEstate(Estate estate, House house, Address address) {
-        estate.setHouse(house);
-        estate.setAddress(address);
+    public Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets) {
+        Estate newEstate = estateRepository.save(estate);
+        newEstate.setHouse(house);
+        newEstate.setAddress(address);
 
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
-        estate.setEstateHit(estateHit);
+        newEstate.setEstateHit(estateHit);
 
         ContractState contractState = new ContractState();
-        contractState.setEstate(estate);
+        contractState.setEstate(newEstate);
         contractStateRepository.save(contractState);
 
-        return estateRepository.save(estate);
+        assets.forEach(asset -> {
+            newEstate.addAsset(asset);
+            asset.setEstate(newEstate);
+        });
+        return newEstate;
     }
 
     @Override

@@ -22,6 +22,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -70,6 +72,7 @@ public class HouseApiControllerTest extends ControllerTest {
                 .monthlyRent(1L)
                 .build();
         house.setId(1L);
+
         houseSaveRequestDto = HouseSaveRequestDto.builder()
                 .bathCount(1L)
                 .usageAvailableDate(LocalDateTime.now())
@@ -100,16 +103,20 @@ public class HouseApiControllerTest extends ControllerTest {
     @WithMockUser(roles="USER")
     @DisplayName("House 데이터 생성 테스트")
     public void 집만들기() throws Exception {
+        given(houseService.saveHouse(houseSaveRequestDto))
+                .willReturn(new HouseResponseDto(house));
         //given
         String content = objectMapper.writeValueAsString(houseSaveRequestDto);
 
         //when
         mockMvc.perform(
                 post("/api/house")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(content))
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.deposit").exists())
                 .andDo(print());
+        verify(houseService).saveHouse(houseSaveRequestDto);
 
     }
 
@@ -118,12 +125,15 @@ public class HouseApiControllerTest extends ControllerTest {
     @WithMockUser(roles="USER")
     @DisplayName("House 데이터 반환 테스트")
     public void 집가져오기() throws Exception {
-        Long houseId = 2L;
+        given(houseService.getHouse(1L))
+                .willReturn(new HouseResponseDto(house));
+        Long houseId = 1L;
         mockMvc.perform(
                 get("/api/house/{houseId}",houseId)
                         .characterEncoding("utf-8"))
                 .andExpect(status().isOk())
                 .andDo(print());
+        verify(houseService).getHouse(1L);
     }
 
     // put(http://localhost:8080/api/house/{houseId})
@@ -131,18 +141,21 @@ public class HouseApiControllerTest extends ControllerTest {
     @WithMockUser(roles="USER")
     @DisplayName("House 데이터 수정 테스트")
     public void 집수정하기() throws Exception {
-        Long houseId = 2L;
+
+        Long houseId = 1L;
         HouseUpdateRequestDto houseUpdateRequestDto = new HouseUpdateRequestDto(house.getDeposit(),house.getMonthlyRent(),house.getSellingFee(),house.getCurrentFloors(),
                 house.getTotalFloors(),house.isShortTermRent(),house.getMaintenanceFee(),house.getItemsIncludedMaintenanceFee(),
                 house.getNetRentableArea(),house.getRentableArea(),house.isParking(),house.getParkingFee(),house.getMoveInAvailableDate(),
                 house.getUsageAvailableDate(),house.getSize(),house.getHeatType(),house.getEstateType(),house.getHousehold(),
                 house.getRoomCount(),house.getBathCount());
         String content = objectMapper.writeValueAsString(houseUpdateRequestDto);
+
         mockMvc.perform(
                         put("/api/house/{houseId}",houseId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.deposit").exists())
                 .andDo(print());
     }
 

@@ -80,14 +80,6 @@ public class House extends BaseTimeEntity {
     @Column
     private Long bathCount;
 
-    @OneToMany(
-            mappedBy = "house",
-            cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
-            orphanRemoval = true // DB에서 함께 삭제됨
-    )
-    private List<Asset> assets = new ArrayList<>();
-
     @OneToOne(mappedBy = "house")
     private Estate estate;
 

@@ -5,8 +5,7 @@ import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import com.example.Estate_Twin.house.service.impl.HouseServiceImpl;
-import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
-import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
+import com.example.Estate_Twin.house.web.dto.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class HouseServiceTest {
     private HouseRepository houseRepository = Mockito.mock(HouseRepository.class);
     private HouseDAOImpl houseDAO;
     private HouseServiceImpl houseService;
-    House givenHouse;
+    private House givenHouse;
     @BeforeEach
     public void setUpTest() {
         houseDAO =  new HouseDAOImpl(houseRepository);
@@ -62,14 +61,14 @@ public class HouseServiceTest {
 
         HouseResponseDto houseResponseDto = houseService.getHouse(123L);
         Assertions.assertEquals(houseResponseDto.getBathCount(),givenHouse.getBathCount());
+        System.out.println(houseResponseDto.getHeatType());
         verify(houseRepository).findById(123L); // 해당 함수가 호출되었는지를 검증
     }
 
     @Test
-    void saveHouse() {
+    void saveHouseTest() {
         Mockito.when(houseRepository.save(any(House.class)))
                 .then(returnsFirstArg());
-
         HouseResponseDto houseResponseDto = houseService.saveHouse(new HouseSaveRequestDto(givenHouse.getDeposit(),givenHouse.getMonthlyRent(),givenHouse.getSellingFee(),
         givenHouse.getCurrentFloors(),givenHouse.getTotalFloors(),givenHouse.isShortTermRent(),givenHouse.getMaintenanceFee(),
                 givenHouse.getItemsIncludedMaintenanceFee(),givenHouse.getNetRentableArea(),givenHouse.getRentableArea(),

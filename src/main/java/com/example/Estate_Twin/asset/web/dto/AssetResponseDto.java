@@ -19,8 +19,8 @@ public class AssetResponseDto {
     private final String manufacturer;
 
     public AssetResponseDto(Asset asset) {
-        this.id = asset.getId();
         this.house = new HouseResponseDto(asset.getHouse());
+        this.id = asset.getId();
         this.category = asset.getCategory();
         this.assetPhoto = asset.getAssetPhoto();
         this.assetName = asset.getAssetName();

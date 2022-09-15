@@ -82,4 +82,5 @@ public class Address {
     public void setUser(User user) {
         this.user = user;
     }
+    public void setId(Long id) {this.id = id;}
 }

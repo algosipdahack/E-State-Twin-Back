@@ -34,16 +34,16 @@ public class AssetApiController {
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
-    @Operation(summary = "get assets", description = "에셋 등록하기")
+    @Operation(summary = "post assets", description = "에셋 등록하기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
     })
     @Parameters({
             @Parameter(name = "houseId", description = "House Id", example = "1")
     })
-    @PostMapping("/{houseId}")
-    public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long houseId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
-        AssetResponseDto assetDto = assetService.saveAsset(houseId,assetSaveRequestDto);
+    @PostMapping("/")
+    public ResponseEntity<AssetResponseDto> saveAsset(@RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
+        AssetResponseDto assetDto = assetService.saveAsset(assetSaveRequestDto);
         awsS3Service.uploadAsset(multipartFiles,assetDto.getId(),"asset");
         return ResponseEntity.status(HttpStatus.OK).body(assetDto);
     }

@@ -4,7 +4,7 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -46,8 +46,7 @@ public class AssetDAOImpl implements AssetDAO {
     }
 
     @Override
-    public Asset saveAsset(Asset asset, House house) {
-        asset.setHouse(house);
+    public Asset saveAsset(Asset asset) {
         return assetRepository.save(asset);
     }
 }

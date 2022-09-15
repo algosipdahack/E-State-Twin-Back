@@ -4,6 +4,7 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
+import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.media.domain.entity.Media;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
     private final AssetDAO assetDAO;
-    private final HouseDAO houseDAO;
+    private final EstateDAO estateDAO;
 
     @Override
     public AssetResponseDto getAsset(Long id) {
@@ -22,8 +23,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public AssetResponseDto saveAsset(Long houseId, AssetSaveRequestDto assetSaveRequestDto) {
-        return new AssetResponseDto(assetDAO.saveAsset(assetSaveRequestDto.toEntity(),houseDAO.findHouse(houseId)));
+    public AssetResponseDto saveAsset(AssetSaveRequestDto assetSaveRequestDto) {
+        return new AssetResponseDto(assetDAO.saveAsset(assetSaveRequestDto.toEntity()));
     }
 
     @Override
