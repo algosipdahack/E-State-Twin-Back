@@ -36,7 +36,6 @@ public class EstateDAOImpl implements EstateDAO {
         contractStateRepository.save(contractState);
 
         assets.forEach(asset -> {
-            newEstate.addAsset(asset);
             asset.setEstate(newEstate);
         });
         return newEstate;

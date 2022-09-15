@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,11 +21,12 @@ public class EstateSaveRequestDto {
     private String town;
     private String model;
     private AddressSaveRequestDto address;
+    private HouseSaveRequestDto house;
     private List<AssetSaveRequestDto> assetSaveRequestDtos;
     private ContractStateUpdateRequestDto contractState;
     @Builder
     public EstateSaveRequestDto(String transactionType, String model,
-                                String estateThumbNail, String content,
+                                String estateThumbNail, String content, HouseSaveRequestDto house,
                                 AddressSaveRequestDto address, List<AssetSaveRequestDto> assets,
                                 ContractStateUpdateRequestDto contractState) {
         this.transactionType = TransactionType.of(transactionType);
@@ -33,7 +35,8 @@ public class EstateSaveRequestDto {
         this.content = content;
         this.address = address;
         this.contractState = contractState;
-        assetSaveRequestDtos = new ArrayList<>();
+        this.house = house;
+        this.assetSaveRequestDtos = new ArrayList<>();
         assets.forEach(asset -> {
             assetSaveRequestDtos.add(asset);
         });

@@ -11,6 +11,7 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
@@ -34,14 +35,15 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto,  Long houseId) {
+    public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
         Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssetSaveRequestDtos().forEach(asset -> {
             assets.add(assetDAO.saveAsset(asset.toEntity()));
         });
+        House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
 
-        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),houseDAO.findHouse(houseId),address,assets));
+        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),house,address,assets));
     }
 
     @Override

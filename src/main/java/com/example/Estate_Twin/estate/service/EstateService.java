@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EstateService {
     EstateResponseDto getEstate(Long id);
-    EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto, Long houseId);
+    EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     Estate addMedia(Long id, Media media);
     void clearMedia(Long id);

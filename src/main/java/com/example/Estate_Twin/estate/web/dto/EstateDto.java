@@ -1,11 +1,15 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressDto;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
+import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class EstateDto {
@@ -16,10 +20,13 @@ public class EstateDto {
     private final String city;
     private final String borough;
     private final String town;
-    private final AddressDto address;
-    private final HouseDto house;
     private final String model;
     private final LocalDateTime createdAt;
+    private final List<MediaResponseDto> media;
+    private final List<AssetResponseDto> assets;
+    private final AddressDto address;
+    private final HouseDto house;
+    private final EstateHitDto estatehit;
 
     public EstateDto(Estate estate) {
         this.state = estate.getState().toString();
@@ -32,6 +39,11 @@ public class EstateDto {
         this.model = estate.getModel();
         this.createdAt = estate.getCreatedDate();
         this.address = new AddressDto(estate.getAddress());
+        this.estatehit = new EstateHitDto(estate.getEstateHit());
         this.house = new HouseDto(estate.getHouse());
+        this.media = new ArrayList<>();
+        estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
+        this.assets = new ArrayList<>();
+        estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
     }
 }

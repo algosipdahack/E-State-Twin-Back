@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressDto;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateDto;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
@@ -27,6 +28,7 @@ public class EstateResponseDto {
     private final String model;
     private final LocalDateTime createdAt;
     private final List<MediaResponseDto> media;
+    private final List<AssetResponseDto> assets;
     private final AddressDto address;
     private final HouseDto house;
     private final EstateHitDto estatehit;
@@ -47,6 +49,8 @@ public class EstateResponseDto {
         this.house = new HouseDto(estate.getHouse());
         this.media = new ArrayList<>();
         estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
+        this.assets = new ArrayList<>();
+        estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
     }
 
 }
