@@ -2,8 +2,6 @@ package com.example.Estate_Twin.asset.data.dao;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 
 
@@ -12,5 +10,5 @@ public interface AssetDAO {
     Asset findAsset(Long id);
     Asset saveAsset(Asset asset);
     Asset addAssetMedia(Long id, Media media);
-    void clearMedia(Asset asset);
+    void clearMedia(Long assetId);
 }

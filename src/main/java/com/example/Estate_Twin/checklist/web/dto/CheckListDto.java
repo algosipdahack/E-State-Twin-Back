@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class CheckListDto {
     private final AssetDto asset;
-    private final List<Media> checkListPhoto;
+    private final List<Media> checkListPhotos;
     private final String flawPart;
     private final Category category;
     private final String checkListContent;
@@ -21,7 +21,7 @@ public class CheckListDto {
 
     public CheckListDto(CheckList checkList) {
         this.asset = new AssetDto(checkList.getAsset());
-        this.checkListPhoto = checkList.getCheckListPhoto();
+        this.checkListPhotos = checkList.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();
         this.category = checkList.getCategory();
         this.checkListContent = checkList.getCheckListContent();

@@ -4,7 +4,6 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -41,8 +40,9 @@ public class AssetDAOImpl implements AssetDAO {
     }
 
     @Override
-    public void clearMedia(Asset asset) {
-        asset.getAssetPhoto().clear();;
+    public void clearMedia(Long assetId) {
+        Asset asset = findAsset(assetId);
+        asset.getAssetPhoto().clear();
     }
 
     @Override

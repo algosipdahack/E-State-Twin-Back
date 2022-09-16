@@ -5,9 +5,9 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
-import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.media.domain.entity.Media;
 
+import com.example.Estate_Twin.media.service.AwsS3Service;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class AssetServiceImpl implements AssetService {
     private final AssetDAO assetDAO;
     private final EstateDAO estateDAO;
-
+    private final AwsS3Service awsS3Service;
     @Override
     public AssetResponseDto getAsset(Long id) {
         return new AssetResponseDto(assetDAO.findAsset(id));
@@ -41,7 +41,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public void clearMedia(Long id) {
-        assetDAO.clearMedia(assetDAO.findAsset(id));
+        assetDAO.clearMedia(id);
     }
 
 }

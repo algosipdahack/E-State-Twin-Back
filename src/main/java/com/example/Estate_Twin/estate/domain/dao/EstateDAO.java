@@ -17,7 +17,7 @@ public interface EstateDAO {
     Estate addEstateMedia(Long id, Media media);
     List<Estate> findEstateCustomized(String borough);
     List<Estate> findAllEstate();
-    void clearMedia(Estate estate);
+    void clearMedia(Long estateId);
     Estate allowBroker(Estate estate);
     Estate allowOwner(Estate estate);
 }

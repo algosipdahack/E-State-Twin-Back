@@ -50,6 +50,9 @@ public class Asset extends BaseTimeEntity {
         this.estate = estate;
         estate.getAssets().add(this);
     }
-    public void setId(Long id) { this.id = id; }
+    public Asset setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
 }
