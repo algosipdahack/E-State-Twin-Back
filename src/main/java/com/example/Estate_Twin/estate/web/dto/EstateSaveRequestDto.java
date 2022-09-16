@@ -2,10 +2,10 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,26 +20,25 @@ public class EstateSaveRequestDto {
     private String borough;
     private String town;
     private String model;
+    private List<MultipartFile> estatePhotos;
     private AddressSaveRequestDto address;
     private HouseSaveRequestDto house;
     private List<AssetSaveRequestDto> assetSaveRequestDtos;
-    private ContractStateUpdateRequestDto contractState;
+
     @Builder
-    public EstateSaveRequestDto(String transactionType, String model,
+    public EstateSaveRequestDto(String transactionType, String model, List<MultipartFile> estatePhotos,
                                 String estateThumbNail, String content, HouseSaveRequestDto house,
-                                AddressSaveRequestDto address, List<AssetSaveRequestDto> assets,
-                                ContractStateUpdateRequestDto contractState) {
+                                AddressSaveRequestDto address, List<AssetSaveRequestDto> assets) {
         this.transactionType = TransactionType.of(transactionType);
         this.model = model;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.address = address;
-        this.contractState = contractState;
         this.house = house;
         this.assetSaveRequestDtos = new ArrayList<>();
-        assets.forEach(asset -> {
-            assetSaveRequestDtos.add(asset);
-        });
+        assets.forEach(asset -> this.assetSaveRequestDtos.add(asset));
+        this.estatePhotos = new ArrayList<>();
+        estatePhotos.forEach(multipartFile -> this.estatePhotos.add(multipartFile));
         this.city = address.getCity();
         this.borough = address.getBorough();
         this.town = address.getTown();

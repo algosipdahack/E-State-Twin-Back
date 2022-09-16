@@ -5,10 +5,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import static com.example.Estate_Twin.contractstate.domain.entity.State.BEFORE;
+import static com.example.Estate_Twin.contractstate.domain.entity.State.CONTRACT_BEFORE;
 
 @Getter
 @NoArgsConstructor
@@ -39,7 +36,7 @@ public class ContractState extends BaseTimeEntity {
 
     @PrePersist
     public void prePersist() {
-        this.state = this.state == null ? BEFORE : this.state;
+        this.state = this.state == null ? CONTRACT_BEFORE : this.state;
     }
 
     public void setEstate(Estate estate) {

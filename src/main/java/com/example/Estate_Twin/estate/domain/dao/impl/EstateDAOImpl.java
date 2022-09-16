@@ -23,33 +23,28 @@ public class EstateDAOImpl implements EstateDAO {
     private ContractStateRepository contractStateRepository;
     @Override
     public Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets) {
-        Estate newEstate = estateRepository.save(estate);
-        newEstate.setHouse(house);
-        newEstate.setAddress(address);
+        estate.setHouse(house);
+        estate.setAddress(address);
 
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
-        newEstate.setEstateHit(estateHit);
+        estate.setEstateHit(estateHit);
 
         ContractState contractState = new ContractState();
-        contractState.setEstate(newEstate);
         contractStateRepository.save(contractState);
+        contractState.setEstate(estate);
 
         assets.forEach(asset -> {
-            asset.setEstate(newEstate);
+            asset.setEstate(estate);
         });
-        return newEstate;
+
+        return estateRepository.save(estate);
     }
 
     @Override
     public Estate findEstate(Long id) {
         Estate estate = estateRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
-
-        EstateHit estateHit = estate.getEstateHit();
-        //조회수 증가
-        estateHit.updateHit();
-        estateHitRepository.save(estateHit);
         return estate;
     }
 
@@ -64,7 +59,8 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public void clearMedia(Estate estate) {
+    public void clearMedia(Long estateId) {
+        Estate estate = findEstate(estateId);
         estate.getEstateMedia().clear();
     }
 

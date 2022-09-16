@@ -5,14 +5,16 @@ import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
+import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
@@ -28,9 +30,12 @@ public class EstateServiceImpl implements EstateService {
     private final AddressDAO addressDAO;
     private final UserDAO userDAO;
     private final AssetDAO assetDAO;
-
+    private final EstateHitDAO estateHitDAO;
+    private final AwsS3Service awsS3Service;
     @Override
     public EstateResponseDto getEstate(Long id) {
+        Estate estate = estateDAO.findEstate(id);
+        estateHitDAO.updateHit(estate);
         return new EstateResponseDto(estateDAO.findEstate(id));
     }
 
@@ -38,11 +43,12 @@ public class EstateServiceImpl implements EstateService {
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
         Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
         List<Asset> assets = new ArrayList<>();
-        estateSaveRequestDto.getAssetSaveRequestDtos().forEach(asset -> {
-            assets.add(assetDAO.saveAsset(asset.toEntity()));
+        estateSaveRequestDto.getAssetSaveRequestDtos().forEach(assetSaveRequestDto -> {
+            Asset asset = assetDAO.saveAsset(assetSaveRequestDto.toEntity());
+            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhotos(),asset.getId(),"asset");
+            assets.add(asset);
         });
         House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
-
         return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),house,address,assets));
     }
 
@@ -53,7 +59,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public void clearMedia(Long id) {
-        estateDAO.clearMedia(estateDAO.findEstate(id));
+        estateDAO.clearMedia(id);
     }
 
     @Override
@@ -66,12 +72,22 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto) {
-        Long addressId = estateDAO.findEstate(id).getAddress().getId();
-        AddressUpdateRequestDto addressUpdateRequestDto = estateUpdateRequestDto.getAddress();
-        addressDAO.updateAddress(addressId, addressUpdateRequestDto.getCity(), addressUpdateRequestDto.getBorough(),
-                addressUpdateRequestDto.getTown(),addressUpdateRequestDto.getComplexName(), addressUpdateRequestDto.getBlock(),
-                addressUpdateRequestDto.getUnit(), addressUpdateRequestDto.getRoadName(), addressUpdateRequestDto.getMainBuildingNumber(),
-                addressUpdateRequestDto.getSubBuildingNumber(), addressUpdateRequestDto.getBuildingName());
+        Estate estate = estateDAO.findEstate(id);
+        Long addressId = estate.getAddress().getId();
+        Long houseId = estate.getHouse().getId();
+
+        AddressUpdateRequestDto address = estateUpdateRequestDto.getAddress();
+        addressDAO.updateAddress(addressId, address.getCity(), address.getBorough(),
+                address.getTown(),address.getComplexName(), address.getBlock(),
+                address.getUnit(), address.getRoadName(), address.getMainBuildingNumber(),
+                address.getSubBuildingNumber(), address.getBuildingName());
+
+        HouseUpdateRequestDto house = estateUpdateRequestDto.getHouse();
+        houseDAO.updateHouse(houseId,house.getDeposit(),house.getMonthlyRent(),house.getSellingFee(),
+                house.getCurrentFloors(),house.getTotalFloors(),house.isShortTermRent(),house.getMaintenanceFee(),
+                house.getItemsIncludedMaintenanceFee(),house.getNetRentableArea(),house.getRentableArea(),
+                house.isParking(),house.getParkingFee(),house.getMoveInAvailableDate(),house.getSize(),house.getHeatType(),
+                house.getEstateType(),house.getHousehold(),house.getRoomCount(),house.getUsageAvailableDate(),house.getBathCount());
 
         return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto.getContent(), estateUpdateRequestDto.getModel(),
                 estateUpdateRequestDto.getTransactionType(), estateUpdateRequestDto.getEstateThumbNail(),

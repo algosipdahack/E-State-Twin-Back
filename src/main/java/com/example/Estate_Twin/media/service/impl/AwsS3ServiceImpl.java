@@ -2,8 +2,10 @@ package com.example.Estate_Twin.media.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.checklist.service.CheckListService;
+import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.media.service.MediaService;
@@ -27,8 +29,8 @@ import java.util.*;
 public class AwsS3ServiceImpl implements AwsS3Service {
     private final AmazonS3Client amazonS3Client;
     private final MediaService mediaService;
-    private final EstateService estateService;
-    private final AssetService assetService;
+    private final EstateDAO estateDAO;
+    private final AssetDAO assetDAO;
     private final CheckListService checkListService;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -40,13 +42,12 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
         //파일 초기화
-        estateService.clearMedia(estateId);
+        estateDAO.clearMedia(estateId);
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaResponseDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            MediaResponseDto mediaDto = mediaService.saveEstateMedia(estateId, new MediaSaveRequestDto(file, getFilePath(file))); // AWS URL
             mediaDtoList.add(mediaDto);
-            mediaService.updateEstate(mediaDto.getId(),estateId);
         });
 
         return mediaDtoList;
@@ -58,13 +59,12 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
         //파일 초기화
-        assetService.clearMedia(assetId);
+        assetDAO.clearMedia(assetId);
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaResponseDto mediaResponseDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            MediaResponseDto mediaResponseDto = mediaService.saveAssetMedia(assetId, new MediaSaveRequestDto(file, getFilePath(file)));
             mediaDtoList.add(mediaResponseDto);
-            mediaService.updateAsset(mediaResponseDto.getId(),assetId);
         });
 
         return mediaDtoList;
@@ -80,9 +80,8 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         //파일 이름에 따라 media 객체 생성하기
         fileNameList.forEach(file -> {
             log.info(file);
-            MediaResponseDto mediaDto = mediaService.saveMedia(new MediaSaveRequestDto(file, getFilePath(file)));
+            MediaResponseDto mediaDto = mediaService.saveCheckListMedia(checklistId, new MediaSaveRequestDto(file, getFilePath(file)));
             mediaDtoList.add(mediaDto);
-            mediaService.updateCheckList(mediaDto.getId(),checklistId);
         });
 
         return mediaDtoList;

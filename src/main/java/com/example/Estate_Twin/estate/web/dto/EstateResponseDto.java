@@ -27,7 +27,7 @@ public class EstateResponseDto {
     private final String town;
     private final String model;
     private final LocalDateTime createdAt;
-    private final List<MediaResponseDto> media;
+    private final List<MediaResponseDto> estatePhotos;
     private final List<AssetResponseDto> assets;
     private final AddressDto address;
     private final HouseDto house;
@@ -47,8 +47,8 @@ public class EstateResponseDto {
         this.address = new AddressDto(estate.getAddress());
         this.estatehit = new EstateHitDto(estate.getEstateHit());
         this.house = new HouseDto(estate.getHouse());
-        this.media = new ArrayList<>();
-        estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
+        this.estatePhotos = new ArrayList<>();
+        estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(new MediaResponseDto(eMedia)));
         this.assets = new ArrayList<>();
         estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
     }

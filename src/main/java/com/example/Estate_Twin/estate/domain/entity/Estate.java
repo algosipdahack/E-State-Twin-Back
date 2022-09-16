@@ -13,7 +13,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-import static com.example.Estate_Twin.contractstate.domain.entity.State.BEFORE;
 
 @Getter
 @NoArgsConstructor
@@ -140,7 +139,7 @@ public class Estate extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.estateMedia = new ArrayList<>();
-        this.state = this.state == null ? BEFORE : this.state;
+        this.state = this.state == null ? State.CONTRACT_BEFORE : this.state;
         this.isPosted = false;
         this.ownerConfirmYN = false;
         this.brokerConfirmYN = false;

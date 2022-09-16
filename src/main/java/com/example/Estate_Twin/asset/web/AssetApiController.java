@@ -34,19 +34,19 @@ public class AssetApiController {
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
-    @Operation(summary = "post assets", description = "에셋 등록하기")
+    /*@Operation(summary = "post assets", description = "에셋 등록하기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
     })
     @Parameters({
             @Parameter(name = "houseId", description = "House Id", example = "1")
     })
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<AssetResponseDto> saveAsset(@RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
         AssetResponseDto assetDto = assetService.saveAsset(assetSaveRequestDto);
         awsS3Service.uploadAsset(multipartFiles,assetDto.getId(),"asset");
         return ResponseEntity.status(HttpStatus.OK).body(assetDto);
-    }
+    }*/
 
     @Operation(summary = "put assets", description = "에셋에 대한 정보들 수정하기")
     @ApiResponses({
@@ -58,6 +58,7 @@ public class AssetApiController {
     @PutMapping("/{assetId}")
     public ResponseEntity<AssetResponseDto> updateAsset(@PathVariable Long assetId, @RequestBody AssetUpdateRequestDto assetUpdateRequestDto){
         AssetResponseDto assetResponseDto = assetService.updateAsset(assetId,assetUpdateRequestDto);
+        awsS3Service.uploadAsset(assetUpdateRequestDto.getAssetPhotos(),assetResponseDto.getId(),"asset");
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 }

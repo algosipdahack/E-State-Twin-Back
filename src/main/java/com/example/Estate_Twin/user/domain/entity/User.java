@@ -9,9 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
-
-import static com.example.Estate_Twin.contractstate.domain.entity.State.BEFORE;
-
 @Getter
 @NoArgsConstructor
 @Entity

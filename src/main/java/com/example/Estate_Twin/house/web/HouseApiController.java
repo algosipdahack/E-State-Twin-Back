@@ -29,7 +29,7 @@ public class HouseApiController {
         return ResponseEntity.status(HttpStatus.OK).body(houseService.getHouse(houseId));
     }
 
-    @Operation(summary = "post House", description = "집에 대한 정보들 등록하기")
+    /*@Operation(summary = "post House", description = "집에 대한 정보들 등록하기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))
     })
@@ -48,6 +48,6 @@ public class HouseApiController {
     @PutMapping("/{houseId}")
     public ResponseEntity<HouseResponseDto> updateHouse(@PathVariable Long houseId, @RequestBody HouseUpdateRequestDto houseUpdateRequestDto){
         return ResponseEntity.status(HttpStatus.OK).body(houseService.updateHouse(houseId, houseUpdateRequestDto));
-    }
+    }*/
 
 }

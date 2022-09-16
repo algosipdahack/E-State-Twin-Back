@@ -42,9 +42,9 @@ public class CheckListApiController {
             @Parameter(name = "assetId", description = "Asset Id", example = "1")
     })
     @PostMapping("/{assetId}")
-    public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+    public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
-        awsS3Service.uploadCheckList(multipartFiles,checkListResponseDto.getId(),"checklist");
+        awsS3Service.uploadCheckList(checkListSaveRequestDto.getCheckListPhotos(),checkListResponseDto.getId(),"checklist");
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 
@@ -58,6 +58,7 @@ public class CheckListApiController {
     @PutMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);
+        awsS3Service.uploadCheckList(checkListUpdateRequestDto.getCheckListPhotos(),checkListResponseDto.getId(),"checklist");
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 }

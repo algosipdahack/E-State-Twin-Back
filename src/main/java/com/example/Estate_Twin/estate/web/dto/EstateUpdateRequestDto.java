@@ -3,7 +3,12 @@ package com.example.Estate_Twin.estate.web.dto;
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -16,13 +21,17 @@ public class EstateUpdateRequestDto {
     private String city;
     private String borough;
     private String town;
+    private List<MultipartFile> estatePhotos;
     private AddressUpdateRequestDto address;
+    private HouseUpdateRequestDto house;
 
     @Builder
-    public EstateUpdateRequestDto(String transactionType,
+    public EstateUpdateRequestDto(String transactionType, HouseUpdateRequestDto house,
                                   String estateThumbNail, String content, String model,
-                                  String thumbNail3D, AddressUpdateRequestDto address) {
+                                  String thumbNail3D, AddressUpdateRequestDto address,
+                                  List<MultipartFile> estatePhotos) {
         this.transactionType = TransactionType.of(transactionType);
+        this.house = house;
         this.estateThumbNail = estateThumbNail;
         this.content = content;
         this.model = model;
@@ -31,5 +40,7 @@ public class EstateUpdateRequestDto {
         this.city = address.getCity();
         this.borough = address.getBorough();
         this.town = address.getTown();
+        this.estatePhotos = new ArrayList<>();
+        estatePhotos.forEach(photo -> this.estatePhotos.add(photo));
     }
 }

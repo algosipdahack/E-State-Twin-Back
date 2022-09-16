@@ -15,7 +15,18 @@ public class MediaDAOImpl implements MediaDAO {
     private MediaRepository mediaRepository;
 
     @Override
-    public Media saveMedia(Media media) {
+    public Media saveEstateMedia(Estate estate, Media media) {
+        media.setEstate(estate);
+        return mediaRepository.save(media);
+    }
+    @Override
+    public Media saveAssetMedia(Asset asset, Media media) {
+        media.setAsset(asset);
+        return mediaRepository.save(media);
+    }
+    @Override
+    public Media saveCheckListMedia(CheckList checkList, Media media) {
+        media.setCheckList(checkList);
         return mediaRepository.save(media);
     }
 
@@ -36,27 +47,4 @@ public class MediaDAOImpl implements MediaDAO {
         return mediaRepository.save(newMedia);
     }
 
-    @Override
-    public Media updateEstate(Long id, Estate estate) {
-        Media media = mediaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
-        media.setEstate(estate);
-        return media;
-    }
-
-    @Override
-    public Media updateAsset(Long id, Asset asset) {
-        Media media = mediaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
-        media.setAsset(asset);
-        return media;
-    }
-
-    @Override
-    public Media updateCheckList(Long id, CheckList checkList) {
-        Media media = mediaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 미디어가 없습니다. id = " + id));
-        media.setCheckList(checkList);
-        return media;
-    }
 }

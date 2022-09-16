@@ -23,27 +23,22 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaResponseDto saveMedia(MediaSaveRequestDto mediaSaveRequestDto) {
-        return new MediaResponseDto(mediaDAO.saveMedia(mediaSaveRequestDto.toEntity()));
+    public MediaResponseDto saveEstateMedia(Long estateId, MediaSaveRequestDto mediaSaveRequestDto) {
+        return new MediaResponseDto(mediaDAO.saveEstateMedia(estateDAO.findEstate(estateId),mediaSaveRequestDto.toEntity()));
+    }
+
+    @Override
+    public MediaResponseDto saveAssetMedia(Long assetId, MediaSaveRequestDto mediaSaveRequestDto) {
+        return new MediaResponseDto(mediaDAO.saveAssetMedia(assetDAO.findAsset(assetId),mediaSaveRequestDto.toEntity()));
+    }
+
+    @Override
+    public MediaResponseDto saveCheckListMedia(Long checklistId, MediaSaveRequestDto mediaSaveRequestDto) {
+        return new MediaResponseDto(mediaDAO.saveCheckListMedia(checkListDAO.findCheckList(checklistId),mediaSaveRequestDto.toEntity()));
     }
 
     @Override
     public MediaResponseDto updateMedia(Long id, MediaUpdateRequestDto mediaUpdateRequestDto) {
         return new MediaResponseDto(mediaDAO.updateMedia(id, mediaUpdateRequestDto.getOrigFileName(), mediaUpdateRequestDto.getFilePath()));
-    }
-
-    @Override
-    public MediaResponseDto updateCheckList(Long id, Long checkListId) {
-        return new MediaResponseDto(mediaDAO.updateCheckList(id, checkListDAO.findCheckList(checkListId)));
-    }
-
-    @Override
-    public MediaResponseDto updateAsset(Long id, Long assetId) {
-        return new MediaResponseDto(mediaDAO.updateAsset(id, assetDAO.findAsset(assetId)));
-    }
-
-    @Override
-    public MediaResponseDto updateEstate(Long id, Long estateId) {
-        return new MediaResponseDto(mediaDAO.updateEstate(id, estateDAO.findEstate(estateId)));
     }
 }

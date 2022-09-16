@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.estate.service.DipEstateService;
-import com.example.Estate_Twin.estate.service.EstateService;
+import com.example.Estate_Twin.estate.service.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
@@ -27,10 +26,9 @@ public class EstateApiController {
     private final AwsS3Service awsS3Service;
 
     //리스트
+    //TODO 페이징 처리
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @GetMapping("list")
     public ResponseEntity<List<EstateListResponseDto>> getList() {
         List<EstateListResponseDto> estateListResponseDtos = estateService.getAllEstate();
@@ -38,13 +36,10 @@ public class EstateApiController {
     }
 
     //추천매물 보여주기 -> 조회수에 따라 정렬
+    //TODO 페이징 처리
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "distinct", description = "Name of Distinct", example = "강남구")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @Parameters({@Parameter(name = "distinct", description = "Name of Distinct", example = "강남구")})
     @GetMapping("customized")
     public ResponseEntity<List<EstateListResponseDto>> getList(@RequestParam(value = "distinct") String borough) {
         List<EstateListResponseDto> estateListResponseDtos = estateService.getEstateCustomized(borough);
@@ -53,12 +48,8 @@ public class EstateApiController {
 
     //상세 페이지
     @Operation(summary = "get detail of Estate", description = "매물에 대한 상세정보들 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @GetMapping("detail/{estateId}")
     public ResponseEntity<EstateResponseDto> getEstate(@PathVariable Long estateId) {
         EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
@@ -66,30 +57,22 @@ public class EstateApiController {
     }
 
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "houseId", description = "House Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @Parameters({@Parameter(name = "houseId", description = "House Id", example = "1")})
     @PostMapping("detail")
-    public ResponseEntity<EstateResponseDto> saveEstate(@RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+    public ResponseEntity<EstateResponseDto> saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        awsS3Service.uploadEstate(multipartFiles,estateDto.getId(),"estate");
+        awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 
-    @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 수정하기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    })
+    @Operation(summary = "put detail of Estate", description = "매물에 대한 상세정보들 수정하기")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}")
-    public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto
-    ) {
+    public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
         EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        awsS3Service.uploadEstate(estateUpdateRequestDto.getEstatePhotos(),estateResponseDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
