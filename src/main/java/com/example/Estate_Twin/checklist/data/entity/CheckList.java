@@ -70,12 +70,12 @@ public class CheckList extends BaseTimeEntity {
         this.tanentConfirmYN = tanentConfirmYN;
     }
 
-    public void addMedia(Media media) {
-        this.checkListPhoto.add(media);
-    }
 
     public void setAsset(Asset asset) {
+        if(this.asset != null) {
+            this.asset.getCheckList().remove(this);
+        }
         this.asset = asset;
-        this.asset.addCheckList(this);
+        asset.getCheckList().add(this);
     }
 }

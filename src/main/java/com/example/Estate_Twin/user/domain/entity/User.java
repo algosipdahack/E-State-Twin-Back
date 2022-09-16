@@ -21,60 +21,40 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-
     //LocalDate => 날짜 정보만 출력. ex) 2019-11-13
-    @Column
+    @Column(nullable = false)
     private LocalDate birthday;
-
     @Column(nullable = false, unique = true)
     private String phone;
-
     @Column(nullable = false)
     private String name;
-
     @Email
-    @NotBlank(message = "아이디는 null일 수 없습니다!")
     private String email;
-
-    @Column
+    @Column(nullable = false)
     private String refreshToken;
-
-    @Column
     private boolean isBroker;
-
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
-
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EstateType estateType;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
-
     //세입중인 매물
     @OneToOne(mappedBy = "tanent")
     private Estate tanentEstate;
-
     //소유한 매물
-    @OneToMany(
-            mappedBy = "owner",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Estate> ownEstates = new ArrayList<>();
-
     //찜한 매물
-    @OneToMany(
-            mappedBy = "user",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder
@@ -98,13 +78,6 @@ public class User extends BaseTimeEntity {
     public void setAddress(Address address) {
         this.address = address;
         this.address.setUser(this);
-    }
-    public void addOwnEstate(Estate estate) {
-        this.ownEstates.add(estate);
-    }
-
-    public void addDipEstate(DipEstate dipEstate) {
-        this.dipEstates.add(dipEstate);
     }
     public void setIsBroker() {
         this.isBroker = true;

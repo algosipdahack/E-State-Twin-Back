@@ -46,7 +46,7 @@ public class CheckListDAOImpl implements CheckListDAO {
     @Override
     public CheckList addCheckListMedia(Long id, Media media) {
         CheckList checkList = findCheckList(id);
-        checkList.addMedia(media);
+        media.setCheckList(checkList);
         return checkListRepository.save(checkList);
     }
 

@@ -20,69 +20,29 @@ public class House extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "house_id")
     private Long id;
-
-    @Column
     private Long deposit;
-
-    @Column
     private Long monthlyRent;
-
-    @Column
     private Long sellingFee;
-
-    @Column
     private Long currentFloors;
-
-    @Column
     private Long totalFloors;
-
-    @Column
     private boolean shortTermRent;
-
-    @Column
     private Long maintenanceFee;
-
-    @Column
     private String itemsIncludedMaintenanceFee;
-
-    @Column
     private Long netRentableArea;
-
-    @Column
     private Long rentableArea;
-
-    @Column
     private boolean parking;
-
-    @Column
     private Long parkingFee;
-    @Column
     private LocalDateTime moveInAvailableDate;
-
-    @Column
     private Long size;
-
-    @Column
     private String heatType;
-
-    @Column
     private EstateType estateType;
-
-    @Column
     private Long household;
-
-    @Column
     private LocalDateTime usageAvailableDate;
-
-    @Column
     private Long roomCount;
-
-    @Column
     private Long bathCount;
 
     @OneToOne(mappedBy = "house")
     private Estate estate;
-
 
     @Builder // 빌더 형태로 만들어줌
     public House(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,

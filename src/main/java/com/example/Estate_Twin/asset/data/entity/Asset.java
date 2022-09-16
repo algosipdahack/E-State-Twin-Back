@@ -19,35 +19,20 @@ public class Asset extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "asset_id")
     private Long id;
-
-    @Column
+    @Column(nullable = false)
     private String assetName;
-
-    @Column
+    @Column(nullable = false)
     private String productName;
-
-    @Column
+    @Column(nullable = false)
     private String manufacturer;
-
     @Enumerated(EnumType.STRING)
     private Category category;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
-
-    @OneToMany(
-            mappedBy = "asset",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "asset", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Media> assetPhoto = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "asset",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "asset", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<CheckList> checkList = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
@@ -58,19 +43,12 @@ public class Asset extends BaseTimeEntity {
         this.manufacturer = manufacturer;
         this.estate = estate;
     }
-
-    public void addMedia(Media media) {
-        this.assetPhoto.add(media);
-    }
-    public void addCheckList(CheckList checkList) {
-        if (this.checkList == null) {
-            this.checkList = new ArrayList<>();
-        }
-        this.checkList.add(checkList);
-    }
     public void setEstate(Estate estate) {
+        if(this.estate != null) {
+            this.estate.getAssets().remove(this);
+        }
         this.estate = estate;
-        this.estate.addAsset(this);
+        estate.getAssets().add(this);
     }
     public void setId(Long id) { this.id = id; }
 

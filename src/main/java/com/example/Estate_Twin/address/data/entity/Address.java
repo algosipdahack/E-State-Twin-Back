@@ -15,50 +15,19 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     private Long id;
-
-    @Column
     private String city;
-
-    @Column
     private String borough;
-
-    @Column
     private String town;
-
-    @Column
     private String complexName;
-
-    @Column
     private String block;
-
-    @Column
     private String unit;
-
-    @Column
     private String roadName;
-
-    @Column
     private int mainBuildingNumber;
-
-    @Column
     private int subBuildingNumber;
-
-    @Column
     private String buildingName;
-
-
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "estate_id")
+    @OneToOne(mappedBy = "address")
     private Estate estate;
-
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "address")
     private User user;
 
     @Builder // 빌더 형태로 만들어줌
@@ -82,5 +51,5 @@ public class Address {
     public void setUser(User user) {
         this.user = user;
     }
-    public void setId(Long id) {this.id = id;}
+    public void setId(Long id) { this.id = id; }
 }

@@ -102,7 +102,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     public Estate addEstateMedia(Long id, Media media) {
         Estate estate = findEstate(id);
-        estate.addMedia(media);
+        media.setEstate(estate);
         return estateRepository.save(estate);
     }
 }

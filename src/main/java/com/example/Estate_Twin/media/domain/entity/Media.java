@@ -18,51 +18,53 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "media_id")
     private Long id;
-
-    @Column
     private String origFileName;
-
-    @Column
     private String filePath;
-
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BROKER_ID", referencedColumnName = "BROKER_ID")
+    @JoinColumn(name = "broker_id", referencedColumnName = "BROKER_ID")
     private Broker broker;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CHECKLIST_ID", referencedColumnName = "CHECKLIST_ID")
+    @JoinColumn(name = "checklist_id", referencedColumnName = "CHECKLIST_ID")
     private CheckList checkList;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ESTATE_ID", referencedColumnName = "ESTATE_ID")
+    @JoinColumn(name = "estate_id", referencedColumnName = "ESTATE_ID")
     private Estate estate;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ASSET_ID", referencedColumnName = "ASSET_ID")
+    @JoinColumn(name = "asset_id", referencedColumnName = "ASSET_ID")
     private Asset asset;
-
 
     @Builder
     public Media(String origFileName, String filePath) {
         this.origFileName = origFileName;
         this.filePath = filePath;
     }
-
     public void setCheckList(CheckList checkList) {
+        if(this.checkList != null) {
+            this.checkList.getCheckListPhoto().remove(this);
+        }
         this.checkList = checkList;
+        checkList.getCheckListPhoto().add(this);
     }
-
     public void setEstate(Estate estate) {
+        if(this.estate != null) {
+            this.estate.getEstateMedia().remove(this);
+        }
         this.estate = estate;
+        estate.getEstateMedia().add(this);
     }
-
     public void setAsset(Asset asset) {
+        if(this.asset != null) {
+            this.asset.getAssetPhoto().remove(this);
+        }
         this.asset = asset;
+        asset.getAssetPhoto().add(this);
     }
-
     public void setBroker(Broker broker) {
-        this.asset = asset;
+        if(this.broker != null) {
+            this.broker.getBrokerPhoto().remove(this);
+        }
+        this.broker = broker;
+        broker.getBrokerPhoto().add(this);
     }
 
 }

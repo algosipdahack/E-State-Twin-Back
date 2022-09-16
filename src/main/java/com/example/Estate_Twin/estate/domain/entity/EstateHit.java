@@ -15,8 +15,7 @@ public class EstateHit extends BaseTimeEntity {
     @Column(name = "estatehit_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "estate_id")
+    @OneToOne(mappedBy = "estateHit")
     private Estate estate;
 
     @Column
@@ -31,11 +30,9 @@ public class EstateHit extends BaseTimeEntity {
         this.totalHit = totalHit;
         this.weeklyHit = weeklyHit;
     }
-
     public void setEstate(Estate estate) {
         this.estate = estate;
     }
-
     public void updateHit() {
         this.weeklyHit += 1;
         this.totalHit += 1;

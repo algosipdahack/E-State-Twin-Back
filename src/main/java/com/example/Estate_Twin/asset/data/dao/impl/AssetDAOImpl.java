@@ -36,7 +36,7 @@ public class AssetDAOImpl implements AssetDAO {
     @Override
     public Asset addAssetMedia(Long id, Media media) {
         Asset asset = findAsset(id);
-        asset.addMedia(media);
+        media.setAsset(asset);
         return assetRepository.save(asset);
     }
 

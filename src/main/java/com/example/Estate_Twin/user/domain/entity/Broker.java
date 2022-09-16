@@ -16,46 +16,27 @@ public class Broker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "broker_id")
     private Long id;
-
     // broker column
-
-    @Column
+    @Column(nullable = false)
     private String businessName;
-
-    @Column
+    @Column(nullable = false)
     private String agentName;
-
-    @Column
+    @Column(nullable = false)
     private String brokerageRegistrationNumber;
-
-    @Column
+    @Column(nullable = false)
     private String businessRegistrationNumber;
-
-    @Column
+    @Column(nullable = false)
     private String businessLicense;
-
-    @Column
+    @Column(nullable = false)
     private String brokerageRegistrationLicense;
-
     //단방향
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(
-            mappedBy = "broker",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "broker",cascade = {CascadeType.ALL},orphanRemoval = true)
     private List<Estate> estates = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "broker",
-            cascade = {CascadeType.ALL},
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "broker",cascade = {CascadeType.ALL},orphanRemoval = true)
     private List<Media> brokerPhoto = new ArrayList<>();
-
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
                   String businessLicense, String brokerageRegistrationLicense) {
@@ -66,16 +47,8 @@ public class Broker {
         this.businessLicense = businessLicense;
         this.brokerageRegistrationLicense = brokerageRegistrationLicense;
     }
-
-    public void addMedia(Media media) {
-        this.brokerPhoto.add(media);
-    }
-
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void addEstate(Estate estate) {
-        this.estates.add(estate);
+        user.setIsBroker();
     }
 }
