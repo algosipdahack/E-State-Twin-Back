@@ -11,18 +11,21 @@ import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Estate", description = "매물 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/estate/")
+@Slf4j
+//@RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
@@ -69,9 +72,9 @@ public class EstateApiController {
 
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
-    @PostMapping(value = "detail" )
-    public ResponseEntity<EstateResponseDto> saveEstate(
-            @ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
+    @PostMapping(value = "/api/estate/detail")
+    public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
+        log.info(estateSaveRequestDto.getBorough());
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
         awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);

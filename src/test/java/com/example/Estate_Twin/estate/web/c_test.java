@@ -1,5 +1,14 @@
 package com.example.Estate_Twin.estate.web;
 
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
+import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
+import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
+import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
+
+import java.util.List;
+/*
 public class c_test {
     @Getter
     @Setter
@@ -19,7 +28,7 @@ public class c_test {
         /**
          * Dto to Entity
          * @PropertySource가 먹히지않음
-         **/
+         *
         public BranchImage toEntity() {
             return BranchImage.builder()
                     .fileName(this.fileName)
@@ -118,7 +127,7 @@ public class c_test {
         List<BranchImageCreateRequestDto> branchImageCreateRequestDtos = new ArrayList<>();
 
         // BranchImages
-        String[] branchImageFiles = {"/Users/dong/Downloads/8_1.jpg", "/Users/dong/Downloads/8_2.jpg"};
+        String[] branchImageFiles = {/Users/mincho/Downloads/photo.png", "/Users/mincho/Downloads/image.png"};
 
         // BranchImage 생성
         for (int i = 0; i < branchImageFiles.length; i++) {
@@ -201,3 +210,26 @@ public class c_test {
         logger.info(responseEntity.getBody().toString());
     }
 }
+    private TransactionType transactionType;
+    private String estateThumbNail;
+    private String content;
+    private String city;
+    private String borough;
+    private String town;
+    private String model;
+    private List<MediaSaveMultipartRequestDto> estatePhotos;
+    private AddressSaveRequestDto address;
+    private HouseSaveRequestDto house;
+    private List<AssetSaveRequestDto> assetSaveRequestDtos;
+        private Category category;
+        private String assetName;
+        private String productName;
+        private String manufacturer;
+        private List<MediaSaveMultipartRequestDto> assetPhotos;
+    assetName="변기" productName="대림바스" category="BATHROOM"
+    assetName="벽지" productName="코스모스" category="INTERIOR"
+    estateThumbNail="src" content="1"
+    model="src" city="서울특별시" borough="강남구" town="개포동"
+    thumbnail3D="src" isPosted="false" ownerConfirmYN="false" brokerConfirmYN="false" transactionType="MONTHLYRENT"
+    state="BEFORE" house_id="1" broker_id="1" owner_id="2" tanent_id="3" +
+*/

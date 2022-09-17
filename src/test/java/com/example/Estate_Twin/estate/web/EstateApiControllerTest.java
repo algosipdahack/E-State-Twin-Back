@@ -1,56 +1,120 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.media.domain.entity.Media;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveRequestDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.amazonaws.util.IOUtils;
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
+import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
+import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
+import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.charset.StandardCharsets;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.util.*;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-//@WebMvcTest(controllers = EstateApiController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Slf4j
 public class EstateApiControllerTest {
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper mapper;
+    private EstateApiController estateApiController;
     @Test
     public void uploadFile() throws Exception {
-        MockMultipartFile multipartFile1 = new MockMultipartFile("file","test.png","image/png","test file".getBytes(StandardCharsets.UTF_8));
-        MockMultipartFile multipartFile2 = new MockMultipartFile("file","test2.png","image/png","test file2".getBytes(StandardCharsets.UTF_8));
-        MediaSaveRequestDto mediaDto = new MediaSaveRequestDto("sdf","sfd");
-        String mediaDtoJson = mapper.writeValueAsString(mediaDto);
-        MockMultipartFile media = new MockMultipartFile("media","media","application/json",mediaDtoJson.getBytes(StandardCharsets.UTF_8));
+        AddressSaveRequestDto addressSaveRequestDto = new AddressSaveRequestDto()
+                .builder()
+                .city("경기도")
+                .borough("고양시")
+                .town("화정동")
+                .complexName("6단지")
+                .block("123동")
+                .unit("3455호")
+                .roadName("화정로 27")
+                .mainBuildingNumber(234)
+                .subBuildingNumber(556)
+                .buildingName("00빌딩")
+                .build();
 
-        mockMvc.perform(multipart("/api/estate/")
-                                .file(multipartFile1).part(new MockPart("가구","1".getBytes(StandardCharsets.UTF_8)))
-                                .file(multipartFile2).part(new MockPart("가구","2".getBytes(StandardCharsets.UTF_8)))
-                                .file(multipartFile2).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
-                                .file(multipartFile2).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
-                                .file(multipartFile2).part(new MockPart("id","매물".getBytes(StandardCharsets.UTF_8)))
-                        .file(media)
-                )
-                .andDo(print());
+        HouseSaveRequestDto houseSaveRequestDto =  HouseSaveRequestDto.builder()
+                .bathCount(1L)
+                .usageAvailableDate(LocalDateTime.now())
+                .roomCount(1L)
+                .household(1L)
+                .estateType(EstateType.APARTMENT)
+                .heatType("heattype")
+                .size(1L)
+                .moveInAvailableDate(LocalDateTime.now())
+                .parkingFee(1L)
+                .parking(true)
+                .rentableArea(1L)
+                .netRentableArea(1L)
+                .itemsIncludedMaintenanceFee("fee")
+                .maintenanceFee(1L)
+                .shortTermRent(true)
+                .totalFloors(1L)
+                .currentFloors(1L)
+                .sellingFee(1L)
+                .monthlyRent(1L)
+                .deposit(1L)
+                .monthlyRent(1L)
+                .build();
+
+        EstateSaveRequestDto estateSaveRequestDto = new EstateSaveRequestDto();
+
+        //DTO 생성
+        List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos = new ArrayList<>();
+        List<AssetSaveRequestDto> assetSaveRequestDtos = new ArrayList<>();
+        // Images
+        String[] ImageFiles = {"/Users/mincho/Downloads/photo.png", "/Users/mincho/Downloads/image.png"};
+
+        // Image 생성
+        for (int i = 0; i < ImageFiles.length; i++) {
+            File imageFile = new File(ImageFiles[i]);
+            FileInputStream inputStream = new FileInputStream(imageFile);
+            MultipartFile multipartFile = new MockMultipartFile(imageFile.getName(), imageFile.getName(), "image/jpg", IOUtils.toByteArray(inputStream));
+
+            MediaSaveMultipartRequestDto mediaSaveMultipartRequestDto = new MediaSaveMultipartRequestDto();
+            mediaSaveMultipartRequestDto.setImageFile(multipartFile);
+
+            mediaSaveMultipartRequestDtos.add(mediaSaveMultipartRequestDto);
+        }
+
+        for (int i = 0; i < ImageFiles.length; i++) {
+            AssetSaveRequestDto assetSaveRequestDto = new AssetSaveRequestDto().builder()
+                    .assetName("변기")
+                    .productName("대림바스")
+                    .category(Category.BATHROOM)
+                    .assetPhotos(mediaSaveMultipartRequestDtos)
+                    .build();
+            assetSaveRequestDtos.add(assetSaveRequestDto);
+        }
+
+        estateSaveRequestDto.builder()
+                .model("src")
+                .address(addressSaveRequestDto)
+                .content("1")
+                .estateThumbNail("src")
+                .transactionType("MONTHLYRENT")
+                .estatePhotos(mediaSaveMultipartRequestDtos)
+                .house(houseSaveRequestDto)
+                .assets(assetSaveRequestDtos)
+                .build();
+
+        ResponseEntity<EstateResponseDto> responseEntity = estateApiController.saveEstate(estateSaveRequestDto);
+        log.info(responseEntity.getBody().toString());
     }
 }
     /*
