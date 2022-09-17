@@ -5,6 +5,7 @@ import com.example.Estate_Twin.auth.jwt.*;
 import com.example.Estate_Twin.auth.repository.CookieAuthorizationRequestRepository;
 import com.example.Estate_Twin.auth.service.CustomOAuth2UserService;
 import com.example.Estate_Twin.auth.OAuth2SuccessHandler;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
+@Profile("prod")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
@@ -61,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/oauth2/**","/auth/**").permitAll()
-                .anyRequest().permitAll()
-
+                .anyRequest().permitAll();
+/*
                 .and()
                 .formLogin().disable()
                 .oauth2Login()
@@ -87,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(jwtAccessDeniedHandler);
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
+*/
 
     }
 

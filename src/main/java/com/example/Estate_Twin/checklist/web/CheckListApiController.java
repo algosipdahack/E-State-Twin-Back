@@ -17,17 +17,13 @@ import java.util.List;
 @Tag(name = "CheckList", description = "체크리스트 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/checklist")
+@RequestMapping("/api/estate/asset/checklist")
 public class CheckListApiController {
     private final CheckListService checkListService;
     private final AwsS3Service awsS3Service;
     @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
     @GetMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> getCheckList(@PathVariable Long checklistId) {
         CheckListResponseDto checkListResponseDto = checkListService.getCheckList(checklistId);
@@ -35,12 +31,8 @@ public class CheckListApiController {
     }
 
     @Operation(summary = "post checklist", description = "체크리스트 등록하기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "assetId", description = "Asset Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @PostMapping("/{assetId}")
     public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
@@ -49,12 +41,8 @@ public class CheckListApiController {
     }
 
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
     @PutMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);

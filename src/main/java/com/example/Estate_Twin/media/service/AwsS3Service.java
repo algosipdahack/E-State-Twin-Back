@@ -10,4 +10,5 @@ public interface AwsS3Service {
     List<MediaResponseDto> uploadEstate(List<MultipartFile> multipartFile, Long estateId, String dirName);
     List<MediaResponseDto> uploadAsset(List<MultipartFile> multipartFile, Long assetId, String dirName);
     List<MediaResponseDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName);
+    List<String> uploadFile(List<MultipartFile> multipartFiles, String dirName);
 }

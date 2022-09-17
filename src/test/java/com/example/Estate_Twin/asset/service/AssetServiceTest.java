@@ -26,7 +26,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 //@AutoConfigureTestDatabase()
-public class AssetServiceTest {
+/*public class AssetServiceTest {
     private HouseRepository houseRepository = Mockito.mock(HouseRepository.class);
     private AssetRepository assetRepository = Mockito.mock(AssetRepository.class);
     private AssetDAOImpl assetDAO;
@@ -95,4 +95,5 @@ public class AssetServiceTest {
         verify(assetRepository).save(any());
     }
 
-}
+
+*/

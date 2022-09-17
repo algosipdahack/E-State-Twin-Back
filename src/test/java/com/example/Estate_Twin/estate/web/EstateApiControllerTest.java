@@ -1,58 +1,56 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.address.service.impl.AddressServiceImpl;
-import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
-import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
-import com.example.Estate_Twin.auth.jwt.JwtAuthenticationFilter;
-import com.example.Estate_Twin.config.SecurityConfig;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateUpdateRequestDto;
-import com.example.Estate_Twin.controller.ControllerTest;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
-import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
-import com.example.Estate_Twin.estate.service.impl.EstateServiceImpl;
-import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
-import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
-import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.domain.repository.HouseRepository;
-import com.example.Estate_Twin.house.service.impl.HouseServiceImpl;
-import com.example.Estate_Twin.house.web.HouseApiController;
-import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
-import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
+import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.web.dto.MediaDto;
+import com.example.Estate_Twin.media.web.dto.MediaSaveRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import junit.framework.TestCase;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockPart;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
+import java.nio.charset.StandardCharsets;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
-        (controllers = HouseApiController.class,
-                excludeFilters = {
-                        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes =
-                                SecurityConfig.class),
-                        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes =
-                                JwtAuthenticationFilter.class)
-                })
-@AutoConfigureMockMvc(addFilters = false)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class EstateApiControllerTest extends ControllerTest {
+//@WebMvcTest(controllers = EstateApiController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+public class EstateApiControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper mapper;
+    @Test
+    public void uploadFile() throws Exception {
+        MockMultipartFile multipartFile1 = new MockMultipartFile("file","test.png","image/png","test file".getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile multipartFile2 = new MockMultipartFile("file","test2.png","image/png","test file2".getBytes(StandardCharsets.UTF_8));
+        MediaSaveRequestDto mediaDto = new MediaSaveRequestDto("sdf","sfd");
+        String mediaDtoJson = mapper.writeValueAsString(mediaDto);
+        MockMultipartFile media = new MockMultipartFile("media","media","application/json",mediaDtoJson.getBytes(StandardCharsets.UTF_8));
+
+        mockMvc.perform(multipart("/api/estate/")
+                        .file(multipartFile1).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
+                        .file(multipartFile2).part(new MockPart("id","foo2".getBytes(StandardCharsets.UTF_8)))
+                        .file(media)
+                )
+                .andDo(print());
+    }
+}
+    /*
     @MockBean
     EstateServiceImpl estateService;
     @MockBean
@@ -108,6 +106,11 @@ public class EstateApiControllerTest extends ControllerTest {
         //given
         String content = objectMapper.writeValueAsString(estateSaveRequestDto);
         Long houseId = 2L;
+        MockMultipartFile file = new MockMultipartFile("image","test.png","image/png",new FileInputStream("업로드 할 실제 파일 path 입력"));
+        this.mockMvc.perform(multipart("/images")
+                .file(file).part(new MockPart("estate","foo".getBytes(StandardCharsets.UTF_8))))
+                        .andDo(print())
+                                .andExpect(status().isOk());
         //when
         mockMvc.perform(
                         post("/api/estate/detail/{houseId}",houseId)
@@ -148,4 +151,4 @@ public class EstateApiControllerTest extends ControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-}
+}*/

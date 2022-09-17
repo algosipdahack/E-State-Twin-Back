@@ -23,24 +23,19 @@ import java.util.List;
 @Tag(name = "Media", description = "미디어 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/upload")
+@RequestMapping("/api/upload/")
 public class MediaApiController {
     private final AwsS3ServiceImpl awsS3ServiceImpl;
 
-    /*@Operation(summary = "post Photo of Estate", description = "매물 사진 업로드")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    })
-    @PostMapping(value = "/estate/{estateId}/photo", consumes = {"multipart/form-data"})
-    @ResponseBody()
+    @Operation(summary = "upload photo", description = "사진 업로드")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))})
+    @PostMapping(value = "", consumes = {"multipart/form-data"})
     //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<MediaDto>> estatePhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long estateId) throws IOException {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadEstate(multipartFile, estateId, "estate/photo"));
+    public ResponseEntity<List<String>> estatePhoto(@RequestPart(required = false) List<MultipartFile> multipartFile) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3ServiceImpl.uploadFile(multipartFile, "estate/photo"));
     }
-
+}
+/*
     @Operation(summary = "post Video of Estate", description = "매물 동영상 업로드")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))
@@ -90,5 +85,3 @@ public class MediaApiController {
     public ResponseEntity<MediaResponseDto> brokerPhoto(@RequestPart(required = false) List<MultipartFile> multipartFile, @PathVariable Long brokerId) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(s3Uploader.uploadEstate(multipartFile, brokerId, "idiot/broker"));
     }*/
-
-}

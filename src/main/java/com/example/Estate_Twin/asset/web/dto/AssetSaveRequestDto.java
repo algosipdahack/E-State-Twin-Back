@@ -2,6 +2,7 @@ package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.Category;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ public class AssetSaveRequestDto {
     private String assetName;
     private String productName;
     private String manufacturer;
+    @Schema()
     private List<MultipartFile> assetPhotos;
 
     @Builder

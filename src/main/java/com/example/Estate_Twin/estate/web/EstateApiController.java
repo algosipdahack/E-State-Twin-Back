@@ -3,6 +3,8 @@ package com.example.Estate_Twin.estate.web;
 import com.example.Estate_Twin.estate.service.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.media.service.AwsS3Service;
+import com.example.Estate_Twin.media.web.dto.MediaDto;
+import com.example.Estate_Twin.media.web.dto.MediaSaveRequestDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -14,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Estate", description = "매물 API")
@@ -24,7 +27,15 @@ public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
     private final AwsS3Service awsS3Service;
-
+    @Operation(summary = "upload photo", description = "사진 업로드")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))})
+    @PostMapping(value = "", consumes = {"multipart/form-data"})
+    //파일 첨부를 안할 수도 있기에 required=false로 설정
+    public ResponseEntity<List<String>> estatePhoto(
+            @RequestPart(name = "file") List<MultipartFile> multipartFile,
+            @RequestPart(name = "media") MediaSaveRequestDto mediaDto ) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(awsS3Service.uploadFile(multipartFile, "estate/photo"));
+    }
     //리스트
     //TODO 페이징 처리
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
@@ -55,14 +66,14 @@ public class EstateApiController {
         EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
-
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
-    @Parameters({@Parameter(name = "houseId", description = "House Id", example = "1")})
-    @PostMapping("detail")
-    public ResponseEntity<EstateResponseDto> saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
+    @PostMapping(value = "detail" )
+    public ResponseEntity<EstateResponseDto> saveEstate(
+            @RequestPart(value="estate")EstateSaveRequestDto estateSaveRequestDto,
+            @RequestPart(value = "file", required = false) List<MultipartFile> file) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
+        //awsS3Service.uploadEstate(files,estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 
@@ -78,12 +89,8 @@ public class EstateApiController {
 
     //TODO
     @Operation(summary = "Allow broker of estate", description = "중개인의 매물 등록 확인")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}/postBroker")
     public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user
     ) {
@@ -93,12 +100,8 @@ public class EstateApiController {
     }
 
     @Operation(summary = "Allow owner of estate", description = "집주인의 매물 등록 확인")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}/postOwner")
     public ResponseEntity<EstateResponseDto> allowOwner(@PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user
     ) {

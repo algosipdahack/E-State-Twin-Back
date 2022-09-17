@@ -145,15 +145,15 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
     public boolean checkExt(String fileName) {
         String ext = getFileExtension(fileName);
-        boolean flag;
+        boolean flag = true;
         // 사진일 때
         if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "bmp") {
             flag = true;
         } else if (ext == "mp4") { //동영상일 때
             flag = false;
-        } else { // 이상한 확장자일 때
+        } /*else { // 이상한 확장자일 때
             throw new IllegalArgumentException("사진은 jpg, png, jpeg, bmp 확장자만 가능하고 동영상은 mp4 확장자만 가능합니다!");
-        }
+        }*/
         return flag;
     }
 }

@@ -17,17 +17,13 @@ import java.util.List;
 @Tag(name = "Asset", description = "에셋 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/asset")
+@RequestMapping("/api/estate/asset")
 public class AssetApiController {
     private final AssetService assetService;
     private final AwsS3Service awsS3Service;
     @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "assetId", description = "Asset Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @GetMapping("/{assetId}")
     public ResponseEntity<AssetResponseDto> getAsset(@PathVariable Long assetId) {
         AssetResponseDto assetResponseDto = assetService.getAsset(assetId);

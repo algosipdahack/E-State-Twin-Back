@@ -18,12 +18,8 @@ public class HouseApiController {
     private final HouseService houseService;
 
     @Operation(summary = "get House", description = "집에 대한 정보들 가져오기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "houseId", description = "House Id", example = "1")
-    })
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))})
+    @Parameters({@Parameter(name = "houseId", description = "House Id", example = "1")})
     @GetMapping("/{houseId}")
     public ResponseEntity<HouseResponseDto> getHouse(@PathVariable Long houseId) {
         return ResponseEntity.status(HttpStatus.OK).body(houseService.getHouse(houseId));

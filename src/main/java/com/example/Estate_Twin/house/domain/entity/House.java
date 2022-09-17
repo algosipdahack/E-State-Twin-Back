@@ -3,13 +3,11 @@ package com.example.Estate_Twin.house.domain.entity;
 
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
 
 @Getter
 @NoArgsConstructor
