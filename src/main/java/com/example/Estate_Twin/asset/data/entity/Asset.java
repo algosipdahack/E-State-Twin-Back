@@ -30,9 +30,9 @@ public class Asset extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
-    @OneToMany(mappedBy = "asset", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Media> assetPhoto = new ArrayList<>();
-    @OneToMany(mappedBy = "asset", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "asset", orphanRemoval = true)
     private List<CheckList> checkList = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌

@@ -22,7 +22,6 @@ public class ContractState extends BaseTimeEntity {
     private State state;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "estate_id")

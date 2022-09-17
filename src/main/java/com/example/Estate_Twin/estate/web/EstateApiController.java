@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-//@RequestMapping("/api/estate/")
+@RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
@@ -37,6 +37,7 @@ public class EstateApiController {
     public ResponseEntity<List<String>> estatePhoto(
             @RequestPart(name = "file") List<MultipartFile> multipartFile,
             @RequestPart(name = "media") MediaSaveRequestDto mediaDto ) throws IOException {
+        log.info(mediaDto.getFilePath());
         return ResponseEntity.status(HttpStatus.OK).body(awsS3Service.uploadFile(multipartFile, "estate/photo"));
     }
     //리스트
@@ -72,7 +73,7 @@ public class EstateApiController {
 
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
-    @PostMapping(value = "/api/estate/detail")
+    @PostMapping(value = "detail")
     public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
         log.info(estateSaveRequestDto.getBorough());
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);

@@ -18,20 +18,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Slf4j
 public class EstateApiControllerTest {
     @Autowired
     private EstateApiController estateApiController;
+    @Autowired
+    private MockMvc mockMvc;
     @Test
     public void uploadFile() throws Exception {
         AddressSaveRequestDto addressSaveRequestDto = new AddressSaveRequestDto()
@@ -72,7 +77,6 @@ public class EstateApiControllerTest {
                 .monthlyRent(1L)
                 .build();
 
-        EstateSaveRequestDto estateSaveRequestDto = new EstateSaveRequestDto();
 
         //DTO 생성
         List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos = new ArrayList<>();
@@ -101,8 +105,7 @@ public class EstateApiControllerTest {
                     .build();
             assetSaveRequestDtos.add(assetSaveRequestDto);
         }
-
-        estateSaveRequestDto.builder()
+        EstateSaveRequestDto estateSaveRequestDto = new EstateSaveRequestDto().builder()
                 .model("src")
                 .address(addressSaveRequestDto)
                 .content("1")
@@ -112,7 +115,7 @@ public class EstateApiControllerTest {
                 .house(houseSaveRequestDto)
                 .assets(assetSaveRequestDtos)
                 .build();
-
+        log.info(estateSaveRequestDto.getBorough());
         ResponseEntity<EstateResponseDto> responseEntity = estateApiController.saveEstate(estateSaveRequestDto);
         log.info(responseEntity.getBody().toString());
     }

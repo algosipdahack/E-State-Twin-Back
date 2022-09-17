@@ -47,8 +47,10 @@ public class EstateResponseDto {
         this.address = new AddressDto(estate.getAddress());
         this.estatehit = new EstateHitDto(estate.getEstateHit());
         this.house = new HouseDto(estate.getHouse());
+
         this.estatePhotos = new ArrayList<>();
         estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(new MediaResponseDto(eMedia)));
+
         this.assets = new ArrayList<>();
         estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
     }

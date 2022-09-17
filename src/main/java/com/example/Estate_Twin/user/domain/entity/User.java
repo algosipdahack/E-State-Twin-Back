@@ -41,17 +41,17 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
     //세입중인 매물
     @OneToOne(mappedBy = "tanent")
     private Estate tanentEstate;
     //소유한 매물
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", orphanRemoval = true)
     private List<Estate> ownEstates = new ArrayList<>();
     //찜한 매물
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder

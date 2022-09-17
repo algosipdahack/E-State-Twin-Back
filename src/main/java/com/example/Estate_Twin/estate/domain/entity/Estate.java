@@ -46,30 +46,30 @@ public class Estate extends BaseTimeEntity {
     private State state;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "estatehit_id")
     private EstateHit estateHit;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id")
     private House house;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_id")
     private Broker broker;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tanent_id")
     private User tanent;
-    @OneToMany(mappedBy = "estate",cascade = {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Media> estateMedia;
-    @OneToMany(mappedBy = "estate",cascade = {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Asset> assets = new ArrayList<>();
     //찜한 매물
-    @OneToMany(mappedBy = "estate",cascade = {CascadeType.ALL},fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌

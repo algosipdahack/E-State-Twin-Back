@@ -33,9 +33,9 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToMany(mappedBy = "broker",orphanRemoval = true)
     private List<Estate> estates = new ArrayList<>();
-    @OneToMany(mappedBy = "broker",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToMany(mappedBy = "broker",orphanRemoval = true)
     private List<Media> brokerPhoto = new ArrayList<>();
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,

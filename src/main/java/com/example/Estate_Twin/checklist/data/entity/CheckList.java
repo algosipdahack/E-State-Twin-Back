@@ -50,8 +50,7 @@ public class CheckList extends BaseTimeEntity {
 
     @OneToMany(
             mappedBy = "checkList",
-            cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             orphanRemoval = true
     )
     private List<Media> checkListPhoto = new ArrayList<>();
