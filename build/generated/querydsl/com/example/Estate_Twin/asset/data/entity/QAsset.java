@@ -35,9 +35,11 @@ public class QAsset extends EntityPathBase<Asset> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final com.example.Estate_Twin.house.domain.entity.QHouse house;
+    public final com.example.Estate_Twin.estate.domain.entity.QEstate estate;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath manufacturer = createString("manufacturer");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
@@ -62,7 +64,7 @@ public class QAsset extends EntityPathBase<Asset> {
 
     public QAsset(Class<? extends Asset> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.house = inits.isInitialized("house") ? new com.example.Estate_Twin.house.domain.entity.QHouse(forProperty("house"), inits.get("house")) : null;
+        this.estate = inits.isInitialized("estate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("estate"), inits.get("estate")) : null;
     }
 
 }

@@ -41,8 +41,6 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath manufacturer = createString("manufacturer");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedDate = _super.modifiedDate;
 

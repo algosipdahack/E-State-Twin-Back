@@ -26,6 +26,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.address.data.entity.QAddress address;
 
+    public final ListPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createList("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
+
     public final StringPath borough = createString("borough");
 
     public final com.example.Estate_Twin.user.domain.entity.QBroker broker;
@@ -47,6 +49,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final StringPath estateThumbNail = createString("estateThumbNail");
 
+    public final EnumPath<Grade> grade = createEnum("grade", Grade.class);
+
     public final com.example.Estate_Twin.house.domain.entity.QHouse house;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -61,8 +65,6 @@ public class QEstate extends EntityPathBase<Estate> {
     public final com.example.Estate_Twin.user.domain.entity.QUser owner;
 
     public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
-
-    public final EnumPath<Grade> rank = createEnum("rank", Grade.class);
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
 

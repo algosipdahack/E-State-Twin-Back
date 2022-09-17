@@ -25,9 +25,6 @@ public class QOfficetel extends EntityPathBase<Officetel> {
     public final QHouse _super;
 
     //inherited
-    public final ListPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets;
-
-    //inherited
     public final NumberPath<Long> bathCount;
 
     public final BooleanPath builtIn = createBoolean("builtIn");
@@ -127,7 +124,6 @@ public class QOfficetel extends EntityPathBase<Officetel> {
     public QOfficetel(Class<? extends Officetel> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this._super = new QHouse(type, metadata, inits);
-        this.assets = _super.assets;
         this.bathCount = _super.bathCount;
         this.createdDate = _super.createdDate;
         this.currentFloors = _super.currentFloors;
