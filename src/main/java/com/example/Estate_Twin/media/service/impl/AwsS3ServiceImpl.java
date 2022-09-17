@@ -36,8 +36,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
 
-    public List<MediaResponseDto> uploadEstate(List<MultipartFile> multipartFile, Long estateId, String dirName) {
+    public List<MediaResponseDto> uploadEstate(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long estateId, String dirName) {
         //파일 이름 받아오기
+        List<MultipartFile> multipartFile = new ArrayList<>();
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
@@ -53,8 +56,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return mediaDtoList;
     }
 
-    public List<MediaResponseDto> uploadAsset(List<MultipartFile> multipartFile, Long assetId, String dirName) {
+    public List<MediaResponseDto> uploadAsset(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long assetId, String dirName) {
         //파일 이름 받아오기
+        List<MultipartFile> multipartFile = new ArrayList<>();
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 
@@ -70,8 +76,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return mediaDtoList;
     }
 
-    public List<MediaResponseDto> uploadCheckList(List<MultipartFile> multipartFile, Long checklistId, String dirName) {
+    public List<MediaResponseDto> uploadCheckList(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long checklistId, String dirName) {
         //파일 이름 받아오기
+        List<MultipartFile> multipartFile = new ArrayList<>();
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
 

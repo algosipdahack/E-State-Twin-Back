@@ -2,6 +2,7 @@ package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,11 +17,10 @@ public class AssetSaveRequestDto {
     private String assetName;
     private String productName;
     private String manufacturer;
-    @Schema()
-    private List<MultipartFile> assetPhotos;
+    private List<MediaSaveMultipartRequestDto> assetPhotos;
 
     @Builder
-    public AssetSaveRequestDto(Category category, String assetName, String productName, String manufacturer, List<MultipartFile> assetPhotos) {
+    public AssetSaveRequestDto(Category category, String assetName, String productName, String manufacturer, List<MediaSaveMultipartRequestDto> assetPhotos) {
         this.category = category;
         this.assetName = assetName;
         this.productName = productName;

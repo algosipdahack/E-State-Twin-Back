@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
+import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public class EstateUpdateRequestDto {
     private String city;
     private String borough;
     private String town;
-    private List<MultipartFile> estatePhotos;
+    private List<MediaSaveMultipartRequestDto> estatePhotos;
     private AddressUpdateRequestDto address;
     private HouseUpdateRequestDto house;
 
@@ -29,7 +30,7 @@ public class EstateUpdateRequestDto {
     public EstateUpdateRequestDto(String transactionType, HouseUpdateRequestDto house,
                                   String estateThumbNail, String content, String model,
                                   String thumbNail3D, AddressUpdateRequestDto address,
-                                  List<MultipartFile> estatePhotos) {
+                                  List<MediaSaveMultipartRequestDto> estatePhotos) {
         this.transactionType = TransactionType.of(transactionType);
         this.house = house;
         this.estateThumbNail = estateThumbNail;

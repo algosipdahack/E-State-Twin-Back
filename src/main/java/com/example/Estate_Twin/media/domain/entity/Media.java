@@ -5,8 +5,10 @@ import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -20,6 +22,7 @@ public class Media {
     private Long id;
     private String origFileName;
     private String filePath;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_id", referencedColumnName = "BROKER_ID")
     private Broker broker;

@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
 import com.example.Estate_Twin.checklist.data.entity.*;
+import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,11 +19,11 @@ public class CheckListSaveRequestDto {
     private RepairType repairType;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
-    private List<MultipartFile> checkListPhotos;
+    private List<MediaSaveMultipartRequestDto> checkListPhotos;
 
     @Builder
     public CheckListSaveRequestDto(String flawPart, Category category, String checkListContent,
-                                   LocalDateTime repairDate, String repairType, List<MultipartFile> checkListPhotos,
+                                   LocalDateTime repairDate, String repairType, List<MediaSaveMultipartRequestDto> checkListPhotos,
                                    Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
         this.flawPart = flawPart;
         this.category = category;

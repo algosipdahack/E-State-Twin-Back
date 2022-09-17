@@ -43,8 +43,11 @@ public class EstateApiControllerTest {
         MockMultipartFile media = new MockMultipartFile("media","media","application/json",mediaDtoJson.getBytes(StandardCharsets.UTF_8));
 
         mockMvc.perform(multipart("/api/estate/")
-                        .file(multipartFile1).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
-                        .file(multipartFile2).part(new MockPart("id","foo2".getBytes(StandardCharsets.UTF_8)))
+                                .file(multipartFile1).part(new MockPart("가구","1".getBytes(StandardCharsets.UTF_8)))
+                                .file(multipartFile2).part(new MockPart("가구","2".getBytes(StandardCharsets.UTF_8)))
+                                .file(multipartFile2).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
+                                .file(multipartFile2).part(new MockPart("id","foo1".getBytes(StandardCharsets.UTF_8)))
+                                .file(multipartFile2).part(new MockPart("id","매물".getBytes(StandardCharsets.UTF_8)))
                         .file(media)
                 )
                 .andDo(print());

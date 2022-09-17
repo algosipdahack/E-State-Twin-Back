@@ -2,6 +2,7 @@ package com.example.Estate_Twin.media.web.dto;
 
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @NoArgsConstructor

@@ -66,14 +66,14 @@ public class EstateApiController {
         EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
+
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail" )
     public ResponseEntity<EstateResponseDto> saveEstate(
-            @RequestPart(value="estate")EstateSaveRequestDto estateSaveRequestDto,
-            @RequestPart(value = "file", required = false) List<MultipartFile> file) {
+            @ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        //awsS3Service.uploadEstate(files,estateDto.getId(),"estate");
+        awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 
