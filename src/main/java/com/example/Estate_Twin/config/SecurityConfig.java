@@ -63,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/oauth2/**","/auth/**").permitAll()
-                .anyRequest().permitAll();
-/*
+                .anyRequest().permitAll()
+
                 .and()
                 .formLogin().disable()
                 .oauth2Login()
@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(jwtAccessDeniedHandler);
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-*/
+
 
     }
 
