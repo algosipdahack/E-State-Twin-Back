@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 
-public interface AssetRepository extends JpaRepository<Asset,Long> {
+public interface AssetRepository extends JpaRepository<Asset,Long> , AssetRepositoryCustom{
     List<Asset> findAllByOrderByIdDesc();
 }

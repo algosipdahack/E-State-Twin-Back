@@ -1,9 +1,14 @@
 package com.example.Estate_Twin.estate.domain.dao;
 
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
+import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
 
 import java.util.List;
@@ -15,9 +20,14 @@ public interface EstateDAO {
                         TransactionType transactionType, String estateThumbNail,
                         String city, String borough, String thumbnail3D);
     Estate addEstateMedia(Long id, Media media);
-    List<Estate> findEstateCustomized(String borough);
-    List<Estate> findAllEstate();
+    List<EstateListResponseDto> findEstateCustomized(String borough);
+    List<EstateListResponseDto> findAllEstateList();
     void clearMedia(Long estateId);
     Estate allowBroker(Estate estate);
     Estate allowOwner(Estate estate);
+    AddressDto findAddress(Long id);
+    HouseDto findHouse(Long id);
+    EstateHitDto findEstateHit(Long id);
+    List<AssetResponseDto> findAssets(Long id);
+
 }

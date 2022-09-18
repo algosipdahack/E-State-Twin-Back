@@ -3,14 +3,17 @@ package com.example.Estate_Twin.checklist.web.dto;
 import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 public class CheckListDto {
     private final AssetDto asset;
-    private final List<Media> checkListPhotos;
+    private final List<MediaResponseDto> checkListPhotos;
     private final String flawPart;
     private final Category category;
     private final String checkListContent;
@@ -19,9 +22,11 @@ public class CheckListDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
 
+    @QueryProjection
     public CheckListDto(CheckList checkList) {
-        this.asset = new AssetDto(checkList.getAsset());
-        this.checkListPhotos = checkList.getCheckListPhoto();
+        this.asset = null;
+        this.checkListPhotos = new ArrayList<>();
+        checkList.getCheckListPhoto().forEach(photo -> this.checkListPhotos.add(new MediaResponseDto(photo)));
         this.flawPart = checkList.getFlawPart();
         this.category = checkList.getCategory();
         this.checkListContent = checkList.getCheckListContent();

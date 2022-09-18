@@ -5,6 +5,7 @@ import com.example.Estate_Twin.checklist.data.entity.Category;
 import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class AssetResponseDto {
     private final String productName;
     private final String manufacturer;
 
+    @QueryProjection
     public AssetResponseDto(Asset asset) {
         this.id = asset.getId();
         this.category = asset.getCategory();

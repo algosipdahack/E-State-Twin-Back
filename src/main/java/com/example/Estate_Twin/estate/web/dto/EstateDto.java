@@ -5,6 +5,7 @@ import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class EstateDto {
     private final AddressDto address;
     private final HouseDto house;
     private final EstateHitDto estatehit;
-
+    @QueryProjection
     public EstateDto(Estate estate) {
         this.state = estate.getState().toString();
         this.transactionType = estate.getTransactionType().toString();
@@ -38,12 +39,11 @@ public class EstateDto {
         this.town = estate.getTown();
         this.model = estate.getModel();
         this.createdAt = estate.getCreatedDate();
-        this.address = new AddressDto(estate.getAddress());
-        this.estatehit = new EstateHitDto(estate.getEstateHit());
-        this.house = new HouseDto(estate.getHouse());
+        this.address = null;
+        this.estatehit = null;
+        this.house = null;
         this.media = new ArrayList<>();
         estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
-        this.assets = new ArrayList<>();
-        estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
+        this.assets = null;
     }
 }

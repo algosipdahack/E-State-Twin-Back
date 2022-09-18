@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.data.dao.impl;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
@@ -25,6 +26,11 @@ public class CheckListDAOImpl implements CheckListDAO {
     public CheckList findCheckList(Long id) {
         return checkListRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
+    }
+
+    @Override
+    public AssetDto findAssetById(Long id) {
+        return checkListRepository.findAssetbyId(id);
     }
 
     @Override

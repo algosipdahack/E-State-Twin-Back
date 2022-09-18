@@ -36,7 +36,9 @@ public class EstateServiceImpl implements EstateService {
     public EstateResponseDto getEstate(Long id) {
         Estate estate = estateDAO.findEstate(id);
         estateHitDAO.updateHit(estate);
-        return new EstateResponseDto(estateDAO.findEstate(id));
+        EstateResponseDto estateResponseDto = new EstateResponseDto(estateDAO.findEstate(id));
+        estateResponseDto.setNull(estateDAO.findEstateHit(id),estateDAO.findAssets(id),estateDAO.findAddress(id),estateDAO.findHouse(id));
+        return estateResponseDto;
     }
 
     @Override
@@ -64,10 +66,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public List<EstateListResponseDto> getAllEstate() {
-        List<Estate> estates = estateDAO.findAllEstate();
-        List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
-        estates.forEach(estate -> estateListResponseDtos.add(new EstateListResponseDto(estate)));
-        return estateListResponseDtos;
+        return estateDAO.findAllEstateList();
     }
 
     @Override
@@ -97,11 +96,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public List<EstateListResponseDto> getEstateCustomized(String borough) {
-        List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
-        estateDAO.findEstateCustomized(borough).forEach(estate -> {
-            estateListResponseDtos.add(new EstateListResponseDto(estate));
-        });
-        return estateListResponseDtos;
+        return estateDAO.findEstateCustomized(borough);
     }
 
     @Override

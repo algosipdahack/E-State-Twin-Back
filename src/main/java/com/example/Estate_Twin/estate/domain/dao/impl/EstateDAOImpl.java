@@ -1,18 +1,24 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
+import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
+import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
@@ -49,13 +55,33 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public List<Estate> findEstateCustomized(String borough) {
+    public AddressDto findAddress(Long id) {
+        return estateRepository.findAddress(id);
+    }
+
+    @Override
+    public HouseDto findHouse(Long id) {
+        return estateRepository.findHouse(id);
+    }
+
+    @Override
+    public EstateHitDto findEstateHit(Long id) {
+        return estateRepository.findEstateHit(id);
+    }
+
+    @Override
+    public List<AssetResponseDto> findAssets(Long id) {
+        return estateRepository.findAssetList(id);
+    }
+
+    @Override
+    public List<EstateListResponseDto> findEstateCustomized(String borough) {
         return estateRepository.findByBoroughOrderByWeeklyHit(borough);
     }
 
     @Override
-    public List<Estate> findAllEstate() {
-        return estateRepository.findAll();
+    public List<EstateListResponseDto> findAllEstateList() {
+        return estateRepository.findEstateList();
     }
 
     @Override

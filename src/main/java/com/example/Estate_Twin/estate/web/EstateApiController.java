@@ -30,16 +30,7 @@ public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
     private final AwsS3Service awsS3Service;
-    @Operation(summary = "upload photo", description = "사진 업로드")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = MediaDto.class)))})
-    @PostMapping(value = "", consumes = {"multipart/form-data"})
-    //파일 첨부를 안할 수도 있기에 required=false로 설정
-    public ResponseEntity<List<String>> estatePhoto(
-            @RequestPart(name = "file") List<MultipartFile> multipartFile,
-            @RequestPart(name = "media") MediaSaveRequestDto mediaDto ) throws IOException {
-        log.info(mediaDto.getFilePath());
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3Service.uploadFile(multipartFile, "estate/photo"));
-    }
+
     //리스트
     //TODO 페이징 처리
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
@@ -75,7 +66,6 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail")
     public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
-        log.info(estateSaveRequestDto.getBorough());
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
         awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);

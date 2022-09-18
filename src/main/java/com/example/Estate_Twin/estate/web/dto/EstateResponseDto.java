@@ -2,12 +2,10 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateDto;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -28,11 +26,11 @@ public class EstateResponseDto {
     private final String model;
     private final LocalDateTime createdAt;
     private final List<MediaResponseDto> estatePhotos;
-    private final List<AssetResponseDto> assets;
-    private final AddressDto address;
-    private final HouseDto house;
-    private final EstateHitDto estatehit;
-
+    private List<AssetResponseDto> assets;
+    private AddressDto address;
+    private HouseDto house;
+    private EstateHitDto estatehit;
+    @QueryProjection
     public EstateResponseDto(Estate estate) {
         this.id = estate.getId();
         this.state = estate.getState().toString();
@@ -44,15 +42,22 @@ public class EstateResponseDto {
         this.town = estate.getTown();
         this.model = estate.getModel();
         this.createdAt = estate.getCreatedDate();
-        this.address = new AddressDto(estate.getAddress());
-        this.estatehit = new EstateHitDto(estate.getEstateHit());
-        this.house = new HouseDto(estate.getHouse());
+        this.address = null;
+        this.estatehit = null;
+        this.house = null;
 
         this.estatePhotos = new ArrayList<>();
         estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(new MediaResponseDto(eMedia)));
 
-        this.assets = new ArrayList<>();
-        estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
+        this.assets = null;
     }
+    public void setNull(EstateHitDto estatehit, List<AssetResponseDto> assets, AddressDto address, HouseDto house) {
+        this.estatehit = estatehit;
 
+        this.assets = new ArrayList<>();
+        assets.forEach(asset -> this.assets.add(asset));
+
+        this.address = address;
+        this.house = house;
+    }
 }

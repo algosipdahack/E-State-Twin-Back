@@ -3,6 +3,7 @@ package com.example.Estate_Twin.contractstate.domain.dao.impl;
 import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
+import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.exception.BadRequestException;
@@ -35,7 +36,7 @@ public class ContractStateDAOImpl implements ContractStateDAO {
     }
 
     @Override
-    public List<ContractState> findContractState(Long estateId) {
+    public List<ContractStateResponseDto> findContractState(Long estateId) {
         return contractStateRepository.findByEstateIdOrderByDate(estateId);
     }
 }

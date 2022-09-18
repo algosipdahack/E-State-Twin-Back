@@ -2,6 +2,7 @@ package com.example.Estate_Twin.house.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -29,7 +30,7 @@ public class HouseResponseDto {
     private final LocalDateTime usageAvailableDate;
     private final Long roomCount;
     private final Long bathCount;
-
+    @QueryProjection
     public HouseResponseDto(House house) {
         this.id = house.getId();
         this.deposit = house.getDeposit();

@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.address.web.dto;
 
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 @Getter
@@ -16,6 +17,7 @@ public class AddressDto {
     private final int subBuildingNumber;
     private final String buildingName;
 
+    @QueryProjection
     public AddressDto(Address address) {
         this.city = address.getCity();
         this.borough = address.getBorough();

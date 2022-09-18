@@ -18,7 +18,9 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
-        return new CheckListResponseDto(checkListDAO.findCheckList(id));
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkListDAO.findCheckList(id));
+        checkListResponseDto.setAsset(checkListDAO.findAssetById(id));
+        return checkListResponseDto;
     }
 
     @Override

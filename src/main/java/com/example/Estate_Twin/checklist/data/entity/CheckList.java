@@ -48,11 +48,7 @@ public class CheckList extends BaseTimeEntity {
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
 
-    @OneToMany(
-            mappedBy = "checkList",
-            fetch = FetchType.EAGER,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "checkList", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Media> checkListPhoto = new ArrayList<>();
 
     @Builder

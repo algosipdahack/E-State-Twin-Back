@@ -19,11 +19,7 @@ public class ContractStateServiceImpl implements ContractStateService {
 
     @Override
     public List<ContractStateResponseDto> getContractState(Long estateId) {
-        List<ContractStateResponseDto> contractStateResponseDtos = new ArrayList<>();
-        contractStateDAO.findContractState(estateId).forEach(contractState -> {
-            contractStateResponseDtos.add(new ContractStateResponseDto(contractState));
-        });
-        return contractStateResponseDtos;
+        return contractStateDAO.findContractState(estateId);
     }
 
 

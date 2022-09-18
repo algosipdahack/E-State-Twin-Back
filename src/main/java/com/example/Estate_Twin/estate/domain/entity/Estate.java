@@ -66,6 +66,7 @@ public class Estate extends BaseTimeEntity {
     private User tanent;
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Media> estateMedia;
+
     @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Asset> assets = new ArrayList<>();
     //찜한 매물

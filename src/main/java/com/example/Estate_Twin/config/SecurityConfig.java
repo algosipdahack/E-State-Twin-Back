@@ -69,12 +69,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .oauth2Login()
                 .authorizationEndpoint() // front -> back으로 요청 보내는 URL
-                .baseUri("/oauth2/authorize")
+                .baseUri("/oauth2/authorize") // ex) /oauth2/authorize/google
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository)
 
                 .and()
-                .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL
-                .baseUri("/oauth2/callback/*")
+                .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL  ex) /login/oauth2/code/google
 
                 .and()
                 .userInfoEndpoint() // Provider로부터 획득한 유저정보를 다룰 service class를 지정

@@ -2,23 +2,30 @@ package com.example.Estate_Twin.contractstate.domain.repository;
 
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
 import com.example.Estate_Twin.contractstate.domain.entity.QContractState;
+import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
+import com.example.Estate_Twin.contractstate.web.dto.QContractStateResponseDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class ContractStateRepositoryImpl extends QuerydslRepositorySupport implements ContractStateRepositoryCustom{
-    public ContractStateRepositoryImpl() { super(ContractState.class); }
+    private JPAQueryFactory jpaQueryFactory;
+    private QContractState contractState;
+    public ContractStateRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+        super(ContractState.class);
+        this.jpaQueryFactory = jpaQueryFactory;
+        this.contractState = QContractState.contractState;
+    }
 
     @Override
-    public List<ContractState> findByEstateIdOrderByDate(Long estateId) {
-        QContractState contractState = QContractState.contractState;
-        List<ContractState> contractStateList = from(contractState)
+    public List<ContractStateResponseDto> findByEstateIdOrderByDate(Long estateId) {
+        return jpaQueryFactory.select(new QContractStateResponseDto(contractState))
+                .from(contractState)
                 .where(contractState.estate.id.eq(estateId))
-                .select(contractState)
-                .orderBy(contractState.createdDate.desc())
+                .orderBy(contractState.createdDate.asc())
                 .fetch();
-        return contractStateList;
     }
 }
