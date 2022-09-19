@@ -55,10 +55,8 @@ public class EstateResponseDto {
     }
     public void setNull(EstateHitDto estatehit, List<AssetResponseDto> assets, AddressDto address, HouseDto house) {
         this.estatehit = estatehit;
-
         this.assets = new ArrayList<>();
         assets.forEach(asset -> this.assets.add(asset));
-
         this.address = address;
         this.house = house;
     }

@@ -14,6 +14,6 @@ public interface EstateService {
     Estate addMedia(Long id, Media media);
     void clearMedia(Long id);
     List<EstateListResponseDto> getAllEstate();
-    List<EstateListResponseDto> getEstateCustomized(String borough);
+    List<EstateMainDto> getEstateCustomized(String borough);
     EstateResponseDto allowPost(Long estateId, Long userId);
 }

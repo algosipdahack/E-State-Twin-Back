@@ -10,6 +10,8 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CheckListServiceImpl implements CheckListService {
@@ -36,6 +38,11 @@ public class CheckListServiceImpl implements CheckListService {
                 checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCheckListContent(),
                 checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType());
         return new CheckListResponseDto(checkList);
+    }
+
+    @Override
+    public List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId) {
+        return checkListDAO.findAllCheckList(assetId);
     }
 
     @Override

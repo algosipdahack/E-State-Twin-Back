@@ -7,6 +7,7 @@ import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
+import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -20,7 +21,7 @@ public interface EstateDAO {
                         TransactionType transactionType, String estateThumbNail,
                         String city, String borough, String thumbnail3D);
     Estate addEstateMedia(Long id, Media media);
-    List<EstateListResponseDto> findEstateCustomized(String borough);
+    List<EstateMainDto> findEstateCustomized(String borough);
     List<EstateListResponseDto> findAllEstateList();
     void clearMedia(Long estateId);
     Estate allowBroker(Estate estate);

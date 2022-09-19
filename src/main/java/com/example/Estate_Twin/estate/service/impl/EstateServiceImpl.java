@@ -95,7 +95,7 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public List<EstateListResponseDto> getEstateCustomized(String borough) {
+    public List<EstateMainDto> getEstateCustomized(String borough) {
         return estateDAO.findEstateCustomized(borough);
     }
 

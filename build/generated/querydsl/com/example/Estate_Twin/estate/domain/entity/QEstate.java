@@ -26,7 +26,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.address.data.entity.QAddress address;
 
-    public final ListPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createList("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
+    public final SetPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createSet("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
 
     public final StringPath borough = createString("borough");
 
@@ -45,7 +45,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final QEstateHit estateHit;
 
-    public final ListPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> estateMedia = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createList("estateMedia", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
+    public final SetPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> estateMedia = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createSet("estateMedia", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
 
     public final StringPath estateThumbNail = createString("estateThumbNail");
 

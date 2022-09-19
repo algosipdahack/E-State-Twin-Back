@@ -21,6 +21,16 @@ import java.util.List;
 public class CheckListApiController {
     private final CheckListService checkListService;
     private final AwsS3Service awsS3Service;
+
+    @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
+    @GetMapping("/{assetId}")
+    public ResponseEntity<List<CheckListResponseDto>> getCheckListbyAsset(@PathVariable Long assetId) {
+        List<CheckListResponseDto> checkListResponseDtos = checkListService.getAllCheckListByAssetId(assetId);
+        return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDtos);
+    }
+
     @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
     @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})

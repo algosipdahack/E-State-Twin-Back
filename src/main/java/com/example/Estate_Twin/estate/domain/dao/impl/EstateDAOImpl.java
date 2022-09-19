@@ -12,6 +12,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
+import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -77,7 +78,7 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public List<EstateListResponseDto> findEstateCustomized(String borough) {
+    public List<EstateMainDto> findEstateCustomized(String borough) {
         return estateRepository.findByBoroughOrderByWeeklyHit(borough);
     }
 

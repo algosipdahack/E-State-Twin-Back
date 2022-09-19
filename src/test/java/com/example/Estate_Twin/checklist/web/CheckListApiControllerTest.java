@@ -70,6 +70,15 @@ public class CheckListApiControllerTest {
 
     @Test
     public void getChecklist() {
+        ResponseEntity<CheckListResponseDto> responseEntity = checkListApiController.getCheckList(1L);
+        log.info(responseEntity.getBody().toString());
+
+    }
+
+    @Test
+    public void getChecklistbyAsset() {
+        ResponseEntity<List<CheckListResponseDto>> responseEntity = checkListApiController.getCheckListbyAsset(1L);
+        log.info(responseEntity.getBody().toString());
 
     }
 

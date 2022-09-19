@@ -22,6 +22,8 @@ public class AssetResponseDto {
     private final String productName;
     private final String manufacturer;
 
+    //TODO 체크리스트 포함하기
+
     @QueryProjection
     public AssetResponseDto(Asset asset) {
         this.id = asset.getId();

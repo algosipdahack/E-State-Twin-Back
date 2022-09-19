@@ -5,11 +5,13 @@ import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
+import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Component
@@ -28,9 +30,10 @@ public class CheckListDAOImpl implements CheckListDAO {
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
     }
 
+
     @Override
-    public AssetDto findAssetById(Long id) {
-        return checkListRepository.findAssetbyId(id);
+    public List<CheckListResponseDto> findAllCheckList(Long assetId) {
+        return checkListRepository.findCheckListbyAssetId(assetId);
     }
 
     @Override

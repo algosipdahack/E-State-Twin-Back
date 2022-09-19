@@ -21,7 +21,7 @@ import java.util.List;
 public class AssetApiController {
     private final AssetService assetService;
     private final AwsS3Service awsS3Service;
-    @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기")
+    @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기(매물 등록 후)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @GetMapping("/{assetId}")

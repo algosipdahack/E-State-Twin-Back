@@ -42,13 +42,13 @@ public class EstateApiController {
     }
 
     //추천매물 보여주기 -> 조회수에 따라 정렬
-    //TODO 페이징 처리
+    //TODO 페이징 처리 , 보여주는 컬럼 정리
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @Parameters({@Parameter(name = "distinct", description = "Name of Distinct", example = "강남구")})
     @GetMapping("customized")
-    public ResponseEntity<List<EstateListResponseDto>> getList(@RequestParam(value = "distinct") String borough) {
-        List<EstateListResponseDto> estateListResponseDtos = estateService.getEstateCustomized(borough);
+    public ResponseEntity<List<EstateMainDto>> getList(@RequestParam(value = "distinct") String borough) {
+        List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(borough);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 

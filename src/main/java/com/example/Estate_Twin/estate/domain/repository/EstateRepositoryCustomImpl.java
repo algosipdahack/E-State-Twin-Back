@@ -37,27 +37,24 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         this.asset = QAsset.asset;
     }
     @Override
-    public List<EstateListResponseDto> findByBoroughOrderByWeeklyHit(String borough) {
-        QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
-                .select(new QEstateListResponseDto(
+    public List<EstateMainDto> findByBoroughOrderByWeeklyHit(String borough) {
+        QueryResults<EstateMainDto> queryResults = jpaQueryFactory
+                .select(new QEstateMainDto(
                         estate.id,
-                        estate.transactionType,
                         estate.estateThumbNail,
                         estate.town,
-                        house.estateType,
-                        address.buildingName,
-                        estate.house.currentFloors,
-                        estate.house.rentableArea,
-                        estate.state.stringValue()
+                        estate.thumbnail3D,
+                        estate.transactionType,
+                        estate.house.sellingFee,
+                        estate.house.estateType
                 ))
                 .from(estate)
                 .leftJoin(estate.house, house)
-                .leftJoin(estate.address, address)
                 .leftJoin(estate.estateHit, estateHit)
                 .where(estate.borough.eq(borough))
                 .orderBy(estate.estateHit.weeklyHit.desc())
                 .fetchResults();
-        List<EstateListResponseDto> result = queryResults.getResults();
+        List<EstateMainDto> result = queryResults.getResults();
         return result;
     }
     @Override

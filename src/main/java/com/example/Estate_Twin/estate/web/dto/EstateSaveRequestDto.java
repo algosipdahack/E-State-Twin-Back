@@ -40,9 +40,9 @@ public class EstateSaveRequestDto {
         assets.forEach(asset -> this.assetSaveRequestDtos.add(asset));
         this.estatePhotos = new ArrayList<>();
         estatePhotos.forEach(multipartFile -> this.estatePhotos.add(multipartFile));
-//        this.city = address.getCity();
- //       this.borough = address.getBorough();
-   //     this.town = address.getTown();
+        this.city = address.getCity();
+        this.borough = address.getBorough();
+        this.town = address.getTown();
     }
 
     public Estate toEntity() {

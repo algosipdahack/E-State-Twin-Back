@@ -133,6 +133,11 @@ public class EstateApiControllerTest {
         ResponseEntity<EstateResponseDto> responseEntity = estateApiController.getEstate(1L);
         log.info(responseEntity.getBody().getAssets().toString());
     }
+    @Test
+    public void getEstateMain() throws Exception {
+        ResponseEntity<List<EstateMainDto>> responseEntity = estateApiController.getList("강남구");
+        log.info(responseEntity.getBody().toString());
+    }
 
 
 }
