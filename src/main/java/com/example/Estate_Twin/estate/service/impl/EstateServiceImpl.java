@@ -43,8 +43,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
-        Address address = null;
-        //Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
+        Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssetSaveRequestDtos().forEach(assetSaveRequestDto -> {
             Asset asset = assetDAO.saveAsset(assetSaveRequestDto.toEntity());

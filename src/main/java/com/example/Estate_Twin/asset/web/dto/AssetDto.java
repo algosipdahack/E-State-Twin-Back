@@ -8,11 +8,14 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Getter
 public class AssetDto {
     private final Category category;
-    private final List<MediaResponseDto> assetPhotos;
+    private final Set<MediaResponseDto> assetPhotos;
     private final String assetName;
     private final String productName;
     private final String manufacturer;
@@ -20,7 +23,7 @@ public class AssetDto {
     @QueryProjection
     public AssetDto(Asset asset) {
         this.category = asset.getCategory();
-        this.assetPhotos = new ArrayList<>();
+        this.assetPhotos = new HashSet<>();
         asset.getAssetPhoto().forEach(photo -> assetPhotos.add(new MediaResponseDto(photo)));
         this.assetName = asset.getAssetName();
         this.productName = asset.getProductName();

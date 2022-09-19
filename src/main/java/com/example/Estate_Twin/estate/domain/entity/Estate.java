@@ -65,13 +65,13 @@ public class Estate extends BaseTimeEntity {
     @JoinColumn(name = "tanent_id")
     private User tanent;
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
-    private List<Media> estateMedia;
+    private Set<Media> estateMedia;
 
     //TODO 수정하기(EAGER)
-    @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<Asset> assets = new ArrayList<>();
+    @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
+    private Set<Asset> assets = new HashSet<>();
     //찜한 매물
-    @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
@@ -140,7 +140,7 @@ public class Estate extends BaseTimeEntity {
     //insert 되기 전 실행된다
     @PrePersist
     public void prePersist() {
-        this.estateMedia = new ArrayList<>();
+        this.estateMedia = new HashSet<>();
         this.state = this.state == null ? State.CONTRACT_BEFORE : this.state;
         this.isPosted = false;
         this.ownerConfirmYN = false;

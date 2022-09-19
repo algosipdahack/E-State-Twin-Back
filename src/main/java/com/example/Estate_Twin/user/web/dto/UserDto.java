@@ -22,7 +22,7 @@ public class UserDto {
     private final Role role;
     private final TransactionType transactionType;
     private final EstateDto tanentEstate;
-    private final List<EstateDto> ownEstate;
+    private final Set<EstateDto> ownEstate;
     private final Set<DipEstateDto> dipEstates;
 
     public UserDto(User user) {
@@ -36,7 +36,7 @@ public class UserDto {
         this.transactionType = user.getTransactionType();
         this.role = user.getRole();
         this.tanentEstate = new EstateDto(user.getTanentEstate());
-        this.ownEstate = new ArrayList<>();
+        this.ownEstate = new HashSet<>();
         user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
         this.dipEstates = new HashSet<>();
         user.getDipEstates().forEach(dipEstate -> this.dipEstates.add(new DipEstateDto(dipEstate)));

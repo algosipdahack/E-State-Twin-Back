@@ -68,5 +68,9 @@ public class CheckListApiControllerTest {
         log.info(responseEntity.getBody().toString());
     }
 
+    @Test
+    public void getChecklist() {
+
+    }
 
 }

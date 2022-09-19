@@ -8,6 +8,7 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 public interface AssetDAO {
     Asset updateAsset(Long id, Category category, String assetName, String productName);
     Asset findAsset(Long id);
+    //Asset findAssetUtilCheckList(Long id);
     Asset saveAsset(Asset asset);
     Asset addAssetMedia(Long id, Media media);
     void clearMedia(Long assetId);

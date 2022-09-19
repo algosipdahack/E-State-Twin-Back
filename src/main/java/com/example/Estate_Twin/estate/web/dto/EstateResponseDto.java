@@ -20,16 +20,17 @@ public class EstateResponseDto {
     private final String transactionType;
     private final String estateThumbNail;
     private final String content;
-    private final String city;
-    private final String borough;
-    private final String town;
     private final String model;
     private final LocalDateTime createdAt;
+    private final boolean isPosted;
+    private final boolean ownerConfirmYN;
+    private final boolean brokerConfirmYN;
     private final List<MediaResponseDto> estatePhotos;
     private List<AssetResponseDto> assets;
     private AddressDto address;
     private HouseDto house;
     private EstateHitDto estatehit;
+
     @QueryProjection
     public EstateResponseDto(Estate estate) {
         this.id = estate.getId();
@@ -37,11 +38,12 @@ public class EstateResponseDto {
         this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();
         this.content = estate.getContent();
-        this.city = estate.getCity();
-        this.borough = estate.getBorough();
-        this.town = estate.getTown();
         this.model = estate.getModel();
         this.createdAt = estate.getCreatedDate();
+        this.isPosted = estate.isPosted();
+        this.ownerConfirmYN = estate.isOwnerConfirmYN();
+        this.brokerConfirmYN = estate.isBrokerConfirmYN();
+
         this.address = null;
         this.estatehit = null;
         this.house = null;

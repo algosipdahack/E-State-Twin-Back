@@ -7,4 +7,5 @@ import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import java.util.List;
 
 public interface AssetRepositoryCustom {
+    //AssetDto findAssetbyId(Long checkListId);
 }

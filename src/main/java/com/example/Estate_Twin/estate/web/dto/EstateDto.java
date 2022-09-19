@@ -10,7 +10,9 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 public class EstateDto {
@@ -19,12 +21,12 @@ public class EstateDto {
     private final String estateThumbNail;
     private final String content;
     private final String city;
-    private final String borough;
-    private final String town;
-    private final String model;
+    private final boolean isPosted;
+    private final boolean ownerConfirmYN;
+    private final boolean brokerConfirmYN;
     private final LocalDateTime createdAt;
-    private final List<MediaResponseDto> media;
-    private final List<AssetResponseDto> assets;
+    private final Set<MediaResponseDto> media;
+    private final Set<AssetResponseDto> assets;
     private final AddressDto address;
     private final HouseDto house;
     private final EstateHitDto estatehit;
@@ -35,14 +37,14 @@ public class EstateDto {
         this.estateThumbNail = estate.getEstateThumbNail();
         this.content = estate.getContent();
         this.city = estate.getCity();
-        this.borough = estate.getBorough();
-        this.town = estate.getTown();
-        this.model = estate.getModel();
+        this.isPosted = estate.isPosted();
+        this.ownerConfirmYN = estate.isOwnerConfirmYN();
+        this.brokerConfirmYN = estate.isBrokerConfirmYN();
         this.createdAt = estate.getCreatedDate();
         this.address = null;
         this.estatehit = null;
         this.house = null;
-        this.media = new ArrayList<>();
+        this.media = new HashSet<>();
         estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
         this.assets = null;
     }

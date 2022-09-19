@@ -22,7 +22,7 @@ public class ContractStateController {
 
     @Operation(summary = "update ContractState", description = "매물 상태 수정하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
-    @Parameters({@Parameter(name = "contractStateId", description = "ContractState Id", example = "1")})
+    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("/{estateId}")
     public ResponseEntity<ContractStateResponseDto> updateContractState(@PathVariable Long estateId, @RequestBody ContractStateUpdateRequestDto contractStateUpdateRequestDto){
         ContractStateResponseDto contractStateResponseDto = contractStateService.updateState(estateId,contractStateUpdateRequestDto);

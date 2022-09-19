@@ -41,12 +41,12 @@ public class CheckList extends BaseTimeEntity {
     @Column
     private Boolean ownerConfirmYN;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
 
     @OneToMany(mappedBy = "checkList", fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Media> checkListPhoto = new ArrayList<>();
+    private Set<Media> checkListPhoto = new HashSet<>();
 
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
@@ -67,6 +67,6 @@ public class CheckList extends BaseTimeEntity {
             this.asset.getCheckList().remove(this);
         }
         this.asset = asset;
-        this.asset.getCheckList().add(this);
+        asset.getCheckList().add(this);
     }
 }

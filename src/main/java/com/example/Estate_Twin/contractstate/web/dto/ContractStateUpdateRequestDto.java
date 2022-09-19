@@ -12,7 +12,7 @@ public class ContractStateUpdateRequestDto {
     private State state;
 
     @Builder
-    public ContractStateUpdateRequestDto(State state, LocalDateTime date, Estate estate) {
+    public ContractStateUpdateRequestDto(State state) {
         this.state = state;
     }
 

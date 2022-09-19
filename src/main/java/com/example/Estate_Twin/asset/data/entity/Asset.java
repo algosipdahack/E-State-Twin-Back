@@ -31,9 +31,9 @@ public class Asset extends BaseTimeEntity {
     @JoinColumn(name = "estate_id")
     private Estate estate;
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Media> assetPhoto = new ArrayList<>();
-    @OneToMany(mappedBy = "asset", orphanRemoval = true)
-    private List<CheckList> checkList = new ArrayList<>();
+    private Set<Media> assetPhoto = new HashSet<>();
+    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<CheckList> checkList = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
     public Asset(Category category, String assetName, String productName, String manufacturer, Estate estate) {
@@ -48,7 +48,7 @@ public class Asset extends BaseTimeEntity {
             this.estate.getAssets().remove(this);
         }
         this.estate = estate;
-        estate.getAssets().add(this);
+        this.estate.getAssets().add(this);
     }
     public Asset setId(Long id) {
         this.id = id;

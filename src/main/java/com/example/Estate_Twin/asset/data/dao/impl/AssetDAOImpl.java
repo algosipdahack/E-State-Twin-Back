@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class AssetDAOImpl implements AssetDAO {
     private AssetRepository assetRepository;
 
+
     @Override
     public Asset updateAsset(Long id, Category category, String assetName, String productName) {
         Asset selectedAsset = assetRepository.findById(id)

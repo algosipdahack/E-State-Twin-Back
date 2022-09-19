@@ -36,7 +36,9 @@ public class CheckListApiController {
     @PostMapping("/{assetId}")
     public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
-        awsS3Service.uploadCheckList(checkListSaveRequestDto.getCheckListPhotos(),checkListResponseDto.getId(),"checklist");
+        if (checkListSaveRequestDto.getCheckListPhotos() != null) {
+            awsS3Service.uploadCheckList(checkListSaveRequestDto.getCheckListPhotos(), checkListResponseDto.getId(), "checklist");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 

@@ -29,22 +29,24 @@ public class EstateDAOImpl implements EstateDAO {
     private ContractStateRepository contractStateRepository;
     @Override
     public Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets) {
-        estate.setHouse(house);
-        //estate.setAddress(address);
+        Estate newEstate = estateRepository.save(estate);
+        newEstate.setHouse(house);
+        newEstate.setAddress(address);
 
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
-        estate.setEstateHit(estateHit);
+        newEstate.setEstateHit(estateHit);
 
         ContractState contractState = new ContractState();
+        contractState.setEstate(newEstate);
         contractStateRepository.save(contractState);
-        contractState.setEstate(estate);
+
 
         assets.forEach(asset -> {
-            asset.setEstate(estate);
+            asset.setEstate(newEstate);
         });
 
-        return estateRepository.save(estate);
+        return estateRepository.save(newEstate);
     }
 
     @Override

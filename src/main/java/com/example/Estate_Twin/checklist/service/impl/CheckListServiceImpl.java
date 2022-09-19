@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.service.impl;
 
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
+import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.service.CheckListService;
@@ -18,8 +19,9 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
-        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkListDAO.findCheckList(id));
-        checkListResponseDto.setAsset(checkListDAO.findAssetById(id));
+        CheckList checkList = checkListDAO.findCheckList(id);
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
+        checkListResponseDto.setAsset(new AssetDto(checkList.getAsset()));
         return checkListResponseDto;
     }
 
