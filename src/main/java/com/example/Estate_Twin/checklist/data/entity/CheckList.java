@@ -23,9 +23,6 @@ public class CheckList extends BaseTimeEntity {
     @Column
     private String flawPart;
 
-    @Column
-    private Category category;
-
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
 
@@ -53,13 +50,12 @@ public class CheckList extends BaseTimeEntity {
 
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     Category category, String checkListContent, LocalDateTime repairDate,
+                     String checkListContent, LocalDateTime repairDate,
                      RepairType repairType, Boolean tanentConfirmYN) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;
         this.ownerConfirmYN = ownerConfirmYN;
-        this.category = category;
         this.checkListContent = checkListContent;
         this.repairType = repairType;
         this.tanentConfirmYN = tanentConfirmYN;

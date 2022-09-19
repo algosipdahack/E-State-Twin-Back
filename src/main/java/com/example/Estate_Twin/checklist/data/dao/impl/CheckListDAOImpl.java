@@ -34,14 +34,13 @@ public class CheckListDAOImpl implements CheckListDAO {
     }
 
     @Override
-    public CheckList updateCheckList(Long id, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN, Category category, String checkListContent, LocalDateTime repairDate, RepairType repairType) {
+    public CheckList updateCheckList(Long id, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN, String checkListContent, LocalDateTime repairDate, RepairType repairType) {
         CheckList newCheckList = checkListRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id))
                 .builder()
                 .flawPart(flawPart)
                 .brokerConfirmYN(brokerConfirmYN)
                 .ownerConfirmYN(ownerConfirmYN)
-                .category(category)
                 .checkListContent(checkListContent)
                 .repairDate(repairDate)
                 .repairType(repairType)

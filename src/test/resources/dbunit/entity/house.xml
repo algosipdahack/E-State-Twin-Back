@@ -12,7 +12,7 @@
            maintenanceFee="2" itemsIncludedMaintenanceFee="2fee" netRentableArea="2"
            rentableArea="2" parking="true" size="2" bathCount="2" estateType="OFFICETELS" household="2"
            parkingFee="2" moveInAvailableDate="2022-06-12 22:44:10" heatType="2히트"
-           usageAvailableDate="2022-06-12 22:44:10" roomCount="2022-06-12 23:44:54"
+           usageAvailableDate="2022-06-12 22:44:10" roomCount="1"
            createdDate="2022-06-12 22:44:10" modifiedDate="2022-06-12 23:44:54"/>
     <house id="3" deposit="3" monthlyRent="3"
            sellingFee="3" currentFloors="3" totalFloors="3" shortTermRent="false "

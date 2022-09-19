@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <asset id="1" assetName="의자" productName="체어클럽" category="FURNITURE" house_id="1" manufacturer="LG" createdDate="2022-06-12 22:44:10"
+    <asset id="1" assetName="의자" productName="체어클럽" category="FURNITURE" estate_id="1" manufacturer="LG" createdDate="2022-06-12 22:44:10"
            modifiedDate="2022-06-12 23:44:54"/>
-    <asset id="2" assetName="식탁" productName="토미" category="FURNITURE" house_id="2" manufacturer="LG" createdDate="2022-06-12 22:44:10"
+    <asset id="2" assetName="식탁" productName="토미" category="FURNITURE" estate_id="2" manufacturer="LG" createdDate="2022-06-12 22:44:10"
            modifiedDate="2022-06-12 23:44:54"/>
-    <asset id="3" assetName="벽지" productName="코스모스" category="INTERIOR" house_id="3" manufacturer="LG" createdDate="2022-06-12 22:44:10"
+    <asset id="3" assetName="벽지" productName="코스모스" category="INTERIOR" estate_id="3" manufacturer="LG" createdDate="2022-06-12 22:44:10"
            modifiedDate="2022-06-12 23:44:54"/>
-    <asset id="4" assetName="변기" productName="대림바스" category="BATHROOM" house_id="4" manufacturer="LG" createdDate="2022-06-12 22:44:10"
+    <asset id="4" assetName="변기" productName="대림바스" category="BATHROOM" estate_id="4" manufacturer="LG" createdDate="2022-06-12 22:44:10"
            modifiedDate="2022-06-12 23:44:54"/>
-    <asset id="5" assetName="침대" productName="에이" category="FURNITURE" house_id="5" manufacturer="LG" createdDate="2022-06-12 22:44:10"
+    <asset id="5" assetName="침대" productName="에이" category="FURNITURE" estate_id="5" manufacturer="LG" createdDate="2022-06-12 22:44:10"
            modifiedDate="2022-06-12 23:44:54"/>
 </dataset>

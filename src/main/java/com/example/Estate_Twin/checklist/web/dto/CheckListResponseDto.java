@@ -17,7 +17,6 @@ public class CheckListResponseDto {
     private AssetDto asset;
     private final List<MediaResponseDto> checkListPhotos;
     private final String flawPart;
-    private final Category category;
     private final String checkListContent;
     private final LocalDateTime repairDate;
     private final RepairType repairType;
@@ -32,7 +31,6 @@ public class CheckListResponseDto {
         this.checkListPhotos = new ArrayList<>();
         checkList.getCheckListPhoto().forEach(photo -> this.checkListPhotos.add(new MediaResponseDto(photo)));
         this.flawPart = checkList.getFlawPart();
-        this.category = checkList.getCategory();
         this.checkListContent = checkList.getCheckListContent();
         this.repairDate = checkList.getRepairDate();
         this.repairType = checkList.getRepairType();

@@ -103,6 +103,7 @@ public class EstateApiControllerTest {
                     .productName("대림바스")
                     .category(Category.BATHROOM)
                     .assetPhotos(mediaSaveMultipartRequestDtos)
+                    .manufacturer("LG")
                     .build();
             assetSaveRequestDtos.add(assetSaveRequestDto);
         }
@@ -125,6 +126,12 @@ public class EstateApiControllerTest {
     public void getEstate() throws Exception {
         ResponseEntity<List<EstateListResponseDto>> responseEntity = estateApiController.getList();
         log.info(responseEntity.getBody().toString());
+    }
+
+    @Test
+    public void getEstateOne() throws Exception {
+        ResponseEntity<EstateResponseDto> responseEntity = estateApiController.getEstate(1L);
+        log.info(responseEntity.getBody().getAssets().toString());
     }
 
 

@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CheckListSaveRequestDto {
     private String flawPart;
-    private Category category;
     private String checkListContent;
     private LocalDateTime repairDate;
     private RepairType repairType;
@@ -22,11 +21,10 @@ public class CheckListSaveRequestDto {
     private List<MediaSaveMultipartRequestDto> checkListPhotos;
 
     @Builder
-    public CheckListSaveRequestDto(String flawPart, Category category, String checkListContent,
-                                   LocalDateTime repairDate, String repairType, List<MediaSaveMultipartRequestDto> checkListPhotos,
+    public CheckListSaveRequestDto(String flawPart, String checkListContent, LocalDateTime repairDate,
+                                   String repairType, List<MediaSaveMultipartRequestDto> checkListPhotos,
                                    Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
         this.flawPart = flawPart;
-        this.category = category;
         this.checkListContent = checkListContent;
         this.repairDate = repairDate;
         this.repairType = RepairType.of(repairType);
@@ -41,7 +39,6 @@ public class CheckListSaveRequestDto {
                 .checkListContent(checkListContent)
                 .ownerConfirmYN(ownerConfirmYN)
                 .brokerConfirmYN(brokerConfirmYN)
-                .category(category)
                 .flawPart(flawPart)
                 .repairDate(repairDate)
                 .repairType(repairType)

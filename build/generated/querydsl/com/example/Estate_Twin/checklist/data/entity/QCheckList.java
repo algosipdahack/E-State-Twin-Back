@@ -28,8 +28,6 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final BooleanPath brokerConfirmYN = createBoolean("brokerConfirmYN");
 
-    public final EnumPath<Category> category = createEnum("category", Category.class);
-
     public final StringPath checkListContent = createString("checkListContent");
 
     public final ListPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> checkListPhoto = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createList("checkListPhoto", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);

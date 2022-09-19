@@ -88,6 +88,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         QueryResults<AssetResponseDto> queryResults = jpaQueryFactory
                 .select(new QAssetResponseDto(asset))
                 .from(asset)
+                .leftJoin(asset.estate, estate)
                 .where(asset.estate.id.eq(estateId))
                 .fetchResults();
         return queryResults.getResults();
@@ -96,7 +97,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public AddressDto findAddress(Long estateId) {
         return jpaQueryFactory.select(new QAddressDto(address))
-                .from(address)
+                .from(estate)
                 .leftJoin(estate.address, address)
                 .where(estate.id.eq(estateId))
                 .fetchOne();
@@ -105,7 +106,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public EstateHitDto findEstateHit(Long estateId) {
         return jpaQueryFactory.select(new QEstateHitDto(estateHit))
-                .from(estateHit)
+                .from(estate)
                 .leftJoin(estate.estateHit, estateHit)
                 .where(estate.id.eq(estateId))
                 .fetchOne();
@@ -114,7 +115,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public HouseDto findHouse(Long estateId) {
         return jpaQueryFactory.select(new QHouseDto(house))
-                .from(house)
+                .from(estate)
                 .leftJoin(estate.house, house)
                 .where(estate.id.eq(estateId))
                 .fetchOne();

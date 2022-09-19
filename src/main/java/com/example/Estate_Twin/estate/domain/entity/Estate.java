@@ -46,7 +46,7 @@ public class Estate extends BaseTimeEntity {
     private State state;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estatehit_id")
     private EstateHit estateHit;
     @OneToOne(fetch = FetchType.LAZY)
@@ -67,6 +67,7 @@ public class Estate extends BaseTimeEntity {
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private List<Media> estateMedia;
 
+    //TODO 수정하기(EAGER)
     @OneToMany(mappedBy = "estate",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Asset> assets = new ArrayList<>();
     //찜한 매물

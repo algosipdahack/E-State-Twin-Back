@@ -2,7 +2,7 @@ package com.example.Estate_Twin.house.domain.entity;
 
 import javax.persistence.*;
 
-@Entity
+/*@Entity
 @DiscriminatorValue("O")
 // coach처럼 다 바꾸기
 public class Officetel extends House {
@@ -26,4 +26,4 @@ public class Officetel extends House {
     @Column
     private Boolean veranda;
 
-}
+}*/

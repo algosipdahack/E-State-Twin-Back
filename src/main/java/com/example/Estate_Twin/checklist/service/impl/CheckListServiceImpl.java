@@ -31,7 +31,7 @@ public class CheckListServiceImpl implements CheckListService {
     @Override
     public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
         CheckList checkList = checkListDAO.updateCheckList(id,checkListUpdateRequestDto.getFlawPart(),checkListUpdateRequestDto.getBrokerConfirmYN(),
-                checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCategory(),checkListUpdateRequestDto.getCheckListContent(),
+                checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCheckListContent(),
                 checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType());
         return new CheckListResponseDto(checkList);
     }
