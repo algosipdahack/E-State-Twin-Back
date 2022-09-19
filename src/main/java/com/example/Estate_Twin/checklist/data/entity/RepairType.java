@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.Arrays;
 @Getter
 public enum RepairType {
-        PURCHASE("purchase"), REPAIR("repair");
+        PURCHASE("PURCHASE"), REPAIR("REPAIR");
         private final String type;
         RepairType(String type) {
                 this.type = type;

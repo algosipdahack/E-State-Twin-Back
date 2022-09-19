@@ -6,7 +6,7 @@ import java.util.Arrays;
 @Getter
 public enum State {
     //거래 전, 방문 예약 , 계약 진행 버튼 , 거래 완료
-    CONTRACT_BEFORE("before"), RESERVATION("reservation"), CONTRACT_DOING("doing"), CONTRACT_DONE("done");
+    CONTRACT_BEFORE("BEFORE"), RESERVATION("RESERVATION"), CONTRACT_DOING("DOING"), CONTRACT_DONE("DONE");
     private final String state;
     State(String state) { this.state = state; }
 

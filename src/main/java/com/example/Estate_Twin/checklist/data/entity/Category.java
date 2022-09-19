@@ -7,7 +7,7 @@ import java.util.Arrays;
 @Getter
 public enum Category {
 
-    HOMEAPPLIANCES("homeappliances"), FURNITURE("furniture"), BATHROOM("bathroom"), INTERIOR("interior");
+    HOMEAPPLIANCES("HOMEAPPLIANCES"), FURNITURE("FURNITURE"), BATHROOM("BATHROOM"), INTERIOR("INTERIOR");
     private final String type;
 
     Category(String type) {

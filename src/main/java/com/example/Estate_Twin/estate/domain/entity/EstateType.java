@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 @Getter
 public enum EstateType {
-    APARTMENT("apartment"), OFFICETELS("officetels");
+    APARTMENT("APARTMENT"), OFFICETELS("OFFICETELS");
     private final String type;
 
     EstateType(String type) {

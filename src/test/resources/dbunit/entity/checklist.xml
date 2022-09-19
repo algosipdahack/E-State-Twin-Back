@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <checklist id="1" flawPart="1하자부위" category="HOMEAPPLIANCES" checkListContent="1"
+    <checklist id="1" flawPart="1하자부위" checkListContent="1"
             repairDate="2022-06-12 23:44:54" repairType="REPAIR" brokerConfirmYN="false"
             tanentConfirmYN="false" ownerConfirmYN="false" asset_id="1" createdDate="2022-06-12 22:44:10"
             modifiedDate="2022-06-12 23:44:54"/>
-    <checklist id="2" flawPart="2하자부위" category="HOMEAPPLIANCES" checkListContent="2"
+    <checklist id="2" flawPart="2하자부위" checkListContent="2"
                repairDate="2022-06-12 23:44:54" repairType="PURCHASE" brokerConfirmYN="false"
                tanentConfirmYN="true" ownerConfirmYN="false" asset_id="2" createdDate="2022-06-12 22:44:10"
                modifiedDate="2022-06-12 23:44:54"/>
-    <checklist id="3" flawPart="3하자부위" category="HOMEAPPLIANCES" checkListContent="3"
+    <checklist id="3" flawPart="3하자부위" checkListContent="3"
                repairDate="2022-06-12 23:44:54" repairType="REPAIR" brokerConfirmYN="false"
                tanentConfirmYN="false" ownerConfirmYN="true" asset_id="3" createdDate="2022-06-12 22:44:10"
                modifiedDate="2022-06-12 23:44:54"/>
-    <checklist id="4" flawPart="4하자부위" category="HOMEAPPLIANCES" checkListContent="4"
+    <checklist id="4" flawPart="4하자부위" checkListContent="4"
                repairDate="2022-06-12 23:44:54" repairType="PURCHASE" brokerConfirmYN="false"
                tanentConfirmYN="true" ownerConfirmYN="true" asset_id="4" createdDate="2022-06-12 22:44:10"
                modifiedDate="2022-06-12 23:44:54"/>
-    <checklist id="5" flawPart="5하자부위" category="HOMEAPPLIANCES" checkListContent="5"
+    <checklist id="5" flawPart="5하자부위" checkListContent="5"
                repairDate="2022-06-12 23:44:54" repairType="REPAIR" brokerConfirmYN="true"
                tanentConfirmYN="true" ownerConfirmYN="true" asset_id="5" createdDate="2022-06-12 22:44:10"
                modifiedDate="2022-06-12 23:44:54"/>

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 @Getter
 public enum Grade {
-    RANK_MANY("rank_many"), RANK_POPULAR("rank_popular");
+    RANK_MANY("RANK_MANY"), RANK_POPULAR("RANK_POPULAR");
     //여기 안에서 아예 배정을 해줘도 좋을 듯
     private final String rank;
     Grade(String rank) { this.rank = rank;}

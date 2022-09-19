@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
+import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import lombok.*;
@@ -18,18 +19,20 @@ public class CheckListSaveRequestDto {
     private RepairType repairType;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
+    private Boolean tanentConfirmYN;
     private List<MediaSaveMultipartRequestDto> checkListPhotos;
 
     @Builder
     public CheckListSaveRequestDto(String flawPart, String checkListContent, LocalDateTime repairDate,
                                    String repairType, List<MediaSaveMultipartRequestDto> checkListPhotos,
-                                   Boolean brokerConfirmYN, Boolean ownerConfirmYN) {
+                                   Boolean brokerConfirmYN, Boolean ownerConfirmYN, Boolean tanentConfirmYN) {
         this.flawPart = flawPart;
         this.checkListContent = checkListContent;
         this.repairDate = repairDate;
         this.repairType = RepairType.of(repairType);
         this.brokerConfirmYN = brokerConfirmYN;
         this.ownerConfirmYN = ownerConfirmYN;
+        this.tanentConfirmYN = tanentConfirmYN;
         this.checkListPhotos = new ArrayList<>();
         checkListPhotos.forEach(checkListPhoto -> this.checkListPhotos.add(checkListPhoto));
     }
