@@ -67,6 +67,6 @@ public class CheckList extends BaseTimeEntity {
             this.asset.getCheckList().remove(this);
         }
         this.asset = asset;
-        asset.getCheckList().add(this);
+        this.asset.getCheckList().add(this);
     }
 }

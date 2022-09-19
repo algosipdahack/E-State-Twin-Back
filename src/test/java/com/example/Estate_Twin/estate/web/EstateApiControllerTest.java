@@ -110,7 +110,7 @@ public class EstateApiControllerTest {
 
         EstateSaveRequestDto estateSaveRequestDto = new EstateSaveRequestDto().builder()
                 .model("src")
-                .address(addressSaveRequestDto)
+                //.address(addressSaveRequestDto)
                 .content("1")
                 .estateThumbNail("src")
                 .transactionType("MONTHLYRENT")

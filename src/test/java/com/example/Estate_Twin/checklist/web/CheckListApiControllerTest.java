@@ -58,7 +58,7 @@ public class CheckListApiControllerTest {
                 .flawPart("1하자부위")
                 .checkListContent("1")
                 .repairDate(dateTime)
-                .repairType("repair")
+                .repairType("REPAIR")
                 .brokerConfirmYN(false)
                 .tanentConfirmYN(false)
                 .ownerConfirmYN(false)
