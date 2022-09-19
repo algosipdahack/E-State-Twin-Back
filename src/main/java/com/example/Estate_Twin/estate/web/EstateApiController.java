@@ -67,7 +67,9 @@ public class EstateApiController {
     @PostMapping(value = "detail")
     public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(),estateDto.getId(),"estate");
+        if(estateSaveRequestDto.getEstatePhotos() != null) {
+            awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(), estateDto.getId(), "estate");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 

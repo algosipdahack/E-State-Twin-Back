@@ -30,7 +30,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     public Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets) {
         estate.setHouse(house);
-        estate.setAddress(address);
+        //estate.setAddress(address);
 
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);

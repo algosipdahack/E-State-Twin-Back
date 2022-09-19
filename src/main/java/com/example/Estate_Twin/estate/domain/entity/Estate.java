@@ -96,7 +96,7 @@ public class Estate extends BaseTimeEntity {
 
     public void setAddress(Address address) {
         this.address = address;
-        //address.setEstate(this);
+        address.setEstate(this);
     }
 
     public void setEstateHit(EstateHit estateHit) {
