@@ -23,7 +23,7 @@ public class ContractStateController {
     @Operation(summary = "update ContractState", description = "매물 상태 수정하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
-    @PutMapping("/{estateId}")
+    @PutMapping("/estate/{estateId}")
     public ResponseEntity<ContractStateResponseDto> updateContractState(@PathVariable Long estateId, @RequestBody ContractStateUpdateRequestDto contractStateUpdateRequestDto){
         ContractStateResponseDto contractStateResponseDto = contractStateService.updateState(estateId,contractStateUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
@@ -32,7 +32,7 @@ public class ContractStateController {
     @Operation(summary = "get ContractState", description = "매물에 따른 상태 정보들 리스트로 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
-    @GetMapping("/{estateId}")
+    @GetMapping("/estate/{estateId}")
     public ResponseEntity<List<ContractStateResponseDto>> getContractStateList(@PathVariable Long estateId) {
         List<ContractStateResponseDto> contractStateResponseDtos = contractStateService.getContractState(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDtos);

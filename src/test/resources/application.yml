@@ -9,17 +9,17 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/local_idiot?serverTimezone=UTC&characterEncoding=UTF-8"
-    username: root
-    password: P@ssw0rd
-
   #datasource:
-  #  driver-class-name: org.mariadb.jdbc.Driver
-  #  url: jdbc:mariadb://idiot-root.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+  #  driver-class-name: com.mysql.cj.jdbc.Driver
+  #  url: "jdbc:mysql://localhost:3306/local_idiot?serverTimezone=UTC&characterEncoding=UTF-8"
   #  username: root
-  #  password: h13001212!
+  #  password: P@ssw0rd
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://idiot-root.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: h13001212!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
