@@ -67,7 +67,6 @@ public class Estate extends BaseTimeEntity {
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private Set<Media> estateMedia;
 
-    //TODO 수정하기(EAGER)
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private Set<Asset> assets = new HashSet<>();
     //찜한 매물

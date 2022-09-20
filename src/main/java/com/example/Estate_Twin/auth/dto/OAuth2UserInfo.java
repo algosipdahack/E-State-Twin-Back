@@ -24,11 +24,11 @@ public class OAuth2UserInfo {
 
     public static OAuth2UserInfo of(String provider, String attributeKey, Map<String,Object> attributes) {
         switch(provider) {
-            case "google" :
+            case "GOOGLE" :
                 return ofGoogle(attributeKey,attributes);
-            case "kakao" :
+            case "KAKAO" :
                 return ofKakao("email",attributes);
-            case "naver" :
+            case "NAVER" :
                 return ofNaver("id", attributes);
             default:
                 throw new RuntimeException();

@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL  ex) /login/oauth2/code/google
+                .baseUri("/login/oauth2/code/*")
 
                 .and()
                 .userInfoEndpoint() // Provider로부터 획득한 유저정보를 다룰 service class를 지정

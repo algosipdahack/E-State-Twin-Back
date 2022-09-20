@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 @Getter
 @NoArgsConstructor
@@ -19,28 +20,25 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_id")
     private Long id;
     //LocalDate => 날짜 정보만 출력. ex) 2019-11-13
-    @Column(nullable = false)
     private LocalDate birthday;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String phone;
-    @Column(nullable = false)
     private String name;
-    @Email
     private String email;
-    @Column(nullable = false)
     private String refreshToken;
     private boolean isBroker;
+
+    //TODO 선호지역 받기
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private EstateType estateType;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    //TODO 선호 지역때문에 넣은 듯. 빼기
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
@@ -82,5 +80,13 @@ public class User extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.isBroker = false;
+        //TODO 디폴트로 박기
+        String string = "2019-01-10";
+        this.birthday = LocalDate.parse(string, DateTimeFormatter.ISO_DATE);
+
+        this.estateType = EstateType.APARTMENT;
+        this.transactionType = TransactionType.LEASE;
+        this.phone = "010-0000-0000";
+        this.refreshToken = "000-000-0000";
     }
 }
