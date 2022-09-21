@@ -1,32 +1,32 @@
 package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
+import com.example.Estate_Twin.asset.data.entity.Category;
+import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 public class AssetDto {
     private final Category category;
     private final Set<MediaResponseDto> assetPhotos;
-    private final String assetName;
+    private final Option option;
     private final String productName;
     private final String manufacturer;
+    private final String anchorId;
 
     @QueryProjection
     public AssetDto(Asset asset) {
         this.category = asset.getCategory();
         this.assetPhotos = new HashSet<>();
         asset.getAssetPhoto().forEach(photo -> assetPhotos.add(new MediaResponseDto(photo)));
-        this.assetName = asset.getAssetName();
+        this.option = asset.getOption();
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();
+        this.anchorId = asset.getAnchorId();
     }
 }

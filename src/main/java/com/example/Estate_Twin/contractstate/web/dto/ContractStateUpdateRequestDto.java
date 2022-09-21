@@ -12,8 +12,8 @@ public class ContractStateUpdateRequestDto {
     private State state;
 
     @Builder
-    public ContractStateUpdateRequestDto(State state) {
-        this.state = state;
+    public ContractStateUpdateRequestDto(String state) {
+        this.state = State.of(state);
     }
 
     public ContractState toEntity() {

@@ -1,28 +1,5 @@
 package com.example.Estate_Twin.asset.service;
 
-import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.repository.AssetRepository;
-import com.example.Estate_Twin.asset.service.impl.AssetServiceImpl;
-import com.example.Estate_Twin.asset.web.dto.*;
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
-import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.domain.repository.HouseRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 //@AutoConfigureTestDatabase()

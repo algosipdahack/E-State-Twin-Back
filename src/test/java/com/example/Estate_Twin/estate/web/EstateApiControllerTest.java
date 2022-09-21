@@ -2,8 +2,9 @@ package com.example.Estate_Twin.estate.web;
 
 import com.amazonaws.util.IOUtils;
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
+import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
-import com.example.Estate_Twin.checklist.data.entity.Category;
+import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
@@ -99,9 +100,9 @@ public class EstateApiControllerTest {
 
         for (int i = 0; i < ImageFiles.length; i++) {
             AssetSaveRequestDto assetSaveRequestDto = new AssetSaveRequestDto().builder()
-                    .assetName("변기")
+                    .option("CLOSET")
                     .productName("대림바스")
-                    .category(Category.BATHROOM)
+                    .category("BATHROOM")
                     .assetPhotos(mediaSaveMultipartRequestDtos)
                     .manufacturer("LG")
                     .build();

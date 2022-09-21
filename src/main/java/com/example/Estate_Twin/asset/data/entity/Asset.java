@@ -3,7 +3,6 @@ package com.example.Estate_Twin.asset.data.entity;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 
@@ -20,11 +19,13 @@ public class Asset extends BaseTimeEntity {
     @Column(name = "asset_id")
     private Long id;
     @Column(nullable = false)
-    private String assetName;
+    private Option option;
     @Column(nullable = false)
     private String productName;
     @Column(nullable = false)
     private String manufacturer;
+    //AR Camera에서 각 앵커마다 에셋이 존재하기 때문
+    private String anchorId;
     @Enumerated(EnumType.STRING)
     private Category category;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,11 +37,12 @@ public class Asset extends BaseTimeEntity {
     private Set<CheckList> checkList = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, String assetName, String productName, String manufacturer, Estate estate) {
+    public Asset(Category category, Option option, String productName, String manufacturer, String anchorId, Estate estate) {
         this.category = category;
-        this.assetName = assetName;
+        this.option = option;
         this.productName = productName;
         this.manufacturer = manufacturer;
+        this.anchorId = anchorId;
         this.estate = estate;
     }
     public void setEstate(Estate estate) {

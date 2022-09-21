@@ -1,4 +1,4 @@
-package com.example.Estate_Twin.checklist.data.entity;
+package com.example.Estate_Twin.asset.data.entity;
 
 import lombok.Getter;
 

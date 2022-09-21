@@ -1,31 +1,5 @@
 package com.example.Estate_Twin.estate.service;
 
-import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
-import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
-import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
-import com.example.Estate_Twin.estate.domain.repository.EstateHitRepository;
-import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
-import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.domain.repository.HouseRepository;
-import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
-import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
-import junit.framework.TestCase;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 /*

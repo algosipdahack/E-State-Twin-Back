@@ -1,13 +1,5 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
-import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
-import com.example.Estate_Twin.checklist.data.entity.Category;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
-import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
-
-import java.util.List;
 /*
 public class c_test {
     @Getter
