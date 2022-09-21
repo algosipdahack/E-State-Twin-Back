@@ -1,7 +1,7 @@
 package com.example.Estate_Twin.contractstate.web.dto;
 
 import com.example.Estate_Twin.contractstate.domain.entity.*;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,16 +9,11 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class ContractStateUpdateRequestDto {
-    private State state;
-
-    @Builder
-    public ContractStateUpdateRequestDto(String state) {
-        this.state = State.of(state);
-    }
-
+    @Schema(description = "거래 상태", example = "BEFORE, RESERVATION, DOING, DONE")
+    private String state;
     public ContractState toEntity() {
         return ContractState.builder()
-                .state(state)
+                .state(State.of(state))
                 .build();
     }
 }

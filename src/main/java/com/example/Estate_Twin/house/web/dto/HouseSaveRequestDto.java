@@ -29,37 +29,6 @@ public class HouseSaveRequestDto {
     private LocalDateTime usageAvailableDate;
     private Long roomCount;
     private Long bathCount;
-
-    @Builder
-    public HouseSaveRequestDto(Long deposit, Long monthlyRent, Long sellingFee,
-                               Long currentFloors, Long totalFloors,
-                               boolean shortTermRent, Long maintenanceFee,
-                               String itemsIncludedMaintenanceFee, Long netRentableArea,
-                               Long rentableArea, boolean parking, Long parkingFee,
-                               LocalDateTime moveInAvailableDate, LocalDateTime usageAvailableDate,
-                               Long size, String heatType, EstateType estateType, Long household,
-                               Long roomCount, Long bathCount) {
-        this.deposit = deposit;
-        this.monthlyRent = monthlyRent;
-        this.sellingFee = sellingFee;
-        this.currentFloors = currentFloors;
-        this.totalFloors = totalFloors;
-        this.shortTermRent = shortTermRent;
-        this.maintenanceFee = maintenanceFee;
-        this.itemsIncludedMaintenanceFee = itemsIncludedMaintenanceFee;
-        this.netRentableArea = netRentableArea;
-        this.rentableArea = rentableArea;
-        this.parking = parking;
-        this.parkingFee = parkingFee;
-        this.moveInAvailableDate = moveInAvailableDate;
-        this.size = size;
-        this.heatType = heatType;
-        this.estateType = estateType;
-        this.household = household;
-        this.usageAvailableDate = usageAvailableDate;
-        this.roomCount = roomCount;
-        this.bathCount = bathCount;
-    }
     public House toEntity() {
         return House.builder()
                 .bathCount(bathCount)

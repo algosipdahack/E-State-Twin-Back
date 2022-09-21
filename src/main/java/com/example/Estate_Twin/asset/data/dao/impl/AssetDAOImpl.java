@@ -1,8 +1,7 @@
 package com.example.Estate_Twin.asset.data.dao.impl;
 
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Option;
+import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AssetDAOImpl implements AssetDAO {
     private AssetRepository assetRepository;
-
 
     @Override
     public Asset updateAsset(Long id, Category category, Option option, String productName) {

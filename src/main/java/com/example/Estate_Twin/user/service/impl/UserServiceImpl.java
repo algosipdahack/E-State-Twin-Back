@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.service.impl;
 
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.service.UserService;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -18,6 +19,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto signUp(Long userId, UserSignUpDto userSignUpDto) {
-        return new UserResponseDto(userDAO.signUp(userId, userSignUpDto.getBirthday(), userSignUpDto.getPhone(), userSignUpDto.getEstateType(), userSignUpDto.getTransactionType()));
+        return new UserResponseDto(userDAO.signUp(userId, userSignUpDto.getBirthday(), userSignUpDto.getPhone(), EstateType.of(userSignUpDto.getEstateType()), TransactionType.of(userSignUpDto.getTransactionType())));
     }
 }

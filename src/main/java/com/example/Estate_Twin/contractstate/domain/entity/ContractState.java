@@ -21,9 +21,7 @@ public class ContractState extends BaseTimeEntity {
     @Enumerated(value = EnumType.STRING)
     private State state;
 
-    @OneToOne(
-            fetch = FetchType.LAZY
-    )
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
 

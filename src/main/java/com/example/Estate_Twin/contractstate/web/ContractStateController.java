@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.contractstate.web;
 
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.service.ContractStateService;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 import io.swagger.v3.oas.annotations.*;

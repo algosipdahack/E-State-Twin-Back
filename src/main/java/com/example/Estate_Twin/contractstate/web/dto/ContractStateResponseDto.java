@@ -1,8 +1,8 @@
 package com.example.Estate_Twin.contractstate.web.dto;
 
 import com.example.Estate_Twin.contractstate.domain.entity.*;
-import com.example.Estate_Twin.estate.web.dto.EstateDto;
 import com.querydsl.core.annotations.QueryProjection;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 public class ContractStateResponseDto {
     private final Long id;
-    private final State state;
+    @Schema(description = "거래 상태", example = "BEFORE, RESERVATION, DOING, DONE")
+    private final String state;
     private final LocalDateTime date;
 
     @QueryProjection
     public ContractStateResponseDto(ContractState contractState) {
         this.id = contractState.getId();
-        this.state = contractState.getState();
+        this.state = contractState.getState().toString();
         this.date = contractState.getCreatedDate();
     }
 }

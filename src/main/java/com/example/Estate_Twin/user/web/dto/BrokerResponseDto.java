@@ -22,7 +22,6 @@ public class BrokerResponseDto {
 
     public BrokerResponseDto(Broker broker) {
         this.id = broker.getId();
-
         this.businessName = broker.getBusinessName();
         this.agentName = broker.getAgentName();
         this.brokerageRegistrationNumber = broker.getBrokerageRegistrationNumber();

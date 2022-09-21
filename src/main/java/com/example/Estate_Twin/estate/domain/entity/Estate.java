@@ -33,9 +33,11 @@ public class Estate extends BaseTimeEntity {
     private String city;
     private String borough;
     private String town;
-
-    //s3에 올려진 3D 모델의 썸네일
+    //s3에 올려진 3D 모델의 썸네일 -> 자동으로 업로드 되게끔(lambda -> s3)
     private String thumbnail3D;
+    //매물 영상 동영상
+    //TODO 업로드 해야함
+    private String arCam;
     //TODO 밑의 두개가 confirm되는 순간 true로 바뀜
     private boolean isPosted;
     private boolean ownerConfirmYN;
@@ -74,7 +76,7 @@ public class Estate extends BaseTimeEntity {
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(String content, String model, String town,
+    public Estate(String content, String model, String town, String arCam,
                   TransactionType transactionType, String estateThumbNail,
                   String city, String borough, String thumbnail3D, Address address) {
         this.borough = borough;
@@ -82,6 +84,7 @@ public class Estate extends BaseTimeEntity {
         this.model = model;
         this.thumbnail3D = thumbnail3D;
         this.city = city;
+        this.arCam = arCam;
         this.address = address;
         this.transactionType = transactionType;
         this.estateThumbNail = estateThumbNail;
@@ -111,10 +114,10 @@ public class Estate extends BaseTimeEntity {
     }
     public void setBroker(Broker broker) {
         if(this.broker != null ){
-            this.broker.getEstates().remove(this);
+            this.broker.getTradeEstates().remove(this);
         }
         this.broker = broker;
-        broker.getEstates().add(this);
+        broker.getTradeEstates().add(this);
     }
     public void setTanent(User tanent) {
         this.tanent = tanent;

@@ -1,8 +1,6 @@
 package com.example.Estate_Twin.user.domain.dao.impl;
 
-import com.example.Estate_Twin.address.web.dto.AddressDto;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;

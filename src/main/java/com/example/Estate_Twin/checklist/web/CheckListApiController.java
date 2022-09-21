@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -58,7 +57,9 @@ public class CheckListApiController {
     @PutMapping("/checklist/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);
-        awsS3Service.uploadCheckList(checkListUpdateRequestDto.getCheckListPhotos(),checkListResponseDto.getId(),"checklist");
+        if (checkListUpdateRequestDto.getCheckListPhotos() != null) {
+            awsS3Service.uploadCheckList(checkListUpdateRequestDto.getCheckListPhotos(), checkListResponseDto.getId(), "checklist");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 }

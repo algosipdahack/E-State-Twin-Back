@@ -13,17 +13,6 @@ public class BrokerSignUpDto {
     private String businessLicense;
     private String brokerageRegistrationLicense;
 
-    @Builder
-    public BrokerSignUpDto(String businessName, String agentName, String brokerageRegistrationNumber,
-                           String businessRegistrationNumber, String businessLicense, String brokerageRegistrationLicense) {
-        this.businessName = businessName;
-        this.agentName = agentName;
-        this.brokerageRegistrationNumber = brokerageRegistrationNumber;
-        this.businessRegistrationNumber = businessRegistrationNumber;
-        this.businessLicense = businessLicense;
-        this.brokerageRegistrationLicense = brokerageRegistrationLicense;
-    }
-
     public Broker toEntity() {
         return Broker.builder()
                 .businessName(businessName)

@@ -24,7 +24,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     }
 
     public static CustomUserDetails create(User user) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_TANENT"));
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new CustomUserDetails(
                 user.getId(),

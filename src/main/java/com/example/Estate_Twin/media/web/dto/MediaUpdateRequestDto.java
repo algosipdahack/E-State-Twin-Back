@@ -8,9 +8,4 @@ public class MediaUpdateRequestDto {
     private String origFileName;
     private String filePath;
 
-    @Builder
-    public MediaUpdateRequestDto(String origFileName, String filePath) {
-        this.origFileName = origFileName;
-        this.filePath = filePath;
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.domain.entity;
 
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
@@ -33,10 +34,10 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker",orphanRemoval = true)
-    private List<Estate> estates = new ArrayList<>();
-    @OneToMany(mappedBy = "broker",orphanRemoval = true)
-    private List<Media> brokerPhoto = new ArrayList<>();
+    @OneToMany(mappedBy = "broker", orphanRemoval = true)
+    private Set<Estate> tradeEstates;
+    @OneToMany(mappedBy = "broker", orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<Media> brokerPhoto;
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
                   String businessLicense, String brokerageRegistrationLicense) {
@@ -50,5 +51,10 @@ public class Broker {
     public void setUser(User user) {
         this.user = user;
         user.setIsBroker();
+    }
+    @PrePersist
+    public void prePersist() {
+        this.tradeEstates = new HashSet<>();
+        this.brokerPhoto = new HashSet<>();
     }
 }

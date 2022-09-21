@@ -1,9 +1,7 @@
 package com.example.Estate_Twin.contractstate.domain.repository;
 
-import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
-import com.example.Estate_Twin.contractstate.domain.entity.QContractState;
-import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
-import com.example.Estate_Twin.contractstate.web.dto.QContractStateResponseDto;
+import com.example.Estate_Twin.contractstate.domain.entity.*;
+import com.example.Estate_Twin.contractstate.web.dto.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;

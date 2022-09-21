@@ -4,6 +4,7 @@ import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.checklist.data.entity.RepairType;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -36,7 +37,7 @@ public class CheckListServiceImpl implements CheckListService {
     public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
         CheckList checkList = checkListDAO.updateCheckList(id,checkListUpdateRequestDto.getFlawPart(),checkListUpdateRequestDto.getBrokerConfirmYN(),
                 checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCheckListContent(),
-                checkListUpdateRequestDto.getRepairDate(),checkListUpdateRequestDto.getRepairType());
+                checkListUpdateRequestDto.getRepairDate(), RepairType.of(checkListUpdateRequestDto.getRepairType()));
         return new CheckListResponseDto(checkList);
     }
 

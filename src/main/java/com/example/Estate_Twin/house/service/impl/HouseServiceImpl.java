@@ -23,7 +23,8 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public HouseResponseDto updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto) {
-        return new HouseResponseDto(houseDAO.updateHouse(id, houseUpdateRequestDto.getDeposit(), houseUpdateRequestDto.getMonthlyRent(),
+        return new HouseResponseDto(houseDAO.updateHouse(id, houseUpdateRequestDto.getDeposit(),
+                houseUpdateRequestDto.getMonthlyRent(),
                 houseUpdateRequestDto.getSellingFee(), houseUpdateRequestDto.getCurrentFloors(),
                 houseUpdateRequestDto.getTotalFloors(), houseUpdateRequestDto.isParking(),
                 houseUpdateRequestDto.getMaintenanceFee(), houseUpdateRequestDto.getHeatType(),

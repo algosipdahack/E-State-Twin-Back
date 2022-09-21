@@ -1,21 +1,21 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.asset.data.entity.Option;
+import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 public class AssetResponseDto {
     private final Long id;
-    private final Category category;
+    @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
+    private final String category;
     private final Set<MediaResponseDto> assetPhoto;
-    private final Option option;
+    @Schema(description = "에셋 작은 카테고리(옵션)", example = "AIRCONDITIONER, WASHER, BED, DESK, CLOSET, TV, REFRIGERATOR, SHOERACK, GASSTOVE, DOORLOCK, BIDET, WALLPAPER, CURTAIN")
+    private final String option;
     private final String productName;
     private final String manufacturer;
     private final String anchorId;
@@ -24,10 +24,10 @@ public class AssetResponseDto {
     @QueryProjection
     public AssetResponseDto(Asset asset) {
         this.id = asset.getId();
-        this.category = asset.getCategory();
+        this.category = asset.getCategory().toString();
         this.assetPhoto = new HashSet<>();
         asset.getAssetPhoto().forEach(photo -> assetPhoto.add(new MediaResponseDto(photo)));
-        this.option = asset.getOption();
+        this.option = asset.getOption().toString();
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();

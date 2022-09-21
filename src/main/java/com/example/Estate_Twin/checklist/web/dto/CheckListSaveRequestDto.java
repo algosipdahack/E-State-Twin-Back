@@ -1,13 +1,11 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,35 +14,22 @@ public class CheckListSaveRequestDto {
     private String flawPart;
     private String checkListContent;
     private LocalDateTime repairDate;
-    private RepairType repairType;
+    @Schema(description = "구매/수리", example = "PURCHASE, REPAIR")
+    private String repairType;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
     private Boolean tanentConfirmYN;
     private List<MediaSaveMultipartRequestDto> checkListPhotos;
-
-    @Builder
-    public CheckListSaveRequestDto(String flawPart, String checkListContent, LocalDateTime repairDate,
-                                   String repairType, List<MediaSaveMultipartRequestDto> checkListPhotos,
-                                   Boolean brokerConfirmYN, Boolean ownerConfirmYN, Boolean tanentConfirmYN) {
-        this.flawPart = flawPart;
-        this.checkListContent = checkListContent;
-        this.repairDate = repairDate;
-        this.repairType = RepairType.of(repairType);
-        this.brokerConfirmYN = brokerConfirmYN;
-        this.ownerConfirmYN = ownerConfirmYN;
-        this.tanentConfirmYN = tanentConfirmYN;
-        this.checkListPhotos = new ArrayList<>();
-        checkListPhotos.forEach(checkListPhoto -> this.checkListPhotos.add(checkListPhoto));
-    }
 
     public CheckList toEntity() {
         return CheckList.builder()
                 .checkListContent(checkListContent)
                 .ownerConfirmYN(ownerConfirmYN)
                 .brokerConfirmYN(brokerConfirmYN)
+                .tanentConfirmYN(tanentConfirmYN)
                 .flawPart(flawPart)
                 .repairDate(repairDate)
-                .repairType(repairType)
+                .repairType(RepairType.of(repairType))
                 .build();
     }
 

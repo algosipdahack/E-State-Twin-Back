@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.user.service;
 
-import com.example.Estate_Twin.user.web.dto.BrokerResponseDto;
-import com.example.Estate_Twin.user.web.dto.BrokerSignUpDto;
+import com.example.Estate_Twin.user.web.dto.*;
 
 public interface BrokerService {
     BrokerResponseDto getBroker(Long userId);

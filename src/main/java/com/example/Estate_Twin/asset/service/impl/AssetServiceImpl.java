@@ -2,6 +2,8 @@ package com.example.Estate_Twin.asset.service.impl;
 
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.entity.Category;
+import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -25,8 +27,8 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto) {
-        Asset asset = assetDAO.updateAsset(id, assetUpdateRequestDto.getCategory(),
-                assetUpdateRequestDto.getOption(),assetUpdateRequestDto.getProductName());
+        Asset asset = assetDAO.updateAsset(id, Category.of(assetUpdateRequestDto.getCategory()),
+                Option.of(assetUpdateRequestDto.getOption()),assetUpdateRequestDto.getProductName());
         return new AssetResponseDto(asset);
     }
 

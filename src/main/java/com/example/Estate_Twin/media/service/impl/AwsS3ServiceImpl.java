@@ -3,12 +3,9 @@ package com.example.Estate_Twin.media.service.impl;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
-import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
-import com.example.Estate_Twin.estate.service.EstateService;
-import com.example.Estate_Twin.media.service.AwsS3Service;
-import com.example.Estate_Twin.media.service.MediaService;
+import com.example.Estate_Twin.media.service.*;
 import com.example.Estate_Twin.media.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -154,7 +151,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
     public boolean checkExt(String fileName) {
         String ext = getFileExtension(fileName);
-        boolean flag = true;
+        boolean flag;
         // 사진일 때
         if (Objects.equals(ext, ".jpg") || Objects.equals(ext, ".png") || Objects.equals(ext, ".jpeg") || Objects.equals(ext, ".bmp")) {
             flag = true;

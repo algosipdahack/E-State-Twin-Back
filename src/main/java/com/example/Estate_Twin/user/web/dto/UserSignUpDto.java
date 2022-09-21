@@ -1,9 +1,8 @@
 package com.example.Estate_Twin.user.web.dto;
 
-import com.example.Estate_Twin.address.web.dto.AddressDto;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.user.domain.entity.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,25 +12,20 @@ import java.time.LocalDate;
 public class UserSignUpDto {
     private LocalDate birthday;
     private String phone;
-    private AddressDto address;
-    private EstateType estateType;
-    private TransactionType transactionType;
-
-    @Builder
-    public UserSignUpDto(LocalDate birthday, String phone, AddressDto address, EstateType estateType, TransactionType transactionType) {
-        this.birthday = birthday;
-        this.phone = phone;
-        this.address = address;
-        this.estateType = estateType;
-        this.transactionType = transactionType;
-    }
+    @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
+    private String transactionType;
+    @Schema(description = "매물 거래 종류", example = "APARTMENT, OFFICETELS")
+    private String estateType;
+    @Schema(description = "선호 지역", example = "강남구")
+    private String borough;
 
     public User toEntity() {
         return User.builder()
                 .birthday(birthday)
                 .phone(phone)
-                .estateType(estateType)
-                .transactionType(transactionType)
+                .borough(borough)
+                .estateType(EstateType.of(estateType))
+                .transactionType(TransactionType.of(transactionType))
                 .build();
     }
 }

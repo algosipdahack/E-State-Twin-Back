@@ -19,8 +19,6 @@ public class Asset extends BaseTimeEntity {
     @Column(name = "asset_id")
     private Long id;
     @Column(nullable = false)
-    private Option option;
-    @Column(nullable = false)
     private String productName;
     @Column(nullable = false)
     private String manufacturer;
@@ -28,6 +26,9 @@ public class Asset extends BaseTimeEntity {
     private String anchorId;
     @Enumerated(EnumType.STRING)
     private Category category;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Option option;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;

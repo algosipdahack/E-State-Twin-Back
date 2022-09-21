@@ -27,8 +27,6 @@ public class Address {
     private String buildingName;
     @OneToOne(mappedBy = "address")
     private Estate estate;
-    @OneToOne(mappedBy = "address")
-    private User user;
 
     @Builder // 빌더 형태로 만들어줌
     public Address(String city, String borough, String town, String complexName, String block, String unit, String roadName,
@@ -47,9 +45,6 @@ public class Address {
     }
     public void setEstate(Estate estate) {
         this.estate = estate;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
     public void setId(Long id) { this.id = id; }
 }

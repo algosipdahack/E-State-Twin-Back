@@ -1,9 +1,7 @@
 package com.example.Estate_Twin.address.web.dto;
 
 import com.example.Estate_Twin.address.data.entity.Address;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor
@@ -22,7 +20,8 @@ public class AddressSaveRequestDto {
     @Builder
     public AddressSaveRequestDto(String city, String borough, String town, String complexName, String block,
                                  String unit, String roadName, int mainBuildingNumber, int subBuildingNumber,
-                                 String buildingName) {
+                                 String buildingName)
+    {
         this.city = city;
         this.borough = borough;
         this.town = town;

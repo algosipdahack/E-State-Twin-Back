@@ -1,14 +1,12 @@
 package com.example.Estate_Twin.contractstate.service.impl;
 
 import com.example.Estate_Twin.contractstate.domain.dao.ContractStateDAO;
-import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.service.ContractStateService;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

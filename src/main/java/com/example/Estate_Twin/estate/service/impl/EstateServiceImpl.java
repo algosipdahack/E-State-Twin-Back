@@ -8,6 +8,7 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
@@ -89,8 +90,8 @@ public class EstateServiceImpl implements EstateService {
                 house.getEstateType(),house.getHousehold(),house.getRoomCount(),house.getUsageAvailableDate(),house.getBathCount());
 
         return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto.getContent(), estateUpdateRequestDto.getModel(),
-                estateUpdateRequestDto.getTransactionType(), estateUpdateRequestDto.getEstateThumbNail(),
-                estateUpdateRequestDto.getCity(), estateUpdateRequestDto.getBorough(),
+                TransactionType.of(estateUpdateRequestDto.getTransactionType()), estateUpdateRequestDto.getEstateThumbNail(),
+                address.getCity(), address.getBorough(), address.getTown(),
                 estateUpdateRequestDto.getThumbNail3D()));
     }
 

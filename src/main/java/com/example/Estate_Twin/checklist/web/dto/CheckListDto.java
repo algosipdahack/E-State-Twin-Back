@@ -2,7 +2,6 @@ package com.example.Estate_Twin.checklist.web.dto;
 
 import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
@@ -20,6 +19,7 @@ public class CheckListDto {
     private final RepairType repairType;
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
+    private final Boolean tanentConfirmYN;
 
     @QueryProjection
     public CheckListDto(CheckList checkList) {
@@ -32,5 +32,6 @@ public class CheckListDto {
         this.repairType = checkList.getRepairType();
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
+        this.tanentConfirmYN = checkList.getTanentConfirmYN();
     }
 }

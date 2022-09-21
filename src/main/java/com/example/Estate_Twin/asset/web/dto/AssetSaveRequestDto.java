@@ -1,37 +1,27 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.asset.data.entity.Option;
+import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
 public class AssetSaveRequestDto {
-    private Category category;
-    private Option option;
+    @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
+    private String category;
+    @Schema(description = "에셋 작은 카테고리(옵션)", example = "AIRCONDITIONER, WASHER, BED, DESK, CLOSET, TV, REFRIGERATOR, SHOERACK, GASSTOVE, DOORLOCK, BIDET, WALLPAPER, CURTAIN")
+    private String option;
     private String productName;
     private String manufacturer;
     private List<MediaSaveMultipartRequestDto> assetPhotos;
 
-    @Builder
-    public AssetSaveRequestDto(String category, String option, String productName, String manufacturer, List<MediaSaveMultipartRequestDto> assetPhotos) {
-        this.category = Category.of(category);
-        this.option = Option.of(option);
-        this.productName = productName;
-        this.manufacturer = manufacturer;
-        this.assetPhotos = new ArrayList<>();
-        assetPhotos.forEach(assetPhoto -> this.assetPhotos.add(assetPhoto));
-    }
-
     public Asset toEntity() {
         return Asset.builder()
-                .option(option)
-                .category(category)
+                .option(Option.of(option))
+                .category(Category.of(category))
                 .productName(productName)
                 .manufacturer(manufacturer)
                 .build();
