@@ -46,7 +46,7 @@ public class ContractStateControllerTest {
 
     @Test
     public void updateContractState() throws Exception {
-        ContractStateUpdateRequestDto contractStateUpdateRequestDto = new ContractStateUpdateRequestDto(State.CONTRACT_DOING);
+        ContractStateUpdateRequestDto contractStateUpdateRequestDto = new ContractStateUpdateRequestDto(State.CONTRACT_DOING.toString());
         ResponseEntity<ContractStateResponseDto> responseEntity = contractStateController.updateContractState(6L, contractStateUpdateRequestDto);
         log.info(responseEntity.getBody().toString());
     }
