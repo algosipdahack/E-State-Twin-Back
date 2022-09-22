@@ -41,7 +41,7 @@ public class UserController {
     @Operation(summary = "login of user", description = "로그인")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
     @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
-    @GetMapping("/login/oauth/{provider}")
+    @PostMapping("/login/oauth/{provider}")
     public ResponseEntity<Token> login(@PathVariable String provider, @RequestBody String code) {
         Token token = oAuthService.login(provider, code);
         return ResponseEntity.status(HttpStatus.OK).body(token);
