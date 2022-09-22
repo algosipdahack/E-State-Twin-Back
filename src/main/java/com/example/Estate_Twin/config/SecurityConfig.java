@@ -1,11 +1,6 @@
 package com.example.Estate_Twin.config;
 
-import com.example.Estate_Twin.auth.OAuth2FailureHandler;
 import com.example.Estate_Twin.auth.jwt.*;
-import com.example.Estate_Twin.auth.repository.CookieAuthorizationRequestRepository;
-import com.example.Estate_Twin.auth.service.CustomOAuth2UserService;
-import com.example.Estate_Twin.auth.OAuth2SuccessHandler;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
@@ -25,16 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @Profile("prod")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2SuccessHandler successHandler;
-    private final OAuth2FailureHandler failureHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    //401 error
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    //403 error
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
-
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         String password = passwordEncoder().encode("1111");
@@ -64,33 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/oauth2/**","/auth/**").permitAll()
                 .anyRequest().permitAll()
-
                 .and()
-                .formLogin().disable()
-                .oauth2Login()
-                .authorizationEndpoint() // front -> back으로 요청 보내는 URL
-                .baseUri("/oauth2/authorize") // ex) /oauth2/authorize/google
-                .authorizationRequestRepository(cookieAuthorizationRequestRepository)
-
-                .and()
-                .redirectionEndpoint() //Authorization code와 함께 리다이렉트할 URL  ex) /login/oauth2/code/google
-                .baseUri("/login/oauth2/code/*")
-
-                .and()
-                .userInfoEndpoint() // Provider로부터 획득한 유저정보를 다룰 service class를 지정
-                .userService(customOAuth2UserService)
-
-                .and()
-                .successHandler(successHandler)
-                .failureHandler(failureHandler);
-
-        http.exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler);
-
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

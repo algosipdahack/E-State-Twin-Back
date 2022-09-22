@@ -28,7 +28,7 @@ public class BrokerDto {
         this.brokerageRegistrationLicense = broker.getBrokerageRegistrationLicense();
         this.user = new UserDto(broker.getUser());
         this.estates = new ArrayList<>();
-        broker.getEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
+        broker.getTradeEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
         this.brokerPhotos = new ArrayList<>();
         broker.getBrokerPhoto().forEach(brokerPhoto -> this.brokerPhotos.add(new MediaDto(brokerPhoto)));
     }

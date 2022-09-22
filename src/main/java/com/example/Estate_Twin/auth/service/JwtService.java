@@ -2,6 +2,7 @@ package com.example.Estate_Twin.auth.service;
 
 import com.example.Estate_Twin.auth.jwt.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
+import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class JwtService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
@@ -24,18 +25,20 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(oldAccessToken);
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
-        Long id = Long.valueOf(user.getName());
+        Long name = Long.valueOf(user.getName());
 
         // Match Refresh Token
-        String savedToken = userRepository.getRefreshTokenById(id);
-
+        String savedToken = userRepository.getRefreshTokenByName(name);
+        User r_user = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(()->new IllegalArgumentException("해당 유저를을 찾을 수 없습니다. email = "+user.getEmail()));
         if(!savedToken.equals(oldRefreshToken)) {
             throw new RuntimeException("Not Matched Refresh Token");
         }
 
         //JWT 갱신
-        Token token = tokenProvider.createToken(authentication);
-        return token.getAccessToken();
+        String accessToken = tokenProvider.createAccessToken(r_user);
+        String refreshToken = tokenProvider.createRefreshToken(r_user);
+        return accessToken;
     }
 
 }

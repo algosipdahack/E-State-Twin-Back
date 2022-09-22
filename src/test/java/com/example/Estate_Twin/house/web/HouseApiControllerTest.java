@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+/*
 @WebMvcTest
         (controllers = HouseApiController.class,
         excludeFilters = {
@@ -160,3 +160,4 @@ public class HouseApiControllerTest extends ControllerTest {
     }
 
 }
+*/

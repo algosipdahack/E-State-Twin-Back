@@ -7,6 +7,9 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 @Component
 public class CookieAuthorizationRequestRepository implements AuthorizationRequestRepository {
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
@@ -24,7 +27,11 @@ public class CookieAuthorizationRequestRepository implements AuthorizationReques
                 .map(cookie -> CookieUtil.deserialize(cookie, OAuth2AuthorizationRequest.class))
                 .orElse(null);
     }
-
+    private void writeTokenResponse(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
+        //응답 스트림에 텍스트를 기록하기 위함
+    }
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
         if(authorizationRequest == null) {
@@ -37,7 +44,13 @@ public class CookieAuthorizationRequestRepository implements AuthorizationReques
         if (StringUtils.isNotBlank(redirectUriAfterLogin)) {
             CookieUtil.addCookie(response, REDIRECT_URI_PARAM_COOKIE_NAME, redirectUriAfterLogin, COOKIE_EXPIRE_SECONDS);
         }
+        try {
+            writeTokenResponse(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+    //response에다가 token을 담아서 줌
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {

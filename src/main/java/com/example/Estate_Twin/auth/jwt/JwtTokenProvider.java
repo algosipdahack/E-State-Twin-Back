@@ -1,17 +1,25 @@
 package com.example.Estate_Twin.auth.jwt;
 
-import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
-import com.example.Estate_Twin.user.domain.repository.UserRepository;
+import com.example.Estate_Twin.auth.service.CustomUserDetailService;
+import com.example.Estate_Twin.user.domain.entity.User;
+import com.nimbusds.jwt.JWT;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import sun.net.www.protocol.http.AuthenticationHeader;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.*;
@@ -20,93 +28,79 @@ import java.util.stream.Collectors;
 @Component
 @Log4j2
 @Configuration
+@RequiredArgsConstructor
 @PropertySource("classpath:application-oauth.properties")
 public class JwtTokenProvider {
-    private final String SECRET_KEY;
-    private final String COOKIE_REFRESH_TOKEN_KEY;
-    private final Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L*60*60;
-    private final Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L*60*60*24*7;
-    private final String AUTHORITIES_KEY = "role";
-
-    @Autowired
-    private UserRepository userRepository;
-
-    public JwtTokenProvider(@Value("${app.auth.token.secret-key}")String secretKey, @Value("${app.auth.token.refresh-cookie-key}")String cookieKey) {
-        this.SECRET_KEY = Base64.getEncoder().encodeToString(secretKey.getBytes());
-        this.COOKIE_REFRESH_TOKEN_KEY = cookieKey;
+    @Value("${app.auth.token.secret-key}")
+    private String SECRET_KEY;
+    private Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L*60*60;
+    private Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L*60*60*24*7;
+    private final CustomUserDetailService userDetailsService;
+    @PostConstruct
+    protected void init() {
+        this.SECRET_KEY = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());
     }
-    public Token createToken(Authentication authentication) {
+
+    public String createAccessToken(User user) { // paylod = user.getId()
+        return createToken(user, ACCESS_TOKEN_EXPIRE_LENGTH);
+    }
+
+    public String createRefreshToken(User user) {
+        return createToken(user, REFRESH_TOKEN_EXPIRE_LENGTH);
+    }
+
+    public String createToken(User user, long expireLength) {
+        Claims claims = Jwts.claims().setSubject(user.getId().toString());
+        claims.put("username", user.getEmail());
         Date now = new Date();
-        Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
-
-        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
-
-        String userId = user.getName();
-        String role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+        Date validity = new Date(now.getTime() + expireLength);
         Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-
-        String accessToken = Jwts.builder()
-                .signWith(key,SignatureAlgorithm.HS512)
-                .setSubject(userId)
-                .claim(AUTHORITIES_KEY, role)
-                .setIssuer("debrains")
+        return Jwts.builder()
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .compact();
-
-        validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
-        String refreshToken = Jwts.builder()
                 .signWith(key,SignatureAlgorithm.HS512)
-                .setIssuer("debrains")
-                .setIssuedAt(now)
-                .setExpiration(validity)
                 .compact();
-        saveRefreshToken(authentication, refreshToken);
 
-        return new Token(accessToken,refreshToken);
     }
 
-
-    public void saveRefreshToken(Authentication authentication, String refreshToken) {
-        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
-        Long id = Long.valueOf(user.getName());
-
-        userRepository.updateRefreshToken(id, refreshToken);
-    }
-
-    //Access Token 검사 후 Authentication 객체 생성
-    public Authentication getAuthentication(String accessToken) {
-        Claims claims = parseClaims(accessToken);
-
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-
-        CustomUserDetails principal = new CustomUserDetails(Long.valueOf(claims.getSubject()),"","",authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
-    }
-
-    public Boolean validateToken(String token) {
+    public String getPayload(String token){
         try {
-            Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJwt(token);
-            return true;
+            return Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰입니다.");
-        } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalArgumentException e) {
-            log.info("JWT 토큰이 잘못되었습니다.");
+            return e.getClaims().getSubject();
+        } catch (JwtException e){
+            throw new RuntimeException("유효하지 않은 토큰 입니다");
         }
-        return false;
     }
 
-    //Access Token 만료 시 갱신 때 사용할 정보를 얻기 위해
-    public Claims parseClaims(String accessToken) {
+    public boolean validateToken(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJwt(accessToken).getBody();
-        } catch(ExpiredJwtException e) {
-            return e.getClaims();
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token);
+            return !claimsJws.getBody().getExpiration().before(new Date());
+        } catch (JwtException | IllegalArgumentException exception) {
+            return false;
         }
+    }
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserIdentifier(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+    public String getUserIdentifier(String token){
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token).getBody().getSubject();
+    }
+    public String resolveToken(HttpServletRequest request) {
+        return request.getHeader("X-AUTH-TOKEN");
     }
 }

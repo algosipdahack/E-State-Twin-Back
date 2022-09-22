@@ -18,7 +18,7 @@ import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-
+/*
 public class HouseServiceTest {
     private HouseRepository houseRepository = Mockito.mock(HouseRepository.class);
     private HouseDAOImpl houseDAO;
@@ -79,4 +79,4 @@ public class HouseServiceTest {
         verify(houseRepository).save(any());
     }
 
-}
+*/

@@ -23,6 +23,7 @@ public class User extends BaseTimeEntity {
     private LocalDate birthday;
     @Column(unique = true)
     private String phone;
+    //OAuth
     private String name;
     private String email;
     private String refreshToken;
@@ -30,7 +31,6 @@ public class User extends BaseTimeEntity {
     //선호 지역
     private String borough;
 
-    //TODO 선호지역 받기
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
     @Enumerated(EnumType.STRING)
