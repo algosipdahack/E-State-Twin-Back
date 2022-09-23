@@ -30,5 +30,6 @@ public interface EstateDAO {
     HouseDto findHouse(Long id);
     EstateHitDto findEstateHit(Long id);
     List<AssetResponseDto> findAssets(Long id);
+    Estate enablePost(Estate estate);
 
 }

@@ -38,6 +38,7 @@ public class OAuthService {
         formData.add("client_id",provider.getClientId());
         return formData;
     }
+
     //kakao로부터 access token, refresh token 전달 받음
     private OAuth2AccessTokenResponse getToken(String code, ClientRegistration provider) {
         return WebClient.create()
@@ -53,11 +54,11 @@ public class OAuthService {
                 .block();
     }
 
-    private Map<String, Object> getUserAttributes(ClientRegistration provider, OAuth2AccessTokenResponse tokenResponse) {
+    private Map<String, Object> getUserAttributes(ClientRegistration provider, String accessToken) {
         return WebClient.create()
                 .get()
                 .uri(provider.getProviderDetails().getUserInfoEndpoint().getUri())
-                .headers(header -> header.setBearerAuth(tokenResponse.getAccessToken().getTokenValue()))
+                .headers(header -> header.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                 .block();
@@ -73,8 +74,8 @@ public class OAuthService {
         return userRepository.save(user);
     }
 
-    private User getUserProfile(String providerName, OAuth2AccessTokenResponse tokenResponse, ClientRegistration provider) {
-        Map<String, Object> userAttributes = getUserAttributes(provider, tokenResponse);
+    private User getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
+        Map<String, Object> userAttributes = getUserAttributes(provider, accessToken);
         String userNameAttributeName = provider.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuth2UserInfo attributes = OAuth2UserInfo.of(providerName.toUpperCase(), userNameAttributeName, userAttributes);
         if(attributes.getEmail().isEmpty()) {
@@ -99,19 +100,19 @@ public class OAuthService {
         return user;
     }
     @Transactional
-    public Token login(String providerName, String code) {
+    public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
 
         //kakao로부터 access, refresh토큰 받아옴
-        OAuth2AccessTokenResponse tokenResponse = getToken(code, provider);
+        //OAuth2AccessTokenResponse tokenResponse = getToken(code, provider);
 
         //kakao로부터 유저정보 받아서 db에 저장
-        User user = getUserProfile(providerName, tokenResponse, provider);
+        User user = getUserProfile(providerName.toUpperCase(), accessToken, provider);
 
         //jwt token 발급
-        String accessToken = tokenProvider.createAccessToken(user);
-        String refreshToken = tokenProvider.createRefreshToken(user);
-        Token token = new Token(accessToken,refreshToken);
+        String jaccessToken = tokenProvider.createAccessToken(user);
+        String jrefreshToken = tokenProvider.createRefreshToken(user);
+        Token token = new Token(jaccessToken,jrefreshToken);
         return token;
     }
 

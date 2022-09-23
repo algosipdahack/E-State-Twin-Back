@@ -25,13 +25,32 @@ public class BrokerController {
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<BrokerResponseDto> getCurrentBroker(@AuthenticationPrincipal CustomUserDetails user) {
-        return ResponseEntity.status(HttpStatus.OK).body(brokerService.getBroker(user.getId()));
+        BrokerResponseDto brokerResponseDto = brokerService.getBroker(user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
     @Operation(summary = "signup of broker", description = "브로커 회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
     @PostMapping("/signup")
     public ResponseEntity<BrokerResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, BrokerSignUpDto brokerSignUpDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(brokerService.signUpBroker(user.getId(),brokerSignUpDto));
+        BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(user.getEmail(),brokerSignUpDto);
+        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
+
+    //TODO 공인중개사가 가진 매물 보여주기
+    @Operation(summary = "show broker trade estate", description = "브로커가 거래중인 매물 보여주기")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
+    @GetMapping("/estate")
+    public ResponseEntity<BrokerResponseDto> showEstate(@AuthenticationPrincipal CustomUserDetails user, BrokerSignUpDto brokerSignUpDto) {
+        BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(user.getEmail(),brokerSignUpDto);
+        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
+    }
+
+    //TODO 공인중개사 리스트 보여주기(borough에 따른)
+    //중개소 목록 보여줌
+    //중개소 이름
+    //소개글
+    //거래완료 건수
+    //대표전화번호
+
 }

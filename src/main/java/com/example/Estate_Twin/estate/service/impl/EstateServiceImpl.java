@@ -11,12 +11,15 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.entity.TransactionType;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.media.service.AwsS3Service;
+import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
+import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@ public class EstateServiceImpl implements EstateService {
     private final HouseDAO houseDAO;
     private final AddressDAO addressDAO;
     private final UserDAO userDAO;
+    private final BrokerDAO brokerDAO;
     private final AssetDAO assetDAO;
     private final EstateHitDAO estateHitDAO;
     private final AwsS3Service awsS3Service;
@@ -96,21 +100,59 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public List<EstateMainDto> getEstateCustomized(String borough) {
+    public List<EstateMainDto> getEstateCustomized(String email) {
+        String borough = userDAO.findUserByEmail(email).getBorough();
         return estateDAO.findEstateCustomized(borough);
     }
 
+    //아예 owner랑 broker가 맞다는 가정 하에 진행
     @Override
-    public EstateResponseDto allowPost(Long estateId, Long userId) {
-        User user = userDAO.findUser(userId);
-        //유저 role 검증
-        //broker라면
-        if (user.isBroker()) {
-            //TODO 진짜 매물의 broker인지 확인
+    public EstateResponseDto allowPost(Long estateId, String email) {
+        User user = userDAO.findUserByEmail(email);
+        Estate estate = estateDAO.findEstate(estateId);
+        EstateResponseDto estateResponseDto = new EstateResponseDto(estate);
 
-            return new EstateResponseDto(estateDAO.allowBroker(estateDAO.findEstate(estateId)));
-        } else{
-            return new EstateResponseDto(estateDAO.allowOwner(estateDAO.findEstate(estateId)));
+        // 유저 role 검증
+        if (user.isBroker()) { // Broker라면
+            Broker broker = brokerDAO.findBrokerByEmail(email);
+            if (checkRoleBroker(estateId, broker) == null) {
+                throw new Exception("해당 매물의 broker가 아닙니다!");
+            }
+            estateResponseDto.setBrokerConfirmYN(true);
+            estateDAO.allowBroker(estate);
+        } else { // 집주인이라면
+            if (checkRoleOwner(estateId, user) == null) {
+                throw new Exception("해당 매물의 owner가 아닙니다!");
+            }
+            estateResponseDto.setOwnerConfirmYN(true);
+            estateDAO.allowOwner(estate);
         }
+        if(checkEnroll(estate)) {
+            estateResponseDto.setPosted(true);
+        }
+        return estateResponseDto;
+    }
+
+    // 해당 매물이 올릴 수 있는 상태인지 확인
+    @Override
+    public boolean checkEnroll(Estate estate) {
+        if (estate.isOwnerConfirmYN() && estate.isBrokerConfirmYN()) {
+            estateDAO.enablePost(estate);
+            return true;
+        }
+        return false;
+    }
+
+    // 해당 매물의 브로커인지 확인
+    @Override
+    public Estate checkRoleBroker(Long estateId, Broker broker) {
+        return broker.getTradeEstates().stream().filter(estate -> estate.getId().equals(estateId))
+                        .findAny().orElse(null);
+    }
+    //해당 매물의 소유주인지 확인
+    @Override
+    public Estate checkRoleOwner(Long estateId, User owner) {
+        return owner.getOwnEstates().stream().filter(estate -> estate.getId().equals(estateId))
+                .findAny().orElse(null);
     }
 }

@@ -7,6 +7,7 @@ import com.example.Estate_Twin.user.domain.entity.User;
 import java.time.LocalDate;
 
 public interface UserDAO {
-    User findUser(Long id);
-    User signUp(Long id, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType);
+    User findUserById(Long id);
+    User findUserByEmail(String email);
+    User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType);
 }

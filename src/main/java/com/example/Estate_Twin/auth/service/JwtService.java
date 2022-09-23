@@ -30,7 +30,7 @@ public class JwtService {
         // Match Refresh Token
         String savedToken = userRepository.getRefreshTokenByName(name);
         User r_user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(()->new IllegalArgumentException("해당 유저를을 찾을 수 없습니다. email = "+user.getEmail()));
+                .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = "+user.getEmail()));
         if(!savedToken.equals(oldRefreshToken)) {
             throw new RuntimeException("Not Matched Refresh Token");
         }

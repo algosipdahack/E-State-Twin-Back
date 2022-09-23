@@ -6,13 +6,14 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 
-@Getter
+@Data
 public class EstateResponseDto {
     private final Long id;
     private final String state;
@@ -21,9 +22,9 @@ public class EstateResponseDto {
     private final String content;
     private final String model;
     private final LocalDateTime createdAt;
-    private final boolean isPosted;
-    private final boolean ownerConfirmYN;
-    private final boolean brokerConfirmYN;
+    private boolean isPosted;
+    private boolean ownerConfirmYN;
+    private boolean brokerConfirmYN;
     private final List<MediaResponseDto> estatePhotos;
     private List<AssetResponseDto> assets;
     private AddressDto address;

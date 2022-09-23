@@ -45,7 +45,7 @@ public class User extends BaseTimeEntity {
     private Estate tanentEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
-    private List<Estate> ownEstates = new ArrayList<>();
+    private Set<Estate> ownEstates = new HashSet<>();
     //찜한 매물
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<DipEstate> dipEstates = new HashSet<>();

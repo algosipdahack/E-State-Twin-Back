@@ -28,14 +28,16 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(user.getId()));
+        UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, UserSignUpDto userSignUpDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(user.getId(),userSignUpDto));
+        UserResponseDto userResponseDto = userService.signUp(user.getEmail(), userSignUpDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
     @Operation(summary = "login of user", description = "로그인")

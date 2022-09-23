@@ -15,13 +15,18 @@ public class UserDAOImpl implements UserDAO {
     private UserRepository userRepository;
 
     @Override
-    public User findUser(Long id) {
+    public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = "+id));
     }
 
     @Override
-    public User signUp(Long id, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. id = "+id))
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email));
+    }
+
+    @Override
+    public User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email))
                 .builder()
                 .birthday(birthday)
                 .phone(phone)

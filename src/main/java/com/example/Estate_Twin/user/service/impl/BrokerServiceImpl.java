@@ -12,12 +12,12 @@ public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAO brokerDAO;
     private final UserDAO userDAO;
     @Override
-    public BrokerResponseDto getBroker(Long userId) {
-        return new BrokerResponseDto(brokerDAO.findBroker(userId));
+    public BrokerResponseDto getBroker(String userEmail) {
+        return new BrokerResponseDto(brokerDAO.findBrokerByEmail(userEmail));
     }
 
     @Override
-    public BrokerResponseDto signUpBroker(Long userId, BrokerSignUpDto brokerSignUpDto) {
-        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(),userDAO.findUser(userId)));
+    public BrokerResponseDto signUpBroker(String userEmail, BrokerSignUpDto brokerSignUpDto) {
+        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(),userDAO.findUserByEmail(userEmail)));
     }
 }

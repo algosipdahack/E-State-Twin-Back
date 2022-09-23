@@ -131,4 +131,10 @@ public class EstateDAOImpl implements EstateDAO {
         media.setEstate(estate);
         return estateRepository.save(estate);
     }
+
+    @Override
+    public Estate enablePost(Estate estate) {
+        estate.setIsPosted();
+        return estateRepository.save(estate);
+    }
 }

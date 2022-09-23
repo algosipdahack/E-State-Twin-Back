@@ -57,6 +57,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         List<EstateMainDto> result = queryResults.getResults();
         return result;
     }
+
     @Override
     public List<EstateListResponseDto> findEstateList() {
         QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory

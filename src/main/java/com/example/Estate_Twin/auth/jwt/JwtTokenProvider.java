@@ -41,7 +41,7 @@ public class JwtTokenProvider {
         this.SECRET_KEY = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());
     }
 
-    public String createAccessToken(User user) { // paylod = user.getId()
+    public String createAccessToken(User user) {
         return createToken(user, ACCESS_TOKEN_EXPIRE_LENGTH);
     }
 

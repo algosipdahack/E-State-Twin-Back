@@ -12,8 +12,8 @@ public class BrokerDAOImpl implements BrokerDAO {
     BrokerRepository brokerRepository;
     UserRepository userRepository;
     @Override
-    public Broker findBroker(Long userId) {
-        return brokerRepository.findByUserIdWithUserUsingJoin(userId).orElseThrow(()-> new IllegalArgumentException("해당 id를 가진 user가 존재하지 않습니다. id = "+userId));
+    public Broker findBrokerByEmail(String email) {
+        return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new IllegalArgumentException("해당 email를 가진 user가 존재하지 않습니다. email = "+email));
     }
 
     //broker 회원가입

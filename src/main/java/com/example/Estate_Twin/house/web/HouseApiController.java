@@ -2,6 +2,7 @@ package com.example.Estate_Twin.house.web;
 
 import com.example.Estate_Twin.house.service.HouseService;
 import com.example.Estate_Twin.house.web.dto.*;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -19,9 +20,8 @@ public class HouseApiController {
 
     @Operation(summary = "get House", description = "집에 대한 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))})
-    @Parameters({@Parameter(name = "houseId", description = "House Id", example = "1")})
     @GetMapping("/{houseId}")
-    public ResponseEntity<HouseResponseDto> getHouse(@PathVariable Long houseId) {
+    public ResponseEntity<HouseResponseDto> getHouse(@ApiParam(value = "house Id") @PathVariable Long houseId) {
         return ResponseEntity.status(HttpStatus.OK).body(houseService.getHouse(houseId));
     }
 

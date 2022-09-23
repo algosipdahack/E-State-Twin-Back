@@ -16,7 +16,7 @@ public class UserResponseDto {
     private final String name;
     private final String email;
     @Schema(description = "선호 지역", example = "강남구")
-    private String borough;
+    private final String borough;
     @Schema(description = "OAuth provider", example = "KAKAO, NAVER, GOOGLE")
     private final String authProvider;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
