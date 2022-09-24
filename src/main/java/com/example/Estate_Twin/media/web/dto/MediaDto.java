@@ -13,4 +13,8 @@ public class MediaDto {
         this.origFileName = media.getOrigFileName();
         this.filePath = media.getFilePath();
     }
+    public MediaDto(String origFileName, String filePath) {
+        this.origFileName = origFileName;
+        this.filePath = filePath;
+    }
 }

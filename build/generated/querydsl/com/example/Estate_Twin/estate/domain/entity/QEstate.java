@@ -26,6 +26,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.address.data.entity.QAddress address;
 
+    public final StringPath arCam = createString("arCam");
+
     public final SetPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createSet("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
 
     public final StringPath borough = createString("borough");
@@ -94,7 +96,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public QEstate(Class<? extends Estate> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address"), inits.get("address")) : null;
+        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address")) : null;
         this.broker = inits.isInitialized("broker") ? new com.example.Estate_Twin.user.domain.entity.QBroker(forProperty("broker"), inits.get("broker")) : null;
         this.estateHit = inits.isInitialized("estateHit") ? new QEstateHit(forProperty("estateHit"), inits.get("estateHit")) : null;
         this.house = inits.isInitialized("house") ? new com.example.Estate_Twin.house.domain.entity.QHouse(forProperty("house"), inits.get("house")) : null;

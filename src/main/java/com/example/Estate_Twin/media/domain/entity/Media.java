@@ -24,9 +24,6 @@ public class Media {
     private String filePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "broker_id", referencedColumnName = "BROKER_ID")
-    private Broker broker;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "checklist_id", referencedColumnName = "CHECKLIST_ID")
     private CheckList checkList;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,13 +58,6 @@ public class Media {
         }
         this.asset = asset;
         asset.getAssetPhoto().add(this);
-    }
-    public void setBroker(Broker broker) {
-        if(this.broker != null) {
-            this.broker.getBrokerPhoto().remove(this);
-        }
-        this.broker = broker;
-        broker.getBrokerPhoto().add(this);
     }
 
 }

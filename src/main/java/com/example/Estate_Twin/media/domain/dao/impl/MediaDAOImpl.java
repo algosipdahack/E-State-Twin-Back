@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.dao.MediaDAO;
 import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.media.domain.repository.MediaRepository;
+import com.example.Estate_Twin.user.domain.entity.Broker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,7 @@ public class MediaDAOImpl implements MediaDAO {
         media.setCheckList(checkList);
         return mediaRepository.save(media);
     }
+
 
     @Override
     public Media findMedia(Long id) {

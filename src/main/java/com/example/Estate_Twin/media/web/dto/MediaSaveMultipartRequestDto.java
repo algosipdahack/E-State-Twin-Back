@@ -7,5 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Getter
 public class MediaSaveMultipartRequestDto {
-    private MultipartFile imageFile;
+    private MultipartFile File;
 }

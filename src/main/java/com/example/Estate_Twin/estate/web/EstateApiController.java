@@ -2,7 +2,6 @@ package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.estate.service.*;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.v3.oas.annotations.*;
@@ -56,7 +55,7 @@ public class EstateApiController {
         EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
-
+    //브로커만
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기(임시저장)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail")

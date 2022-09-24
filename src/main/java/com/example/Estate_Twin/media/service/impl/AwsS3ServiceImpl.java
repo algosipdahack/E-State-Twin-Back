@@ -36,7 +36,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     public List<MediaResponseDto> uploadEstate(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long estateId, String dirName) {
         //파일 이름 받아오기
         List<MultipartFile> multipartFile = new ArrayList<>();
-        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getFile()));
 
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
@@ -56,7 +56,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     public List<MediaResponseDto> uploadAsset(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long assetId, String dirName) {
         //파일 이름 받아오기
         List<MultipartFile> multipartFile = new ArrayList<>();
-        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getFile()));
 
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
@@ -76,7 +76,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     public List<MediaResponseDto> uploadCheckList(List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos, Long checklistId, String dirName) {
         //파일 이름 받아오기
         List<MultipartFile> multipartFile = new ArrayList<>();
-        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getImageFile()));
+        mediaSaveMultipartRequestDtos.forEach(mediaSaveMultipartRequestDto -> multipartFile.add(mediaSaveMultipartRequestDto.getFile()));
 
         List<String> fileNameList = uploadFile(multipartFile,dirName);
         List<MediaResponseDto> mediaDtoList = new ArrayList<>();
@@ -92,20 +92,13 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
         return mediaDtoList;
     }
+    public MediaSaveRequestDto multipartTostring(MediaSaveMultipartRequestDto media) {
+        List<MultipartFile> multipartFile = new ArrayList<>();
+        multipartFile.add(media.getFile());
+        List<String> fileNameList = uploadFile(multipartFile,"broker");
 
-    //TODO
-    /*public List<MediaResponseDto> uploadBroker(List<MultipartFile> multipartFile, Long brokerId, String dirName) throws IOException {
-        Media uploadMedia = mediaDAO.saveMedia(new Media()
-                .builder()
-                .filePath(mediaResponseDto.getFilePath())
-                .origFileName(mediaResponseDto.getOrigFileName())
-                .build());
-
-        mediaDAO.saveMedia(mediaResponseDto);
-
-        File uploadFile = convert(multipartFile);  // 파일 변환할 수 없으면 에러
-        return upload(uploadFile, dirName);
-    }*/
+        return new MediaSaveRequestDto(fileNameList.get(0),getFilePath(fileNameList.get(0)));
+    }
 
     public String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));

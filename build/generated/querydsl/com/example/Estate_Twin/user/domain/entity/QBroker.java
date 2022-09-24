@@ -22,13 +22,15 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public static final QBroker broker = new QBroker("broker");
 
+    public final com.example.Estate_Twin.address.data.entity.QAddress address;
+
     public final StringPath agentName = createString("agentName");
 
     public final StringPath brokerageRegistrationLicense = createString("brokerageRegistrationLicense");
 
     public final StringPath brokerageRegistrationNumber = createString("brokerageRegistrationNumber");
 
-    public final ListPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> brokerPhoto = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createList("brokerPhoto", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
+    public final com.example.Estate_Twin.media.domain.entity.QMedia brokerPhoto;
 
     public final StringPath businessLicense = createString("businessLicense");
 
@@ -36,9 +38,13 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public final StringPath businessRegistrationNumber = createString("businessRegistrationNumber");
 
-    public final ListPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> estates = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createList("estates", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
+    public final StringPath content = createString("content");
+
+    public final NumberPath<Long> countOfTransactionCompletion = createNumber("countOfTransactionCompletion", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final SetPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> tradeEstates = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createSet("tradeEstates", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
 
     public final QUser user;
 
@@ -60,6 +66,8 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public QBroker(Class<? extends Broker> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address")) : null;
+        this.brokerPhoto = inits.isInitialized("brokerPhoto") ? new com.example.Estate_Twin.media.domain.entity.QMedia(forProperty("brokerPhoto"), inits.get("brokerPhoto")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 

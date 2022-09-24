@@ -4,7 +4,9 @@ import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.media.web.dto.MediaDto;
 import lombok.*;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.*;
@@ -38,7 +40,7 @@ public class Broker {
     @Column(nullable = false)
     private String brokerageRegistrationLicense;
     //거래 완료 건 수
-    private Long CountOfTransactionCompletion;
+    private Long countOfTransactionCompletion;
     //소개글
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -46,31 +48,47 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "media_id")
+    private Media brokerPhoto;
     //단방향
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker", orphanRemoval = true)
-    private Set<Estate> tradeEstates;
     @OneToMany(mappedBy = "broker", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Media> brokerPhoto;
+    private Set<Estate> tradeEstates;
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
-                  String businessLicense, String brokerageRegistrationLicense) {
+                  String businessLicense, String brokerageRegistrationLicense, Long countOfTransactionCompletion, String content,
+                  Address address, Media brokerPhoto) {
         this.businessName = businessName;
         this.agentName = agentName;
         this.brokerageRegistrationNumber = brokerageRegistrationNumber;
         this.businessRegistrationNumber = businessRegistrationNumber;
         this.businessLicense = businessLicense;
         this.brokerageRegistrationLicense = brokerageRegistrationLicense;
+        this.countOfTransactionCompletion = countOfTransactionCompletion;
+        this.content = content;
+        this.address = address;
+        this.brokerPhoto = brokerPhoto;
     }
     public void setUser(User user) {
         this.user = user;
         user.setIsBroker();
     }
+
+    public void setString(String brokerageRegistrationLicense, String businessLicense) {
+        this.brokerageRegistrationLicense = brokerageRegistrationLicense;
+        this.businessLicense = businessLicense;
+    }
+
+    public void setPhoto(Media media) {
+        this.brokerPhoto = media;
+    }
     @PrePersist
     public void prePersist() {
         this.tradeEstates = new HashSet<>();
-        this.brokerPhoto = new HashSet<>();
+        this.countOfTransactionCompletion = 0L;
     }
 }
