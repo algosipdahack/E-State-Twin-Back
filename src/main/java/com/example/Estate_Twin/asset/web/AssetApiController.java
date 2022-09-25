@@ -10,11 +10,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Tag(name = "Asset", description = "에셋 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/estate/asset")
+@RequestMapping("/api/asset")
 public class AssetApiController {
     private final AssetService assetService;
     private final AwsS3Service awsS3Service;
@@ -40,17 +43,14 @@ public class AssetApiController {
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
-    /*@Operation(summary = "post assets", description = "에셋 등록하기")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
-    })
-    @Parameters({
-            @Parameter(name = "houseId", description = "House Id", example = "1")
-    })
-    @PostMapping("")
-    public ResponseEntity<AssetResponseDto> saveAsset(@RequestParam("media") List<MultipartFile> multipartFiles, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
-        AssetResponseDto assetDto = assetService.saveAsset(assetSaveRequestDto);
-        awsS3Service.uploadAsset(multipartFiles,assetDto.getId(),"asset");
+    @Operation(summary = "post assets", description = "에셋 등록하기")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @PostMapping("/estate/{estateId}")
+    public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long estateId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
+        AssetResponseDto assetDto = assetService.saveAsset(estateId, assetSaveRequestDto);
+        if(assetSaveRequestDto.getAssetPhoto() != null) {
+            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhoto(), assetDto.getId(), "asset");
+        }
         return ResponseEntity.status(HttpStatus.OK).body(assetDto);
-    }*/
+    }
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class ContractStateResponseDto {
     private final Long id;
-    @Schema(description = "거래 상태", example = "BEFORE, RESERVATION, DOING, DONE")
+    @Schema(description = "거래 상태", example = "BROKER_BEFORE,POST_DOING,POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
     private final String state;
     private final LocalDateTime date;
 

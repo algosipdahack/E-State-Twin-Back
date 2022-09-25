@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.exception.BadRequestException;
+import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.media.domain.entity.Media;
@@ -38,7 +39,6 @@ public class Estate extends BaseTimeEntity {
     //매물 영상 동영상
     //TODO 업로드 해야함
     private String arCam;
-    //TODO 밑의 두개가 confirm되는 순간 true로 바뀜
     private boolean isPosted;
     private boolean ownerConfirmYN;
     private boolean brokerConfirmYN;
@@ -60,7 +60,7 @@ public class Estate extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "broker_id")
     private Broker broker;
-    @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
     @OneToOne(fetch = FetchType.LAZY)
@@ -70,10 +70,10 @@ public class Estate extends BaseTimeEntity {
     private Set<Media> estateMedia;
 
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
-    private Set<Asset> assets = new HashSet<>();
+    private Set<Asset> assets;
     //찜한 매물
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
-    private Set<DipEstate> dipEstates = new HashSet<>();
+    private Set<DipEstate> dipEstates;
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(String content, String model, String town, String arCam,
@@ -98,6 +98,9 @@ public class Estate extends BaseTimeEntity {
 
     public void setAddress(Address address) {
         this.address = address;
+        this.city = address.getCity();
+        this.borough = address.getBorough();
+        this.town = address.getTown();
     }
 
     public void setEstateHit(EstateHit estateHit) {
@@ -134,7 +137,13 @@ public class Estate extends BaseTimeEntity {
     public void setOwnerConfirmY() {
         this.ownerConfirmYN = true;
     }
-    public void setIsPosted() { this.isPosted = true; }
+    public void setIsPosted() {
+        if(!this.isBrokerConfirmYN() || !this.isOwnerConfirmYN()) {
+            throw new Exception("브로커와 집주인 모두 confirm을 해야 합니다.");
+        }
+        this.isPosted = true;
+        this.state = State.POST_DONE;
+    }
     public void setState(State state) {
         this.state = state;
     }
@@ -143,7 +152,9 @@ public class Estate extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.estateMedia = new HashSet<>();
-        this.state = this.state == null ? State.CONTRACT_BEFORE : this.state;
+        this.assets = new HashSet<>();
+        this.dipEstates = new HashSet<>();
+        this.state = this.state == null ? State.BROKER_BEFORE : this.state;
         this.isPosted = false;
         this.ownerConfirmYN = false;
         this.brokerConfirmYN = false;

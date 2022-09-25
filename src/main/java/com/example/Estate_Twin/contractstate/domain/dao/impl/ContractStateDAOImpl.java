@@ -21,17 +21,20 @@ public class ContractStateDAOImpl implements ContractStateDAO {
     //상태 체크 -> 중개인, 소유자 모두 confirm을 눌러야만 변경 가능
     @Override
     public ContractState updateState(ContractState contractState, Estate estate) {
-        if(contractState.getState() != State.CONTRACT_BEFORE) {
+        // 게시하고 싶을 때
+        if(contractState.getState() == State.POST_DONE) {
             if (estate.isBrokerConfirmYN() == true && estate.isOwnerConfirmYN() == true) {
                 contractState.setEstate(estate);
-
+                estate.setIsPosted();
                 estate.setState(contractState.getState());
+
                 estateRepository.save(estate);
 
                 return contractStateRepository.save(contractState);
             }
             throw new BadRequestException("중개인과 소유자 모두 Confirm을 눌러야만 합니다!");
         }
+        //체크리스트 post하고 싶을 때
         return contractStateRepository.save(contractState);
     }
 

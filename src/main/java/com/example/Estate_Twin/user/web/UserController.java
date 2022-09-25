@@ -23,11 +23,13 @@ public class UserController {
     private final UserService userService;
     private final OAuthService oAuthService;
 
+    // TODO - 아직 무슨 내용이 들어가야 할지 모름
     @Operation(summary = "mypage of user", description = "마이페이지")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
+
         UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
@@ -35,7 +37,7 @@ public class UserController {
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, UserSignUpDto userSignUpDto) {
+    public ResponseEntity<UserResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
         UserResponseDto userResponseDto = userService.signUp(user.getEmail(), userSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }

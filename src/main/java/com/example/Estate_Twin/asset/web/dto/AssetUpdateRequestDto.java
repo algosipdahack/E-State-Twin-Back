@@ -4,6 +4,7 @@ import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,5 +16,7 @@ public class AssetUpdateRequestDto {
     private String option;
     private String productName;
     private String manufacturer;
+    private String anchorId;
+    private LocalDateTime repairDate;
     private List<MediaSaveMultipartRequestDto> assetPhotos;
 }

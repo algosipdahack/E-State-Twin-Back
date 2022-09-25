@@ -2,6 +2,8 @@ package com.example.Estate_Twin.estate.domain.repository;
 
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateMainDto;

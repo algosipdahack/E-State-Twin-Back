@@ -39,6 +39,11 @@ public class MediaDAOImpl implements MediaDAO {
     }
 
     @Override
+    public Media saveMedia(Media media) {
+        return mediaRepository.save(media);
+    }
+
+    @Override
     public Media updateMedia(Long id, String origFileName, String filepath) {
         Media newMedia = mediaRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 미디어가 없습니다. id = "+id))

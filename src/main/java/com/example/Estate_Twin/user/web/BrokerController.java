@@ -1,10 +1,13 @@
 package com.example.Estate_Twin.user.web;
 
+import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.media.web.dto.MediaDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.service.BrokerService;
 import com.example.Estate_Twin.user.web.dto.*;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -14,6 +17,8 @@ import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Broker", description = "브로커 API")
 @RequiredArgsConstructor
@@ -35,33 +40,31 @@ public class BrokerController {
     @Operation(summary = "signup of broker", description = "브로커 회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<BrokerResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, BrokerSignUpDto brokerSignUpDto) {
+    public ResponseEntity<BrokerResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, @RequestBody BrokerSignUpDto brokerSignUpDto) {
         BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(user.getEmail(),brokerSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
-    //TODO 공인중개사가 가진 매물 보여주기
-    @Operation(summary = "show broker trade estate", description = "브로커가 거래중인 매물 보여주기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
-    @GetMapping("/estate")
-    public ResponseEntity<BrokerResponseDto> showEstate(@AuthenticationPrincipal CustomUserDetails user, BrokerSignUpDto brokerSignUpDto) {
 
-        BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(user.getEmail(),brokerSignUpDto);
-        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
+    @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
+    @GetMapping("/list")
+    public ResponseEntity<List<BrokerListDto>> getBrokerList() {
+        List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
+        return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
     }
 
-    //TODO 공인중개사 리스트 보여주기(borough에 따른)
-    /*@Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
+
+    @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerEstateDto.class)))})
     @GetMapping("/estate")
-    public ResponseEntity<BrokerResponseDto> showEstate(@AuthenticationPrincipal CustomUserDetails user, BrokerSignUpDto brokerSignUpDto) {
-        BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(user.getEmail(),brokerSignUpDto);
-        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
-    }*/
-    //중개소 목록 보여줌
-    //중개소 이름
-    //소개글
-    //거래완료 건수
-    //대표전화번호
+    public ResponseEntity<List<BrokerEstateDto>> getEstate(@AuthenticationPrincipal CustomUserDetails user,
+                                                            @ApiParam(value = "State", required = true, example = "BROKER_BEFORE, POST_DOING, POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
+                                                            @RequestParam(name = "State") String state) {
+        Long brokerId = brokerService.getBroker(user.getEmail()).getId();
+        List<BrokerEstateDto> brokerEstateDtos = brokerService.getbrokerEstate(brokerId,State.of(state));
+        return ResponseEntity.status(HttpStatus.OK).body(brokerEstateDtos);
+    }
+
 
 }

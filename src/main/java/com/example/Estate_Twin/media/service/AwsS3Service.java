@@ -13,5 +13,5 @@ public interface AwsS3Service {
     List<MediaResponseDto> uploadAsset(List<MediaSaveMultipartRequestDto> multipartFile, Long assetId, String dirName);
     List<MediaResponseDto> uploadCheckList(List<MediaSaveMultipartRequestDto> multipartFile, Long checklistId, String dirName);
     List<String> uploadFile(List<MultipartFile> multipartFiles, String dirName);
-    MediaSaveRequestDto multipartTostring(MediaSaveMultipartRequestDto media);
+    MediaResponseDto saveMedia(MediaSaveMultipartRequestDto media);
 }

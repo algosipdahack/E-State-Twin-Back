@@ -2,6 +2,7 @@ package com.example.Estate_Twin.estate.service.impl;
 
 import com.example.Estate_Twin.address.data.dao.AddressDAO;
 import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.Asset;
@@ -37,6 +38,14 @@ public class EstateServiceImpl implements EstateService {
     private final AssetDAO assetDAO;
     private final EstateHitDAO estateHitDAO;
     private final AwsS3Service awsS3Service;
+
+    @Override
+    public Long saveFirst(AddressSaveRequestDto addressSaveRequestDto, Long brokerId, String email) {
+        //owner 매핑, estate 생성, broker한테 알림
+        Address address = addressDAO.saveAddress(addressSaveRequestDto.toEntity());
+        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId),userDAO.findUserByEmail(email),address).getId();
+    }
+
     @Override
     public EstateResponseDto getEstate(Long id) {
         Estate estate = estateDAO.findEstate(id);
@@ -48,15 +57,20 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
-        Address address = addressDAO.saveAddress(estateSaveRequestDto.getAddress().toEntity());
+        Estate estate = estateDAO.findEstate(estateSaveRequestDto.getId())
+                .builder()
+                .content(estateSaveRequestDto.getContent())
+                .estateThumbNail(estateSaveRequestDto.getEstateThumbNail())
+                .transactionType(TransactionType.of(estateSaveRequestDto.getTransactionType()))
+                .build();
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssetSaveRequestDtos().forEach(assetSaveRequestDto -> {
-            Asset asset = assetDAO.saveAsset(assetSaveRequestDto.toEntity());
-            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhotos(),asset.getId(),"asset");
+            Asset asset = assetDAO.saveAsset(estate,assetSaveRequestDto.toEntity());
+            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhoto(),asset.getId(),"asset");
             assets.add(asset);
         });
         House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
-        return new EstateResponseDto(estateDAO.saveEstate(estateSaveRequestDto.toEntity(),house,address,assets));
+        return new EstateResponseDto(estateDAO.saveEstate(estate,house,assets));
     }
 
     @Override

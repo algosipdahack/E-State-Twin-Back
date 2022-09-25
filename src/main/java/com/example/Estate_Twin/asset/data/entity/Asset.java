@@ -7,6 +7,7 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -24,6 +25,7 @@ public class Asset extends BaseTimeEntity {
     private String manufacturer;
     //AR Camera에서 각 앵커마다 에셋이 존재하기 때문
     private String anchorId;
+    private LocalDateTime repairDate;
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)
@@ -33,18 +35,18 @@ public class Asset extends BaseTimeEntity {
     @JoinColumn(name = "estate_id")
     private Estate estate;
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Media> assetPhoto = new HashSet<>();
+    private Set<Media> assetPhoto;
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<CheckList> checkList = new HashSet<>();
+    private Set<CheckList> checkLists;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, Option option, String productName, String manufacturer, String anchorId, Estate estate) {
+    public Asset(Category category, Option option, String productName, String manufacturer, String anchorId, LocalDateTime repairDate) {
         this.category = category;
         this.option = option;
         this.productName = productName;
         this.manufacturer = manufacturer;
         this.anchorId = anchorId;
-        this.estate = estate;
+        this.repairDate = repairDate;
     }
     public void setEstate(Estate estate) {
         if(this.estate != null) {
@@ -56,6 +58,11 @@ public class Asset extends BaseTimeEntity {
     public Asset setId(Long id) {
         this.id = id;
         return this;
+    }
+    @PrePersist
+    public void prePersist() {
+        this.assetPhoto = new HashSet<>();
+        this.checkLists = new HashSet<>();
     }
 
 }

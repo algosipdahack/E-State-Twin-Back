@@ -6,16 +6,20 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
+import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,25 +33,32 @@ public class EstateDAOImpl implements EstateDAO {
     private EstateHitRepository estateHitRepository;
     private ContractStateRepository contractStateRepository;
     @Override
-    public Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets) {
-        Estate newEstate = estateRepository.save(estate);
-        newEstate.setHouse(house);
-        newEstate.setAddress(address);
+    public Estate saveFirst(Broker broker, User owner, Address address) {
+        Estate estate = new Estate();
+        estate.setBroker(broker);
+        estate.setOwner(owner);
+        estate.setAddress(address);
+        return estateRepository.save(estate);
+    }
+
+    @Override
+    public Estate saveEstate(Estate estate, House house, List<Asset> assets) {
+        estate.setHouse(house);
+
+        // 매물 등록중인 상태
+        estate.setState(State.POST_DOING);
 
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
-        newEstate.setEstateHit(estateHit);
+        estate.setEstateHit(estateHit);
 
-        ContractState contractState = new ContractState();
-        contractState.setEstate(newEstate);
+        ContractState contractState = new ContractState().builder()
+                .estate(estate)
+                .state(State.POST_DOING)
+                .build();
         contractStateRepository.save(contractState);
 
-
-        assets.forEach(asset -> {
-            asset.setEstate(newEstate);
-        });
-
-        return estateRepository.save(newEstate);
+        return estateRepository.save(estate);
     }
 
     @Override

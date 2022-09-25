@@ -12,6 +12,7 @@ import java.util.List;
 public interface EstateService {
     EstateResponseDto getEstate(Long id);
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
+    Long saveFirst(AddressSaveRequestDto addressSaveRequestDto, Long brokerId, String email);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     Estate addMedia(Long id, Media media);
     void clearMedia(Long id);

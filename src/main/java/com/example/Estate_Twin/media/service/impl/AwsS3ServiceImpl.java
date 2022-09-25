@@ -92,12 +92,13 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
         return mediaDtoList;
     }
-    public MediaSaveRequestDto multipartTostring(MediaSaveMultipartRequestDto media) {
+    public MediaResponseDto saveMedia(MediaSaveMultipartRequestDto media) {
         List<MultipartFile> multipartFile = new ArrayList<>();
         multipartFile.add(media.getFile());
         List<String> fileNameList = uploadFile(multipartFile,"broker");
 
-        return new MediaSaveRequestDto(fileNameList.get(0),getFilePath(fileNameList.get(0)));
+        MediaSaveRequestDto mediaSaveRequestDto = new MediaSaveRequestDto(fileNameList.get(0), getFilePath(fileNameList.get(0)));
+        return mediaService.saveMedia(mediaSaveRequestDto);
     }
 
     public String createFileName(String fileName) {

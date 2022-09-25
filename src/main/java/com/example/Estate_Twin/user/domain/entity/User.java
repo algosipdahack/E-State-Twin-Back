@@ -30,7 +30,8 @@ public class User extends BaseTimeEntity {
     private boolean isBroker;
     //선호 지역
     private String borough;
-
+    //매물 정보 중 arCam 비활성화
+    private boolean isArCam;
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
     @Enumerated(EnumType.STRING)
@@ -71,8 +72,10 @@ public class User extends BaseTimeEntity {
     public void setIsBroker() {
         this.isBroker = true;
     }
+    public void setIsArCam() { this.isArCam = true; }
     @PrePersist
     public void prePersist() {
         this.isBroker = false;
+        this.isArCam = false;
     }
 }

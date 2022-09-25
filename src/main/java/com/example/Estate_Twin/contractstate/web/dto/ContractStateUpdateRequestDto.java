@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class ContractStateUpdateRequestDto {
-    @Schema(description = "거래 상태", example = "BEFORE, RESERVATION, DOING, DONE")
+    @Schema(description = "거래 상태", example = "BROKER_BEFORE,POST_DOING,POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
     private String state;
     public ContractState toEntity() {
         return ContractState.builder()

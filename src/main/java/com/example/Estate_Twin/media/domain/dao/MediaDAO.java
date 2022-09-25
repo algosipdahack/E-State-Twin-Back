@@ -12,4 +12,5 @@ public interface MediaDAO {
     Media saveCheckListMedia(CheckList checkList, Media media);
     Media findMedia(Long id);
     Media updateMedia(Long id, String origFileName, String filepath);
+    Media saveMedia(Media media);
 }

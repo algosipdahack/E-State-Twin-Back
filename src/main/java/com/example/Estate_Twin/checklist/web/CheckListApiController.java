@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name = "CheckList", description = "체크리스트 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/estate/checklist")
+@RequestMapping("/api/checklist")
 public class CheckListApiController {
     private final CheckListService checkListService;
     private final AwsS3Service awsS3Service;
@@ -33,7 +33,7 @@ public class CheckListApiController {
     @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
     @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
-    @GetMapping("/checklist/{checklistId}")
+    @GetMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> getCheckList(@PathVariable Long checklistId) {
         CheckListResponseDto checkListResponseDto = checkListService.getCheckList(checklistId);
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
@@ -54,7 +54,7 @@ public class CheckListApiController {
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
     @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
-    @PutMapping("/checklist/{checklistId}")
+    @PutMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);
         if (checkListUpdateRequestDto.getCheckListPhotos() != null) {

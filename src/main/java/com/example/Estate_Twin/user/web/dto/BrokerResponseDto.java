@@ -23,7 +23,7 @@ public class BrokerResponseDto {
     private final String businessRegistrationNumber;
     @Schema(description = "사업자 등록증")
     private final String businessLicense;
-    @Schema(description = "상호명")
+    @Schema(description = "중개 등록증")
     private final String brokerageRegistrationLicense;
     private final Long countOfTransactionCompletion;
     private final String content;

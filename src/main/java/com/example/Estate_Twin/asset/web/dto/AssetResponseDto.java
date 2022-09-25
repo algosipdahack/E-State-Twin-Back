@@ -1,11 +1,13 @@
 package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.*;
+import com.example.Estate_Twin.checklist.web.dto.CheckListDto;
 import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -19,7 +21,9 @@ public class AssetResponseDto {
     private final String productName;
     private final String manufacturer;
     private final String anchorId;
-    //TODO 체크리스트 포함하기
+    private final LocalDateTime repairDate;
+    private final Set<CheckListDto> checkLists;
+
 
     @QueryProjection
     public AssetResponseDto(Asset asset) {
@@ -31,5 +35,8 @@ public class AssetResponseDto {
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();
+        this.repairDate = asset.getRepairDate();
+        this.checkLists = new HashSet<>();
+        asset.getCheckLists().forEach(checkList -> this.checkLists.add(new CheckListDto(checkList)));
     }
 }

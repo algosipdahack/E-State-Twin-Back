@@ -6,7 +6,7 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 
 public interface AssetService {
     AssetResponseDto getAsset(Long id);
-    AssetResponseDto saveAsset(AssetSaveRequestDto assetSaveRequestDto);
+    AssetResponseDto saveAsset(Long estateId, AssetSaveRequestDto assetSaveRequestDto);
     AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto);
     Asset addMedia(Long assetId, Media media);
     void clearMedia(Long id);

@@ -19,7 +19,7 @@ import java.util.List;
 public class ContractStateController {
     private final ContractStateService contractStateService;
 
-    @Operation(summary = "update ContractState", description = "매물 상태 수정하기")
+    @Operation(summary = "update ContractState", description = "매물 상태 수정하기 ex) 브로커가 매물 등록 승인 한 상황 : state = POST_DOING 요청")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("/estate/{estateId}")

@@ -5,17 +5,20 @@ import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.media.domain.entity.Media;
+import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 
 import java.util.List;
 
 public interface EstateDAO {
-    Estate saveEstate(Estate estate, House house, Address address, List<Asset> assets);
+    Estate saveEstate(Estate estate, House house, List<Asset> assets);
     Estate findEstate(Long id);
     Estate updateEstate(Long id, String content, String model,
                         TransactionType transactionType, String estateThumbNail,
@@ -31,5 +34,6 @@ public interface EstateDAO {
     EstateHitDto findEstateHit(Long id);
     List<AssetResponseDto> findAssets(Long id);
     Estate enablePost(Estate estate);
+    Estate saveFirst(Broker broker, User owner, Address address);
 
 }

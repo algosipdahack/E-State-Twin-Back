@@ -21,7 +21,10 @@ public class MediaServiceImpl implements MediaService {
     public MediaResponseDto getMedia(Long id) {
         return new MediaResponseDto(mediaDAO.findMedia(id));
     }
-
+    @Override
+    public MediaResponseDto saveMedia(MediaSaveRequestDto mediaSaveRequestDto) {
+        return new MediaResponseDto(mediaDAO.saveMedia(mediaSaveRequestDto.toEntity()));
+    }
     @Override
     public MediaResponseDto saveEstateMedia(Long estateId, MediaSaveRequestDto mediaSaveRequestDto) {
         return new MediaResponseDto(mediaDAO.saveEstateMedia(estateDAO.findEstate(estateId),mediaSaveRequestDto.toEntity()));

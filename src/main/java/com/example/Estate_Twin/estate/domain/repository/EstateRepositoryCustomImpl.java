@@ -6,11 +6,15 @@ import com.example.Estate_Twin.address.web.dto.QAddressDto;
 import com.example.Estate_Twin.asset.data.entity.QAsset;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.asset.web.dto.QAssetResponseDto;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.QHouse;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.house.web.dto.QHouseDto;
+import com.example.Estate_Twin.user.domain.entity.QBroker;
+import com.example.Estate_Twin.user.domain.entity.QUser;
+import com.example.Estate_Twin.user.web.dto.QBrokerListDto;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -27,6 +31,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     private QAddress address;
     private QEstateHit estateHit;
     private QAsset asset;
+    private QUser user;
+    private QBroker broker;
     public EstateRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         super(Estate.class);
         this.jpaQueryFactory = jpaQueryFactory;
@@ -35,6 +41,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         this.address = QAddress.address;
         this.estateHit = QEstateHit.estateHit;
         this.asset = QAsset.asset;
+        this.user = QUser.user;
+        this.broker = QBroker.broker;
     }
     @Override
     public List<EstateMainDto> findByBoroughOrderByWeeklyHit(String borough) {
@@ -80,6 +88,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         List<EstateListResponseDto> result = queryResults.getResults();
         return result;
     }
+
 
     @Override
     public List<AssetResponseDto> findAssetList(Long estateId) {
