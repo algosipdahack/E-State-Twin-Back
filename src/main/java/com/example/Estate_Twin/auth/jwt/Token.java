@@ -8,9 +8,11 @@ import lombok.*;
 public class Token {
     private String accessToken;
     private String refreshToken;
+    private Boolean isMember;
 
-    public Token(String accessToken, String refreshToken) {
+    public Token(String accessToken, String refreshToken, Boolean isMember) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.isMember = isMember;
     }
 }

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class EstateApiController {
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateMainDto.class)))})
     @GetMapping("main")
-    public ResponseEntity<List<EstateMainDto>> getList(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<List<EstateMainDto>> getList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
@@ -60,7 +61,7 @@ public class EstateApiController {
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping("detail/owner")
-    public ResponseEntity<Long> postEstateOwner(@AuthenticationPrincipal CustomUserDetails user,
+    public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user,
                                                              @RequestBody AddressSaveRequestDto addressSaveRequestDto,
                                                              @ApiParam(value = "Broker Id", required = true, example = "1")
                                                              @RequestParam(name = "brokerId") Long brokerId) {
@@ -101,7 +102,7 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}/confirm")
-    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         // broker가 confirm 버튼을 클릭
         EstateResponseDto estateResponseDto = estateService.allowPost(estateId,user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
@@ -112,7 +113,7 @@ public class EstateApiController {
     @PutMapping("detail/{estateId}/confirmOwner")
     public ResponseEntity<EstateResponseDto> allowOwner(
             @ApiParam(value = "Estate Id", required = true, example = "1")
-            @PathVariable Long estateId, @AuthenticationPrincipal CustomUserDetails user) {
+            @PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         // user가 confirm 버튼을 클릭
         EstateResponseDto estateResponseDto = estateService.allowPost(estateId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);

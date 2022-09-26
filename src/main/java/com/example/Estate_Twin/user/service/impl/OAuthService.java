@@ -74,7 +74,7 @@ public class OAuthService {
         return userRepository.save(user);
     }
 
-    private User getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
+    private Token getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
         Map<String, Object> userAttributes = getUserAttributes(provider, accessToken);
         String userNameAttributeName = provider.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuth2UserInfo attributes = OAuth2UserInfo.of(providerName.toUpperCase(), userNameAttributeName, userAttributes);
@@ -84,20 +84,24 @@ public class OAuthService {
 
         Optional<User> userOptional = userRepository.findByEmail(attributes.getEmail());
         User user;
-
+        Boolean isMember;
         //이미 가입된 경우
         if(userOptional.isPresent()){
             user = userOptional.get();
+            isMember = true;
             if(AuthProvider.valueOf(providerName) != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
             }
         } else {
             //첫 로그인인 경우
+            isMember = false;
             user = createUser(attributes,AuthProvider.valueOf(providerName));
         }
 
         CustomUserDetails.create(user,userAttributes);
-        return user;
+        String jaccessToken = tokenProvider.createAccessToken(user);
+        String jrefreshToken = tokenProvider.createRefreshToken(user);
+        return new Token(jaccessToken,jrefreshToken,isMember);
     }
     @Transactional
     public Token login(String providerName, String accessToken) {
@@ -107,13 +111,7 @@ public class OAuthService {
         //OAuth2AccessTokenResponse tokenResponse = getToken(code, provider);
 
         //kakao로부터 유저정보 받아서 db에 저장
-        User user = getUserProfile(providerName.toUpperCase(), accessToken, provider);
-
-        //jwt token 발급
-        String jaccessToken = tokenProvider.createAccessToken(user);
-        String jrefreshToken = tokenProvider.createRefreshToken(user);
-        Token token = new Token(jaccessToken,jrefreshToken);
-        return token;
+        return getUserProfile(providerName.toUpperCase(), accessToken, provider);
     }
 
 }

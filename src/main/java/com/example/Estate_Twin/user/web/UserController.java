@@ -28,7 +28,7 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<UserResponseDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
 
         UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
@@ -37,7 +37,7 @@ public class UserController {
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
+    public ResponseEntity<UserResponseDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
         UserResponseDto userResponseDto = userService.signUp(user.getEmail(), userSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
