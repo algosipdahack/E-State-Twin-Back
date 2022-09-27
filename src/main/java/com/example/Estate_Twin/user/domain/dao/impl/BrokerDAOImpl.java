@@ -3,16 +3,16 @@ package com.example.Estate_Twin.user.domain.dao.impl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.*;
 import com.example.Estate_Twin.user.web.dto.BrokerListDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 @Component
 @AllArgsConstructor
 public class BrokerDAOImpl implements BrokerDAO {

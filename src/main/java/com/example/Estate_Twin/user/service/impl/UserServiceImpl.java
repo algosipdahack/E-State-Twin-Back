@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto signUp(String email, UserSignUpDto userSignUpDto) {
-        return new UserResponseDto(userDAO.signUp(email, userSignUpDto.getBirthday(), userSignUpDto.getPhone(), EstateType.of(userSignUpDto.getEstateType()), TransactionType.of(userSignUpDto.getTransactionType())));
+        return new UserResponseDto(userDAO.signUp(email, userSignUpDto.getBirthday(), userSignUpDto.getPhone(), EstateType.of(userSignUpDto.getEstateType()), TransactionType.of(userSignUpDto.getTransactionType()), userSignUpDto.getBorough()));
     }
 
 }

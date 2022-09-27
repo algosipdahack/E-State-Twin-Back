@@ -3,7 +3,6 @@ package com.example.Estate_Twin.estate.service;
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 

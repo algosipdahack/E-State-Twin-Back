@@ -26,11 +26,11 @@ public class QAsset extends EntityPathBase<Asset> {
 
     public final StringPath anchorId = createString("anchorId");
 
-    public final SetPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> assetPhoto = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createSet("assetPhoto", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
+    public final StringPath assetPhoto = createString("assetPhoto");
 
     public final EnumPath<Category> category = createEnum("category", Category.class);
 
-    public final SetPath<com.example.Estate_Twin.checklist.data.entity.CheckList, com.example.Estate_Twin.checklist.data.entity.QCheckList> checkList = this.<com.example.Estate_Twin.checklist.data.entity.CheckList, com.example.Estate_Twin.checklist.data.entity.QCheckList>createSet("checkList", com.example.Estate_Twin.checklist.data.entity.CheckList.class, com.example.Estate_Twin.checklist.data.entity.QCheckList.class, PathInits.DIRECT2);
+    public final SetPath<com.example.Estate_Twin.checklist.data.entity.CheckList, com.example.Estate_Twin.checklist.data.entity.QCheckList> checkLists = this.<com.example.Estate_Twin.checklist.data.entity.CheckList, com.example.Estate_Twin.checklist.data.entity.QCheckList>createSet("checkLists", com.example.Estate_Twin.checklist.data.entity.CheckList.class, com.example.Estate_Twin.checklist.data.entity.QCheckList.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
@@ -47,6 +47,8 @@ public class QAsset extends EntityPathBase<Asset> {
     public final EnumPath<Option> option = createEnum("option", Option.class);
 
     public final StringPath productName = createString("productName");
+
+    public final DateTimePath<java.time.LocalDateTime> repairDate = createDateTime("repairDate", java.time.LocalDateTime.class);
 
     public QAsset(String variable) {
         this(Asset.class, forVariable(variable), INITS);

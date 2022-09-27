@@ -42,7 +42,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
     //세입중인 매물
-    @OneToOne(mappedBy = "tanent")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estate_id")
     private Estate tanentEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
@@ -68,11 +69,20 @@ public class User extends BaseTimeEntity {
     }
     public void setTanentEstate(Estate estate) {
         this.tanentEstate = estate;
+        estate.setTanent(this);
     }
     public void setIsBroker() {
         this.isBroker = true;
     }
     public void setIsArCam() { this.isArCam = true; }
+    public User update(LocalDate birthday, String phone, TransactionType transactionType, EstateType estateType, String borough) {
+        this.birthday = birthday;
+        this.phone = phone;
+        this.transactionType = transactionType;
+        this.estateType = estateType;
+        this.borough = borough;
+        return this;
+    }
     @PrePersist
     public void prePersist() {
         this.isBroker = false;

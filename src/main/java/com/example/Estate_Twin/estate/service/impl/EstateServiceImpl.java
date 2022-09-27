@@ -16,8 +16,6 @@ import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
-import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.Broker;

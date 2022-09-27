@@ -7,7 +7,6 @@ import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
-import com.example.Estate_Twin.media.domain.entity.Media;
 
 import lombok.*;
 import org.springframework.stereotype.Service;

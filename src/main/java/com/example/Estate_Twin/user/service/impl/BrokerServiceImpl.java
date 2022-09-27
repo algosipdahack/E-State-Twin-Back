@@ -2,10 +2,6 @@ package com.example.Estate_Twin.user.service.impl;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.media.service.AwsS3Service;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
-import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveRequestDto;
 import com.example.Estate_Twin.user.domain.dao.*;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.BrokerService;

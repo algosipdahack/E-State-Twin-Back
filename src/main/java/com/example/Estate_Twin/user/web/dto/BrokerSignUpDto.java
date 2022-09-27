@@ -1,9 +1,6 @@
 package com.example.Estate_Twin.user.web.dto;
 
-import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -25,6 +22,7 @@ public class BrokerSignUpDto {
     private String brokerageRegistrationLicense;
     @Schema(description = "공인중개사 사진")
     private String brokerPhoto;
+    private String content;
     private AddressSaveRequestDto address;
 
     public Broker toEntity() {
@@ -36,6 +34,7 @@ public class BrokerSignUpDto {
                 .businessLicense(businessLicense)
                 .brokerageRegistrationLicense(brokerageRegistrationLicense)
                 .brokerPhoto(brokerPhoto)
+                .content(content)
                 .address(address.toEntity())
                 .build();
     }

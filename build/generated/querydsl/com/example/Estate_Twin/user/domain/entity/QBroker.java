@@ -30,7 +30,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public final StringPath brokerageRegistrationNumber = createString("brokerageRegistrationNumber");
 
-    public final com.example.Estate_Twin.media.domain.entity.QMedia brokerPhoto;
+    public final StringPath brokerPhoto = createString("brokerPhoto");
 
     public final StringPath businessLicense = createString("businessLicense");
 
@@ -67,7 +67,6 @@ public class QBroker extends EntityPathBase<Broker> {
     public QBroker(Class<? extends Broker> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address")) : null;
-        this.brokerPhoto = inits.isInitialized("brokerPhoto") ? new com.example.Estate_Twin.media.domain.entity.QMedia(forProperty("brokerPhoto"), inits.get("brokerPhoto")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 

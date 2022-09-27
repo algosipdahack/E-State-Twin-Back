@@ -7,7 +7,6 @@ import com.example.Estate_Twin.exception.BadRequestException;
 import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
 
@@ -65,8 +64,7 @@ public class Estate extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tanent_id")
+    @OneToOne(mappedBy = "tanentEstate")
     private User tanent;
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private Set<Asset> assets;
@@ -122,7 +120,6 @@ public class Estate extends BaseTimeEntity {
     }
     public void setTanent(User tanent) {
         this.tanent = tanent;
-        tanent.setTanentEstate(this);
     }
     public void setGrade(Grade grade) {
         if(this.isPosted == false) {

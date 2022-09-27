@@ -3,7 +3,6 @@ package com.example.Estate_Twin.estate.web;
 import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
 import com.example.Estate_Twin.estate.service.*;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.media.service.AwsS3Service;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 

@@ -1,8 +1,6 @@
 package com.example.Estate_Twin.checklist.service;
 
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.web.dto.*;
-import com.example.Estate_Twin.media.domain.entity.Media;
 
 import java.util.List;
 

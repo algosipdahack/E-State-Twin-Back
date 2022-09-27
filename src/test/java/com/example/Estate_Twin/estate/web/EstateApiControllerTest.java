@@ -8,7 +8,6 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-
+/*
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -141,5 +140,5 @@ public class EstateApiControllerTest {
     }
 
 
-}
+}*/
 

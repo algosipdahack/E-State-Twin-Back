@@ -3,7 +3,6 @@ package com.example.Estate_Twin.estate.web.dto;
 import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import java.util.List;

@@ -2,7 +2,6 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import lombok.*;
 
 import java.util.List;

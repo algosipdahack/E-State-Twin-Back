@@ -47,7 +47,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final QEstateHit estateHit;
 
-    public final SetPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> estateMedia = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createSet("estateMedia", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
+    public final ListPath<String, StringPath> estateMedia = this.<String, StringPath>createList("estateMedia", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final StringPath estateThumbNail = createString("estateThumbNail");
 

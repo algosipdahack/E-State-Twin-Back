@@ -2,8 +2,6 @@ package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.media.service.AwsS3Service;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.service.BrokerService;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -28,7 +26,6 @@ import java.util.List;
 @RequestMapping("/api/broker")
 public class BrokerController {
     private final BrokerService brokerService;
-    private final AwsS3Service awsS3Service;
 
     @Operation(summary = "mypage of broker", description = "브로커 마이페이지")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})

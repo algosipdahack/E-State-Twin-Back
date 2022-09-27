@@ -1,12 +1,10 @@
 package com.example.Estate_Twin.checklist.data.dao.impl;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 import org.springframework.stereotype.Component;
 

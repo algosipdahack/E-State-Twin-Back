@@ -5,7 +5,6 @@ import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

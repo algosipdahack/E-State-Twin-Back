@@ -1,11 +1,9 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

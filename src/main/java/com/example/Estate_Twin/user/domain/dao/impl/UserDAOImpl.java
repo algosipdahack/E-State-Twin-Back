@@ -6,9 +6,10 @@ import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-
+@Transactional
 @Component
 @AllArgsConstructor
 public class UserDAOImpl implements UserDAO {
@@ -25,14 +26,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email))
-                .builder()
-                .birthday(birthday)
-                .phone(phone)
-                .estateType(estateType)
-                .transactionType(transactionType)
-                .build();
-        return userRepository.save(user);
+    public User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType, String borough) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email))
+                .update(birthday,phone,transactionType,estateType,borough);
     }
 }

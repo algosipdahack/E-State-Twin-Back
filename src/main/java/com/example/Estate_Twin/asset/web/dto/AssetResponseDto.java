@@ -2,7 +2,6 @@ package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.checklist.web.dto.CheckListDto;
-import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

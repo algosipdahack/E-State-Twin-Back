@@ -30,7 +30,7 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final StringPath checkListContent = createString("checkListContent");
 
-    public final SetPath<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia> checkListPhoto = this.<com.example.Estate_Twin.media.domain.entity.Media, com.example.Estate_Twin.media.domain.entity.QMedia>createSet("checkListPhoto", com.example.Estate_Twin.media.domain.entity.Media.class, com.example.Estate_Twin.media.domain.entity.QMedia.class, PathInits.DIRECT2);
+    public final StringPath checkListPhoto = createString("checkListPhoto");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;

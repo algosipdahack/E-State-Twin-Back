@@ -1,10 +1,8 @@
 package com.example.Estate_Twin.checklist.data.dao;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
 
 import java.time.LocalDateTime;
 import java.util.List;

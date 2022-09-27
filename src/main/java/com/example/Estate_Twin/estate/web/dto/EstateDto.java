@@ -4,7 +4,6 @@ import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.media.web.dto.MediaResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 

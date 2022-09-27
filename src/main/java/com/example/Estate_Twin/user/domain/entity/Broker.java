@@ -1,12 +1,8 @@
 package com.example.Estate_Twin.user.domain.entity;
 
 import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.media.domain.entity.Media;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
 import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.*;

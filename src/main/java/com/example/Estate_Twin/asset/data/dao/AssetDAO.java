@@ -4,7 +4,6 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.media.domain.entity.Media;
 
 
 public interface AssetDAO {

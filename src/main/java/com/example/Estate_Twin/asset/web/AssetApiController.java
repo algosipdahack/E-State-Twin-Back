@@ -2,7 +2,6 @@ package com.example.Estate_Twin.asset.web;
 
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
-import com.example.Estate_Twin.media.service.AwsS3Service;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;

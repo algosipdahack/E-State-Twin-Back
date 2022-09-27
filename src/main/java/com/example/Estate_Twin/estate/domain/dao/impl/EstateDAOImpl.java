@@ -17,7 +17,6 @@ import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.AllArgsConstructor;

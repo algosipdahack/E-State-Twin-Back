@@ -29,7 +29,6 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserResponseDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-
         UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }

@@ -2,9 +2,6 @@ package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.web.dto.AddressDto;
-import com.example.Estate_Twin.media.domain.entity.Media;
-import com.example.Estate_Twin.media.web.dto.MediaDto;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

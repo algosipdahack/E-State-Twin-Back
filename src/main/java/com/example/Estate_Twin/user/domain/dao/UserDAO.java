@@ -9,5 +9,5 @@ import java.time.LocalDate;
 public interface UserDAO {
     User findUserById(Long id);
     User findUserByEmail(String email);
-    User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType);
+    User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType, String borough);
 }
