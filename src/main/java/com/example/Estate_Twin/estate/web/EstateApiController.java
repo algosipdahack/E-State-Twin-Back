@@ -27,7 +27,6 @@ import java.util.List;
 public class EstateApiController {
     private final EstateService estateService;
     private final DipEstateService dipEstateService;
-    private final AwsS3Service awsS3Service;
 
     //리스트
     //TODO 페이징 처리
@@ -76,12 +75,6 @@ public class EstateApiController {
     @PostMapping(value = "detail/broker")
     public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        if(estateSaveRequestDto.getEstatePhotos() != null) {
-            awsS3Service.uploadEstate(estateSaveRequestDto.getEstatePhotos(), estateDto.getId(), "estate");
-        }
-        if(estateSaveRequestDto.getArCam() != null) {
-
-        }
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }
 
@@ -91,9 +84,6 @@ public class EstateApiController {
     @PutMapping("detail/{estateId}")
     public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
         EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
-        if(estateUpdateRequestDto.getEstatePhotos() != null) {
-            awsS3Service.uploadEstate(estateUpdateRequestDto.getEstatePhotos(),estateResponseDto.getId(),"estate");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 

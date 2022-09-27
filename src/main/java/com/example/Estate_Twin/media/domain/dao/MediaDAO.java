@@ -7,9 +7,6 @@ import com.example.Estate_Twin.media.domain.entity.Media;
 
 
 public interface MediaDAO {
-    Media saveEstateMedia(Estate estate, Media media);
-    Media saveAssetMedia(Asset asset, Media media);
-    Media saveCheckListMedia(CheckList checkList, Media media);
     Media findMedia(Long id);
     Media updateMedia(Long id, String origFileName, String filepath);
     Media saveMedia(Media media);

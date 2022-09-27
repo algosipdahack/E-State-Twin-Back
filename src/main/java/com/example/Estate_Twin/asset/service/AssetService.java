@@ -8,6 +8,4 @@ public interface AssetService {
     AssetResponseDto getAsset(Long id);
     AssetResponseDto saveAsset(Long estateId, AssetSaveRequestDto assetSaveRequestDto);
     AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto);
-    Asset addMedia(Long assetId, Media media);
-    void clearMedia(Long id);
 }

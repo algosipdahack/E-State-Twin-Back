@@ -42,6 +42,8 @@ public class Estate extends BaseTimeEntity {
     private boolean isPosted;
     private boolean ownerConfirmYN;
     private boolean brokerConfirmYN;
+    @ElementCollection
+    private List<String> estateMedia;
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
@@ -66,9 +68,6 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tanent_id")
     private User tanent;
-    @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
-    private Set<Media> estateMedia;
-
     @OneToMany(mappedBy = "estate",fetch = FetchType.EAGER,orphanRemoval = true)
     private Set<Asset> assets;
     //찜한 매물
@@ -151,7 +150,7 @@ public class Estate extends BaseTimeEntity {
     //insert 되기 전 실행된다
     @PrePersist
     public void prePersist() {
-        this.estateMedia = new HashSet<>();
+        this.estateMedia = new ArrayList<>();
         this.assets = new HashSet<>();
         this.dipEstates = new HashSet<>();
         this.state = this.state == null ? State.BROKER_BEFORE : this.state;

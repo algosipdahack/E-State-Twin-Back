@@ -10,7 +10,5 @@ public interface CheckListService {
     CheckListResponseDto getCheckList(Long id);
     CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId);
     CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
-    CheckList addMedia(Long checklistId, Media media);
     List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId);
-    void clearMedia(Long id);
 }

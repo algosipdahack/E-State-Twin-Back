@@ -25,7 +25,7 @@ public class EstateResponseDto {
     private boolean isPosted;
     private boolean ownerConfirmYN;
     private boolean brokerConfirmYN;
-    private final List<MediaResponseDto> estatePhotos;
+    private final List<String> estatePhotos;
     private List<AssetResponseDto> assets;
     private AddressDto address;
     private HouseDto house;
@@ -49,7 +49,7 @@ public class EstateResponseDto {
         this.house = null;
 
         this.estatePhotos = new ArrayList<>();
-        estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(new MediaResponseDto(eMedia)));
+        estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(eMedia));
 
         this.assets = null;
     }

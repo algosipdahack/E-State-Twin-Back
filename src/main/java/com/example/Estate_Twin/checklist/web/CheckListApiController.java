@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/api/checklist")
 public class CheckListApiController {
     private final CheckListService checkListService;
-    private final AwsS3Service awsS3Service;
 
     @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
@@ -45,9 +44,6 @@ public class CheckListApiController {
     @PostMapping("/asset/{assetId}")
     public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
-        if (checkListSaveRequestDto.getCheckListPhotos() != null) {
-            awsS3Service.uploadCheckList(checkListSaveRequestDto.getCheckListPhotos(), checkListResponseDto.getId(), "checklist");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 
@@ -57,9 +53,6 @@ public class CheckListApiController {
     @PutMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);
-        if (checkListUpdateRequestDto.getCheckListPhotos() != null) {
-            awsS3Service.uploadCheckList(checkListUpdateRequestDto.getCheckListPhotos(), checkListResponseDto.getId(), "checklist");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 }

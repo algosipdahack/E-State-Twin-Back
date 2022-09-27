@@ -16,23 +16,6 @@ public class MediaDAOImpl implements MediaDAO {
     private MediaRepository mediaRepository;
 
     @Override
-    public Media saveEstateMedia(Estate estate, Media media) {
-        media.setEstate(estate);
-        return mediaRepository.save(media);
-    }
-    @Override
-    public Media saveAssetMedia(Asset asset, Media media) {
-        media.setAsset(asset);
-        return mediaRepository.save(media);
-    }
-    @Override
-    public Media saveCheckListMedia(CheckList checkList, Media media) {
-        media.setCheckList(checkList);
-        return mediaRepository.save(media);
-    }
-
-
-    @Override
     public Media findMedia(Long id) {
         return mediaRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 미디어가 없습니다. id = "+id));

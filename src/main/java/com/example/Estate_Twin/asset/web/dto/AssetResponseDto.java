@@ -15,7 +15,7 @@ public class AssetResponseDto {
     private final Long id;
     @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
     private final String category;
-    private final Set<MediaResponseDto> assetPhoto;
+    private final String assetPhoto;
     @Schema(description = "에셋 작은 카테고리(옵션)", example = "AIRCONDITIONER, WASHER, BED, DESK, CLOSET, TV, REFRIGERATOR, SHOERACK, GASSTOVE, DOORLOCK, BIDET, WALLPAPER, CURTAIN")
     private final String option;
     private final String productName;
@@ -29,8 +29,7 @@ public class AssetResponseDto {
     public AssetResponseDto(Asset asset) {
         this.id = asset.getId();
         this.category = asset.getCategory().toString();
-        this.assetPhoto = new HashSet<>();
-        asset.getAssetPhoto().forEach(photo -> assetPhoto.add(new MediaResponseDto(photo)));
+        this.assetPhoto = asset.getAssetPhoto();
         this.option = asset.getOption().toString();
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();

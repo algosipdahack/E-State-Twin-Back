@@ -106,4 +106,5 @@ public class EstateServiceTest {
         Assertions.assertEquals(houseResponseDto.getBathCount(),givenHouse.getBathCount());
         verify(houseRepository).save(any());
     }
-}*/
+}
+*/

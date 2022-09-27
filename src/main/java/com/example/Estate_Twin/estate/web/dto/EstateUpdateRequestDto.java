@@ -15,7 +15,7 @@ public class EstateUpdateRequestDto {
     private String content;
     private String thumbNail3D;
     private String model;
-    private List<MediaSaveMultipartRequestDto> estatePhotos;
+    private List<String> estatePhotos;
     private AddressUpdateRequestDto address;
     private HouseUpdateRequestDto house;
 }

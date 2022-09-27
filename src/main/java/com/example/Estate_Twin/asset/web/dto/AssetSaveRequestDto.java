@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.*;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -18,8 +17,8 @@ public class AssetSaveRequestDto {
     private String productName;
     private String manufacturer;
     private String anchorId;
+    private String assetPhoto;
     private LocalDateTime repairDate;
-    private List<MediaSaveMultipartRequestDto> assetPhoto;
 
     public Asset toEntity() {
         return Asset.builder()
@@ -29,6 +28,7 @@ public class AssetSaveRequestDto {
                 .manufacturer(manufacturer)
                 .repairDate(repairDate)
                 .anchorId(anchorId)
+                .assetPhoto(assetPhoto)
                 .build();
     }
 }

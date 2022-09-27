@@ -12,6 +12,4 @@ public interface AssetDAO {
     Asset findAsset(Long id);
     //Asset findAssetUtilCheckList(Long id);
     Asset saveAsset(Estate estate, Asset asset);
-    Asset addAssetMedia(Long id, Media media);
-    void clearMedia(Long assetId);
 }

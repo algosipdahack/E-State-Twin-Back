@@ -41,6 +41,7 @@ public class Broker {
     private String brokerageRegistrationLicense;
     //거래 완료 건 수
     private Long countOfTransactionCompletion;
+    private String brokerPhoto;
     //소개글
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -48,10 +49,6 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
-
-    @OneToOne
-    @JoinColumn(name = "media_id")
-    private Media brokerPhoto;
     //단방향
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -61,7 +58,7 @@ public class Broker {
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
                   String businessLicense, String brokerageRegistrationLicense, Long countOfTransactionCompletion, String content,
-                  Address address, Media brokerPhoto) {
+                  Address address, String brokerPhoto) {
         this.businessName = businessName;
         this.agentName = agentName;
         this.brokerageRegistrationNumber = brokerageRegistrationNumber;
@@ -76,15 +73,6 @@ public class Broker {
     public void setUser(User user) {
         this.user = user;
         user.setIsBroker();
-    }
-
-    public void setString(String brokerageRegistrationLicense, String businessLicense) {
-        this.brokerageRegistrationLicense = brokerageRegistrationLicense;
-        this.businessLicense = businessLicense;
-    }
-
-    public void setPhoto(Media media) {
-        this.brokerPhoto = media;
     }
     @PrePersist
     public void prePersist() {

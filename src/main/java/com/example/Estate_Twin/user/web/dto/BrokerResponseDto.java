@@ -30,7 +30,7 @@ public class BrokerResponseDto {
     private final AddressDto address;
     private final String phone;
     private final List<EstateDto> estates;
-    private final MediaDto brokerPhoto;
+    private final String brokerPhoto;
 
     @QueryProjection
     public BrokerResponseDto(Broker broker) {
@@ -45,7 +45,7 @@ public class BrokerResponseDto {
         this.content = broker.getContent();
         this.address = new AddressDto(broker.getAddress());
         this.phone = broker.getUser().getPhone();
-        this.brokerPhoto = new MediaDto(broker.getBrokerPhoto());
+        this.brokerPhoto = broker.getBrokerPhoto();
         this.estates = new ArrayList<>();
         broker.getTradeEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
     }

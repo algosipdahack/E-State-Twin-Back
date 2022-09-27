@@ -28,7 +28,7 @@ public class BrokerDto {
     private final String content;
     private final AddressDto address;
     private final List<EstateDto> estates;
-    private final MediaDto brokerPhoto;
+    private final String brokerPhoto;
 
     @QueryProjection
     public BrokerDto(Broker broker) {
@@ -41,7 +41,7 @@ public class BrokerDto {
         this.countOfTransactionCompletion = broker.getCountOfTransactionCompletion();
         this.content = broker.getContent();
         this.address = new AddressDto(broker.getAddress());
-        this.brokerPhoto = new MediaDto(broker.getBrokerPhoto());
+        this.brokerPhoto = broker.getBrokerPhoto();
         this.estates = new ArrayList<>();
         broker.getTradeEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
     }

@@ -12,7 +12,7 @@ import java.util.*;
 @Getter
 public class AssetDto {
     private final Category category;
-    private final Set<MediaResponseDto> assetPhotos;
+    private final String assetPhoto;
     private final Option option;
     private final String productName;
     private final String manufacturer;
@@ -23,8 +23,7 @@ public class AssetDto {
     @QueryProjection
     public AssetDto(Asset asset) {
         this.category = asset.getCategory();
-        this.assetPhotos = new HashSet<>();
-        asset.getAssetPhoto().forEach(photo -> assetPhotos.add(new MediaResponseDto(photo)));
+        this.assetPhoto = asset.getAssetPhoto();
         this.option = asset.getOption();
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();

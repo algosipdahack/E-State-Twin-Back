@@ -3,7 +3,6 @@ package com.example.Estate_Twin.asset.data.entity;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.util.BaseTimeEntity;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +24,7 @@ public class Asset extends BaseTimeEntity {
     private String manufacturer;
     //AR Camera에서 각 앵커마다 에셋이 존재하기 때문
     private String anchorId;
+    private String assetPhoto;
     private LocalDateTime repairDate;
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -35,18 +35,17 @@ public class Asset extends BaseTimeEntity {
     @JoinColumn(name = "estate_id")
     private Estate estate;
     @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Media> assetPhoto;
-    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<CheckList> checkLists;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, Option option, String productName, String manufacturer, String anchorId, LocalDateTime repairDate) {
+    public Asset(Category category, String assetPhoto, Option option, String productName, String manufacturer, String anchorId, LocalDateTime repairDate) {
         this.category = category;
         this.option = option;
         this.productName = productName;
         this.manufacturer = manufacturer;
         this.anchorId = anchorId;
         this.repairDate = repairDate;
+        this.assetPhoto = assetPhoto;
     }
     public void setEstate(Estate estate) {
         if(this.estate != null) {
@@ -61,7 +60,6 @@ public class Asset extends BaseTimeEntity {
     }
     @PrePersist
     public void prePersist() {
-        this.assetPhoto = new HashSet<>();
         this.checkLists = new HashSet<>();
     }
 

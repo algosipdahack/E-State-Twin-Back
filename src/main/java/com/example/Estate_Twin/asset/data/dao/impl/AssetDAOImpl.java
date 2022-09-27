@@ -34,19 +34,6 @@ public class AssetDAOImpl implements AssetDAO {
     }
 
     @Override
-    public Asset addAssetMedia(Long id, Media media) {
-        Asset asset = findAsset(id);
-        media.setAsset(asset);
-        return assetRepository.save(asset);
-    }
-
-    @Override
-    public void clearMedia(Long assetId) {
-        Asset asset = findAsset(assetId);
-        asset.getAssetPhoto().clear();
-    }
-
-    @Override
     public Asset saveAsset(Estate estate, Asset asset) {
         asset.setEstate(estate);
         return assetRepository.save(asset);

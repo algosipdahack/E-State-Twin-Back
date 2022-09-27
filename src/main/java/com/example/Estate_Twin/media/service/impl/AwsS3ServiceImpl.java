@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.util.*;
-
+/*
 @Component
 @RequiredArgsConstructor
 @PropertySource("classpath:application-s3.properties")
@@ -157,3 +157,4 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return flag;
     }
 }
+*/

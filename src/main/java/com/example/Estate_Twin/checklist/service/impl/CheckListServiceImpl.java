@@ -7,7 +7,6 @@ import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.data.entity.RepairType;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
-import com.example.Estate_Twin.media.domain.entity.Media;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CheckListServiceImpl implements CheckListService {
-
     private final CheckListDAO checkListDAO;
     private final AssetDAO assetDAO;
 
@@ -44,15 +42,5 @@ public class CheckListServiceImpl implements CheckListService {
     @Override
     public List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId) {
         return checkListDAO.findAllCheckList(assetId);
-    }
-
-    @Override
-    public CheckList addMedia(Long checklistId, Media media) {
-        return checkListDAO.addCheckListMedia(checklistId,media);
-    }
-
-    @Override
-    public void clearMedia(Long id) {
-        checkListDAO.clearMedia(checkListDAO.findCheckList(id));
     }
 }

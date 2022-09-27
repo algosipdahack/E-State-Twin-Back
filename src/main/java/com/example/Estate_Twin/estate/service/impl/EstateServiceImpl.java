@@ -37,7 +37,6 @@ public class EstateServiceImpl implements EstateService {
     private final BrokerDAO brokerDAO;
     private final AssetDAO assetDAO;
     private final EstateHitDAO estateHitDAO;
-    private final AwsS3Service awsS3Service;
 
     @Override
     public Long saveFirst(AddressSaveRequestDto addressSaveRequestDto, Long brokerId, String email) {
@@ -66,21 +65,10 @@ public class EstateServiceImpl implements EstateService {
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssetSaveRequestDtos().forEach(assetSaveRequestDto -> {
             Asset asset = assetDAO.saveAsset(estate,assetSaveRequestDto.toEntity());
-            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhoto(),asset.getId(),"asset");
             assets.add(asset);
         });
         House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
         return new EstateResponseDto(estateDAO.saveEstate(estate,house,assets));
-    }
-
-    @Override
-    public Estate addMedia(Long id, Media media) {
-        return estateDAO.addEstateMedia(id, media);
-    }
-
-    @Override
-    public void clearMedia(Long id) {
-        estateDAO.clearMedia(id);
     }
 
     @Override
@@ -94,6 +82,7 @@ public class EstateServiceImpl implements EstateService {
         Long addressId = estate.getAddress().getId();
         Long houseId = estate.getHouse().getId();
 
+        //DTO로 만들기
         AddressUpdateRequestDto address = estateUpdateRequestDto.getAddress();
         addressDAO.updateAddress(addressId, address.getCity(), address.getBorough(),
                 address.getTown(),address.getComplexName(), address.getBlock(),

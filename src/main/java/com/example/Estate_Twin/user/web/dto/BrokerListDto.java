@@ -19,16 +19,16 @@ public class BrokerListDto {
     private final String content;
     private final AddressDto address;
     private final String phone;
-    private final MediaDto brokerPhoto;
+    private final String brokerPhoto;
     @QueryProjection
-    public BrokerListDto(Long id, String businessName, Long countOfTransactionCompletion, String content, Address address, String phone, Media brokerPhoto) {
+    public BrokerListDto(Long id, String businessName, Long countOfTransactionCompletion, String content, Address address, String phone, String brokerPhoto) {
         this.id = id;
         this.businessName = businessName;
         this.countOfTransactionCompletion = countOfTransactionCompletion;
         this.content = content;
         this.address = new AddressDto(address);
         this.phone = phone;
-        this.brokerPhoto = new MediaDto(brokerPhoto);
+        this.brokerPhoto = brokerPhoto;
     }
 
 }

@@ -20,7 +20,6 @@ import java.util.List;
 public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAO brokerDAO;
     private final UserDAO userDAO;
-    private final AwsS3Service awsS3Service;
     @Override
     public BrokerResponseDto getBroker(String userEmail) {
         return new BrokerResponseDto(brokerDAO.findBrokerByEmail(userEmail));
@@ -28,12 +27,8 @@ public class BrokerServiceImpl implements BrokerService {
 
     @Override
     public BrokerResponseDto signUpBroker(String userEmail, BrokerSignUpDto brokerSignUpDto) {
-        String brokerLicense = awsS3Service.saveMedia(brokerSignUpDto.getBrokerageRegistrationLicense()).getFilePath();
-        String businessLicense = awsS3Service.saveMedia(brokerSignUpDto.getBusinessLicense()).getFilePath();
-        MediaResponseDto brokerPhoto = awsS3Service.saveMedia(brokerSignUpDto.getBrokerPhoto());
-
         User user = userDAO.findUserByEmail(userEmail);
-        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(),brokerLicense,businessLicense,brokerPhoto.toEntity(), user));
+        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
     }
 
     @Override

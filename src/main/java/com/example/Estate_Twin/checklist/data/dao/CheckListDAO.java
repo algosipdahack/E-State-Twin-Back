@@ -14,7 +14,5 @@ public interface CheckListDAO {
     CheckList findCheckList(Long id);
     CheckList updateCheckList(Long id, String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                               String checkListContent, LocalDateTime repairDate, RepairType repairType);
-    CheckList addCheckListMedia(Long id, Media media);
-    void clearMedia(CheckList checkList);
     List<CheckListResponseDto> findAllCheckList(Long assetId);
 }

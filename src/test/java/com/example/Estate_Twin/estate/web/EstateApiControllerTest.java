@@ -26,7 +26,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/*
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -142,4 +142,4 @@ public class EstateApiControllerTest {
 
 
 }
-*/
+

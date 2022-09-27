@@ -15,9 +15,9 @@ public class CheckListUpdateRequestDto {
     @Schema(description = "구매/수리", example = "PURCHASE, REPAIR")
     private String repairType;
     private String manufacturer;
+    private String checkListPhoto;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
     private Boolean tanentConfirmYN;
     private LocalDateTime repairDate;
-    private List<MediaSaveMultipartRequestDto> checkListPhotos;
 }

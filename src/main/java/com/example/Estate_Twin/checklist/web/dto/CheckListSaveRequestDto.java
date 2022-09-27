@@ -19,7 +19,7 @@ public class CheckListSaveRequestDto {
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
     private Boolean tanentConfirmYN;
-    private List<MediaSaveMultipartRequestDto> checkListPhotos;
+    private String checkListPhoto;
 
     public CheckList toEntity() {
         return CheckList.builder()
@@ -29,6 +29,7 @@ public class CheckListSaveRequestDto {
                 .tanentConfirmYN(tanentConfirmYN)
                 .flawPart(flawPart)
                 .repairDate(repairDate)
+                .checkListPhoto(checkListPhoto)
                 .repairType(RepairType.of(repairType))
                 .build();
     }

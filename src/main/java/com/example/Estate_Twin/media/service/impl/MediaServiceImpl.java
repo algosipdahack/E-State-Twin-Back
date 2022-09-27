@@ -8,7 +8,7 @@ import com.example.Estate_Twin.media.service.MediaService;
 import com.example.Estate_Twin.media.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+/*
 @Service
 @RequiredArgsConstructor
 public class MediaServiceImpl implements MediaService {
@@ -46,3 +46,5 @@ public class MediaServiceImpl implements MediaService {
         return new MediaResponseDto(mediaDAO.updateMedia(id, mediaUpdateRequestDto.getOrigFileName(), mediaUpdateRequestDto.getFilePath()));
     }
 }
+*/
+

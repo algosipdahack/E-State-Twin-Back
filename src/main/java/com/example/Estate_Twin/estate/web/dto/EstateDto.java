@@ -22,7 +22,7 @@ public class EstateDto {
     private final boolean ownerConfirmYN;
     private final boolean brokerConfirmYN;
     private final LocalDateTime createdAt;
-    private final Set<MediaResponseDto> media;
+    private final List<String> media;
     private final Set<AssetResponseDto> assets;
     private final AddressDto address;
     private final HouseDto house;
@@ -41,8 +41,8 @@ public class EstateDto {
         this.address = null;
         this.estatehit = null;
         this.house = null;
-        this.media = new HashSet<>();
-        estate.getEstateMedia().forEach(eMedia -> this.media.add(new MediaResponseDto(eMedia)));
+        this.media = new ArrayList<>();
+        estate.getEstateMedia().forEach(eMedia -> this.media.add(eMedia));
         this.assets = null;
     }
 }

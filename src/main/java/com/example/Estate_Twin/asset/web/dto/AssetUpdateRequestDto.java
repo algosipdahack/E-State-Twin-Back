@@ -18,5 +18,5 @@ public class AssetUpdateRequestDto {
     private String manufacturer;
     private String anchorId;
     private LocalDateTime repairDate;
-    private List<MediaSaveMultipartRequestDto> assetPhotos;
+    private String assetPhoto;
 }

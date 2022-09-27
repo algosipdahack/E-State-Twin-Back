@@ -23,7 +23,6 @@ public interface EstateDAO {
     Estate updateEstate(Long id, String content, String model,
                         TransactionType transactionType, String estateThumbNail,
                         String city, String borough, String town, String thumbnail3D);
-    Estate addEstateMedia(Long id, Media media);
     List<EstateMainDto> findEstateCustomized(String borough);
     List<EstateListResponseDto> findAllEstateList();
     void clearMedia(Long estateId);

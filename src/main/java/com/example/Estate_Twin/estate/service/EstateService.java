@@ -14,8 +14,6 @@ public interface EstateService {
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
     Long saveFirst(AddressSaveRequestDto addressSaveRequestDto, Long brokerId, String email);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
-    Estate addMedia(Long id, Media media);
-    void clearMedia(Long id);
     List<EstateListResponseDto> getAllEstate();
     List<EstateMainDto> getEstateCustomized(String borough);
     EstateResponseDto allowPost(Long estateId, String userEmail);

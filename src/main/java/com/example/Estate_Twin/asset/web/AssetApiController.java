@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/api/asset")
 public class AssetApiController {
     private final AssetService assetService;
-    private final AwsS3Service awsS3Service;
 
     @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기(매물 등록 후)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
@@ -37,9 +36,6 @@ public class AssetApiController {
     @PutMapping("/{assetId}")
     public ResponseEntity<AssetResponseDto> updateAsset(@PathVariable Long assetId, @RequestBody AssetUpdateRequestDto assetUpdateRequestDto){
         AssetResponseDto assetResponseDto = assetService.updateAsset(assetId,assetUpdateRequestDto);
-        if(assetUpdateRequestDto.getAssetPhotos() != null) {
-            awsS3Service.uploadAsset(assetUpdateRequestDto.getAssetPhotos(),assetResponseDto.getId(),"asset");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
@@ -48,9 +44,6 @@ public class AssetApiController {
     @PostMapping("/estate/{estateId}")
     public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long estateId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
         AssetResponseDto assetDto = assetService.saveAsset(estateId, assetSaveRequestDto);
-        if(assetSaveRequestDto.getAssetPhoto() != null) {
-            awsS3Service.uploadAsset(assetSaveRequestDto.getAssetPhoto(), assetDto.getId(), "asset");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(assetDto);
     }
 }

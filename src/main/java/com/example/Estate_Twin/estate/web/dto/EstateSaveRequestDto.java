@@ -17,10 +17,10 @@ public class EstateSaveRequestDto {
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
     private String transactionType;
     //2차원 도면 사진
-    private MediaSaveMultipartRequestDto model;
-    private MediaSaveMultipartRequestDto arCam;
+    private String model;
+    private String arCam;
     private HouseSaveRequestDto house;
-    private List<MediaSaveMultipartRequestDto> estatePhotos;
+    private List<String> estatePhotos;
     private List<AssetSaveRequestDto> assetSaveRequestDtos;
 
     public Estate toEntity() {
@@ -29,6 +29,8 @@ public class EstateSaveRequestDto {
                 .content(content)
                 .estateThumbNail(estateThumbNail)
                 .transactionType(type)
+                .model(model)
+                .arCam(arCam)
                 .build();
     }
 

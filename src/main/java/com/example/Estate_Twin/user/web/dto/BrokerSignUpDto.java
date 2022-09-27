@@ -20,11 +20,11 @@ public class BrokerSignUpDto {
     @Schema(description = "사업자 등록번호")
     private String businessRegistrationNumber;
     @Schema(description = "사업자 등록증")
-    private MediaSaveMultipartRequestDto businessLicense;
+    private String businessLicense;
     @Schema(description = "중개등록증")
-    private MediaSaveMultipartRequestDto brokerageRegistrationLicense;
+    private String brokerageRegistrationLicense;
     @Schema(description = "공인중개사 사진")
-    private MediaSaveMultipartRequestDto brokerPhoto;
+    private String brokerPhoto;
     private AddressSaveRequestDto address;
 
     public Broker toEntity() {
@@ -33,6 +33,9 @@ public class BrokerSignUpDto {
                 .businessRegistrationNumber(businessRegistrationNumber)
                 .agentName(agentName)
                 .brokerageRegistrationNumber(brokerageRegistrationNumber)
+                .businessLicense(businessLicense)
+                .brokerageRegistrationLicense(brokerageRegistrationLicense)
+                .brokerPhoto(brokerPhoto)
                 .address(address.toEntity())
                 .build();
     }
