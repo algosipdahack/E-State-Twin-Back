@@ -107,6 +107,7 @@ public class EstateServiceImpl implements EstateService {
     }
 
     //아예 owner랑 broker가 맞다는 가정 하에 진행
+    // 1.
     @Override
     public EstateResponseDto allowPost(Long estateId, String email) {
         User user = userDAO.findUserByEmail(email);

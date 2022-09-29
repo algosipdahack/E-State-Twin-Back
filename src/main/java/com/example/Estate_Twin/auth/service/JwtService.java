@@ -7,6 +7,7 @@ import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +15,7 @@ public class JwtService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
-
+    @Transactional
     public String refreshToken(String oldRefreshToken, String oldAccessToken) {
 
         if(!tokenProvider.validateToken(oldRefreshToken)) {
@@ -34,6 +35,20 @@ public class JwtService {
         if(!savedToken.equals(oldRefreshToken)) {
             throw new RuntimeException("Not Matched Refresh Token");
         }
+
+        //JWT 갱신
+        String accessToken = tokenProvider.createAccessToken(r_user);
+        return accessToken;
+    }
+
+    public String refreshToken(String oldAccessToken) {
+
+        // 유저정보 얻기
+
+        User r_user = userRepository.findByEmail("daowll@naver.com")
+                .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = "));
+
+        // Match Refresh Token
 
         //JWT 갱신
         String accessToken = tokenProvider.createAccessToken(r_user);

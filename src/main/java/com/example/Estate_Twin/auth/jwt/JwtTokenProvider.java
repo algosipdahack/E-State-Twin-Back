@@ -67,7 +67,7 @@ public class JwtTokenProvider {
     public String getPayload(String token){
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(SECRET_KEY)
+                    .setSigningKey(SECRET_KEY.getBytes())
                     .build()
                     .parseClaimsJws(token)
                     .getBody()
@@ -82,7 +82,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
-                    .setSigningKey(SECRET_KEY)
+                    .setSigningKey(SECRET_KEY.getBytes())
                     .build()
                     .parseClaimsJws(token);
             return !claimsJws.getBody().getExpiration().before(new Date());
@@ -96,7 +96,7 @@ public class JwtTokenProvider {
     }
     public String getUserIdentifier(String token){
         return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(SECRET_KEY.getBytes())
                 .build()
                 .parseClaimsJws(token).getBody().getSubject();
     }

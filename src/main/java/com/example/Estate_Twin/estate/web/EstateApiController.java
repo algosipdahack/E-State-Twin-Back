@@ -55,6 +55,7 @@ public class EstateApiController {
         EstateResponseDto estateResponseDto = estateService.getEstate(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
+
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping("detail/owner")
@@ -85,25 +86,12 @@ public class EstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
-    //TODO 브로커, owner confirm 한번에
-    @Operation(summary = "Allow broker of estate", description = "중개인의 매물 등록 확인")
+    @Operation(summary = "Confirm of estate post", description = "중개인/집주인의 매물 등록 확인")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}/confirm")
-    public ResponseEntity<EstateResponseDto> allowBroker(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        // broker가 confirm 버튼을 클릭
+    public ResponseEntity<EstateResponseDto> confirmEstate(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         EstateResponseDto estateResponseDto = estateService.allowPost(estateId,user.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
-    }
-
-    @Operation(summary = "Allow owner of estate", description = "집주인의 매물 등록 확인")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
-    @PutMapping("detail/{estateId}/confirmOwner")
-    public ResponseEntity<EstateResponseDto> allowOwner(
-            @ApiParam(value = "Estate Id", required = true, example = "1")
-            @PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        // user가 confirm 버튼을 클릭
-        EstateResponseDto estateResponseDto = estateService.allowPost(estateId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 

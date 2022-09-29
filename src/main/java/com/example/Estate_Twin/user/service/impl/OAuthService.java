@@ -73,8 +73,8 @@ public class OAuthService {
                 .build();
         return userRepository.save(user);
     }
-
-    private Token getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
+    @Transactional
+    Token getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
         Map<String, Object> userAttributes = getUserAttributes(provider, accessToken);
         String userNameAttributeName = provider.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuth2UserInfo attributes = OAuth2UserInfo.of(providerName.toUpperCase(), userNameAttributeName, userAttributes);
@@ -101,6 +101,7 @@ public class OAuthService {
         CustomUserDetails.create(user,userAttributes);
         String jaccessToken = tokenProvider.createAccessToken(user);
         String jrefreshToken = tokenProvider.createRefreshToken(user);
+        user.setRefreshToken(jrefreshToken);
         return new Token(jaccessToken,jrefreshToken,isMember);
     }
     @Transactional

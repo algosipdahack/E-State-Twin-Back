@@ -25,7 +25,7 @@ public class Estate extends BaseTimeEntity {
     private Long id;
     //리스트에서 보여줄 썸네일
     private String estateThumbNail;
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     //s3에 올려진 model src
@@ -127,18 +127,21 @@ public class Estate extends BaseTimeEntity {
         }
         this.grade = grade;
     }
-    public void setBrokerConfirmY() {
+    public Estate setBrokerConfirmY() {
         this.brokerConfirmYN = true;
+        return this;
     }
-    public void setOwnerConfirmY() {
+    public Estate setOwnerConfirmY() {
         this.ownerConfirmYN = true;
+        return this;
     }
-    public void setIsPosted() {
+    public Estate setIsPosted() {
         if(!this.isBrokerConfirmYN() || !this.isOwnerConfirmYN()) {
             throw new Exception("브로커와 집주인 모두 confirm을 해야 합니다.");
         }
         this.isPosted = true;
         this.state = State.POST_DONE;
+        return this;
     }
     public void setState(State state) {
         this.state = state;

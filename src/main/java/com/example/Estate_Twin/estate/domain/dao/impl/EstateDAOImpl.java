@@ -3,28 +3,22 @@ package com.example.Estate_Twin.estate.domain.dao.impl;
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
-import com.example.Estate_Twin.contractstate.domain.entity.ContractState;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
-import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
-import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
-import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
+import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.user.domain.entity.Broker;
-import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-
+@Transactional
 @Component
 @AllArgsConstructor
 public class EstateDAOImpl implements EstateDAO {
@@ -98,12 +92,6 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public void clearMedia(Long estateId) {
-        Estate estate = findEstate(estateId);
-        estate.getEstateMedia().clear();
-    }
-
-    @Override
     public Estate updateEstate(Long id, String content, String model, TransactionType transactionType,
                                String estateThumbNail, String city, String borough, String town,
                                String thumbNail3D) {
@@ -125,19 +113,17 @@ public class EstateDAOImpl implements EstateDAO {
 
     @Override
     public Estate allowBroker(Estate estate) {
-        estate.setBrokerConfirmY();
-        return estateRepository.save(estate);
+        return estate.setBrokerConfirmY();
     }
 
     @Override
     public Estate allowOwner(Estate estate) {
-        estate.setOwnerConfirmY();
-        return estateRepository.save(estate);
+        return estate.setOwnerConfirmY();
+
     }
 
     @Override
     public Estate enablePost(Estate estate) {
-        estate.setIsPosted();
-        return estateRepository.save(estate);
+        return estate.setIsPosted();
     }
 }

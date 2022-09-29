@@ -39,7 +39,6 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private EstateType estateType;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
     //세입중인 매물
     @OneToOne(fetch = FetchType.LAZY)
@@ -70,6 +69,9 @@ public class User extends BaseTimeEntity {
     public void setTanentEstate(Estate estate) {
         this.tanentEstate = estate;
         estate.setTanent(this);
+    }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
     public void setIsBroker() {
         this.isBroker = true;

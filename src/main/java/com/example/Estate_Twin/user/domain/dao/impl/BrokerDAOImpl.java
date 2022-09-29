@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.domain.dao.impl;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
@@ -40,11 +41,11 @@ public class BrokerDAOImpl implements BrokerDAO {
 
     //broker 회원가입
     @Override
-    public Broker signUp(Broker broker, User user) {
+    public Broker signUp(Broker broker, User user, Address address) {
         //broker로 설정
         user.setIsBroker();
-        userRepository.save(user);
         broker.setUser(user);
+        broker.setAddress(address);
         return brokerRepository.save(broker);
     }
 }

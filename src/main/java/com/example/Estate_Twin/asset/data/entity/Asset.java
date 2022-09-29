@@ -18,9 +18,7 @@ public class Asset extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "asset_id")
     private Long id;
-    @Column(nullable = false)
     private String productName;
-    @Column(nullable = false)
     private String manufacturer;
     //AR Camera에서 각 앵커마다 에셋이 존재하기 때문
     private String anchorId;
@@ -29,7 +27,6 @@ public class Asset extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Option option;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")

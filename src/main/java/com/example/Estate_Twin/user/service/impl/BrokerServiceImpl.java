@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.user.service.impl;
 
+import com.example.Estate_Twin.address.data.dao.AddressDAO;
+import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.*;
@@ -16,6 +18,7 @@ import java.util.List;
 public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAO brokerDAO;
     private final UserDAO userDAO;
+    private final AddressDAO addressDAO;
     @Override
     public BrokerResponseDto getBroker(String userEmail) {
         return new BrokerResponseDto(brokerDAO.findBrokerByEmail(userEmail));
@@ -24,7 +27,8 @@ public class BrokerServiceImpl implements BrokerService {
     @Override
     public BrokerResponseDto signUpBroker(String userEmail, BrokerSignUpDto brokerSignUpDto) {
         User user = userDAO.findUserByEmail(userEmail);
-        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
+        Address address = addressDAO.saveAddress(brokerSignUpDto.getAddress().toEntity());
+        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user, address));
     }
 
     @Override

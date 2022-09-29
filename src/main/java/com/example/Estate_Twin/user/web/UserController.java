@@ -36,9 +36,9 @@ public class UserController {
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
-        UserResponseDto userResponseDto = userService.signUp(user.getEmail(), userSignUpDto);
-        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
+        UserInfoDto userInfoDto = userService.signUp(user.getEmail(), userSignUpDto);
+        return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 
     @Operation(summary = "login of user", description = "로그인")

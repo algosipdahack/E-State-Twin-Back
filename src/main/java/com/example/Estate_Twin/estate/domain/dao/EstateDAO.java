@@ -23,7 +23,6 @@ public interface EstateDAO {
                         String city, String borough, String town, String thumbnail3D);
     List<EstateMainDto> findEstateCustomized(String borough);
     List<EstateListResponseDto> findAllEstateList();
-    void clearMedia(Long estateId);
     Estate allowBroker(Estate estate);
     Estate allowOwner(Estate estate);
     AddressDto findAddress(Long id);

@@ -9,7 +9,6 @@ import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateUpdateRequestDto;
-import com.example.Estate_Twin.media.web.dto.MediaSaveMultipartRequestDto;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
