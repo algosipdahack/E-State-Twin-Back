@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.address.web.dto;
 
+import com.example.Estate_Twin.address.data.entity.Address;
 import lombok.*;
 
 @Getter
@@ -15,4 +16,18 @@ public class AddressUpdateRequestDto {
     private int mainBuildingNumber;
     private int subBuildingNumber;
     private String buildingName;
+    public Address toEntity() {
+        return Address.builder()
+                .buildingName(buildingName)
+                .subBuildingNumber(subBuildingNumber)
+                .unit(unit)
+                .mainBuildingNumber(mainBuildingNumber)
+                .roadName(roadName)
+                .block(block)
+                .complexName(complexName)
+                .town(town)
+                .borough(borough)
+                .city(city)
+                .build();
+    }
 }

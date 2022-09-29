@@ -28,8 +28,7 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public AssetResponseDto updateAsset(Long id, AssetUpdateRequestDto assetUpdateRequestDto) {
-        Asset asset = assetDAO.updateAsset(id, Category.of(assetUpdateRequestDto.getCategory()),
-                Option.of(assetUpdateRequestDto.getOption()),assetUpdateRequestDto.getProductName());
+        Asset asset = assetDAO.updateAsset(id, assetUpdateRequestDto);
         return new AssetResponseDto(asset);
     }
 

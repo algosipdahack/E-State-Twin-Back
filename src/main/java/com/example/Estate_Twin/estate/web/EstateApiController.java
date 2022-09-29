@@ -69,10 +69,10 @@ public class EstateApiController {
     }
     //브로커만
     //TODO
-    @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기(임시저장)")
+    @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기(임시저장) - broker")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail/broker")
-    public ResponseEntity<EstateResponseDto> saveEstate(@ModelAttribute EstateSaveRequestDto estateSaveRequestDto) {
+    public ResponseEntity<EstateResponseDto> saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(estateDto);
     }

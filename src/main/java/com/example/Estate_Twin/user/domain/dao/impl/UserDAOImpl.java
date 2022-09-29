@@ -28,6 +28,12 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User signUp(String email, LocalDate birthday, String phone, EstateType estateType, TransactionType transactionType, String borough) {
         return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email))
-                .update(birthday,phone,transactionType,estateType,borough);
+                .signupBuilder()
+                .birthday(birthday)
+                .phone(phone)
+                .transactionType(transactionType)
+                .estateType(estateType)
+                .borough(borough)
+                .build();
     }
 }

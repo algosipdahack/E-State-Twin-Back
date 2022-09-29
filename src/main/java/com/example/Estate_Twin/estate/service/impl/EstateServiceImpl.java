@@ -22,6 +22,7 @@ import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -53,18 +54,17 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
+    @Transactional
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
         Estate estate = estateDAO.findEstate(estateSaveRequestDto.getId())
-                .builder()
-                .content(estateSaveRequestDto.getContent())
-                .estateThumbNail(estateSaveRequestDto.getEstateThumbNail())
-                .transactionType(TransactionType.of(estateSaveRequestDto.getTransactionType()))
-                .build();
+                .brokerUpdate(estateSaveRequestDto);
+
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssetSaveRequestDtos().forEach(assetSaveRequestDto -> {
             Asset asset = assetDAO.saveAsset(estate,assetSaveRequestDto.toEntity());
             assets.add(asset);
         });
+
         House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
         return new EstateResponseDto(estateDAO.saveEstate(estate,house,assets));
     }
@@ -82,22 +82,12 @@ public class EstateServiceImpl implements EstateService {
 
         //DTO로 만들기
         AddressUpdateRequestDto address = estateUpdateRequestDto.getAddress();
-        addressDAO.updateAddress(addressId, address.getCity(), address.getBorough(),
-                address.getTown(),address.getComplexName(), address.getBlock(),
-                address.getUnit(), address.getRoadName(), address.getMainBuildingNumber(),
-                address.getSubBuildingNumber(), address.getBuildingName());
+        addressDAO.updateAddress(addressId, address);
 
         HouseUpdateRequestDto house = estateUpdateRequestDto.getHouse();
-        houseDAO.updateHouse(houseId,house.getDeposit(),house.getMonthlyRent(),house.getSellingFee(),
-                house.getCurrentFloors(),house.getTotalFloors(),house.isShortTermRent(),house.getMaintenanceFee(),
-                house.getItemsIncludedMaintenanceFee(),house.getNetRentableArea(),house.getRentableArea(),
-                house.isParking(),house.getParkingFee(),house.getMoveInAvailableDate(),house.getSize(),house.getHeatType(),
-                house.getEstateType(),house.getHousehold(),house.getRoomCount(),house.getUsageAvailableDate(),house.getBathCount());
+        houseDAO.updateHouse(houseId,house);
 
-        return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto.getContent(), estateUpdateRequestDto.getModel(),
-                TransactionType.of(estateUpdateRequestDto.getTransactionType()), estateUpdateRequestDto.getEstateThumbNail(),
-                address.getCity(), address.getBorough(), address.getTown(),
-                estateUpdateRequestDto.getThumbNail3D()));
+        return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto));
     }
 
     @Override

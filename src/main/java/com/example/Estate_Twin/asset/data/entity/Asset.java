@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.asset.data.entity;
 
+import com.example.Estate_Twin.asset.web.dto.AssetUpdateRequestDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.util.BaseTimeEntity;
@@ -43,6 +44,17 @@ public class Asset extends BaseTimeEntity {
         this.anchorId = anchorId;
         this.repairDate = repairDate;
         this.assetPhoto = assetPhoto;
+    }
+
+    @Builder(builderMethodName = "updateBuilder") // 빌더 형태로 만들어줌
+    public Asset(AssetUpdateRequestDto dto) {
+        this.category = Category.of(dto.getCategory());
+        this.option = Option.of(dto.getOption());
+        this.productName = dto.getProductName();
+        this.manufacturer = dto.getManufacturer();
+        this.anchorId = dto.getAnchorId();
+        this.repairDate = dto.getRepairDate();
+        this.assetPhoto = dto.getAssetPhoto();
     }
     public void setEstate(Estate estate) {
         if(this.estate != null) {

@@ -24,10 +24,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponseDto updateAddress(Long id, AddressUpdateRequestDto addressUpdateRequestDto) {
-        Address address = addressDAO.updateAddress(id, addressUpdateRequestDto.getCity(), addressUpdateRequestDto.getBorough(),
-                addressUpdateRequestDto.getTown(), addressUpdateRequestDto.getComplexName(), addressUpdateRequestDto.getBlock(),
-                addressUpdateRequestDto.getUnit(), addressUpdateRequestDto.getRoadName(), addressUpdateRequestDto.getMainBuildingNumber(),
-                addressUpdateRequestDto.getSubBuildingNumber(), addressUpdateRequestDto.getBuildingName());
+        Address address = addressDAO.updateAddress(id,addressUpdateRequestDto);
         return new AddressResponseDto(address);
     }
 }

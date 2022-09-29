@@ -8,6 +8,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.EstateHitDto;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
+import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
@@ -18,9 +19,7 @@ import java.util.List;
 public interface EstateDAO {
     Estate saveEstate(Estate estate, House house, List<Asset> assets);
     Estate findEstate(Long id);
-    Estate updateEstate(Long id, String content, String model,
-                        TransactionType transactionType, String estateThumbNail,
-                        String city, String borough, String town, String thumbnail3D);
+    Estate updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     List<EstateMainDto> findEstateCustomized(String borough);
     List<EstateListResponseDto> findAllEstateList();
     Estate allowBroker(Estate estate);

@@ -1,14 +1,14 @@
 package com.example.Estate_Twin.house.domain.dao.impl;
 
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
+import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
+@Transactional
 @Component
 @AllArgsConstructor
 public class HouseDAOImpl implements HouseDAO {
@@ -25,34 +25,29 @@ public class HouseDAOImpl implements HouseDAO {
     }
 
     @Override
-    public House updateHouse(Long id, Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors, Long totalFloors,
-                             boolean shortTermRent, Long maintenanceFee, String itemsIncludedMaintenanceFee, Long netRentableArea,
-                             Long rentableArea, boolean parking, Long parkingFee, LocalDateTime moveInAvailableDate, Long size,
-                             String heatType, EstateType estateType, Long household, Long roomCount, LocalDateTime usageAvailableDate,
-                             Long bathCount) {
-        House newHouse = houseRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 집이 없습니다 id = "+id))
+    public House updateHouse(Long id, HouseUpdateRequestDto dto) {
+        return houseRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 집이 없습니다 id = "+id))
                 .builder()
-                .deposit(deposit)
-                .monthlyRent(monthlyRent)
-                .sellingFee(sellingFee)
-                .currentFloors(currentFloors)
-                .totalFloors(totalFloors)
-                .shortTermRent(shortTermRent)
-                .maintenanceFee(maintenanceFee)
-                .itemsIncludedMaintenanceFee(itemsIncludedMaintenanceFee)
-                .netRentableArea(netRentableArea)
-                .rentableArea(rentableArea)
-                .parking(parking)
-                .parkingFee(parkingFee)
-                .moveInAvailableDate(moveInAvailableDate)
-                .size(size)
-                .heatType(heatType)
-                .estateType(estateType)
-                .household(household)
-                .roomCount(roomCount)
-                .usageAvailableDate(usageAvailableDate)
-                .bathCount(bathCount)
+                .deposit(dto.getDeposit())
+                .monthlyRent(dto.getMonthlyRent())
+                .sellingFee(dto.getSellingFee())
+                .currentFloors(dto.getCurrentFloors())
+                .totalFloors(dto.getTotalFloors())
+                .shortTermRent(dto.isShortTermRent())
+                .maintenanceFee(dto.getMaintenanceFee())
+                .itemsIncludedMaintenanceFee(dto.getItemsIncludedMaintenanceFee())
+                .netRentableArea(dto.getNetRentableArea())
+                .rentableArea(dto.getRentableArea())
+                .parking(dto.isParking())
+                .parkingFee(dto.getParkingFee())
+                .moveInAvailableDate(dto.getMoveInAvailableDate())
+                .size(dto.getSize())
+                .heatType(dto.getHeatType())
+                .estateType(dto.getEstateType())
+                .household(dto.getHousehold())
+                .roomCount(dto.getRoomCount())
+                .usageAvailableDate(dto.getUsageAvailableDate())
+                .bathCount(dto.getBathCount())
                 .build();
-        return houseRepository.save(newHouse);
     }
 }

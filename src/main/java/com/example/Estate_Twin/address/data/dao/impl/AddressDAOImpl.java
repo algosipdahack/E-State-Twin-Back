@@ -3,6 +3,7 @@ package com.example.Estate_Twin.address.data.dao.impl;
 import com.example.Estate_Twin.address.data.dao.AddressDAO;
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.address.data.repository.AddressRepository;
+import com.example.Estate_Twin.address.web.dto.AddressUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,21 +13,18 @@ public class AddressDAOImpl implements AddressDAO {
     private AddressRepository addressRepository;
 
     @Override
-    public Address updateAddress(Long id, String city, String borough, String town,
-                               String complexName, String block, String unit,
-                               String roadName, int mainBuildingNumber, int subBuildingNumber,
-                               String buildingName) {
+    public Address updateAddress(Long id, AddressUpdateRequestDto dto) {
         Address address = findAddress(id).builder()
-                .city(city)
-                .borough(borough)
-                .town(town)
-                .complexName(complexName)
-                .block(block)
-                .unit(unit)
-                .roadName(roadName)
-                .mainBuildingNumber(mainBuildingNumber)
-                .subBuildingNumber(subBuildingNumber)
-                .buildingName(buildingName)
+                .city(dto.getCity())
+                .borough(dto.getBorough())
+                .town(dto.getTown())
+                .complexName(dto.getComplexName())
+                .block(dto.getBlock())
+                .unit(dto.getUnit())
+                .roadName(dto.getRoadName())
+                .mainBuildingNumber(dto.getMainBuildingNumber())
+                .subBuildingNumber(dto.getSubBuildingNumber())
+                .buildingName(dto.getBuildingName())
                 .build();
         return addressRepository.save(address);
     }

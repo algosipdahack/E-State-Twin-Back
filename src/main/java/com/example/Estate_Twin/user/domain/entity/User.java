@@ -66,6 +66,15 @@ public class User extends BaseTimeEntity {
         this.authProvider = authProvider;
         this.refreshToken = refreshToken;
     }
+
+    @Builder(builderMethodName = "signupBuilder")
+    public User(LocalDate birthday, String phone, TransactionType transactionType, EstateType estateType, String borough) {
+        this.birthday = birthday;
+        this.phone = phone;
+        this.transactionType = transactionType;
+        this.estateType = estateType;
+        this.borough = borough;
+    }
     public void setTanentEstate(Estate estate) {
         this.tanentEstate = estate;
         estate.setTanent(this);
@@ -77,14 +86,6 @@ public class User extends BaseTimeEntity {
         this.isBroker = true;
     }
     public void setIsArCam() { this.isArCam = true; }
-    public User update(LocalDate birthday, String phone, TransactionType transactionType, EstateType estateType, String borough) {
-        this.birthday = birthday;
-        this.phone = phone;
-        this.transactionType = transactionType;
-        this.estateType = estateType;
-        this.borough = borough;
-        return this;
-    }
     @PrePersist
     public void prePersist() {
         this.isBroker = false;

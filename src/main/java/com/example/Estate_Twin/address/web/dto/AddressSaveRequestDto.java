@@ -20,8 +20,7 @@ public class AddressSaveRequestDto {
     @Builder
     public AddressSaveRequestDto(String city, String borough, String town, String complexName, String block,
                                  String unit, String roadName, int mainBuildingNumber, int subBuildingNumber,
-                                 String buildingName)
-    {
+                                 String buildingName) {
         this.city = city;
         this.borough = borough;
         this.town = town;
@@ -47,6 +46,5 @@ public class AddressSaveRequestDto {
                 .borough(borough)
                 .city(city)
                 .build();
-
     }
 }
