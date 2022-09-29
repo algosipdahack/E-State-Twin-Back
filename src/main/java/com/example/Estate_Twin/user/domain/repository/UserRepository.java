@@ -11,8 +11,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 
-    @Query("SELECT u.refreshToken FROM User u WHERE u.name=:name")
-    String getRefreshTokenByName(@Param("name")Long name);
+    @Query("SELECT u.refreshToken FROM User u WHERE u.email=:email")
+    String getRefreshTokenByEmail(@Param("email")String email);
 
     @Transactional //update, save에는 필요 -> db를 건드려야 하므로
     @Modifying

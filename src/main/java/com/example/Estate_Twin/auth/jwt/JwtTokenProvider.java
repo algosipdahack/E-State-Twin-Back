@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     @Value("${app.auth.token.secret-key}")
     private String SECRET_KEY;
-    private Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L*60*60;
-    private Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L*60*60*24*7;
+    private Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L*60*60000;
+    private Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L*60*60*24*7000;
     private final CustomUserDetailService userDetailsService;
     @PostConstruct
     protected void init() {

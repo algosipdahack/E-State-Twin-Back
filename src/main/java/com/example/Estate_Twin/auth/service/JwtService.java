@@ -26,10 +26,10 @@ public class JwtService {
         Authentication authentication = tokenProvider.getAuthentication(oldAccessToken);
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 
-        Long name = Long.valueOf(user.getName());
+        String email = user.getUsername();
 
         // Match Refresh Token
-        String savedToken = userRepository.getRefreshTokenByName(name);
+        String savedToken = userRepository.getRefreshTokenByEmail(email);
         User r_user = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = "+user.getEmail()));
         if(!savedToken.equals(oldRefreshToken)) {

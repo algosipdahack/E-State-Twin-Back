@@ -53,7 +53,7 @@ public class BrokerController {
         return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
     }
 
-
+/*
     @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerEstateDto.class)))})
     @GetMapping("/estate")
@@ -65,5 +65,5 @@ public class BrokerController {
         return ResponseEntity.status(HttpStatus.OK).body(brokerEstateDtos);
     }
 
-
+*/
 }

@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface BrokerRepositoryCustom {
     List<BrokerListDto> getBrokerList();
-    List<BrokerEstateDto> getBrokerEstate(State state, Long brokerId);
 
 }

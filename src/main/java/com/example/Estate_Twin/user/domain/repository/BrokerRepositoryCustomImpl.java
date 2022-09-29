@@ -46,19 +46,4 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
         List<BrokerListDto> result = queryResults.getResults();
         return result;
     }
-    @Override
-    public List<BrokerEstateDto> getBrokerEstate(State state, Long brokerId) {
-        QueryResults<BrokerEstateDto> queryResults = jpaQueryFactory
-                .select(new QBrokerEstateDto(
-                        estate.id,
-                        user.name,
-                        user.phone))
-                .from(broker)
-                .leftJoin(broker.user, user)
-                .leftJoin(broker.tradeEstates, estate)
-                .where(estate.state.eq(state))
-                .where(broker.id.eq(brokerId))
-                .fetchResults();
-        return queryResults.getResults();
-    }
 }

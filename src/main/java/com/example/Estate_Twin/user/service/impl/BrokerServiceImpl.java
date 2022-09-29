@@ -3,14 +3,17 @@ package com.example.Estate_Twin.user.service.impl;
 import com.example.Estate_Twin.address.data.dao.AddressDAO;
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.*;
+import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.BrokerService;
 import com.example.Estate_Twin.user.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,10 +38,10 @@ public class BrokerServiceImpl implements BrokerService {
     public List<BrokerListDto> getBrokerList() {
         return brokerDAO.getBrokerList();
     }
-
+/*
     @Override
     public List<BrokerEstateDto> getbrokerEstate(Long brokerId, State state) {
         return brokerDAO.getBrokerEstate(brokerId, state);
-    }
+    }*/
 
 }

@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.domain.dao.impl;
 
 import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
@@ -33,10 +34,10 @@ public class BrokerDAOImpl implements BrokerDAO {
         return brokerRepository.getBrokerList();
     }
 
-    @Override
+    /*@Override
     public List<BrokerEstateDto> getBrokerEstate(Long brokerId, State state) {
-        return brokerRepository.getBrokerEstate(state, brokerId);
-    }
+        return brokerRepository.findAllWithEstateByState(brokerId,state);
+    }*/
 
 
     //broker 회원가입
