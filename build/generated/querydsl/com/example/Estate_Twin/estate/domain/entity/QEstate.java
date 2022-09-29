@@ -36,6 +36,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final BooleanPath brokerConfirmYN = createBoolean("brokerConfirmYN");
 
+    public final StringPath buildingName = createString("buildingName");
+
     public final StringPath city = createString("city");
 
     public final StringPath content = createString("content");
