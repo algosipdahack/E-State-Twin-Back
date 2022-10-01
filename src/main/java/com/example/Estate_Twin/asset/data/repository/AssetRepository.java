@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.asset.data.repository;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,4 +16,7 @@ public interface AssetRepository extends JpaRepository<Asset,Long> , AssetReposi
 
     @Query("select a from Asset a join fetch a.checkLists where a.id = :id")
     Optional<Asset> findByIdUsingFetchJoin(Long id);
+
+    @Query("select a.checkLists from Asset a join fetch a.checkLists where a.id = :id")
+    List<CheckList> findCheckListByIdUsingFetchJoin(Long id);
 }

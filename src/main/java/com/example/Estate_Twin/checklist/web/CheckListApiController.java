@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.web;
 
 import com.example.Estate_Twin.checklist.service.CheckListService;
+import com.example.Estate_Twin.checklist.service.impl.CheckListServiceImpl;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/checklist")
 public class CheckListApiController {
-    private final CheckListService checkListService;
+    private final CheckListServiceImpl checkListService;
 
     @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})

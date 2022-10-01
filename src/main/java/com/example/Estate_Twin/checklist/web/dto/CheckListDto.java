@@ -7,11 +7,14 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 @Getter
 public class CheckListDto {
-    private final String checkListPhoto;
     private final String flawPart;
     private final String checkListContent;
+    private final String checkListPhoto;
     private final LocalDateTime repairDate;
     private final RepairType repairType;
+    private final Boolean brokerConfirmYN;
+    private final Boolean tanentConfirmYN;
+    private final Boolean ownerConfirmYN;
 
     @QueryProjection
     public CheckListDto(CheckList checkList) {
@@ -20,5 +23,8 @@ public class CheckListDto {
         this.checkListContent = checkList.getCheckListContent();
         this.repairDate = checkList.getRepairDate();
         this.repairType = checkList.getRepairType();
+        this.tanentConfirmYN = checkList.getTanentConfirmYN();
+        this.brokerConfirmYN = checkList.getBrokerConfirmYN();
+        this.ownerConfirmYN = checkList.getOwnerConfirmYN();
     }
 }

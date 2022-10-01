@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.data.entity;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
@@ -43,6 +44,18 @@ public class CheckList extends BaseTimeEntity {
         this.repairType = repairType;
         this.tanentConfirmYN = tanentConfirmYN;
         this.checkListPhoto = checkListPhoto;
+    }
+
+    public CheckList update(CheckListUpdateRequestDto dto) {
+        this.flawPart = dto.getFlawPart();
+        this.brokerConfirmYN = dto.getBrokerConfirmYN();
+        this.repairDate = dto.getRepairDate();
+        this.ownerConfirmYN = dto.getOwnerConfirmYN();
+        this.checkListContent = dto.getCheckListContent();
+        this.repairType = RepairType.of(dto.getRepairType());
+        this.tanentConfirmYN = dto.getTanentConfirmYN();
+        this.checkListPhoto = dto.getCheckListPhoto();
+        return this;
     }
 
     public void setAsset(Asset asset) {

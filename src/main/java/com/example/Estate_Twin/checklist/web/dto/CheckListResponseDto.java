@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
-import com.example.Estate_Twin.asset.web.dto.AssetDto;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,12 +20,10 @@ public class CheckListResponseDto {
     private final Boolean tanentConfirmYN;
     private final LocalDateTime repairDate;
     private final LocalDateTime createdAt;
-    private AssetDto asset;
 
     @QueryProjection
     public CheckListResponseDto(CheckList checkList) {
         this.id = checkList.getId();
-        this.asset = null;
         this.checkListPhoto = this.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();
         this.checkListContent = checkList.getCheckListContent();
@@ -36,9 +33,6 @@ public class CheckListResponseDto {
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
         this.tanentConfirmYN = checkList.getTanentConfirmYN();
         this.createdAt = checkList.getCreatedDate();
-    }
-    public void setAsset(AssetDto asset) {
-        this.asset = asset;
     }
 
 }

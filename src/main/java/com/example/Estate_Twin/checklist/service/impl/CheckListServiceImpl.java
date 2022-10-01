@@ -1,29 +1,24 @@
 package com.example.Estate_Twin.checklist.service.impl;
 
-import com.example.Estate_Twin.asset.data.dao.AssetDAO;
-import com.example.Estate_Twin.asset.web.dto.AssetDto;
-import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.entity.RepairType;
+import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
+import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class CheckListServiceImpl implements CheckListService {
-    private final CheckListDAO checkListDAO;
-    private final AssetDAO assetDAO;
+    private final CheckListDAOImpl checkListDAO;
+    private final AssetDAOImpl assetDAO;
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
-        CheckList checkList = checkListDAO.findCheckList(id);
-        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
-        checkListResponseDto.setAsset(new AssetDto(checkList.getAsset()));
-        return checkListResponseDto;
+        return new CheckListResponseDto(checkListDAO.findCheckList(id));
     }
 
     @Override
@@ -32,15 +27,14 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto) {
-        CheckList checkList = checkListDAO.updateCheckList(id,checkListUpdateRequestDto.getFlawPart(),checkListUpdateRequestDto.getBrokerConfirmYN(),
-                checkListUpdateRequestDto.getOwnerConfirmYN(),checkListUpdateRequestDto.getCheckListContent(),
-                checkListUpdateRequestDto.getRepairDate(), RepairType.of(checkListUpdateRequestDto.getRepairType()));
-        return new CheckListResponseDto(checkList);
+    public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto dto) {
+        return new CheckListResponseDto(checkListDAO.updateCheckList(id, dto));
     }
 
     @Override
     public List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId) {
-        return checkListDAO.findAllCheckList(assetId);
+        List<CheckListResponseDto> dtos = new ArrayList<>();
+        checkListDAO.findAllCheckList(assetId).forEach(checkList -> new CheckListResponseDto(checkList));
+        return dtos;
     }
 }
