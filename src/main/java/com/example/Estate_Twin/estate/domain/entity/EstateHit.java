@@ -14,19 +14,15 @@ public class EstateHit extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estatehit_id")
     private Long id;
-
     @OneToOne(mappedBy = "estateHit")
     private Estate estate;
-
     @Column
     private Long totalHit;
-
     @Column
     private Long weeklyHit;
 
     @Builder // 빌더 형태로 만들어줌
-    public EstateHit(Long totalHit, Long weeklyHit
-    ) {//생성자
+    public EstateHit(Long totalHit, Long weeklyHit) {//생성자
         this.totalHit = totalHit;
         this.weeklyHit = weeklyHit;
     }
@@ -37,7 +33,6 @@ public class EstateHit extends BaseTimeEntity {
         this.weeklyHit += 1;
         this.totalHit += 1;
     }
-
     @PrePersist
     public void prePersist() {
         this.weeklyHit = this.weeklyHit == null ? 0 : this.weeklyHit;

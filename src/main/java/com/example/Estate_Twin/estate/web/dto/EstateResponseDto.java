@@ -1,9 +1,10 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.address.web.dto.AddressDto;
+import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.house.web.dto.HouseDto;
+import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
@@ -24,10 +25,10 @@ public class EstateResponseDto {
     private boolean ownerConfirmYN;
     private boolean brokerConfirmYN;
     private final List<String> estatePhotos;
-    private List<AssetResponseDto> assets;
-    private AddressDto address;
-    private HouseDto house;
+    private Address address;
+    private HouseResponseDto house;
     private EstateHitDto estatehit;
+    private List<AssetResponseDto> assets;
 
     @QueryProjection
     public EstateResponseDto(Estate estate) {
@@ -41,21 +42,15 @@ public class EstateResponseDto {
         this.isPosted = estate.isPosted();
         this.ownerConfirmYN = estate.isOwnerConfirmYN();
         this.brokerConfirmYN = estate.isBrokerConfirmYN();
-
-        this.address = null;
-        this.estatehit = null;
-        this.house = null;
+        this.address = estate.getAddress();
+        this.house = new HouseResponseDto(estate.getHouse());
+        this.estatehit = new EstateHitDto(estate.getEstateHit());
 
         this.estatePhotos = new ArrayList<>();
         estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(eMedia));
 
-        this.assets = null;
-    }
-    public void setNull(EstateHitDto estatehit, List<AssetResponseDto> assets, AddressDto address, HouseDto house) {
-        this.estatehit = estatehit;
+
         this.assets = new ArrayList<>();
-        assets.forEach(asset -> this.assets.add(asset));
-        this.address = address;
-        this.house = house;
+        estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
     }
 }

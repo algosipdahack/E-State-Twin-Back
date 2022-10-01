@@ -2,6 +2,7 @@ package com.example.Estate_Twin.house.domain.entity;
 
 
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
@@ -70,6 +71,30 @@ public class House extends BaseTimeEntity {
         this.household = household;
         this.parkingFee = parkingFee;
         this.sellingFee = sellingFee;
+    }
+
+    public House update(HouseUpdateRequestDto dto) {
+        this.deposit = dto.getDeposit();
+        this.monthlyRent = dto.getMonthlyRent();
+        this.sellingFee = dto.getSellingFee();
+        this.currentFloors = dto.getCurrentFloors();
+        this.totalFloors = dto.getTotalFloors();
+        this.shortTermRent = dto.isShortTermRent();
+        this.maintenanceFee = dto.getMaintenanceFee();
+        this.itemsIncludedMaintenanceFee = dto.getItemsIncludedMaintenanceFee();
+        this.netRentableArea = dto.getNetRentableArea();
+        this.rentableArea = dto.getRentableArea();
+        this.parking = dto.isParking();
+        this.parkingFee = dto.getParkingFee();
+        this.moveInAvailableDate = dto.getMoveInAvailableDate();
+        this.size = dto.getSize();
+        this.heatType = dto.getHeatType();
+        this.estateType = dto.getEstateType();
+        this.household = dto.getHousehold();
+        this.usageAvailableDate = dto.getUsageAvailableDate();
+        this.roomCount = dto.getRoomCount();
+        this.bathCount = dto.getBathCount();
+        return this;
     }
     public void setId(Long id) { this.id = id; }
     public void setEstate(Estate estate) {

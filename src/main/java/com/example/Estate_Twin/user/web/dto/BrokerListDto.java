@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.user.web.dto;
 
-import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;

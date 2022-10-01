@@ -1,8 +1,6 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
-import com.example.Estate_Twin.address.data.entity.Address;
-import com.example.Estate_Twin.address.web.dto.AddressDto;
-import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
@@ -10,8 +8,8 @@ import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.web.dto.HouseDto;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,54 +23,51 @@ public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
     private ContractStateRepository contractStateRepository;
+
+    @Override
+    @Transactional
+    public Estate getEstate(Long id) {
+        return findEstate(id).updateEstateHit();
+    }
     @Override
     public Estate saveFirst(Broker broker, User owner, Address address) {
-        Estate estate = new Estate();
-        estate.setBroker(broker);
-        estate.setOwner(owner);
-        estate.setAddress(address);
-        return estateRepository.save(estate);
+        return estateRepository.save(new Estate(broker, owner, address));
     }
 
     @Override
-    public Estate saveEstate(Estate estate, House house, List<Asset> assets) {
-        estate.setHouse(house);
-
+    @Transactional
+    public Estate saveEstate(Estate estate) {
         // 매물 등록중인 상태
         estate.setState(State.POST_DOING);
 
+        //조회수 등록
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
         estate.setEstateHit(estateHit);
 
+        // 새로운 상태 등록
         ContractState contractState = new ContractState().builder()
                 .estate(estate)
                 .state(State.POST_DOING)
                 .build();
         contractStateRepository.save(contractState);
 
-        return estateRepository.save(estate);
-    }
-
-    @Override
-    public Estate findEstate(Long id) {
-        Estate estate = estateRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
         return estate;
     }
-
     @Override
-    public AddressDto findAddress(Long id) {
-        return estateRepository.findAddress(id);
+    public Estate findEstate(Long id) {
+        return estateRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
     }
 
+
     @Override
-    public HouseDto findHouse(Long id) {
+    public House findHouse(Long id) {
         return estateRepository.findHouse(id);
     }
 
     @Override
-    public EstateHitDto findEstateHit(Long id) {
+    public EstateHit findEstateHit(Long id) {
         return estateRepository.findEstateHit(id);
     }
 
@@ -92,6 +87,7 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
+    @Transactional
     public Estate updateEstate(Long id, EstateUpdateRequestDto dto) {
         return estateRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id))
@@ -99,18 +95,40 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public Estate allowBroker(Estate estate) {
-        return estate.setBrokerConfirmY();
+    @Transactional
+    public Estate allowBroker(Estate estate, Broker broker) {
+        if (checkRoleBroker(estate, broker) == null) {
+            throw new Exception("해당 매물의 broker가 아닙니다!");
+        }
+        estate.setBrokerConfirmY();
+        return checkEnroll(estate);
     }
 
     @Override
-    public Estate allowOwner(Estate estate) {
-        return estate.setOwnerConfirmY();
-
+    @Transactional
+    public Estate allowOwner(Estate estate, User owner) {
+        if (checkRoleOwner(estate, owner) == null) {
+            throw new Exception("해당 매물의 owner가 아닙니다!");
+        }
+        estate.setOwnerConfirmY();
+        return checkEnroll(estate);
     }
-
-    @Override
-    public Estate enablePost(Estate estate) {
-        return estate.setIsPosted();
+    // 해당 매물의 브로커인지 확인
+    public Estate checkRoleBroker(Estate estate, Broker broker) {
+        return broker.getTradeEstates().stream().filter(trade -> trade.equals(estate))
+                .findAny().orElse(null);
+    }
+    //해당 매물의 소유주인지 확인
+    public Estate checkRoleOwner(Estate estate, User owner) {
+        return owner.getOwnEstates().stream().filter(own -> own.equals(estate))
+                .findAny().orElse(null);
+    }
+    // 해당 매물이 올릴 수 있는 상태인지 확인
+    @Transactional
+    public Estate checkEnroll(Estate estate) {
+        if (estate.isOwnerConfirmYN() && estate.isBrokerConfirmYN()) {
+            estate.setIsPosted();
+        }
+        return estate;
     }
 }

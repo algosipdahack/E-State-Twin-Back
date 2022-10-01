@@ -29,6 +29,7 @@ public class HouseSaveRequestDto {
     private LocalDateTime usageAvailableDate;
     private Long roomCount;
     private Long bathCount;
+
     public House toEntity() {
         return House.builder()
                 .bathCount(bathCount)

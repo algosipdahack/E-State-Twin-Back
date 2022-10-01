@@ -25,29 +25,8 @@ public class HouseDAOImpl implements HouseDAO {
     }
 
     @Override
-    public House updateHouse(Long id, HouseUpdateRequestDto dto) {
-        return houseRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 집이 없습니다 id = "+id))
-                .builder()
-                .deposit(dto.getDeposit())
-                .monthlyRent(dto.getMonthlyRent())
-                .sellingFee(dto.getSellingFee())
-                .currentFloors(dto.getCurrentFloors())
-                .totalFloors(dto.getTotalFloors())
-                .shortTermRent(dto.isShortTermRent())
-                .maintenanceFee(dto.getMaintenanceFee())
-                .itemsIncludedMaintenanceFee(dto.getItemsIncludedMaintenanceFee())
-                .netRentableArea(dto.getNetRentableArea())
-                .rentableArea(dto.getRentableArea())
-                .parking(dto.isParking())
-                .parkingFee(dto.getParkingFee())
-                .moveInAvailableDate(dto.getMoveInAvailableDate())
-                .size(dto.getSize())
-                .heatType(dto.getHeatType())
-                .estateType(dto.getEstateType())
-                .household(dto.getHousehold())
-                .roomCount(dto.getRoomCount())
-                .usageAvailableDate(dto.getUsageAvailableDate())
-                .bathCount(dto.getBathCount())
-                .build();
+    @Transactional
+    public House updateHouse(House house, HouseUpdateRequestDto dto) {
+        return house.update(dto);
     }
 }

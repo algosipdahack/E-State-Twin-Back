@@ -22,7 +22,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public static final QBroker broker = new QBroker("broker");
 
-    public final com.example.Estate_Twin.address.data.entity.QAddress address;
+    public final com.example.Estate_Twin.address.QAddress address;
 
     public final StringPath agentName = createString("agentName");
 
@@ -66,7 +66,7 @@ public class QBroker extends EntityPathBase<Broker> {
 
     public QBroker(Class<? extends Broker> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address")) : null;
+        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.QAddress(forProperty("address")) : null;
         this.user = inits.isInitialized("user") ? new QUser(forProperty("user"), inits.get("user")) : null;
     }
 

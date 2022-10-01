@@ -1,4 +1,4 @@
-package com.example.Estate_Twin.address.data.entity;
+package com.example.Estate_Twin.address;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -12,10 +12,10 @@ import com.querydsl.core.types.Path;
 /**
  * QAddress is a Querydsl query type for Address
  */
-@Generated("com.querydsl.codegen.EntitySerializer")
-public class QAddress extends EntityPathBase<Address> {
+@Generated("com.querydsl.codegen.EmbeddableSerializer")
+public class QAddress extends BeanPath<Address> {
 
-    private static final long serialVersionUID = 1997887535L;
+    private static final long serialVersionUID = 1225702262L;
 
     public static final QAddress address = new QAddress("address");
 
@@ -28,8 +28,6 @@ public class QAddress extends EntityPathBase<Address> {
     public final StringPath city = createString("city");
 
     public final StringPath complexName = createString("complexName");
-
-    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> mainBuildingNumber = createNumber("mainBuildingNumber", Integer.class);
 

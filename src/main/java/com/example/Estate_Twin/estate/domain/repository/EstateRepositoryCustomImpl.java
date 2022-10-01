@@ -1,20 +1,14 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
-import com.example.Estate_Twin.address.data.entity.QAddress;
-import com.example.Estate_Twin.address.web.dto.AddressDto;
-import com.example.Estate_Twin.address.web.dto.QAddressDto;
+import com.example.Estate_Twin.address.QAddress;
 import com.example.Estate_Twin.asset.data.entity.QAsset;
-import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
-import com.example.Estate_Twin.asset.web.dto.QAssetResponseDto;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.entity.QHouse;
-import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.house.web.dto.QHouseDto;
-import com.example.Estate_Twin.user.domain.entity.QBroker;
-import com.example.Estate_Twin.user.domain.entity.QUser;
-import com.example.Estate_Twin.user.web.dto.QBrokerListDto;
+import com.example.Estate_Twin.house.web.dto.*;
+import com.example.Estate_Twin.user.domain.entity.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -50,16 +44,16 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .select(new QEstateMainDto(
                         estate.id,
                         estate.estateThumbNail,
-                        estate.town,
+                        estate.address.town,
                         estate.thumbnail3D,
                         estate.transactionType,
-                        estate.house.sellingFee,
-                        estate.house.estateType
+                        house.sellingFee,
+                        house.estateType
                 ))
                 .from(estate)
                 .leftJoin(estate.house, house)
                 .leftJoin(estate.estateHit, estateHit)
-                .where(estate.borough.eq(borough))
+                .where(estate.address.borough.eq(borough))
                 .orderBy(estate.estateHit.weeklyHit.desc())
                 .fetchResults();
         List<EstateMainDto> result = queryResults.getResults();
@@ -73,16 +67,16 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.id,
                         estate.transactionType,
                         estate.estateThumbNail,
-                        estate.town,
+                        estate.address.town,
                         house.estateType,
-                        address.buildingName,
+                        estate.address.buildingName,
                         estate.house.currentFloors,
                         estate.house.rentableArea,
-                        estate.state.stringValue()
+                        estate.state.stringValue(),
+                        house.sellingFee
                 ))
                 .from(estate)
                 .leftJoin(estate.house, house)
-                .leftJoin(estate.address, address)
                 .orderBy(estate.id.desc())
                 .fetchResults();
         List<EstateListResponseDto> result = queryResults.getResults();
@@ -102,17 +96,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public AddressDto findAddress(Long estateId) {
-        return jpaQueryFactory.select(new QAddressDto(address))
-                .from(estate)
-                .leftJoin(estate.address, address)
-                .where(estate.id.eq(estateId))
-                .fetchOne();
-    }
-
-    @Override
-    public EstateHitDto findEstateHit(Long estateId) {
-        return jpaQueryFactory.select(new QEstateHitDto(estateHit))
+    public EstateHit findEstateHit(Long estateId) {
+        return jpaQueryFactory.select(estateHit)
                 .from(estate)
                 .leftJoin(estate.estateHit, estateHit)
                 .where(estate.id.eq(estateId))
@@ -120,8 +105,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public HouseDto findHouse(Long estateId) {
-        return jpaQueryFactory.select(new QHouseDto(house))
+    public House findHouse(Long estateId) {
+        return jpaQueryFactory.select(new QHouse(house))
                 .from(estate)
                 .leftJoin(estate.house, house)
                 .where(estate.id.eq(estateId))

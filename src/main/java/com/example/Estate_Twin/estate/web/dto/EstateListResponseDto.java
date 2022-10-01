@@ -13,6 +13,7 @@ public class EstateListResponseDto {
     private final String buildingName;
     private final Long currentFloors;
     private final Long rentableArea;
+    private final Long sellingFee;
     private final String state;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
     private final String transactionType;
@@ -20,8 +21,8 @@ public class EstateListResponseDto {
     private final String estateType;
 
     @QueryProjection
-    public EstateListResponseDto(Long id,TransactionType transactionType,String estateThumbNail,String town,EstateType estateType,
-                                 String buildingName,Long currentFloors,Long rentableArea,String state) {
+    public EstateListResponseDto(Long id, TransactionType transactionType, String estateThumbNail, String town, EstateType estateType,
+                                 String buildingName, Long currentFloors, Long rentableArea, String state, Long sellingFee) {
         this.id = id;
         this.transactionType = transactionType.toString();
         this.estateThumbNail = estateThumbNail;
@@ -31,5 +32,6 @@ public class EstateListResponseDto {
         this.buildingName = buildingName;
         this.currentFloors = currentFloors;
         this.rentableArea = rentableArea;
+        this.sellingFee = sellingFee;
     }
 }

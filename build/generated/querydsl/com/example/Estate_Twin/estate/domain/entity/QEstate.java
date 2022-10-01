@@ -24,21 +24,15 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final com.example.Estate_Twin.util.QBaseTimeEntity _super = new com.example.Estate_Twin.util.QBaseTimeEntity(this);
 
-    public final com.example.Estate_Twin.address.data.entity.QAddress address;
+    public final com.example.Estate_Twin.address.QAddress address;
 
     public final StringPath arCam = createString("arCam");
 
     public final SetPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createSet("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
 
-    public final StringPath borough = createString("borough");
-
     public final com.example.Estate_Twin.user.domain.entity.QBroker broker;
 
     public final BooleanPath brokerConfirmYN = createBoolean("brokerConfirmYN");
-
-    public final StringPath buildingName = createString("buildingName");
-
-    public final StringPath city = createString("city");
 
     public final StringPath content = createString("content");
 
@@ -76,8 +70,6 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final StringPath thumbnail3D = createString("thumbnail3D");
 
-    public final StringPath town = createString("town");
-
     public final EnumPath<TransactionType> transactionType = createEnum("transactionType", TransactionType.class);
 
     public QEstate(String variable) {
@@ -98,7 +90,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public QEstate(Class<? extends Estate> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.data.entity.QAddress(forProperty("address")) : null;
+        this.address = inits.isInitialized("address") ? new com.example.Estate_Twin.address.QAddress(forProperty("address")) : null;
         this.broker = inits.isInitialized("broker") ? new com.example.Estate_Twin.user.domain.entity.QBroker(forProperty("broker"), inits.get("broker")) : null;
         this.estateHit = inits.isInitialized("estateHit") ? new QEstateHit(forProperty("estateHit"), inits.get("estateHit")) : null;
         this.house = inits.isInitialized("house") ? new com.example.Estate_Twin.house.domain.entity.QHouse(forProperty("house"), inits.get("house")) : null;

@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
-import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
@@ -29,21 +29,17 @@ public class Estate extends BaseTimeEntity {
     private String estateThumbNail;
     @Column(columnDefinition = "TEXT")
     private String content;
-
     //s3에 올려진 model src
     private String model;
-    private String city;
-    private String borough;
-    private String town;
-    private String buildingName;
     //s3에 올려진 3D 모델의 썸네일 -> 자동으로 업로드 되게끔(lambda -> s3)
     private String thumbnail3D;
     //매물 영상 동영상
-    //TODO 업로드 해야함
     private String arCam;
     private boolean isPosted;
     private boolean ownerConfirmYN;
     private boolean brokerConfirmYN;
+    @Embedded
+    private Address address;
     @ElementCollection
     private List<String> estateMedia;
     @Enumerated(value = EnumType.STRING)
@@ -52,13 +48,10 @@ public class Estate extends BaseTimeEntity {
     private State state;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "estatehit_id")
     private EstateHit estateHit;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "house_id")
     private House house;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -76,23 +69,13 @@ public class Estate extends BaseTimeEntity {
     private Set<DipEstate> dipEstates = new HashSet<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Estate(String content, String model, String town, String arCam,
-                  TransactionType transactionType, String estateThumbNail, String buildingName,
-                  String city, String borough, String thumbnail3D, Address address) {
-        this.borough = borough;
-        this.content = content;
-        this.model = model;
-        this.thumbnail3D = thumbnail3D;
-        this.city = city;
-        this.arCam = arCam;
+    public Estate(Broker broker, User owner, Address address) {
+        this.broker = broker;
+        this.owner = owner;
         this.address = address;
-        this.buildingName = buildingName;
-        this.transactionType = transactionType;
-        this.estateThumbNail = estateThumbNail;
-        this.town = town;
     }
 
-    public Estate brokerUpdate(EstateSaveRequestDto dto) {
+    public Estate detailUpdate(EstateSaveRequestDto dto, List<Asset> assets, House house) {
         this.content = dto.getContent();
         this.estateThumbNail = dto.getEstateThumbNail();
         this.transactionType = TransactionType.of(dto.getTransactionType());
@@ -100,6 +83,9 @@ public class Estate extends BaseTimeEntity {
         this.arCam = dto.getArCam();
         this.estateMedia = new ArrayList<>();
         dto.getEstatePhotos().forEach(media -> this.estateMedia.add(media));
+        this.assets = new HashSet<>();
+        assets.forEach(asset -> this.assets.add(asset));
+        this.house = house;
         return this;
     }
 
@@ -108,12 +94,7 @@ public class Estate extends BaseTimeEntity {
         this.model = dto.getModel();
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.estateThumbNail = dto.getEstateThumbNail();
-        this.address = dto.getAddress().toEntity();
-        this.city = this.address.getCity();
-        this.borough = this.address.getBorough();
-        this.town = this.address.getTown();
-        this.buildingName = this.address.getBuildingName();
-        this.thumbnail3D = dto.getThumbNail3D();
+        this.address = dto.getAddress();
         return this;
     }
 
@@ -122,18 +103,16 @@ public class Estate extends BaseTimeEntity {
         house.setEstate(this);
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-        this.city = address.getCity();
-        this.borough = address.getBorough();
-        this.town = address.getTown();
-        this.buildingName = address.getBuildingName();
-    }
-
     public void setEstateHit(EstateHit estateHit) {
         this.estateHit = estateHit;
         estateHit.setEstate(this);
     }
+
+    public Estate updateEstateHit() {
+        this.estateHit.updateHit();
+        return this;
+    }
+
     public void setOwner(User owner) {
         if(this.owner != null ){
             this.owner.getOwnEstates().remove(this);

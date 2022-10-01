@@ -1,10 +1,9 @@
 package com.example.Estate_Twin.address.service;
 
 import com.example.Estate_Twin.address.data.dao.impl.AddressDAOImpl;
-import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.address.data.repository.AddressRepository;
 import com.example.Estate_Twin.address.service.impl.AddressServiceImpl;
-import com.example.Estate_Twin.address.web.dto.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;

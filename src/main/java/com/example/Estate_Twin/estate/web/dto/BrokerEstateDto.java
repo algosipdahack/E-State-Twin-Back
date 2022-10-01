@@ -1,9 +1,8 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.querydsl.core.annotations.QueryProjection;
 
 public class BrokerEstateDto {

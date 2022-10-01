@@ -21,7 +21,7 @@ public class AssetResponseDto {
     private final String manufacturer;
     private final String anchorId;
     private final LocalDateTime repairDate;
-    private final Set<CheckListDto> checkLists;
+    private final List<CheckListDto> checkLists;
 
 
     @QueryProjection
@@ -34,7 +34,7 @@ public class AssetResponseDto {
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();
         this.repairDate = asset.getRepairDate();
-        this.checkLists = new HashSet<>();
+        this.checkLists = new ArrayList<>();
         asset.getCheckLists().forEach(checkList -> this.checkLists.add(new CheckListDto(checkList)));
     }
 }

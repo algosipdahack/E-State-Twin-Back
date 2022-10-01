@@ -19,5 +19,5 @@ public class EstateSaveRequestDto {
     private String arCam;
     private HouseSaveRequestDto house;
     private List<String> estatePhotos;
-    private List<AssetSaveRequestDto> assetSaveRequestDtos;
+    private List<AssetSaveRequestDto> assets;
 }

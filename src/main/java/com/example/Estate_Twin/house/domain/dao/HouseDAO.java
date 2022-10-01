@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 public interface HouseDAO {
     House saveHouse(House house);
     House findHouse(Long id);
-    House updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto);
+    House updateHouse(House house, HouseUpdateRequestDto dto);
 }

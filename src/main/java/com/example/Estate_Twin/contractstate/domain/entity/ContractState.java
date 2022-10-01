@@ -15,11 +15,8 @@ public class ContractState extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contractstate_id")
     private Long id;
-
-    @Column
     @Enumerated(value = EnumType.STRING)
     private State state;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;

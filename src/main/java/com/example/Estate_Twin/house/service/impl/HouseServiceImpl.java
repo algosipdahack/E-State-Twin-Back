@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.house.service.impl;
 
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.service.HouseService;
 import com.example.Estate_Twin.house.web.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,6 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public HouseResponseDto updateHouse(Long id, HouseUpdateRequestDto houseUpdateRequestDto) {
-        return new HouseResponseDto(houseDAO.updateHouse(id, houseUpdateRequestDto));
+        return new HouseResponseDto(houseDAO.updateHouse(houseDAO.findHouse(id), houseUpdateRequestDto));
     }
 }

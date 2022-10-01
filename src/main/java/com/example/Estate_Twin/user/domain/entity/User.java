@@ -1,14 +1,11 @@
 package com.example.Estate_Twin.user.domain.entity;
 
-import com.example.Estate_Twin.address.data.entity.Address;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 @Getter
 @NoArgsConstructor

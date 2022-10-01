@@ -1,7 +1,8 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.address.web.dto.AddressSaveRequestDto;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.estate.service.*;
+import com.example.Estate_Twin.estate.service.impl.EstateServiceImpl;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.annotations.ApiParam;
@@ -23,7 +24,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api/estate/")
 public class EstateApiController {
-    private final EstateService estateService;
+    private final EstateServiceImpl estateService;
     private final DipEstateService dipEstateService;
 
     //리스트
@@ -37,11 +38,11 @@ public class EstateApiController {
     }
 
     //추천매물 보여주기 -> 조회수에 따라 정렬
-    //TODO 페이징 처리
+    //TODO 페이징 처리 -> 6개씩 잘라서 주기
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateMainDto.class)))})
     @GetMapping("main")
-    public ResponseEntity<List<EstateMainDto>> getList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+    public ResponseEntity<List<EstateMainDto>> getMainPage(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
@@ -56,19 +57,20 @@ public class EstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
+    //집주인이
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping("detail/owner")
     public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user,
-                                                             @RequestBody AddressSaveRequestDto addressSaveRequestDto,
+                                                             @RequestBody Address address,
                                                              @ApiParam(value = "Broker Id", required = true, example = "1")
                                                              @RequestParam(name = "brokerId") Long brokerId) {
         //owner 매핑, estate 생성, broker매핑
-        Long estateId = estateService.saveFirst(addressSaveRequestDto, brokerId, user.getEmail());
+        Long estateId = estateService.saveFirst(address, brokerId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateId);
     }
-    //브로커만
-    //TODO
+
+    //브로커가
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기(임시저장) - broker")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail/broker")
@@ -82,7 +84,7 @@ public class EstateApiController {
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}")
     public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
-        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
+        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId, estateUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
@@ -90,13 +92,13 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}/confirm")
-    public ResponseEntity<EstateResponseDto> confirmEstate(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        EstateResponseDto estateResponseDto = estateService.allowPost(estateId,user.getEmail());
+    public ResponseEntity<EstateResponseDto> allowPost(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        EstateResponseDto estateResponseDto = estateService.allowPost(estateId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
 
-    //TODO 세입자 등록, 집주인 매칭, 브로커 매칭
+    //TODO 세입자 등록
     /*@Operation(summary = "enroll tanent of estate", description = "세입자 등록")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})

@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.user.domain.entity;
 
-import com.example.Estate_Twin.address.data.entity.Address;
+import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.*;
 
@@ -36,8 +36,7 @@ public class Broker {
     @Column(columnDefinition = "TEXT")
     private String content;
     //주소
-    @OneToOne
-    @JoinColumn(name = "address_id")
+    @Embedded
     private Address address;
     //단방향
     @OneToOne
