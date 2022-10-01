@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.address.web.dto.AddressDto;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -14,7 +13,7 @@ public class BrokerListDto {
     @Schema(description = "거래 완증 건수")
     private final Long countOfTransactionCompletion;
     private final String content;
-    private final AddressDto address;
+    private final Address address;
     private final String phone;
     private final String brokerPhoto;
     @QueryProjection
@@ -23,7 +22,7 @@ public class BrokerListDto {
         this.businessName = businessName;
         this.countOfTransactionCompletion = countOfTransactionCompletion;
         this.content = content;
-        this.address = new AddressDto(address);
+        this.address = address;
         this.phone = phone;
         this.brokerPhoto = brokerPhoto;
     }

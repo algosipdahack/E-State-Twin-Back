@@ -4,6 +4,7 @@ import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.UserService;
 import com.example.Estate_Twin.user.service.impl.OAuthService;
+import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
 import com.example.Estate_Twin.user.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final OAuthService oAuthService;
 
     // TODO - 아직 무슨 내용이 들어가야 할지 모름

@@ -42,11 +42,11 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Estate> tradeEstates;
+    @OneToMany(mappedBy = "broker", orphanRemoval = true)
+    private List<Estate> tradeEstates;
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
-                  String businessLicense, String brokerageRegistrationLicense, Long countOfTransactionCompletion, String content,
+                  String businessLicense, String brokerageRegistrationLicense, String content,
                   Address address, String brokerPhoto) {
         this.businessName = businessName;
         this.agentName = agentName;
@@ -54,7 +54,6 @@ public class Broker {
         this.businessRegistrationNumber = businessRegistrationNumber;
         this.businessLicense = businessLicense;
         this.brokerageRegistrationLicense = brokerageRegistrationLicense;
-        this.countOfTransactionCompletion = countOfTransactionCompletion;
         this.content = content;
         this.address = address;
         this.brokerPhoto = brokerPhoto;
@@ -65,7 +64,7 @@ public class Broker {
     }
     @PrePersist
     public void prePersist() {
-        this.tradeEstates = new HashSet<>();
+        this.tradeEstates = new ArrayList<>();
         this.countOfTransactionCompletion = 0L;
     }
 

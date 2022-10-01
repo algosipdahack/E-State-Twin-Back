@@ -3,14 +3,9 @@ package com.example.Estate_Twin.user.domain.repository;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.QEstate;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.estate.web.dto.EstateMainDto;
 import com.example.Estate_Twin.estate.web.dto.QBrokerEstateDto;
-import com.example.Estate_Twin.estate.web.dto.QEstateMainDto;
-import com.example.Estate_Twin.user.domain.entity.Broker;
-import com.example.Estate_Twin.user.domain.entity.QBroker;
-import com.example.Estate_Twin.user.domain.entity.QUser;
-import com.example.Estate_Twin.user.web.dto.BrokerListDto;
-import com.example.Estate_Twin.user.web.dto.QBrokerListDto;
+import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.web.dto.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -28,12 +23,14 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
         super(Broker.class);
         this.jpaQueryFactory = jpaQueryFactory;
         this.broker = QBroker.broker;
+        this.user = QUser.user;
+        this.estate = QEstate.estate;
     }
     @Override
     public List<BrokerListDto> getBrokerList() {
         QueryResults<BrokerListDto> queryResults = jpaQueryFactory
                 .select(new QBrokerListDto(
-                    broker.id,
+                        broker.id,
                         broker.businessName,
                         broker.countOfTransactionCompletion,
                         broker.content,
@@ -44,6 +41,21 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .from(broker)
                 .fetchResults();
         List<BrokerListDto> result = queryResults.getResults();
+        return result;
+    }
+
+    @Override
+    public List<BrokerEstateDto> findAllWithEstateByState(Long brokerId, State state) {
+        QueryResults<BrokerEstateDto> queryResults = jpaQueryFactory
+                .select(new QBrokerEstateDto(
+                    estate, estate.owner
+                ))
+                .from(estate)
+                .leftJoin(estate.owner, user)
+                .leftJoin(estate.broker, broker)
+                .where(estate.broker.id.eq(brokerId))
+                .fetchResults();
+        List<BrokerEstateDto> result = queryResults.getResults();
         return result;
     }
 }

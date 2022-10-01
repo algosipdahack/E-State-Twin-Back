@@ -19,7 +19,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -99,17 +98,14 @@ public class OAuthService {
         }
 
         CustomUserDetails.create(user,userAttributes);
-        String jaccessToken = tokenProvider.createAccessToken(user);
-        String jrefreshToken = tokenProvider.createRefreshToken(user);
-        user.setRefreshToken(jrefreshToken);
-        return new Token(jaccessToken,jrefreshToken,isMember);
+        String jAccessToken = tokenProvider.createAccessToken(user);
+        String jRefreshToken = tokenProvider.createRefreshToken(user);
+        user.setRefreshToken(jRefreshToken);
+        return new Token(jAccessToken,jRefreshToken,isMember);
     }
     @Transactional
     public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
-
-        //kakao로부터 access, refresh토큰 받아옴
-        //OAuth2AccessTokenResponse tokenResponse = getToken(code, provider);
 
         //kakao로부터 유저정보 받아서 db에 저장
         return getUserProfile(providerName.toUpperCase(), accessToken, provider);

@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.user.domain.entity;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.user.web.dto.UserSignUpDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
@@ -64,14 +65,15 @@ public class User extends BaseTimeEntity {
         this.refreshToken = refreshToken;
     }
 
-    @Builder(builderMethodName = "signupBuilder")
-    public User(LocalDate birthday, String phone, TransactionType transactionType, EstateType estateType, String borough) {
-        this.birthday = birthday;
-        this.phone = phone;
-        this.transactionType = transactionType;
-        this.estateType = estateType;
-        this.borough = borough;
+    public User signup(UserSignUpDto dto) {
+        this.birthday = dto.getBirthday();
+        this.phone = dto.getPhone();
+        this.transactionType = TransactionType.of(dto.getTransactionType());
+        this.estateType = EstateType.of(dto.getEstateType());
+        this.borough = dto.getBorough();
+        return this;
     }
+
     public void setTanentEstate(Estate estate) {
         this.tanentEstate = estate;
         estate.setTanent(this);
