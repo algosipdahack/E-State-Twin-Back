@@ -23,7 +23,7 @@ public class BrokerDAOImpl implements BrokerDAO {
     }
     @Override
     public Broker findBrokerById(Long id) {
-        return brokerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
+        return brokerRepository.findByIdUsingFetchJoin(id).orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
     }
 
     @Override

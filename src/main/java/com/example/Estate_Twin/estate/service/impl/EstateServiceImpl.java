@@ -3,6 +3,8 @@ package com.example.Estate_Twin.estate.service.impl;
 import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.service.EstateService;
@@ -27,6 +29,7 @@ public class EstateServiceImpl implements EstateService {
     private final UserDAOImpl userDAO;
     private final BrokerDAOImpl brokerDAO;
     private final AssetDAOImpl assetDAO;
+    private final ContractStateDAOImpl contractStateDAO;
 
     @Override
     public Long saveFirst(Address address, Long brokerId, String email) {
@@ -83,14 +86,17 @@ public class EstateServiceImpl implements EstateService {
     public EstateResponseDto allowPost(Long estateId, String email) {
         User user = userDAO.findUserByEmail(email);
         Estate estate = estateDAO.findEstate(estateId);
+        Estate newEstate;
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
             Broker broker = brokerDAO.findBrokerByEmail(email);
-            return new EstateResponseDto(estateDAO.allowBroker(estate, broker));
+            newEstate = estateDAO.allowBroker(estate, broker);
         } else { // 집주인이라면
-            return new EstateResponseDto(estateDAO.allowOwner(estate, user));
+            newEstate = estateDAO.allowOwner(estate, user);
         }
+        if (estateDAO.checkEnroll(newEstate)) {
+            contractStateDAO.updateState(newEstate, State.POST_DONE);
+        }
+        return new EstateResponseDto(newEstate);
     }
-
-
 }

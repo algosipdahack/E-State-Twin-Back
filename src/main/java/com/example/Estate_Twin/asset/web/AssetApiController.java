@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.asset.web;
 
 import com.example.Estate_Twin.asset.service.AssetService;
+import com.example.Estate_Twin.asset.service.impl.AssetServiceImpl;
 import com.example.Estate_Twin.asset.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -9,16 +10,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Tag(name = "Asset", description = "에셋 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/asset")
 public class AssetApiController {
-    private final AssetService assetService;
+    private final AssetServiceImpl assetService;
 
     @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기(매물 등록 후)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})

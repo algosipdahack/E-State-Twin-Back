@@ -24,7 +24,7 @@ public interface EstateDAO {
     House findHouse(Long id);
     EstateHit findEstateHit(Long id);
     List<AssetResponseDto> findAssets(Long id);
-    Estate checkEnroll(Estate estate);
+    boolean checkEnroll(Estate estate);
     Estate saveFirst(Broker broker, User owner, Address address);
 
 }

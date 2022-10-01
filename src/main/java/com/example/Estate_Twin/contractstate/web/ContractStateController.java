@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.contractstate.web;
 
-import com.example.Estate_Twin.contractstate.service.ContractStateService;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.contractstate.service.impl.ContractStateServiceImpl;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -17,14 +18,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/contractState")
 public class ContractStateController {
-    private final ContractStateService contractStateService;
+    private final ContractStateServiceImpl contractStateService;
 
     @Operation(summary = "update ContractState", description = "매물 상태 수정하기 ex) 브로커가 매물 등록 승인 한 상황 : state = POST_DOING 요청")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("/estate/{estateId}")
-    public ResponseEntity<ContractStateResponseDto> updateContractState(@PathVariable Long estateId, @RequestBody ContractStateUpdateRequestDto contractStateUpdateRequestDto){
-        ContractStateResponseDto contractStateResponseDto = contractStateService.updateState(estateId,contractStateUpdateRequestDto);
+    public ResponseEntity<ContractStateResponseDto> updateContractState(@PathVariable Long estateId, @RequestBody State state){
+        ContractStateResponseDto contractStateResponseDto = contractStateService.updateState(estateId,state);
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
     }
 

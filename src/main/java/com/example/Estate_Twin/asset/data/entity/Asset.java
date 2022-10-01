@@ -32,8 +32,8 @@ public class Asset extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
-    @OneToMany(mappedBy = "asset", orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<CheckList> checkLists;
+    @OneToMany(mappedBy = "asset", orphanRemoval = true)
+    private List<CheckList> checkLists;
 
     @Builder // 빌더 형태로 만들어줌
     public Asset(Category category, String assetPhoto, Option option, String productName, String manufacturer, String anchorId, LocalDateTime repairDate) {
@@ -46,8 +46,7 @@ public class Asset extends BaseTimeEntity {
         this.assetPhoto = assetPhoto;
     }
 
-    @Builder(builderMethodName = "updateBuilder") // 빌더 형태로 만들어줌
-    public Asset(AssetUpdateRequestDto dto) {
+    public Asset update(AssetUpdateRequestDto dto) {
         this.category = Category.of(dto.getCategory());
         this.option = Option.of(dto.getOption());
         this.productName = dto.getProductName();
@@ -55,7 +54,9 @@ public class Asset extends BaseTimeEntity {
         this.anchorId = dto.getAnchorId();
         this.repairDate = dto.getRepairDate();
         this.assetPhoto = dto.getAssetPhoto();
+        return this;
     }
+
     public void setEstate(Estate estate) {
         if(this.estate != null) {
             this.estate.getAssets().remove(this);
@@ -69,7 +70,7 @@ public class Asset extends BaseTimeEntity {
     }
     @PrePersist
     public void prePersist() {
-        this.checkLists = new HashSet<>();
+        this.checkLists = new ArrayList<>();
     }
 
 }

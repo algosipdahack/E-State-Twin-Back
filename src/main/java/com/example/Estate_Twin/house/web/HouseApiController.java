@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.house.web;
 
 import com.example.Estate_Twin.house.service.HouseService;
+import com.example.Estate_Twin.house.service.impl.HouseServiceImpl;
 import com.example.Estate_Twin.house.web.dto.*;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/house")
 public class HouseApiController {
-    private final HouseService houseService;
+    private final HouseServiceImpl houseService;
 
     @Operation(summary = "get House", description = "집에 대한 정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))})

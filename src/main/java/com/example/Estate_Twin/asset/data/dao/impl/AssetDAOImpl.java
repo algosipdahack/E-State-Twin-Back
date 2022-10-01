@@ -3,7 +3,6 @@ package com.example.Estate_Twin.asset.data.dao.impl;
 import com.example.Estate_Twin.asset.data.dao.AssetDAO;
 import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
-import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.web.dto.AssetUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import lombok.AllArgsConstructor;
@@ -12,25 +11,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Component
-@Transactional
 @AllArgsConstructor
 public class AssetDAOImpl implements AssetDAO {
     private AssetRepository assetRepository;
 
+    // checklist까지 정보 가져옴
     @Override
     public Asset findAsset(Long id) {
-        return assetRepository.findById(id)
+        return assetRepository.findByIdUsingFetchJoin(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+id));
     }
 
+    @Transactional
     @Override
     public Asset updateAsset(Long id, AssetUpdateRequestDto updateRequestDto) {
-        Asset selectedAsset = assetRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+id))
-                .updateBuilder()
-                .dto(updateRequestDto)
-                .build();
-        return assetRepository.save(selectedAsset);
+        return findAsset(id).update(updateRequestDto);
     }
 
     @Override

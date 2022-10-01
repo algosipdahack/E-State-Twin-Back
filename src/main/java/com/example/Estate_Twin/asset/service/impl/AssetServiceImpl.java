@@ -1,21 +1,20 @@
 package com.example.Estate_Twin.asset.service.impl;
 
-import com.example.Estate_Twin.asset.data.dao.AssetDAO;
+import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
-import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 
+import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
+import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
-    private final AssetDAO assetDAO;
-    private final EstateDAO estateDAO;
+    private final AssetDAOImpl assetDAO;
+    private final EstateDAOImpl estateDAO;
     @Override
     public AssetResponseDto getAsset(Long id) {
         return new AssetResponseDto(assetDAO.findAsset(id));

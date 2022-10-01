@@ -28,7 +28,6 @@ public class CheckListDAOImpl implements CheckListDAO {
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
     }
 
-
     @Override
     public List<CheckListResponseDto> findAllCheckList(Long assetId) {
         return checkListRepository.findCheckListbyAssetId(assetId);
