@@ -18,7 +18,7 @@ public class AssetDAOImpl implements AssetDAO {
     // checklist까지 정보 가져옴
     @Override
     public Asset findAsset(Long id) {
-        return assetRepository.findByIdUsingFetchJoin(id)
+        return assetRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+id));
     }
 

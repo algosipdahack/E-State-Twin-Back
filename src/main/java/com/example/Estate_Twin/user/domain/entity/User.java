@@ -19,7 +19,7 @@ public class User extends BaseTimeEntity {
     private Long id;
     //LocalDate => 날짜 정보만 출력. ex) 2019-11-13
     private LocalDate birthday;
-    @Column(unique = true)
+    @Column(unique = true, length = 11)
     private String phone;
     //OAuth
     private String name;

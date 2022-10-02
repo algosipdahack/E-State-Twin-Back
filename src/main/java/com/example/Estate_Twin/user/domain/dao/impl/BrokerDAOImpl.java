@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.user.domain.dao.impl;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
 import com.example.Estate_Twin.user.domain.entity.*;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BrokerDAOImpl implements BrokerDAO {
     BrokerRepository brokerRepository;
     UserRepository userRepository;
+    EstateRepository estateRepository;
     @Override
     public Broker findBrokerByEmail(String email) {
         return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new IllegalArgumentException("해당 email를 가진 user가 존재하지 않습니다. email = "+email));
@@ -38,7 +40,7 @@ public class BrokerDAOImpl implements BrokerDAO {
 
     @Override
     public List<BrokerEstateDto> getBrokerEstate(Long brokerId, State state) {
-        return brokerRepository.findAllWithEstateByState(brokerId,state);
+        return estateRepository.findEstateBybrokerIdAndState(brokerId,state);
     }
 
 
