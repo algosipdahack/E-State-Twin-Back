@@ -7,6 +7,8 @@ import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
+import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +36,7 @@ public class CheckListDAOImpl implements CheckListDAO {
 
     @Override
     public List<CheckList> findAllCheckList(Long assetId) {
-        return assetRepository.findCheckListByIdUsingFetchJoin(assetId);
+        return assetRepository.findByIdUsingFetchJoin(assetId).orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId)).getCheckLists();
     }
 
     @Override
@@ -42,5 +44,16 @@ public class CheckListDAOImpl implements CheckListDAO {
     public CheckList updateCheckList(Long id, CheckListUpdateRequestDto dto) {
        return findCheckList(id).update(dto);
     }
+    @Transactional
+    public CheckList confirmBroker(CheckList checkList) {
+        return checkList.setBrokerConfirmY();
+    }
+    @Transactional
+    public CheckList confirmUser(CheckList checkList, User user) {
 
+        return checkList.setOwnerConfirmY();
+    }
+    public boolean checkUser(User user) {
+        return true;
+    }
 }

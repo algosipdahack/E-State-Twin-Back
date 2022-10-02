@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class Address {
     private String city;

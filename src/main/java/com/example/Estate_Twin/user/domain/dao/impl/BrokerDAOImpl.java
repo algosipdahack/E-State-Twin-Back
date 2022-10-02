@@ -22,8 +22,13 @@ public class BrokerDAOImpl implements BrokerDAO {
         return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new IllegalArgumentException("해당 email를 가진 user가 존재하지 않습니다. email = "+email));
     }
     @Override
-    public Broker findBrokerById(Long id) {
+    public Broker findBrokerFetchJoinById(Long id) {
         return brokerRepository.findByIdUsingFetchJoin(id).orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
+    }
+
+    @Override
+    public Broker findBrokerById(Long id) {
+        return brokerRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
     }
 
     @Override
@@ -44,6 +49,6 @@ public class BrokerDAOImpl implements BrokerDAO {
         //broker로 설정
         user.setIsBroker();
         broker.setUser(user);
-        return broker;
+        return brokerRepository.save(broker);
     }
 }

@@ -53,6 +53,5 @@ public class HouseSaveRequestDto {
                 .size(size)
                 .usageAvailableDate(usageAvailableDate)
                 .build();
-
     }
 }

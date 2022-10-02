@@ -63,10 +63,10 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(mappedBy = "tanentEstate")
     private User tanent;
     @OneToMany(mappedBy = "estate", fetch = FetchType.EAGER, orphanRemoval = true)
-    private Set<Asset> assets = new HashSet<>();
+    private Set<Asset> assets;
     //찜한 매물
     @OneToMany(mappedBy = "estate", fetch = FetchType.EAGER, orphanRemoval = true)
-    private Set<DipEstate> dipEstates = new HashSet<>();
+    private Set<DipEstate> dipEstates;
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(Broker broker, User owner, Address address) {
@@ -74,17 +74,16 @@ public class Estate extends BaseTimeEntity {
         this.owner = owner;
         this.address = address;
     }
-
     public Estate detailUpdate(EstateSaveRequestDto dto, List<Asset> assets, House house) {
         this.content = dto.getContent();
         this.estateThumbNail = dto.getEstateThumbNail();
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.model = dto.getModel();
         this.arCam = dto.getArCam();
-        this.estateMedia = new ArrayList<>();
-        dto.getEstatePhotos().forEach(media -> this.estateMedia.add(media));
-        this.assets = new HashSet<>();
-        assets.forEach(asset -> this.assets.add(asset));
+        this.estateMedia.clear();
+        this.estateMedia.addAll(dto.getEstatePhotos());
+        this.assets.clear();
+        this.assets.addAll(assets);
         this.house = house;
         return this;
     }

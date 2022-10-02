@@ -1,6 +1,6 @@
 package com.example.Estate_Twin.user.web.dto;
 
-import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.address.AddressResponseDto;
 import com.example.Estate_Twin.estate.web.dto.EstateDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.querydsl.core.annotations.QueryProjection;
@@ -26,7 +26,7 @@ public class BrokerResponseDto {
     private final String brokerageRegistrationLicense;
     private final Long countOfTransactionCompletion;
     private final String content;
-    private final Address address;
+    private final AddressResponseDto address;
     private final String phone;
     private final List<EstateDto> estates;
     private final String brokerPhoto;
@@ -42,10 +42,12 @@ public class BrokerResponseDto {
         this.brokerageRegistrationLicense = broker.getBrokerageRegistrationLicense();
         this.countOfTransactionCompletion = broker.getCountOfTransactionCompletion();
         this.content = broker.getContent();
-        this.address = broker.getAddress();
+        this.address = new AddressResponseDto(broker.getAddress());
         this.phone = broker.getUser().getPhone();
         this.brokerPhoto = broker.getBrokerPhoto();
         this.estates = new ArrayList<>();
-        broker.getTradeEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
+        if(broker.getTradeEstates() != null) {
+            broker.getTradeEstates().forEach(estate -> this.estates.add(new EstateDto(estate)));
+        }
     }
 }
