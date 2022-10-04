@@ -1,8 +1,11 @@
 package com.example.Estate_Twin.estate.service;
 
 import com.example.Estate_Twin.estate.domain.entity.Preference;
-import com.example.Estate_Twin.estate.web.dto.PreferEstateResponseDto;
+import com.example.Estate_Twin.estate.web.dto.*;
+
+import java.util.List;
 
 public interface PreferEstateService {
-    PreferEstateResponseDto preferEstate(Long estateId, String email, Preference prefer);
+    PreferEstateResponseDto savePreferEstate(Long estateId, String email, Preference prefer);
+    List<EstateListResponseDto> getPreferEstate(String email, Preference prefer);
 }

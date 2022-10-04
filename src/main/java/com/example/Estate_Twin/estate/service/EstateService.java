@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.service;
 
-import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.address.AddressSearchDto;
+import com.example.Estate_Twin.address.*;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.*;
 
@@ -16,5 +15,5 @@ public interface EstateService {
     List<EstateMainDto> getEstateCustomized(String borough);
     EstateResponseDto allowPost(Long estateId, String userEmail);
     ContractStateResponseDto startContract(Long estateId, String email);
-    List<EstateListResponseDto> searchEstate(AddressSearchDto addressSearchDto);
+    List<EstateListResponseDto> searchEstate(String email, AddressSearchDto addressSearchDto);
 }

@@ -105,7 +105,7 @@ public class EstateApiController {
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/dip")
     public ResponseEntity<PreferEstateResponseDto> dipEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long estateId) {
-        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.preferEstate(estateId,user.getEmail(), Preference.DIP);
+        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId,user.getEmail(), Preference.DIP);
         return ResponseEntity.status(HttpStatus.OK).body(preferEstateResponseDto);
     }
 
@@ -115,7 +115,7 @@ public class EstateApiController {
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/inquiry")
     public ResponseEntity<PreferEstateResponseDto> inquireEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long estateId) {
-        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.preferEstate(estateId,user.getEmail(), Preference.INQUIRY);
+        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId, user.getEmail(), Preference.INQUIRY);
         return ResponseEntity.status(HttpStatus.OK).body(preferEstateResponseDto);
     }
 
@@ -129,11 +129,13 @@ public class EstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
     }
 
+    // 최근 검색 추가
     @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @PostMapping(value = "list/search")
-    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@RequestBody AddressSearchDto addressSearchDto) {
-        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(addressSearchDto);
+    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody AddressSearchDto addressSearchDto) {
+        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(user.getEmail(), addressSearchDto);
+        // 최근 본 매물에 추가 -> redis, batch 적용
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 

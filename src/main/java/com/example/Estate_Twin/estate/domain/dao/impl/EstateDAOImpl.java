@@ -136,7 +136,14 @@ public class EstateDAOImpl implements EstateDAO {
         return false;
     }
 
+    @Override
     public Estate matchTanent(Long estateId, User user) {
         return findEstate(estateId).setTanent(user);
+    }
+
+    @Override
+    @Transactional
+    public User updateBorough(User user, String borough) {
+        return user.setBorough(borough);
     }
 }

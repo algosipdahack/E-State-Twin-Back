@@ -85,6 +85,11 @@ public class User extends BaseTimeEntity {
         this.isBroker = true;
     }
 
+    public User setBorough(String borough) {
+        this.borough = borough;
+        return this;
+    }
+
     @PrePersist
     public void prePersist() {
         this.isBroker = false;

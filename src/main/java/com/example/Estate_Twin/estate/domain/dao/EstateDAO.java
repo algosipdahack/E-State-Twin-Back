@@ -26,5 +26,6 @@ public interface EstateDAO {
     Estate matchTanent(Long estateId, User user);
     List<EstateListResponseDto> findEstateListByBorough(String borough);
     List<EstateListResponseDto> findEstateListByTown(String town);
+    User updateBorough(User user, String region);
 
 }
