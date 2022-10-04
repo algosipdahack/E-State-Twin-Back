@@ -64,10 +64,7 @@ public class Asset extends BaseTimeEntity {
         this.estate = estate;
         this.estate.getAssets().add(this);
     }
-    public Asset setId(Long id) {
-        this.id = id;
-        return this;
-    }
+
     @PrePersist
     public void prePersist() {
         this.checkLists = new ArrayList<>();

@@ -1,9 +1,6 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
-import com.example.Estate_Twin.estate.domain.entity.PreferEstate;
-import com.example.Estate_Twin.estate.domain.entity.Preference;
-import com.example.Estate_Twin.estate.domain.entity.QPreferEstate;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;

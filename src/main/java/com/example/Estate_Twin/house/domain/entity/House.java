@@ -49,8 +49,8 @@ public class House extends BaseTimeEntity {
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
                  Long rentableArea,boolean parking,Long parkingFee,LocalDateTime moveInAvailableDate,
                  Long size,String heatType,EstateType estateType,Long household,Long roomCount,
-                 LocalDateTime usageAvailableDate,Long bathCount
-    ) {//생성자
+                 LocalDateTime usageAvailableDate,Long bathCount)
+    {
         this.deposit = deposit;
         this.totalFloors = totalFloors;
         this.size = size;
@@ -96,7 +96,6 @@ public class House extends BaseTimeEntity {
         this.bathCount = dto.getBathCount();
         return this;
     }
-    public void setId(Long id) { this.id = id; }
     public void setEstate(Estate estate) {
         this.estate = estate;
     }

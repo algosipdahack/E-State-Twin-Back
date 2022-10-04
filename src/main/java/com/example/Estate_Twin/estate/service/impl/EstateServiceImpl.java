@@ -4,17 +4,14 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
-import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
-import com.example.Estate_Twin.estate.domain.dao.impl.PreferEstateDAOImpl;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.Preference;
+import com.example.Estate_Twin.contractstate.domain.entity.*;
+import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
+import com.example.Estate_Twin.estate.domain.dao.impl.*;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.user.domain.dao.impl.*;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
@@ -80,8 +77,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto) {
-        House house = estateDAO.findHouse(id);
-        houseDAO.updateHouse(house, estateUpdateRequestDto.getHouse());
+        houseDAO.updateHouse(estateDAO.findHouse(id), estateUpdateRequestDto.getHouse());
 
         return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto));
     }
@@ -111,4 +107,11 @@ public class EstateServiceImpl implements EstateService {
         return new EstateResponseDto(newEstate);
     }
 
+    @Override
+    @Transactional
+    public ContractStateResponseDto startContract(Long estateId, String email) {
+        Estate estate = estateDAO.matchTanent(estateId,userDAO.findUserByEmail(email));
+        ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
+        return new ContractStateResponseDto(contractState);
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.service.impl;
 
-import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
-import com.example.Estate_Twin.estate.domain.dao.impl.PreferEstateDAOImpl;
+import com.example.Estate_Twin.estate.domain.dao.impl.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.service.PreferEstateService;
 import com.example.Estate_Twin.estate.web.dto.PreferEstateResponseDto;

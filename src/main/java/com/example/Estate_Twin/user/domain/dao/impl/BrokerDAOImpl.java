@@ -19,6 +19,7 @@ public class BrokerDAOImpl implements BrokerDAO {
     BrokerRepository brokerRepository;
     UserRepository userRepository;
     EstateRepository estateRepository;
+
     @Override
     public Broker findBrokerByEmail(String email) {
         return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new IllegalArgumentException("해당 email를 가진 user가 존재하지 않습니다. email = "+email));
@@ -42,7 +43,6 @@ public class BrokerDAOImpl implements BrokerDAO {
     public List<BrokerEstateDto> getBrokerEstate(Long brokerId, State state) {
         return estateRepository.findEstateBybrokerIdAndState(brokerId,state);
     }
-
 
     //broker 회원가입
     @Override

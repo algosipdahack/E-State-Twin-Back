@@ -1,10 +1,9 @@
 package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Preference;
-import com.example.Estate_Twin.estate.service.*;
-import com.example.Estate_Twin.estate.service.impl.EstateServiceImpl;
-import com.example.Estate_Twin.estate.service.impl.PreferEstateServiceImpl;
+import com.example.Estate_Twin.estate.service.impl.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import io.swagger.annotations.ApiParam;
@@ -93,7 +92,7 @@ public class EstateApiController {
     @Operation(summary = "Confirm of estate post", description = "중개인/집주인의 매물 등록 확인")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
-    @PatchMapping("detail/{estateId}/confirm")
+    @PatchMapping("detail/{estateId}/allowPost")
     public ResponseEntity<EstateResponseDto> allowPost(@PathVariable Long estateId, @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         EstateResponseDto estateResponseDto = estateService.allowPost(estateId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
@@ -120,15 +119,14 @@ public class EstateApiController {
     }
 
 
-    //TODO 세입자 등록
-    /*@Operation(summary = "enroll tanent of estate", description = "세입자 등록")
+    @Operation(summary = "enroll tanent of estate", description = "계약 진행 버튼 클릭 -> 세입자 등록")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
-    @PutMapping("detail/{estateId}/matchTanent")
-    public ResponseEntity<EstateResponseDto> enrollTanent(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
-        EstateResponseDto estateResponseDto = estateService.updateEstate(estateId,estateUpdateRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
-    }*/
+    @PatchMapping("detail/{estateId}/contract")
+    public ResponseEntity<ContractStateResponseDto> startContract(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long estateId) {
+        ContractStateResponseDto contractStateResponseDto = estateService.startContract(estateId,user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
+    }
 
 
 }

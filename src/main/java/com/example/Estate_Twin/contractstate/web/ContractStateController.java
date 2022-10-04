@@ -37,4 +37,5 @@ public class ContractStateController {
         List<ContractStateResponseDto> contractStateResponseDtos = contractStateService.getContractState(estateId);
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDtos);
     }
+
 }

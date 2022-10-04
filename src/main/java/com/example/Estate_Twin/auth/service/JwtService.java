@@ -41,19 +41,4 @@ public class JwtService {
         return accessToken;
     }
 
-    public String refreshToken(String oldAccessToken) {
-
-        // 유저정보 얻기
-
-        User r_user = userRepository.findByEmail("daowll@naver.com")
-                .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = "));
-
-        // Match Refresh Token
-
-        //JWT 갱신
-        String accessToken = tokenProvider.createAccessToken(r_user);
-        String refreshToken = tokenProvider.createRefreshToken(r_user);
-        return accessToken;
-    }
-
 }

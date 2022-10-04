@@ -5,15 +5,12 @@ import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
-import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,7 +33,8 @@ public class CheckListDAOImpl implements CheckListDAO {
 
     @Override
     public List<CheckList> findAllCheckList(Long assetId) {
-        return assetRepository.findByIdUsingFetchJoin(assetId).orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId)).getCheckLists();
+        return assetRepository.findByIdUsingFetchJoin(assetId)
+                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId)).getCheckLists();
     }
 
     @Override
@@ -44,16 +42,38 @@ public class CheckListDAOImpl implements CheckListDAO {
     public CheckList updateCheckList(Long id, CheckListUpdateRequestDto dto) {
        return findCheckList(id).update(dto);
     }
+
+    @Override
     @Transactional
     public CheckList confirmBroker(CheckList checkList) {
         return checkList.setBrokerConfirmY();
     }
-    @Transactional
-    public CheckList confirmUser(CheckList checkList, User user) {
 
-        return checkList.setOwnerConfirmY();
+    @Override
+    @Transactional
+    public CheckList confirmUser(Long estateId, CheckList checkList, User user) {
+        // 집주인인지 세입자인지 검증
+        if(checkUser(estateId,user)) { // 집주인이면
+            return checkList.setOwnerConfirmY();
+        } else{ // 세입자라면
+            return checkList.setTanentConfirmY();
+        }
     }
-    public boolean checkUser(User user) {
-        return true;
+
+    public boolean checkUser(Long estateId, User user) {
+        if(user.getOwnEstates() != null && user.getOwnEstates().contains(estateId)) { //집주인이라면
+                return true;
+        }
+        return false;
     }
+
+    @Override
+    public boolean checkDone(CheckList checkList) {
+        //모두 다 동의했을 경우
+        if(checkList.getBrokerConfirmYN() && checkList.getOwnerConfirmYN() && checkList.getTanentConfirmYN()) {
+            return true;
+        }
+        return false;
+    }
+
 }

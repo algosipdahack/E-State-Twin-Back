@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.asset.web;
 
-import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.service.impl.AssetServiceImpl;
 import com.example.Estate_Twin.asset.web.dto.*;
 import io.swagger.v3.oas.annotations.*;

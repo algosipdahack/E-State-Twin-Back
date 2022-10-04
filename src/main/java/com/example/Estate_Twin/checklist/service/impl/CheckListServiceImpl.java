@@ -7,17 +7,14 @@ import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
-import com.example.Estate_Twin.user.domain.dao.impl.BrokerDAOImpl;
 import com.example.Estate_Twin.user.domain.dao.impl.UserDAOImpl;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +22,7 @@ public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
     private final AssetDAOImpl assetDAO;
     private final UserDAOImpl userDAO;
-    private final BrokerDAOImpl brokerDAO;
+    private final EstateDAOImpl estateDAO;
     private final ContractStateDAOImpl contractStateDAO;
 
     @Override
@@ -49,22 +46,24 @@ public class CheckListServiceImpl implements CheckListService {
         checkListDAO.findAllCheckList(assetId).forEach(checkList -> new CheckListResponseDto(checkList));
         return dtos;
     }
+
+    @Override
     // 상태 -> CheckList_Doing -> contract_done
-    /*public CheckListResponseDto confirmCheckList(Long checklistId, String email) {
+    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, String email) {
         User user = userDAO.findUserByEmail(email);
         CheckList checkList = checkListDAO.findCheckList(checklistId);
+        Estate estate = estateDAO.findEstate(estateId);
         CheckList newCheckList;
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
-            Broker broker = brokerDAO.findBrokerByEmail(email);
             newCheckList = checkListDAO.confirmBroker(checkList);
         } else { // 집주인 or 세입자라면
-            newCheckList = checkListDAO.confirmUser(checkList);
+            newCheckList = checkListDAO.confirmUser(estateId, checkList, user);
         }
+        //체크리스트 등록 끝났다면 계약 완료 상태
         if (checkListDAO.checkDone(newCheckList)) {
-            contractStateDAO.updateState(newEstate, State.CONTRACT_DONE);
+            contractStateDAO.updateState(estate, State.CONTRACT_DONE);
         }
         return new CheckListResponseDto(newCheckList);
-
-    }*/
+    }
 }

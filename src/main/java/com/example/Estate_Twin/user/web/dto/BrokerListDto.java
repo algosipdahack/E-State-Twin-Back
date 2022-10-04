@@ -16,6 +16,7 @@ public class BrokerListDto {
     private final Address address;
     private final String phone;
     private final String brokerPhoto;
+
     @QueryProjection
     public BrokerListDto(Long id, String businessName, Long countOfTransactionCompletion, String content, Address address, String phone, String brokerPhoto) {
         this.id = id;

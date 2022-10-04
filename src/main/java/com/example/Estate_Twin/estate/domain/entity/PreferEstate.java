@@ -23,6 +23,7 @@ public class PreferEstate extends BaseTimeEntity {
     private Estate estate;
     @Enumerated(value = EnumType.STRING)
     private Preference preference;
+
     @Builder
     public PreferEstate(User user, Estate estate, Preference preference) {
         this.user = user;

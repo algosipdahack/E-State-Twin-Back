@@ -3,9 +3,8 @@ package com.example.Estate_Twin.estate.domain.entity;
 import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
-import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
-import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
-import com.example.Estate_Twin.exception.BadRequestException;
+import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.exception.*;
 import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
@@ -70,10 +69,11 @@ public class Estate extends BaseTimeEntity {
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(Broker broker, User owner, Address address) {
-        this.broker = broker;
-        this.owner = owner;
+        setOwner(owner);
+        setBroker(broker);
         this.address = address;
     }
+
     public Estate detailUpdate(EstateSaveRequestDto dto, List<Asset> assets, House house) {
         this.content = dto.getContent();
         this.estateThumbNail = dto.getEstateThumbNail();
@@ -119,6 +119,7 @@ public class Estate extends BaseTimeEntity {
         this.owner = owner;
         owner.getOwnEstates().add(this);
     }
+
     public void setBroker(Broker broker) {
         if(this.broker != null ){
             this.broker.getTradeEstates().remove(this);
@@ -126,19 +127,24 @@ public class Estate extends BaseTimeEntity {
         this.broker = broker;
         broker.getTradeEstates().add(this);
     }
-    public void setTanent(User tanent) {
+
+    public Estate setTanent(User tanent) {
         this.tanent = tanent;
+        return this;
     }
+
     public void setGrade(Grade grade) {
         if(this.isPosted == false) {
             throw new BadRequestException("게시되지 않은 매물은 뱃지를 가질 수 없습니다!");
         }
         this.grade = grade;
     }
+
     public Estate setBrokerConfirmY() {
         this.brokerConfirmYN = true;
         return this;
     }
+
     public Estate setOwnerConfirmY() {
         this.ownerConfirmYN = true;
         return this;
@@ -151,10 +157,11 @@ public class Estate extends BaseTimeEntity {
         this.state = State.POST_DONE;
         return this;
     }
+
     public void setState(State state) {
         this.state = state;
     }
-    public void setId(Long id) { this.id = id; }
+
     //insert 되기 전 실행된다
     @PrePersist
     public void prePersist() {

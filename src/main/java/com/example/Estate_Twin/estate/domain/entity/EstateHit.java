@@ -33,6 +33,7 @@ public class EstateHit extends BaseTimeEntity {
         this.weeklyHit += 1;
         this.totalHit += 1;
     }
+
     @PrePersist
     public void prePersist() {
         this.weeklyHit = this.weeklyHit == null ? 0 : this.weeklyHit;

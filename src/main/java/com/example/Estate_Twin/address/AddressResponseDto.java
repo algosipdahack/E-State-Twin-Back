@@ -27,6 +27,5 @@ public class AddressResponseDto {
         this.mainBuildingNumber = address.getMainBuildingNumber();
         this.subBuildingNumber = address.getSubBuildingNumber();
         this.complexName = address.getComplexName();
-
     }
 }

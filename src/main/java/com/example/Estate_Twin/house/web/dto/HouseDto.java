@@ -28,6 +28,7 @@ public class HouseDto {
     private final LocalDateTime usageAvailableDate;
     private final Long roomCount;
     private final Long bathCount;
+
     @QueryProjection
     public HouseDto(House house) {
         this.deposit = house.getDeposit();

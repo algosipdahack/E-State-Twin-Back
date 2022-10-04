@@ -1,9 +1,6 @@
 package com.example.Estate_Twin.user.domain.repository;
 
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.QEstate;
-import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.estate.web.dto.QBrokerEstateDto;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.web.dto.*;
 import com.querydsl.core.QueryResults;
@@ -19,6 +16,7 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
     private QBroker broker;
     private QUser user;
     private QEstate estate;
+
     public BrokerRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         super(Broker.class);
         this.jpaQueryFactory = jpaQueryFactory;
@@ -26,6 +24,7 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
         this.user = QUser.user;
         this.estate = QEstate.estate;
     }
+
     @Override
     public List<BrokerListDto> getBrokerList() {
         QueryResults<BrokerListDto> queryResults = jpaQueryFactory

@@ -24,6 +24,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         return process(userRequest,oAuth2User);
     }
+
     private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
         String registrationId = userRequest.getClientRegistration().getRegistrationId().toUpperCase();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
@@ -33,12 +34,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             throw new OAuthProcessingException("Email not found from OAuth2 provider");
         }
 
-
         Optional<User> userOptional = userRepository.findByEmail(attributes.getEmail());
         User user;
 
         //이미 가입된 경우
-        if(userOptional.isPresent()){
+        if(userOptional.isPresent()) {
             user = userOptional.get();
             if(AuthProvider.valueOf(registrationId) != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");

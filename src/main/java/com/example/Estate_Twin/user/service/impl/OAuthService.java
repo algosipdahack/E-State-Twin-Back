@@ -72,6 +72,7 @@ public class OAuthService {
                 .build();
         return userRepository.save(user);
     }
+
     @Transactional
     Token getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
         Map<String, Object> userAttributes = getUserAttributes(provider, accessToken);
@@ -85,7 +86,7 @@ public class OAuthService {
         User user;
         Boolean isMember;
         //이미 가입된 경우
-        if(userOptional.isPresent()){
+        if(userOptional.isPresent()) {
             user = userOptional.get();
             isMember = true;
             if(AuthProvider.valueOf(providerName) != user.getAuthProvider()) {
@@ -103,6 +104,7 @@ public class OAuthService {
         user.setRefreshToken(jRefreshToken);
         return new Token(jAccessToken,jRefreshToken,isMember);
     }
+
     @Transactional
     public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);

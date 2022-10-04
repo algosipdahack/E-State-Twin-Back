@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.PreferEstate;
-import com.example.Estate_Twin.user.web.dto.UserDto;
 import com.example.Estate_Twin.user.web.dto.UserInfoDto;
 import lombok.Getter;
 

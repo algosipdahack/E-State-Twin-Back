@@ -42,10 +42,10 @@ public class User extends BaseTimeEntity {
     private Estate tanentEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
-    private Set<Estate> ownEstates = new HashSet<>();
+    private Set<Estate> ownEstates;
     //찜한 매물
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<PreferEstate> preferEstates = new HashSet<>();
+    private Set<PreferEstate> preferEstates;
 
     @Builder
     public User(LocalDate birthday, String phone, String name, String email,
@@ -76,14 +76,19 @@ public class User extends BaseTimeEntity {
         this.tanentEstate = estate;
         estate.setTanent(this);
     }
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
     public void setIsBroker() {
         this.isBroker = true;
     }
+
     @PrePersist
     public void prePersist() {
         this.isBroker = false;
+        this.ownEstates = new HashSet<>();
+        this.preferEstates = new HashSet<>();
     }
 }

@@ -57,18 +57,22 @@ public class CheckList extends BaseTimeEntity {
         this.checkListPhoto = dto.getCheckListPhoto();
         return this;
     }
+
     public CheckList setBrokerConfirmY() {
         this.brokerConfirmYN = true;
         return this;
     }
+
     public CheckList setOwnerConfirmY() {
         this.ownerConfirmYN = true;
         return this;
     }
+
     public CheckList setTanentConfirmY() {
         this.tanentConfirmYN = true;
         return this;
     }
+
     public void setAsset(Asset asset) {
         if(this.asset != null) {
             this.asset.getCheckLists().remove(this);
@@ -76,4 +80,5 @@ public class CheckList extends BaseTimeEntity {
         this.asset = asset;
         asset.getCheckLists().add(this);
     }
+
 }

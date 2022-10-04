@@ -4,8 +4,6 @@ import com.example.Estate_Twin.contractstate.domain.entity.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class ContractStateUpdateRequestDto {

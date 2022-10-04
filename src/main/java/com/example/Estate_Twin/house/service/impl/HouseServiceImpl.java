@@ -1,8 +1,6 @@
 package com.example.Estate_Twin.house.service.impl;
 
-import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
-import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.service.HouseService;
 import com.example.Estate_Twin.house.web.dto.*;
 import lombok.RequiredArgsConstructor;

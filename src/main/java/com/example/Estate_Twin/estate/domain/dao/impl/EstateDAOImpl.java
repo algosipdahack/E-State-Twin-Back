@@ -29,6 +29,7 @@ public class EstateDAOImpl implements EstateDAO {
         //조회수 증가
         return findEstate(id).updateEstateHit();
     }
+
     @Override
     public Estate saveFirst(Broker broker, User owner, Address address) {
         return estateRepository.save(new Estate(broker, owner, address));
@@ -54,6 +55,7 @@ public class EstateDAOImpl implements EstateDAO {
 
         return estate;
     }
+
     @Override
     public Estate findEstate(Long id) {
         return estateRepository.findById(id)
@@ -111,16 +113,19 @@ public class EstateDAOImpl implements EstateDAO {
         }
         return estate.setOwnerConfirmY();
     }
+
     // 해당 매물의 브로커인지 확인
     public Estate checkRoleBroker(Estate estate, Broker broker) {
         return broker.getTradeEstates().stream().filter(trade -> trade.equals(estate))
                 .findAny().orElse(null);
     }
+
     //해당 매물의 소유주인지 확인
     public Estate checkRoleOwner(Estate estate, User owner) {
         return owner.getOwnEstates().stream().filter(own -> own.equals(estate))
                 .findAny().orElse(null);
     }
+
     // 해당 매물이 올릴 수 있는 상태인지 확인
     @Transactional
     @Override
@@ -130,5 +135,9 @@ public class EstateDAOImpl implements EstateDAO {
             return true;
         }
         return false;
+    }
+
+    public Estate matchTanent(Long estateId, User user) {
+        return findEstate(estateId).setTanent(user);
     }
 }

@@ -4,8 +4,6 @@ import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.EstateHit;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.web.dto.HouseDto;
-import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 
 import java.util.List;
 

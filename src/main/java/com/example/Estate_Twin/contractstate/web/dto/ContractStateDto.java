@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 public class ContractStateDto {
     private final State state;
     private final LocalDateTime date;
+    private final Long estateId;
     @QueryProjection
     public ContractStateDto(ContractState contractState) {
         this.state = contractState.getState();
         this.date = contractState.getCreatedDate();
+        this.estateId = contractState.getEstate().getId();
     }
 }

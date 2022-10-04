@@ -30,6 +30,7 @@ public class HouseResponseDto {
     private final LocalDateTime usageAvailableDate;
     private final Long roomCount;
     private final Long bathCount;
+
     @QueryProjection
     public HouseResponseDto(House house) {
         this.id = house.getId();

@@ -3,7 +3,6 @@ package com.example.Estate_Twin.user.service.impl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.impl.*;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.BrokerService;
 import com.example.Estate_Twin.user.web.dto.*;

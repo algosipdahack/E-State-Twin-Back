@@ -5,7 +5,6 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 
-import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,5 @@ public class AssetServiceImpl implements AssetService {
         Asset asset = assetDAO.updateAsset(id, assetUpdateRequestDto);
         return new AssetResponseDto(asset);
     }
-
 
 }

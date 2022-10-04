@@ -28,6 +28,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         this.estateHit = QEstateHit.estateHit;
         this.asset = QAsset.asset;
     }
+
     @Override
     public List<EstateMainDto> findByBoroughOrderByWeeklyHit(String borough) {
         QueryResults<EstateMainDto> queryResults = jpaQueryFactory

@@ -44,6 +44,7 @@ public class Broker {
     private User user;
     @OneToMany(mappedBy = "broker", orphanRemoval = true)
     private List<Estate> tradeEstates;
+
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
                   String businessLicense, String brokerageRegistrationLicense, String content,
@@ -58,10 +59,12 @@ public class Broker {
         this.address = address;
         this.brokerPhoto = brokerPhoto;
     }
+
     public void setUser(User user) {
         this.user = user;
         user.setIsBroker();
     }
+
     @PrePersist
     public void prePersist() {
         this.tradeEstates = new ArrayList<>();

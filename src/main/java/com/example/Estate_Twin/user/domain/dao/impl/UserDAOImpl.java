@@ -28,4 +28,5 @@ public class UserDAOImpl implements UserDAO {
     public User signUp(String email, UserSignUpDto dto) {
         return findUserByEmail(email).signup(dto);
     }
+
 }
