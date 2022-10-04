@@ -52,7 +52,6 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    @Transactional
     // state, estatehit
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
         // 기본 정보 저장
@@ -61,13 +60,17 @@ public class EstateServiceImpl implements EstateService {
         // asset 정보 저장
         List<Asset> assets = new ArrayList<>();
         estateSaveRequestDto.getAssets().forEach(asset -> {
-            assets.add(assetDAO.saveAsset(estate,asset.toEntity()));
+            assets.add(assetDAO.saveAsset(estate, asset.toEntity()));
         });
 
         //house 정보 저장
         House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
-        estate.detailUpdate(estateSaveRequestDto, assets, house);
-        return new EstateResponseDto(estateDAO.saveEstate(estate));
+
+        estate.detailUpdate(estateSaveRequestDto);
+
+        contractStateDAO.updateState(estate,State.POST_DOING);
+
+        return new EstateResponseDto(estateDAO.saveEstate(estate,house));
     }
 
     @Override

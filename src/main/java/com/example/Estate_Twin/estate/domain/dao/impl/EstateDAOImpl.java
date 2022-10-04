@@ -37,21 +37,13 @@ public class EstateDAOImpl implements EstateDAO {
 
     @Override
     @Transactional
-    public Estate saveEstate(Estate estate) {
-        // 매물 등록중인 상태
-        estate.setState(State.POST_DOING);
-
+    public Estate saveEstate(Estate estate, House house) {
         //조회수 등록
         EstateHit estateHit = new EstateHit();
         estateHitRepository.save(estateHit);
         estate.setEstateHit(estateHit);
 
-        // 새로운 상태 등록
-        ContractState contractState = new ContractState().builder()
-                .estate(estate)
-                .state(State.POST_DOING)
-                .build();
-        contractStateRepository.save(contractState);
+        estate.setHouse(house);
 
         return estate;
     }

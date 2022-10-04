@@ -21,7 +21,7 @@ public class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User().builder()
+        user = User.builder()
                 .email("daowll@naver.com")
                 .authProvider(AuthProvider.KAKAO)
                 .role(Role.USER)

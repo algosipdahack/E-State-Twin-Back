@@ -74,7 +74,7 @@ public class Estate extends BaseTimeEntity {
         this.address = address;
     }
 
-    public Estate detailUpdate(EstateSaveRequestDto dto, List<Asset> assets, House house) {
+    public Estate detailUpdate(EstateSaveRequestDto dto) {
         this.content = dto.getContent();
         this.estateThumbNail = dto.getEstateThumbNail();
         this.transactionType = TransactionType.of(dto.getTransactionType());
@@ -82,9 +82,6 @@ public class Estate extends BaseTimeEntity {
         this.arCam = dto.getArCam();
         this.estateMedia.clear();
         this.estateMedia.addAll(dto.getEstatePhotos());
-        this.assets.clear();
-        this.assets.addAll(assets);
-        this.house = house;
         return this;
     }
 

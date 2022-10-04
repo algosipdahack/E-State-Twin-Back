@@ -10,7 +10,7 @@ import com.example.Estate_Twin.user.domain.entity.*;
 import java.util.List;
 
 public interface EstateDAO {
-    Estate saveEstate(Estate estate);
+    Estate saveEstate(Estate estate, House house);
     Estate findEstate(Long id);
     Estate updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     List<EstateMainDto> findEstateCustomized(String borough);

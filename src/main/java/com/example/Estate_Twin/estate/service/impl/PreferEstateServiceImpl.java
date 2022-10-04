@@ -20,6 +20,6 @@ public class PreferEstateServiceImpl implements PreferEstateService {
     public PreferEstateResponseDto preferEstate(Long estateId, String email, Preference prefer) {
         User user = userDAO.findUserByEmail(email);
         Estate estate = estateDAO.findEstate(estateId);
-        return new PreferEstateResponseDto(preferEstateDAO.savePreferEstate(estate,user, prefer));
+        return new PreferEstateResponseDto(preferEstateDAO.savePreferEstate(estate, user, prefer));
     }
 }
