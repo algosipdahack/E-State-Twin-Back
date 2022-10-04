@@ -5,19 +5,19 @@ spring:
 spring:
   config:
     activate:
-      on-profile: real
+      on-profile: test
   jackson:
     serialization:
       fail-on-empty-beans: false
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://mysql-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mariadb://test-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: h13001212!
   jpa:
     show_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
