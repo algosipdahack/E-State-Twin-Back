@@ -15,6 +15,7 @@ public class UserResponseDto {
     private final String phone;
     private final String name;
     private final String email;
+    private final boolean isBroker;
     @Schema(description = "선호 지역", example = "강남구")
     private final String borough;
     @Schema(description = "OAuth provider", example = "KAKAO, NAVER, GOOGLE")
@@ -27,7 +28,7 @@ public class UserResponseDto {
     private final String role;
     private final EstateDto tanentEstate;
     private final Set<EstateDto> ownEstate;
-    private final Set<DipEstateDto> dipEstates;
+    private final Set<PreferEstateDto> dipEstates;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
@@ -40,10 +41,11 @@ public class UserResponseDto {
         this.transactionType = user.getTransactionType().toString();
         this.role = user.getRole().toString();
         this.borough = user.getBorough();
+        this.isBroker = user.isBroker();
         this.tanentEstate = new EstateDto(user.getTanentEstate());
         this.ownEstate = new HashSet<>();
         user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
         this.dipEstates = new HashSet<>();
-        user.getDipEstates().forEach(dipEstate -> this.dipEstates.add(new DipEstateDto(dipEstate)));
+        user.getPreferEstates().forEach(dipEstate -> this.dipEstates.add(new PreferEstateDto(dipEstate)));
     }
 }

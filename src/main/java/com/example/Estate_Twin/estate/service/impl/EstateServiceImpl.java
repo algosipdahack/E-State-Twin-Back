@@ -6,7 +6,9 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
+import com.example.Estate_Twin.estate.domain.dao.impl.PreferEstateDAOImpl;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.Exception;
@@ -30,6 +32,7 @@ public class EstateServiceImpl implements EstateService {
     private final BrokerDAOImpl brokerDAO;
     private final AssetDAOImpl assetDAO;
     private final ContractStateDAOImpl contractStateDAO;
+    private final PreferEstateDAOImpl preferEstateDAO;
 
     @Override
     public Long saveFirst(Address address, Long brokerId, String email) {
@@ -37,10 +40,18 @@ public class EstateServiceImpl implements EstateService {
         return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), userDAO.findUserByEmail(email) ,address).getId();
     }
 
-    //조회수 증가시키기
+    //조회수 증가시키기 + 최근 본 매물에 포함
     @Override
-    public EstateResponseDto getEstate(Long id) {
-        return new EstateResponseDto(estateDAO.getEstate(id));
+    public EstateDetailDto getEstate(Long id, String email) {
+        User user = userDAO.findUserByEmail(email);
+        Estate estate = estateDAO.getEstate(id);
+        // 최근 본 매물에 포함
+        preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
+
+        EstateDetailDto detail = new EstateDetailDto(estate);
+        // 사용자가 문의했는지 확인 -> arCam 활성화
+        detail.setIsInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
+        return detail;
     }
 
     @Override
@@ -99,4 +110,5 @@ public class EstateServiceImpl implements EstateService {
         }
         return new EstateResponseDto(newEstate);
     }
+
 }

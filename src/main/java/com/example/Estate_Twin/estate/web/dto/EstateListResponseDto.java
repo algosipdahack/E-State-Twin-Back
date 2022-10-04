@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -33,5 +34,18 @@ public class EstateListResponseDto {
         this.currentFloors = currentFloors;
         this.rentableArea = rentableArea;
         this.sellingFee = sellingFee;
+    }
+    public EstateListResponseDto(Estate estate) {
+        House house = estate.getHouse();
+        this.id = estate.getId();
+        this.transactionType = estate.getTransactionType().toString();
+        this.estateThumbNail = estate.getEstateThumbNail();
+        this.town = estate.getAddress().getTown();
+        this.state = estate.getState().toString();
+        this.estateType = house.getEstateType().toString();
+        this.buildingName = estate.getAddress().getBuildingName();
+        this.currentFloors = house.getCurrentFloors();
+        this.rentableArea = house.getRentableArea();
+        this.sellingFee = house.getSellingFee();
     }
 }

@@ -2,9 +2,7 @@ package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.user.domain.entity.*;
-import com.example.Estate_Twin.user.service.UserService;
-import com.example.Estate_Twin.user.service.impl.OAuthService;
-import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;

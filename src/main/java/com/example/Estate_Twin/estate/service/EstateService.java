@@ -6,7 +6,7 @@ import com.example.Estate_Twin.estate.web.dto.*;
 import java.util.List;
 
 public interface EstateService {
-    EstateResponseDto getEstate(Long id);
+    public EstateDetailDto getEstate(Long id, String email);
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
     Long saveFirst(Address address, Long brokerId, String email);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);

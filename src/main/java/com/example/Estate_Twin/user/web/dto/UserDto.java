@@ -14,6 +14,7 @@ public class UserDto {
     private final String phone;
     private final String name;
     private final String email;
+    private final boolean isBroker;
     @Schema(description = "선호 지역", example = "강남구")
     private String borough;
     @Schema(description = "OAuth provider", example = "KAKAO, NAVER, GOOGLE")
@@ -26,13 +27,14 @@ public class UserDto {
     private final String role;
     private final EstateDto tanentEstate;
     private final Set<EstateDto> ownEstate;
-    private final Set<DipEstateDto> dipEstates;
+    private final Set<PreferEstateDto> dipEstates;
 
     public UserDto(User user) {
         this.birthday = user.getBirthday();
         this.phone = user.getPhone();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.isBroker = user.isBroker();
         this.borough = user.getBorough();
         this.authProvider = user.getAuthProvider().toString();
         this.estateType = user.getEstateType().toString();
@@ -42,6 +44,6 @@ public class UserDto {
         this.ownEstate = new HashSet<>();
         user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
         this.dipEstates = new HashSet<>();
-        user.getDipEstates().forEach(dipEstate -> this.dipEstates.add(new DipEstateDto(dipEstate)));
+        user.getPreferEstates().forEach(dipEstate -> this.dipEstates.add(new PreferEstateDto(dipEstate)));
     }
 }

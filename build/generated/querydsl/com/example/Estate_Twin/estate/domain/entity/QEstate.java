@@ -39,8 +39,6 @@ public class QEstate extends EntityPathBase<Estate> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final SetPath<DipEstate, QDipEstate> dipEstates = this.<DipEstate, QDipEstate>createSet("dipEstates", DipEstate.class, QDipEstate.class, PathInits.DIRECT2);
-
     public final QEstateHit estateHit;
 
     public final ListPath<String, StringPath> estateMedia = this.<String, StringPath>createList("estateMedia", String.class, StringPath.class, PathInits.DIRECT2);
@@ -63,6 +61,8 @@ public class QEstate extends EntityPathBase<Estate> {
     public final com.example.Estate_Twin.user.domain.entity.QUser owner;
 
     public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
+
+    public final SetPath<PreferEstate, QPreferEstate> preferEstates = this.<PreferEstate, QPreferEstate>createSet("preferEstates", PreferEstate.class, QPreferEstate.class, PathInits.DIRECT2);
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
 

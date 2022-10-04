@@ -1,14 +1,10 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
-import com.example.Estate_Twin.address.QAddress;
 import com.example.Estate_Twin.asset.data.entity.QAsset;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.domain.entity.QHouse;
-import com.example.Estate_Twin.house.web.dto.*;
-import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.house.domain.entity.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -22,21 +18,15 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
     private QEstate estate;
     private QHouse house;
-    private QAddress address;
     private QEstateHit estateHit;
     private QAsset asset;
-    private QUser user;
-    private QBroker broker;
     public EstateRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         super(Estate.class);
         this.jpaQueryFactory = jpaQueryFactory;
         this.estate = QEstate.estate;
         this.house = QHouse.house;
-        this.address = QAddress.address;
         this.estateHit = QEstateHit.estateHit;
         this.asset = QAsset.asset;
-        this.user = QUser.user;
-        this.broker = QBroker.broker;
     }
     @Override
     public List<EstateMainDto> findByBoroughOrderByWeeklyHit(String borough) {

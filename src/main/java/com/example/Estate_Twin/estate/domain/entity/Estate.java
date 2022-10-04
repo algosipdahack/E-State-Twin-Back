@@ -64,9 +64,9 @@ public class Estate extends BaseTimeEntity {
     private User tanent;
     @OneToMany(mappedBy = "estate", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Asset> assets;
-    //찜한 매물
+    //찜한 * 최근 * 문의한 매물
     @OneToMany(mappedBy = "estate", fetch = FetchType.EAGER, orphanRemoval = true)
-    private Set<DipEstate> dipEstates;
+    private Set<PreferEstate> preferEstates;
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(Broker broker, User owner, Address address) {
@@ -160,7 +160,7 @@ public class Estate extends BaseTimeEntity {
     public void prePersist() {
         this.estateMedia = new ArrayList<>();
         this.assets = new HashSet<>();
-        this.dipEstates = new HashSet<>();
+        this.preferEstates = new HashSet<>();
         this.state = this.state == null ? State.BROKER_BEFORE : this.state;
         this.isPosted = false;
         this.ownerConfirmYN = false;

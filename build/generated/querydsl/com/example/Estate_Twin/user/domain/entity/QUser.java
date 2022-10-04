@@ -33,15 +33,11 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final SetPath<com.example.Estate_Twin.estate.domain.entity.DipEstate, com.example.Estate_Twin.estate.domain.entity.QDipEstate> dipEstates = this.<com.example.Estate_Twin.estate.domain.entity.DipEstate, com.example.Estate_Twin.estate.domain.entity.QDipEstate>createSet("dipEstates", com.example.Estate_Twin.estate.domain.entity.DipEstate.class, com.example.Estate_Twin.estate.domain.entity.QDipEstate.class, PathInits.DIRECT2);
-
     public final StringPath email = createString("email");
 
     public final EnumPath<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType = createEnum("estateType", com.example.Estate_Twin.estate.domain.entity.EstateType.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final BooleanPath isArCam = createBoolean("isArCam");
 
     public final BooleanPath isBroker = createBoolean("isBroker");
 
@@ -53,6 +49,8 @@ public class QUser extends EntityPathBase<User> {
     public final SetPath<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate> ownEstates = this.<com.example.Estate_Twin.estate.domain.entity.Estate, com.example.Estate_Twin.estate.domain.entity.QEstate>createSet("ownEstates", com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.estate.domain.entity.QEstate.class, PathInits.DIRECT2);
 
     public final StringPath phone = createString("phone");
+
+    public final SetPath<com.example.Estate_Twin.estate.domain.entity.PreferEstate, com.example.Estate_Twin.estate.domain.entity.QPreferEstate> preferEstates = this.<com.example.Estate_Twin.estate.domain.entity.PreferEstate, com.example.Estate_Twin.estate.domain.entity.QPreferEstate>createSet("preferEstates", com.example.Estate_Twin.estate.domain.entity.PreferEstate.class, com.example.Estate_Twin.estate.domain.entity.QPreferEstate.class, PathInits.DIRECT2);
 
     public final StringPath refreshToken = createString("refreshToken");
 

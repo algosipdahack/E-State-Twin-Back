@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Transactional
 @Component
 @AllArgsConstructor
 public class EstateDAOImpl implements EstateDAO {
@@ -27,6 +26,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate getEstate(Long id) {
+        //조회수 증가
         return findEstate(id).updateEstateHit();
     }
     @Override

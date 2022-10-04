@@ -12,6 +12,7 @@ public class UserInfoDto {
     private final String phone;
     private final String name;
     private final String email;
+    private final boolean isBroker;
     @Schema(description = "선호 지역", example = "강남구")
     private String borough;
     @Schema(description = "OAuth provider", example = "KAKAO, NAVER, GOOGLE")
@@ -30,6 +31,7 @@ public class UserInfoDto {
         this.name = user.getName();
         this.email = user.getEmail();
         this.borough = user.getBorough();
+        this.isBroker = user.isBroker();
         this.authProvider = user.getAuthProvider().toString();
         this.estateType = user.getEstateType().toString();
         this.transactionType = user.getTransactionType().toString();

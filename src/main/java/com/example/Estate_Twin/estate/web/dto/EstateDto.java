@@ -32,7 +32,7 @@ public class EstateDto {
     private final UserDto tanent;
     private final List<String> estateMedia;
     private final List<Asset> assets;
-    private final List<DipEstate> dipEstates;
+    private final List<PreferEstate> preferEstates;
     @QueryProjection
     public EstateDto(Estate estate) {
         this.estateThumbNail = estate.getEstateThumbNail();
@@ -57,7 +57,7 @@ public class EstateDto {
         estate.getEstateMedia().forEach(media -> this.estateMedia.add(media));
         this.assets = new ArrayList<>();
         estate.getAssets().forEach(asset -> this.assets.add(asset));
-        this.dipEstates = new ArrayList<>();
-        estate.getDipEstates().forEach(dipEstate -> this.dipEstates.add(dipEstate));
+        this.preferEstates = new ArrayList<>();
+        estate.getPreferEstates().forEach(dipEstate -> this.preferEstates.add(dipEstate));
     }
 }
