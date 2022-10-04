@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.web.dto;
 
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.querydsl.core.annotations.QueryProjection;
@@ -23,18 +24,19 @@ public class EstateListResponseDto {
 
     @QueryProjection
     public EstateListResponseDto(Long id, TransactionType transactionType, String estateThumbNail, String town, EstateType estateType,
-                                 String buildingName, Long currentFloors, Long rentableArea, String state, Long sellingFee) {
+                                 String buildingName, Long currentFloors, Long rentableArea, State state, Long sellingFee) {
         this.id = id;
         this.transactionType = transactionType.toString();
         this.estateThumbNail = estateThumbNail;
         this.town = town;
-        this.state = state;
+        this.state = state.toString();
         this.estateType = estateType.toString();
         this.buildingName = buildingName;
         this.currentFloors = currentFloors;
         this.rentableArea = rentableArea;
         this.sellingFee = sellingFee;
     }
+
     public EstateListResponseDto(Estate estate) {
         House house = estate.getHouse();
         this.id = estate.getId();

@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.address.AddressSearchDto;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.*;
@@ -124,9 +125,16 @@ public class EstateApiController {
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/contract")
     public ResponseEntity<ContractStateResponseDto> startContract(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @PathVariable Long estateId) {
-        ContractStateResponseDto contractStateResponseDto = estateService.startContract(estateId,user.getEmail());
+        ContractStateResponseDto contractStateResponseDto = estateService.startContract(estateId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
     }
 
+    @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @PostMapping(value = "list/search")
+    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@RequestBody AddressSearchDto addressSearchDto) {
+        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(addressSearchDto);
+        return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
+    }
 
 }

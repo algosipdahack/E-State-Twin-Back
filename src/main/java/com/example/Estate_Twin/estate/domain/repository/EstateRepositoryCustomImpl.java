@@ -63,7 +63,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.address.buildingName,
                         estate.house.currentFloors,
                         estate.house.rentableArea,
-                        estate.state.stringValue(),
+                        estate.state,
                         house.sellingFee
                 ))
                 .from(estate)

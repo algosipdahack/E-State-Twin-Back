@@ -24,5 +24,7 @@ public interface EstateDAO {
     boolean checkEnroll(Estate estate);
     Estate saveFirst(Broker broker, User owner, Address address);
     Estate matchTanent(Long estateId, User user);
+    List<EstateListResponseDto> findEstateListByBorough(String borough);
+    List<EstateListResponseDto> findEstateListByTown(String town);
 
 }

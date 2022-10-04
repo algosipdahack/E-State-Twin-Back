@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.service.impl;
 
 import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.address.AddressSearchDto;
 import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
@@ -116,5 +117,13 @@ public class EstateServiceImpl implements EstateService {
         Estate estate = estateDAO.matchTanent(estateId,userDAO.findUserByEmail(email));
         ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
         return new ContractStateResponseDto(contractState);
+    }
+
+    @Override
+    public List<EstateListResponseDto> searchEstate(AddressSearchDto addressSearchDto) {
+        if (addressSearchDto.getTown() != null) {
+            return estateDAO.findEstateListByTown(addressSearchDto.getTown());
+        }
+        return estateDAO.findEstateListByBorough(addressSearchDto.getBorough());
     }
 }

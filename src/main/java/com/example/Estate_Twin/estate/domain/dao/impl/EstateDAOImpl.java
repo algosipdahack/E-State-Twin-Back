@@ -2,8 +2,6 @@ package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
-import com.example.Estate_Twin.contractstate.domain.entity.*;
-import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
@@ -21,7 +19,6 @@ import java.util.List;
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
-    private ContractStateRepository contractStateRepository;
 
     @Override
     @Transactional
@@ -54,7 +51,6 @@ public class EstateDAOImpl implements EstateDAO {
                 .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
     }
 
-
     @Override
     public House findHouse(Long id) {
         return estateRepository.findHouse(id);
@@ -74,6 +70,17 @@ public class EstateDAOImpl implements EstateDAO {
     public List<EstateMainDto> findEstateCustomized(String borough) {
         return estateRepository.findByBoroughOrderByWeeklyHit(borough);
     }
+
+    @Override
+    public List<EstateListResponseDto> findEstateListByBorough(String borough) {
+        return estateRepository.findEstateByBorough(borough);
+    }
+
+    @Override
+    public List<EstateListResponseDto> findEstateListByTown(String town) {
+        return estateRepository.findEstateByTown(town);
+    }
+
 
     @Override
     public List<EstateListResponseDto> findAllEstateList() {
