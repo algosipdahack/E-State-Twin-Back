@@ -14,7 +14,7 @@ public interface EstateDAO {
     Estate findEstate(Long id);
     Estate updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     List<EstateMainDto> findEstateCustomized(String borough);
-    List<EstateListResponseDto> findAllEstateList();
+    List<EstateListResponseDto> findAllEstateList(Long estateId, int pageSize);
     Estate allowBroker(Estate estate, Broker broker);
     Estate allowOwner(Estate estate, User owner);
     Estate getEstate(Long id);

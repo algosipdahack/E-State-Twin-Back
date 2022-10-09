@@ -108,7 +108,7 @@ public class Estate extends BaseTimeEntity {
         this.estateHit.updateHit();
         return this;
     }
-
+    //TODO Optional 적용
     public void setOwner(User owner) {
         if(this.owner != null ){
             this.owner.getOwnEstates().remove(this);

@@ -74,8 +74,8 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public List<EstateListResponseDto> getAllEstate() {
-        return estateDAO.findAllEstateList();
+    public List<EstateListResponseDto> getAllEstate(Long estateId, int pageSize) {
+        return estateDAO.findAllEstateList(estateId, pageSize);
     }
 
     @Override

@@ -1,29 +1,38 @@
 package com.example.Estate_Twin.house.domain.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 
-/*@Entity
-@DiscriminatorValue("O")
-// coach처럼 다 바꾸기
-public class Officetel extends House {
+@Getter
+@NoArgsConstructor
+@Entity
+@Table(name = "officetel")
+public class Officetel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "house_id")
+    @Column(name = "officetel_id")
     private Long id;
-
-    @Column
     private Boolean elevator;
-
-    @Column
     private Boolean duplex;
-
-    @Column
     private Boolean loft;
-
-    @Column
     private Boolean builtIn;
-
-    @Column
     private Boolean veranda;
+    @OneToOne
+    @JoinColumn(name="house_id")
+    private House house;
 
-}*/
+    @Builder
+    public Officetel(Boolean elevator, Boolean duplex, Boolean loft, Boolean builtIn, Boolean veranda) {
+        this.elevator = elevator;
+        this.duplex = duplex;
+        this.loft = loft;
+        this.builtIn = builtIn;
+        this.veranda = veranda;
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
+        house.setIsOfficetel();
+    }
+}

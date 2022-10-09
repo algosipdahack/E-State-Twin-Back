@@ -61,7 +61,7 @@ public class CheckListApiController {
     @Operation(summary = "Confirm of checklist post", description = "중개인/집주인의 체크리스트 승인")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
-    @PutMapping("/{checklistId}/estate/{estateId}/confirm")
+    @PatchMapping("/{checklistId}/estate/{estateId}/confirm")
     public ResponseEntity<CheckListResponseDto> confirmCheckList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user , @PathVariable Long checklistId, @PathVariable Long estateId) {
         CheckListResponseDto checkListResponseDto = checkListService.confirmCheckList(estateId, checklistId, user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);

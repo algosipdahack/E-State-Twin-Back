@@ -39,7 +39,7 @@ public class House extends BaseTimeEntity {
     private LocalDateTime usageAvailableDate;
     private Long roomCount;
     private Long bathCount;
-
+    private boolean isOfficetel;
     @OneToOne(mappedBy = "house")
     private Estate estate;
 
@@ -96,7 +96,17 @@ public class House extends BaseTimeEntity {
         this.bathCount = dto.getBathCount();
         return this;
     }
+
     public void setEstate(Estate estate) {
         this.estate = estate;
+    }
+
+    public void setIsOfficetel() {
+        this.isOfficetel = true;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.isOfficetel = false;
     }
 }

@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.*;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
@@ -46,13 +47,21 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .leftJoin(estate.estateHit, estateHit)
                 .where(estate.address.borough.eq(borough))
                 .orderBy(estate.estateHit.weeklyHit.desc())
+                .limit(6) //6개씩 잘라서 주기
                 .fetchResults();
         List<EstateMainDto> result = queryResults.getResults();
         return result;
     }
 
+    private BooleanExpression ltEstateId(Long estateId) {
+        if(estateId == null) {
+            return null;
+        }
+        return estate.id.lt(estateId);
+    }
+
     @Override
-    public List<EstateListResponseDto> findEstateList() {
+    public List<EstateListResponseDto> findEstateList(Long estateId, int pageSize) {
         QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
                 .select(new QEstateListResponseDto(
                         estate.id,
@@ -67,8 +76,10 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         house.sellingFee
                 ))
                 .from(estate)
+                .where(ltEstateId(estateId))
                 .leftJoin(estate.house, house)
                 .orderBy(estate.id.desc())
+                .limit(pageSize)
                 .fetchResults();
         List<EstateListResponseDto> result = queryResults.getResults();
         return result;

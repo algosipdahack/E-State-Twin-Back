@@ -83,8 +83,8 @@ public class EstateDAOImpl implements EstateDAO {
 
 
     @Override
-    public List<EstateListResponseDto> findAllEstateList() {
-        return estateRepository.findEstateList();
+    public List<EstateListResponseDto> findAllEstateList(Long estateId, int pageSize) {
+        return estateRepository.findEstateList(estateId, pageSize);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class PreferEstateDAOImpl implements PreferEstateDAO {
     @Transactional
     @Override
     public PreferEstate savePreferEstate(Estate estate, User user, Preference prefer) {
-        return preferEstateRepository.save(new PreferEstate().builder()
+        return preferEstateRepository.save(PreferEstate.builder()
                 .preference(prefer)
                 .estate(estate)
                 .user(user)
