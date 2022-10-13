@@ -56,8 +56,8 @@ public class BrokerController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerEstateDto.class)))})
     @GetMapping("/estate")
     public ResponseEntity<List<BrokerEstateDto>> getEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user,
-                                                           @ApiParam(value = "State", required = true, example = "BROKER_BEFORE, POST_DOING, POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
-                                                            @RequestParam(name = "State") String state) {
+                                                           @ApiParam(value = "state", required = true, example = "BROKER_BEFORE, POST_DOING, POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
+                                                            @RequestParam(name = "state") String state) {
         List<BrokerEstateDto> brokerEstateDtos = brokerService.getbrokerEstate(user.getEmail(), State.of(state));
         return ResponseEntity.status(HttpStatus.OK).body(brokerEstateDtos);
     }

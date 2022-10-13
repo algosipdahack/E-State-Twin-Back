@@ -29,4 +29,10 @@ public class UserDAOImpl implements UserDAO {
         return findUserByEmail(email).signup(dto);
     }
 
+    @Override
+    @Transactional
+    public User deleteMember(String email) {
+        return findUserByEmail(email).delUser();
+    }
+
 }

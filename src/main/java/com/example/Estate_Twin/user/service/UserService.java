@@ -6,4 +6,5 @@ public interface UserService {
     UserResponseDto getUserbyId(Long id);
     UserResponseDto getUserbyEmail(String email);
     UserInfoDto signUp(String email, UserSignUpDto userSignUpDto);
+    Long deleteUser(String email);
 }

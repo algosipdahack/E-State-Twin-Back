@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.auth.service;
 
 import com.example.Estate_Twin.auth.jwt.*;
+import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
@@ -15,6 +16,7 @@ public class JwtService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
+    private final RedisService redisService;
     @Transactional
     public String refreshToken(String oldRefreshToken, String oldAccessToken) {
 
@@ -29,10 +31,10 @@ public class JwtService {
         String email = user.getUsername();
 
         // Match Refresh Token
-        String savedToken = userRepository.getRefreshTokenByEmail(email);
+        String savedRefreshToken = redisService.getValues(email);
         User r_user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = "+user.getEmail()));
-        if(!savedToken.equals(oldRefreshToken)) {
+                .orElseThrow(()->new IllegalArgumentException("해당 유저를 찾을 수 없습니다. email = " + user.getEmail()));
+        if(!savedRefreshToken.equals(oldRefreshToken)) {
             throw new RuntimeException("Not Matched Refresh Token");
         }
 

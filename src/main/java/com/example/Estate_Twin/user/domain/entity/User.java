@@ -26,7 +26,7 @@ public class User extends BaseTimeEntity {
     private String email;
     private String refreshToken;
     private boolean isBroker;
-    private boolean isUser;
+    private boolean userDel;
     //선호 지역
     private String borough;
     @Enumerated(EnumType.STRING)
@@ -91,9 +91,15 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
+    public User delUser() {
+        this.userDel = true;
+        return this;
+    }
+
     @PrePersist
     public void prePersist() {
         this.isBroker = false;
+        this.userDel = false;
         this.ownEstates = new HashSet<>();
         this.preferEstates = new HashSet<>();
     }

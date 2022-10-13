@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
-
+/*
 public class AuthServiceTest {
     private UserRepository userRepository = Mockito.mock(UserRepository.class);
     private CustomUserDetailService customUserDetailService = new CustomUserDetailService(userRepository);
@@ -39,4 +39,3 @@ public class AuthServiceTest {
 
     }
 */
-}

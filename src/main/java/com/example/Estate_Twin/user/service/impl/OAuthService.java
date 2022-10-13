@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.service.impl;
 
 import com.example.Estate_Twin.auth.dto.OAuth2UserInfo;
 import com.example.Estate_Twin.auth.jwt.*;
+import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.exception.OAuthProcessingException;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
@@ -92,6 +93,9 @@ public class OAuthService {
             if(AuthProvider.valueOf(providerName) != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
             }
+            if(user.isUserDel()) { // 탈퇴한 회원의 경우
+                throw new Exception("이미 탈퇴한 회원입니다.");
+            }
         } else {
             //첫 로그인인 경우
             isMember = false;
@@ -101,6 +105,8 @@ public class OAuthService {
         CustomUserDetails.create(user,userAttributes);
         String jAccessToken = tokenProvider.createAccessToken(user);
         String jRefreshToken = tokenProvider.createRefreshToken(user);
+
+
         user.setRefreshToken(jRefreshToken);
         return new Token(jAccessToken,jRefreshToken,isMember);
     }
@@ -109,7 +115,7 @@ public class OAuthService {
     public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
 
-        //kakao로부터 유저정보 받아서 db에 저장
+        // kakao로부터 유저정보 받아서 db에 저장
         return getUserProfile(providerName.toUpperCase(), accessToken, provider);
     }
 

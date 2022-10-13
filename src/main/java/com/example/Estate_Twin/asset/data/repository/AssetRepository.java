@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.asset.data.repository;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.entity.Option;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.*;

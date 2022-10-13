@@ -32,7 +32,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 log.error("토큰에 해당하는 사용자가 없습니다.", e);
             }
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

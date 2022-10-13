@@ -1,6 +1,8 @@
 package com.example.Estate_Twin.user.web;
 
+import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.auth.jwt.Token;
+import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User", description = "유저 API")
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserServiceImpl userService;
     private final OAuthService oAuthService;
+    private final RedisService redisService;
 
     // TODO - 아직 무슨 내용이 들어가야 할지 모름
     @Operation(summary = "mypage of user", description = "마이페이지")
@@ -31,6 +35,24 @@ public class UserController {
         UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
+
+    /*@Operation(summary = "mypage of asset", description = "세입자모드")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @GetMapping("/asset")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<UserResponseDto> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestParam(name = "option") String option) {
+        userService.getTenentAsset(user.getEmail(), Option.of(option));
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+    }
+
+    @Operation(summary = "mypage of owner", description = "집주인 모드")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @GetMapping("/asset")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<UserResponseDto> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+    }*/
 
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
@@ -49,23 +71,24 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
-    /*@Operation(summary = "logout of user", description = "로그아웃")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
-    @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
+    @Operation(summary = "logout of user", description = "로그아웃")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))})
     @GetMapping("/logout")
-    public ResponseEntity<Long> logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        Token token = oAuthService.login();
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+    public ResponseEntity logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        // refresh Token 삭제
+        redisService.delValues(user.getEmail());
+        // 세션 삭제
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.status(HttpStatus.OK).body("로그아웃 성공!");
     }
 
     @Operation(summary = "Membership Withdrawal", description = "회원탈퇴")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
-    @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
     @DeleteMapping("")
     public ResponseEntity<Long> withdrawal(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        Long userId = userService.delete(user.getEmail());
+        Long userId = userService.deleteUser(user.getEmail());
+        SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body(userId);
-    }*/
-
+    }
 
 }
