@@ -66,7 +66,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
 
-    public final com.example.Estate_Twin.user.domain.entity.QUser tanent;
+    public final com.example.Estate_Twin.user.domain.entity.QUser tenent;
 
     public final StringPath thumbnail3D = createString("thumbnail3D");
 
@@ -95,7 +95,7 @@ public class QEstate extends EntityPathBase<Estate> {
         this.estateHit = inits.isInitialized("estateHit") ? new QEstateHit(forProperty("estateHit"), inits.get("estateHit")) : null;
         this.house = inits.isInitialized("house") ? new com.example.Estate_Twin.house.domain.entity.QHouse(forProperty("house"), inits.get("house")) : null;
         this.owner = inits.isInitialized("owner") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("owner"), inits.get("owner")) : null;
-        this.tanent = inits.isInitialized("tanent") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("tanent"), inits.get("tanent")) : null;
+        this.tenent = inits.isInitialized("tenent") ? new com.example.Estate_Twin.user.domain.entity.QUser(forProperty("tenent"), inits.get("tenent")) : null;
     }
 
 }

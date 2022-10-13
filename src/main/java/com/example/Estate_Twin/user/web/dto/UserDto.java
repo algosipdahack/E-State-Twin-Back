@@ -25,7 +25,7 @@ public class UserDto {
     private final String estateType;
     @Schema(description = "유저 지위", example = "USER")
     private final String role;
-    private final EstateDto tanentEstate;
+    private final EstateDto tenentEstate;
     private final Set<EstateDto> ownEstate;
     private final Set<PreferEstateDto> dipEstates;
 
@@ -40,7 +40,7 @@ public class UserDto {
         this.estateType = user.getEstateType().toString();
         this.transactionType = user.getTransactionType().toString();
         this.role = user.getRole().toString();
-        this.tanentEstate = new EstateDto(user.getTanentEstate());
+        this.tenentEstate = new EstateDto(user.getTenentEstate());
         this.ownEstate = new HashSet<>();
         user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
         this.dipEstates = new HashSet<>();

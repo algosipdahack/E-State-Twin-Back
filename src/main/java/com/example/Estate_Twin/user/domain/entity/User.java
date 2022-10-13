@@ -26,6 +26,7 @@ public class User extends BaseTimeEntity {
     private String email;
     private String refreshToken;
     private boolean isBroker;
+    private boolean isUser;
     //선호 지역
     private String borough;
     @Enumerated(EnumType.STRING)
@@ -39,7 +40,7 @@ public class User extends BaseTimeEntity {
     //세입중인 매물
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
-    private Estate tanentEstate;
+    private Estate tenentEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
     private Set<Estate> ownEstates;
@@ -72,9 +73,9 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public void setTanentEstate(Estate estate) {
-        this.tanentEstate = estate;
-        estate.setTanent(this);
+    public void setTenentEstate(Estate estate) {
+        this.tenentEstate = estate;
+        estate.setTenent(this);
     }
 
     public void setRefreshToken(String refreshToken) {

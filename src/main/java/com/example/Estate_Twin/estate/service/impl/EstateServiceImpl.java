@@ -113,7 +113,7 @@ public class EstateServiceImpl implements EstateService {
     @Override
     @Transactional
     public ContractStateResponseDto startContract(Long estateId, String email) {
-        Estate estate = estateDAO.matchTanent(estateId,userDAO.findUserByEmail(email));
+        Estate estate = estateDAO.matchTenent(estateId,userDAO.findUserByEmail(email));
         ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
         return new ContractStateResponseDto(contractState);
     }

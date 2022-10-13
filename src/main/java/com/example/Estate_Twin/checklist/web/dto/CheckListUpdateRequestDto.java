@@ -16,6 +16,6 @@ public class CheckListUpdateRequestDto {
     private String checkListPhoto;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
-    private Boolean tanentConfirmYN;
+    private Boolean tenentConfirmYN;
     private LocalDateTime repairDate;
 }

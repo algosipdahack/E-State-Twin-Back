@@ -13,7 +13,7 @@ public class CheckListDto {
     private final LocalDateTime repairDate;
     private final RepairType repairType;
     private final Boolean brokerConfirmYN;
-    private final Boolean tanentConfirmYN;
+    private final Boolean tenentConfirmYN;
     private final Boolean ownerConfirmYN;
 
     @QueryProjection
@@ -23,7 +23,7 @@ public class CheckListDto {
         this.checkListContent = checkList.getCheckListContent();
         this.repairDate = checkList.getRepairDate();
         this.repairType = checkList.getRepairType();
-        this.tanentConfirmYN = checkList.getTanentConfirmYN();
+        this.tenentConfirmYN = checkList.getTenentConfirmYN();
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
     }

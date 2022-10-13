@@ -23,7 +23,7 @@ public interface EstateDAO {
     List<AssetResponseDto> findAssets(Long id);
     boolean checkEnroll(Estate estate);
     Estate saveFirst(Broker broker, User owner, Address address);
-    Estate matchTanent(Long estateId, User user);
+    Estate matchTenent(Long estateId, User user);
     List<EstateListResponseDto> findEstateListByBorough(String borough);
     List<EstateListResponseDto> findEstateListByTown(String town);
     User updateBorough(User user, String region);

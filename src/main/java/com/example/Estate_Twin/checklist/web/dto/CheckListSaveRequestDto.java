@@ -16,7 +16,7 @@ public class CheckListSaveRequestDto {
     private String repairType;
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
-    private Boolean tanentConfirmYN;
+    private Boolean tenentConfirmYN;
     private String checkListPhoto;
 
     public CheckList toEntity() {
@@ -24,7 +24,7 @@ public class CheckListSaveRequestDto {
                 .checkListContent(checkListContent)
                 .ownerConfirmYN(ownerConfirmYN)
                 .brokerConfirmYN(brokerConfirmYN)
-                .tanentConfirmYN(tanentConfirmYN)
+                .tenentConfirmYN(tenentConfirmYN)
                 .flawPart(flawPart)
                 .repairDate(repairDate)
                 .checkListPhoto(checkListPhoto)

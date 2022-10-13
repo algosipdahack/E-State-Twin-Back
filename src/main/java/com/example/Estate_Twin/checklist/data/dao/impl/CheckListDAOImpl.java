@@ -56,7 +56,7 @@ public class CheckListDAOImpl implements CheckListDAO {
         if(checkUser(estateId,user)) { // 집주인이면
             return checkList.setOwnerConfirmY();
         } else{ // 세입자라면
-            return checkList.setTanentConfirmY();
+            return checkList.setTenentConfirmY();
         }
     }
 
@@ -70,7 +70,7 @@ public class CheckListDAOImpl implements CheckListDAO {
     @Override
     public boolean checkDone(CheckList checkList) {
         //모두 다 동의했을 경우
-        if(checkList.getBrokerConfirmYN() && checkList.getOwnerConfirmYN() && checkList.getTanentConfirmYN()) {
+        if(checkList.getBrokerConfirmYN() && checkList.getOwnerConfirmYN() && checkList.getTenentConfirmYN()) {
             return true;
         }
         return false;

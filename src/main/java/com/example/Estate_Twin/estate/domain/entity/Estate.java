@@ -59,8 +59,8 @@ public class Estate extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
-    @OneToOne(mappedBy = "tanentEstate")
-    private User tanent;
+    @OneToOne(mappedBy = "tenentEstate")
+    private User tenent;
     @OneToMany(mappedBy = "estate", fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Asset> assets;
     //찜한 * 최근 * 문의한 매물
@@ -125,8 +125,8 @@ public class Estate extends BaseTimeEntity {
         broker.getTradeEstates().add(this);
     }
 
-    public Estate setTanent(User tanent) {
-        this.tanent = tanent;
+    public Estate setTenent(User tenent) {
+        this.tenent = tenent;
         return this;
     }
 

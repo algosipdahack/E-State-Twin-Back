@@ -26,7 +26,7 @@ public class CheckList extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
     private Boolean brokerConfirmYN;
-    private Boolean tanentConfirmYN;
+    private Boolean tenentConfirmYN;
     private Boolean ownerConfirmYN;
     @ManyToOne
     @JoinColumn(name = "ASSET_ID")
@@ -35,14 +35,14 @@ public class CheckList extends BaseTimeEntity {
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
                      String checkListContent, LocalDateTime repairDate, String checkListPhoto,
-                     RepairType repairType, Boolean tanentConfirmYN) {
+                     RepairType repairType, Boolean tenentConfirmYN) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;
         this.ownerConfirmYN = ownerConfirmYN;
         this.checkListContent = checkListContent;
         this.repairType = repairType;
-        this.tanentConfirmYN = tanentConfirmYN;
+        this.tenentConfirmYN = tenentConfirmYN;
         this.checkListPhoto = checkListPhoto;
     }
 
@@ -53,7 +53,7 @@ public class CheckList extends BaseTimeEntity {
         this.ownerConfirmYN = dto.getOwnerConfirmYN();
         this.checkListContent = dto.getCheckListContent();
         this.repairType = RepairType.of(dto.getRepairType());
-        this.tanentConfirmYN = dto.getTanentConfirmYN();
+        this.tenentConfirmYN = dto.getTenentConfirmYN();
         this.checkListPhoto = dto.getCheckListPhoto();
         return this;
     }
@@ -68,8 +68,8 @@ public class CheckList extends BaseTimeEntity {
         return this;
     }
 
-    public CheckList setTanentConfirmY() {
-        this.tanentConfirmYN = true;
+    public CheckList setTenentConfirmY() {
+        this.tenentConfirmYN = true;
         return this;
     }
 

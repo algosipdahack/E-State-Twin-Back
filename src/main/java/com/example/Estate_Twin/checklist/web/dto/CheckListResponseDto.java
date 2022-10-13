@@ -17,7 +17,7 @@ public class CheckListResponseDto {
     private final String checkListPhoto;
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
-    private final Boolean tanentConfirmYN;
+    private final Boolean tenentConfirmYN;
     private final LocalDateTime repairDate;
     private final LocalDateTime createdAt;
 
@@ -31,7 +31,7 @@ public class CheckListResponseDto {
         this.repairType = checkList.getRepairType().toString();
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
-        this.tanentConfirmYN = checkList.getTanentConfirmYN();
+        this.tenentConfirmYN = checkList.getTenentConfirmYN();
         this.createdAt = checkList.getCreatedDate();
     }
 

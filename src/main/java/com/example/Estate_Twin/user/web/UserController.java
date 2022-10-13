@@ -49,4 +49,23 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
+    /*@Operation(summary = "logout of user", description = "로그아웃")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
+    @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
+    @GetMapping("/logout")
+    public ResponseEntity<Long> logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        Token token = oAuthService.login();
+        return ResponseEntity.status(HttpStatus.OK).body(token);
+    }
+
+    @Operation(summary = "Membership Withdrawal", description = "회원탈퇴")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
+    @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
+    @DeleteMapping("")
+    public ResponseEntity<Long> withdrawal(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        Long userId = userService.delete(user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(userId);
+    }*/
+
+
 }

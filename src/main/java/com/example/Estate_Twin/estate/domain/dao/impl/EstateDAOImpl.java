@@ -137,8 +137,8 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public Estate matchTanent(Long estateId, User user) {
-        return findEstate(estateId).setTanent(user);
+    public Estate matchTenent(Long estateId, User user) {
+        return findEstate(estateId).setTenent(user);
     }
 
     @Override
