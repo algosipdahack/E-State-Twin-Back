@@ -10,17 +10,18 @@ spring:
     serialization:
       fail-on-empty-beans: false
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://test-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/idiot?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: h13001212!
+    password: P@ssw0rd
   jpa:
     show_sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
+    database: mysql
   batch:
     jdbc:
       initialize-schema: always
@@ -30,6 +31,9 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+  redis:
+    port: 6379
+    host: localhost
 aws:
   paramstore:
     enabled: true
@@ -74,6 +78,50 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
+  redis:
+    port: 6379
+    host: localhost
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: server
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://test-rds.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: h13001212!
+  jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  batch:
+    job:
+      enabled: false #시작과 동시에 실행되는 건 방지
+    jdbc:
+      initialize-schema: always
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  redis:
+    port: 6379
+    host: localhost
 cloud:
   aws:
     region:

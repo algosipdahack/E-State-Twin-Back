@@ -60,6 +60,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<com.example.Estate_Twin.estate.domain.entity.TransactionType> transactionType = createEnum("transactionType", com.example.Estate_Twin.estate.domain.entity.TransactionType.class);
 
+    public final BooleanPath userDel = createBoolean("userDel");
+
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
     }
