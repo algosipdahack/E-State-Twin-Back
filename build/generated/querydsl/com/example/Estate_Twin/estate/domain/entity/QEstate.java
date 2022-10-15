@@ -28,7 +28,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final StringPath arCam = createString("arCam");
 
-    public final SetPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createSet("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
+    public final ListPath<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset> assets = this.<com.example.Estate_Twin.asset.data.entity.Asset, com.example.Estate_Twin.asset.data.entity.QAsset>createList("assets", com.example.Estate_Twin.asset.data.entity.Asset.class, com.example.Estate_Twin.asset.data.entity.QAsset.class, PathInits.DIRECT2);
 
     public final com.example.Estate_Twin.user.domain.entity.QBroker broker;
 
@@ -62,7 +62,7 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
 
-    public final SetPath<PreferEstate, QPreferEstate> preferEstates = this.<PreferEstate, QPreferEstate>createSet("preferEstates", PreferEstate.class, QPreferEstate.class, PathInits.DIRECT2);
+    public final ListPath<PreferEstate, QPreferEstate> preferEstates = this.<PreferEstate, QPreferEstate>createList("preferEstates", PreferEstate.class, QPreferEstate.class, PathInits.DIRECT2);
 
     public final EnumPath<com.example.Estate_Twin.contractstate.domain.entity.State> state = createEnum("state", com.example.Estate_Twin.contractstate.domain.entity.State.class);
 

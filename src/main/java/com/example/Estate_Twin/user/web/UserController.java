@@ -1,7 +1,9 @@
 package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.asset.data.entity.Option;
+import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
+import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
 import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
@@ -16,6 +18,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "User", description = "유저 API")
 @RequiredArgsConstructor
@@ -36,23 +40,41 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
     }
 
-    /*@Operation(summary = "mypage of asset", description = "세입자모드")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
-    @GetMapping("/asset")
+    @Operation(summary = "mypage of tenent", description = "세입자모드 목록")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
+    @GetMapping("/tenent/list")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestParam(name = "option") String option) {
-        userService.getTenentAsset(user.getEmail(), Option.of(option));
-        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+    public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        EstateModeDto estate = userService.getTenentAssetList(user.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(estate);
     }
 
-    @Operation(summary = "mypage of owner", description = "집주인 모드")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
-    @GetMapping("/asset")
+    @Operation(summary = "mypage detail of tenent", description = "세입자모드 상세")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @GetMapping("/tenent/detail")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
-    }*/
+    public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestParam(name = "option") String option) {
+        List<AssetResponseDto> assets = userService.getTenentAsset(user.getId(), Option.of(option));
+        return ResponseEntity.status(HttpStatus.OK).body(assets);
+    }
+
+    @Operation(summary = "mypage of owner", description = "집주인 모드 목록")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
+    @GetMapping("/owner/list")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        List<EstateModeDto> assetList = userService.getOwnerAssetList(user.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(assetList);
+    }
+
+    @Operation(summary = "mypage detail of owner", description = "집주인 모드 상세")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @GetMapping("/owner/detail")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestParam(name = "option") String option) {
+        List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(user.getId(), Option.of(option));
+        return ResponseEntity.status(HttpStatus.OK).body(ownerAsset);
+    }
 
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})

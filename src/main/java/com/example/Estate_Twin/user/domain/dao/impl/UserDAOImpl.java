@@ -1,5 +1,9 @@
 package com.example.Estate_Twin.user.domain.dao.impl;
 
+import com.example.Estate_Twin.asset.data.entity.*;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
+import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
+import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
@@ -8,10 +12,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class UserDAOImpl implements UserDAO {
     private UserRepository userRepository;
+    private AssetRepository assetRepository;
+    private EstateRepository estateRepository;
 
     @Override
     public User findUserById(Long id) {
@@ -35,4 +43,23 @@ public class UserDAOImpl implements UserDAO {
         return findUserByEmail(email).delUser();
     }
 
+    @Override
+    public List<Asset> getTenentAsset(Long userId, Option option) {
+        return assetRepository.findTenentAsset(userId, option);
+    }
+
+    @Override
+    public List<Asset> getOwnerAsset(Long userId, Option option) {
+        return assetRepository.findOwnerAsset(userId, option);
+    }
+
+    @Override
+    public EstateModeDto getTenentAssetList(Long userId) {
+        return estateRepository.findTenentEstateList(userId);
+    }
+
+    @Override
+    public List<EstateModeDto> getOwnerAssetList(Long userId) {
+        return estateRepository.findOwnerEstateList(userId);
+    }
 }

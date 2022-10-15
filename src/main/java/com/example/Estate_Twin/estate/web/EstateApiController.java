@@ -1,14 +1,11 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.address.AddressSearchDto;
+import com.example.Estate_Twin.address.*;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -34,26 +31,6 @@ public class EstateApiController {
     //리스트
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
-    @ApiImplicitParams(
-            {
-                    @ApiImplicitParam(
-                            name = "id"
-                            , value = "자격증 아이디"
-                            , required = true
-                            , dataType = "string"
-                            , paramType = "path"
-                            , defaultValue = "None"
-                    )
-                    ,
-                    @ApiImplicitParam(
-                            name = "fields"
-                            , value = "응답 필드 종류"
-                            , required = false
-                            , dataType = "string"
-                            , paramType = "query"
-                            , defaultValue = ""
-                    )
-            })
     @GetMapping("list")
     public ResponseEntity<List<EstateListResponseDto>> getList(@RequestParam Long estateId, @RequestParam int size) {
         List<EstateListResponseDto> estateListResponseDtos = estateService.getAllEstate(estateId,size);

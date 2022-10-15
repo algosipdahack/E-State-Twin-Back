@@ -29,5 +29,4 @@ public class AssetServiceImpl implements AssetService {
         Asset asset = assetDAO.updateAsset(id, assetUpdateRequestDto);
         return new AssetResponseDto(asset);
     }
-
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.*;
 import java.util.*;
 
 
-public interface AssetRepository extends JpaRepository<Asset,Long> {
+public interface AssetRepository extends JpaRepository<Asset,Long>, AssetRepositoryCustom {
     List<Asset> findAllByOrderByIdDesc();
     @Query("select a from Asset a join fetch a.checkLists")
     List<Asset> findAllUsingFetchJoin();

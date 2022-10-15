@@ -98,6 +98,25 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
+    public List<EstateModeDto> findOwnerEstateList(Long userId) {
+        QueryResults<EstateModeDto> queryResults = jpaQueryFactory
+                .select(new QEstateModeDto(estate.address, estate.house.isOfficetel))
+                .from(estate)
+                .where(estate.owner.id.eq(userId))
+                .fetchResults();
+        return queryResults.getResults();
+    }
+
+    @Override
+    public EstateModeDto findTenentEstateList(Long userId) {
+        return jpaQueryFactory
+                .select(new QEstateModeDto(estate.address, estate.house.isOfficetel))
+                .from(estate)
+                .where(estate.tenent.id.eq(userId))
+                .fetchOne();
+    }
+
+    @Override
     public EstateHit findEstateHit(Long estateId) {
         return jpaQueryFactory.select(estateHit)
                 .from(estate)
@@ -115,3 +134,4 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .fetchOne();
     }
 }
+
