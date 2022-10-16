@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-@Transactional
+@Transactional(readOnly = true)
 @Component
 @AllArgsConstructor
 public class BrokerDAOImpl implements BrokerDAO {

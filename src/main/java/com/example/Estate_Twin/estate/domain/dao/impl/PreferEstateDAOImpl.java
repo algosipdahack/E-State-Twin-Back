@@ -13,8 +13,9 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class PreferEstateDAOImpl implements PreferEstateDAO {
-    PreferEstateRepository preferEstateRepository;
+    private PreferEstateRepository preferEstateRepository;
     @Transactional
     @Override
     public PreferEstate savePreferEstate(Estate estate, User user, Preference prefer) {
@@ -24,6 +25,7 @@ public class PreferEstateDAOImpl implements PreferEstateDAO {
                 .user(user)
                 .build());
     }
+
     @Override
     public boolean existPreferEstate(Long estateId, Long userId, Preference prefer) {
         return preferEstateRepository.existsByEstateIdAndUserIdAndPrefer(estateId, userId, prefer);

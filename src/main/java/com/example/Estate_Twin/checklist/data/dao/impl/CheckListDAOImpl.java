@@ -15,6 +15,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Component
+@Transactional(readOnly = true)
 public class CheckListDAOImpl implements CheckListDAO {
     private CheckListRepository checkListRepository;
     private AssetRepository assetRepository;

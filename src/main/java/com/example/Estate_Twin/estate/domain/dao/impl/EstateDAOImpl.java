@@ -14,8 +14,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Component
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;

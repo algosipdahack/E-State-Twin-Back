@@ -28,7 +28,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
     private final OAuthService oAuthService;
-    private final RedisService redisService;
+    //private final RedisService redisService;
 
     // TODO - 아직 무슨 내용이 들어가야 할지 모름
     @Operation(summary = "mypage of user", description = "마이페이지")
@@ -98,7 +98,7 @@ public class UserController {
     @GetMapping("/logout")
     public ResponseEntity logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
         // refresh Token 삭제
-        redisService.delValues(user.getEmail());
+        //redisService.delValues(user.getEmail());
         // 세션 삭제
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃 성공!");

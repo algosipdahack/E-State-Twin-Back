@@ -5,16 +5,14 @@ import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.web.dto.AssetUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 
 @Component
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class AssetDAOImpl implements AssetDAO {
     private AssetRepository assetRepository;
 
@@ -36,9 +34,4 @@ public class AssetDAOImpl implements AssetDAO {
         asset.setEstate(estate);
         return assetRepository.save(asset);
     }
-/*
-    @Override
-    public List<Asset> getTenentAsset(User user, Option option) {
-
-    }*/
 }

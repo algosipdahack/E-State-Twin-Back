@@ -13,6 +13,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ContractStateDAOImpl implements ContractStateDAO {
     private ContractStateRepository contractStateRepository;
 

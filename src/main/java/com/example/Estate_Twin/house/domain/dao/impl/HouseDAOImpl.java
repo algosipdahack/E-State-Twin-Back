@@ -8,13 +8,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional(readOnly = true)
 @Component
 @AllArgsConstructor
 public class HouseDAOImpl implements HouseDAO {
     private HouseRepository houseRepository;
 
     @Override
+    @Transactional
     public House saveHouse(House house) {
         return houseRepository.save(house);
     }
