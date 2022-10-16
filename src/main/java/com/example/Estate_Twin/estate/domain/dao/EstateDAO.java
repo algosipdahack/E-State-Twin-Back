@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public interface EstateDAO {
     boolean checkEnroll(Estate estate);
     Estate saveFirst(Broker broker, User owner, Address address);
     Estate matchTenent(Long estateId, User user);
-    List<EstateListResponseDto> findEstateListByBorough(String borough);
-    List<EstateListResponseDto> findEstateListByTown(String town);
+    List<EstateListResponseDto> findEstateListByBorough(String borough, Pageable pageable);
+    List<EstateListResponseDto> findEstateListByTown(String town, Pageable pageable);
     User updateBorough(User user, String region);
 
 }

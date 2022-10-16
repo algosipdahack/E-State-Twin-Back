@@ -12,14 +12,16 @@ public class EstateMainDto {
     private final String town;
     private final String thumbnail3D;
     private final Long sellingFee;
+    private final String userBorough;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
     private final String transactionType;
     @Schema(description = "매물 거래 종류", example = "APARTMENT, OFFICETELS")
     private final String estateType;
 
     @QueryProjection
-    public EstateMainDto(Long id, String estateThumbNail, String town, String thumbnail3D, TransactionType transactionType, Long sellingFee, EstateType estateType) {
+    public EstateMainDto(Long id, String userBorough, String estateThumbNail, String town, String thumbnail3D, TransactionType transactionType, Long sellingFee, EstateType estateType) {
         this.id = id;
+        this.userBorough = userBorough;
         this.estateThumbNail = estateThumbNail;
         this.thumbnail3D = thumbnail3D;
         this.transactionType = transactionType.toString();

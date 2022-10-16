@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 @Transactional(readOnly = true)
 @Component
@@ -35,8 +36,8 @@ public class BrokerDAOImpl implements BrokerDAO {
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList() {
-        return brokerRepository.getBrokerList();
+    public List<BrokerListDto> getBrokerList(int pageSize) {
+        return brokerRepository.getBrokerList(pageSize);
     }
 
     @Override

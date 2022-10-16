@@ -10,6 +10,7 @@ import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,13 +75,13 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
-    public List<EstateListResponseDto> findEstateListByBorough(String borough) {
-        return estateRepository.findEstateByBorough(borough);
+    public List<EstateListResponseDto> findEstateListByBorough(String borough, Pageable pageable) {
+        return estateRepository.findEstateByBorough(borough, pageable);
     }
 
     @Override
-    public List<EstateListResponseDto> findEstateListByTown(String town) {
-        return estateRepository.findEstateByTown(town);
+    public List<EstateListResponseDto> findEstateListByTown(String town, Pageable pageable) {
+        return estateRepository.findEstateByTown(town, pageable);
     }
 
 

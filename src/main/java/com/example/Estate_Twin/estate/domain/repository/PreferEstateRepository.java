@@ -2,6 +2,7 @@ package com.example.Estate_Twin.estate.domain.repository;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +16,5 @@ public interface PreferEstateRepository extends JpaRepository<PreferEstate, Long
             "inner join Estate e ON e.id = p.estate.id " +
             "inner join House h ON h.id = e.house.id " +
             "where p.user.id = :userId and p.preference = :prefer")
-    List<EstateListResponseDto> findByUserIdAndPrefer(@Param("userId") Long userId, @Param("prefer") Preference prefer);
+    List<EstateListResponseDto> findByUserIdAndPrefer(@Param("userId") Long userId, @Param("prefer") Preference prefer, Pageable pageable);
 }

@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -26,7 +27,7 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList() {
+    public List<BrokerListDto> getBrokerList(int pageSize) {
         QueryResults<BrokerListDto> queryResults = jpaQueryFactory
                 .select(new QBrokerListDto(
                         broker.id,
@@ -38,6 +39,7 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         broker.brokerPhoto
                 ))
                 .from(broker)
+                .limit(pageSize)
                 .fetchResults();
         List<BrokerListDto> result = queryResults.getResults();
         return result;

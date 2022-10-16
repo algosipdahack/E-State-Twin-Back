@@ -33,6 +33,6 @@ public class Officetel {
 
     public void setHouse(House house) {
         this.house = house;
-        house.setIsOfficetel();
+        house.setOfficetel();
     }
 }

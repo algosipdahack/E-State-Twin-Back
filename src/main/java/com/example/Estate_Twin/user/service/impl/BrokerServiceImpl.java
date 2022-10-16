@@ -9,6 +9,7 @@ import com.example.Estate_Twin.user.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -28,8 +29,8 @@ public class BrokerServiceImpl implements BrokerService {
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList() {
-        return brokerDAO.getBrokerList();
+    public List<BrokerListDto> getBrokerList(int pageSize) {
+        return brokerDAO.getBrokerList(pageSize);
     }
 
     @Override

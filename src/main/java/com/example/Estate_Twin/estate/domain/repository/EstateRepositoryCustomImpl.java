@@ -35,6 +35,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         QueryResults<EstateMainDto> queryResults = jpaQueryFactory
                 .select(new QEstateMainDto(
                         estate.id,
+                        estate.address.borough,
                         estate.estateThumbNail,
                         estate.address.town,
                         estate.thumbnail3D,
@@ -68,16 +69,15 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.transactionType,
                         estate.estateThumbNail,
                         estate.address.town,
-                        house.estateType,
+                        estate.house.estateType,
                         estate.address.buildingName,
                         estate.house.currentFloors,
                         estate.house.rentableArea,
                         estate.state,
-                        house.sellingFee
+                        estate.house.sellingFee
                 ))
                 .from(estate)
                 .where(ltEstateId(estateId))
-                .leftJoin(estate.house, house)
                 .orderBy(estate.id.desc())
                 .limit(pageSize)
                 .fetchResults();
@@ -100,7 +100,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public List<EstateModeDto> findOwnerEstateList(Long userId) {
         QueryResults<EstateModeDto> queryResults = jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.isOfficetel))
+                .select(new QEstateModeDto(estate.address, estate.house.estateType))
                 .from(estate)
                 .where(estate.owner.id.eq(userId))
                 .fetchResults();
@@ -110,7 +110,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public EstateModeDto findTenentEstateList(Long userId) {
         return jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.isOfficetel))
+                .select(new QEstateModeDto(estate.address, estate.house.estateType))
                 .from(estate)
                 .where(estate.tenent.id.eq(userId))
                 .fetchOne();

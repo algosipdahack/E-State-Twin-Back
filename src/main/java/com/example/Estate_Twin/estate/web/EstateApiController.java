@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -129,11 +131,12 @@ public class EstateApiController {
     // 최근 검색 추가
     @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
-    @Parameters({@Parameter(name = "estateId", description = "페이지 인덱스. 첫페이지일 경우 null", example = "1"), @Parameter(name = "size", description = "페이지 사이즈", example = "1")})
     @PostMapping(value = "list/search")
-    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody AddressSearchDto addressSearchDto) {
-        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(user.getEmail(), addressSearchDto);
-        // 최근 본 매물에 추가 -> redis, batch 적용
+    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user,
+                                                                          @RequestBody AddressSearchDto addressSearchDto,
+                                                                          Pageable pageable) {
+        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(user.getEmail(), addressSearchDto, pageable);
+        // 최근 본 매물에 추가 -> batch 적용
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 

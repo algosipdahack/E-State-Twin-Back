@@ -15,6 +15,7 @@ import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.dao.impl.*;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -120,13 +121,11 @@ public class EstateServiceImpl implements EstateService {
 
     // 사용자 최근 검색 변화
     @Override
-    public List<EstateListResponseDto> searchEstate(String email, AddressSearchDto addressSearchDto) {
+    public List<EstateListResponseDto> searchEstate(String email, AddressSearchDto addressSearchDto, Pageable pageable) {
         estateDAO.updateBorough(userDAO.findUserByEmail(email), addressSearchDto.getBorough());
-
         if (addressSearchDto.getTown() != null) {
-            return estateDAO.findEstateListByTown(addressSearchDto.getTown());
+            return estateDAO.findEstateListByTown(addressSearchDto.getTown(), pageable);
         }
-
-        return estateDAO.findEstateListByBorough(addressSearchDto.getBorough());
+        return estateDAO.findEstateListByBorough(addressSearchDto.getBorough(), pageable);
     }
 }

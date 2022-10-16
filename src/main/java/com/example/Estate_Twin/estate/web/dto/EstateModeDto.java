@@ -1,15 +1,16 @@
 package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.querydsl.core.annotations.QueryProjection;
 
 public class EstateModeDto {
     private final Address address;
-    private final boolean isOfficetel;
+    private final String estateType;
 
     @QueryProjection
-    public EstateModeDto(Address address, boolean isOfficetel) {
+    public EstateModeDto(Address address, EstateType estateType) {
         this.address = address;
-        this.isOfficetel = isOfficetel;
+        this.estateType = estateType.toString();
     }
 }

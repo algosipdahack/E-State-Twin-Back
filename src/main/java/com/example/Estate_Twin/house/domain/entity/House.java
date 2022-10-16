@@ -34,12 +34,11 @@ public class House extends BaseTimeEntity {
     private LocalDateTime moveInAvailableDate;
     private Long size;
     private String heatType;
-    private EstateType estateType;
     private Long household;
     private LocalDateTime usageAvailableDate;
     private Long roomCount;
     private Long bathCount;
-    private boolean isOfficetel;
+    private EstateType estateType;
     @OneToOne(mappedBy = "house")
     private Estate estate;
 
@@ -99,14 +98,11 @@ public class House extends BaseTimeEntity {
 
     public void setEstate(Estate estate) {
         this.estate = estate;
+        this.estateType = EstateType.APARTMENT;
     }
 
-    public void setIsOfficetel() {
-        this.isOfficetel = true;
+    public void setOfficetel() {
+        this.estateType = EstateType.OFFICETELS;
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.isOfficetel = false;
-    }
 }
