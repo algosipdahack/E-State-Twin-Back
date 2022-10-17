@@ -96,6 +96,10 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
+    public void setUserDelFalse() {
+        this.userDel = false;
+    }
+
     @PrePersist
     public void prePersist() {
         this.isBroker = false;

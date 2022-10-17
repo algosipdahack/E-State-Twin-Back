@@ -86,15 +86,17 @@ public class OAuthService {
         Optional<User> userOptional = userRepository.findByEmail(attributes.getEmail());
         User user;
         Boolean isMember;
-        //이미 가입된 경우
+        // 이미 가입된 경우
         if(userOptional.isPresent()) {
             user = userOptional.get();
             isMember = true;
+            // 탈퇴한 회원인 경우
+            if(user.isUserDel()) {
+                isMember = false;
+                user.setUserDelFalse();
+            }
             if(AuthProvider.valueOf(providerName) != user.getAuthProvider()) {
                 throw new OAuthProcessingException("Wrong Match Auth Provider");
-            }
-            if(user.isUserDel()) { // 탈퇴한 회원의 경우
-                throw new Exception("이미 탈퇴한 회원입니다.");
             }
         } else {
             //첫 로그인인 경우
