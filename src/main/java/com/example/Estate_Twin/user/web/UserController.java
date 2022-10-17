@@ -30,14 +30,13 @@ public class UserController {
     private final OAuthService oAuthService;
     private final RedisService redisService;
 
-    // TODO - 아직 무슨 내용이 들어가야 할지 모름
     @Operation(summary = "mypage of user", description = "마이페이지")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserResponseDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
-        UserResponseDto userResponseDto = userService.getUserbyEmail(user.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+    public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user) {
+        UserInfoDto userInfoDto = userService.getUserbyEmail(user.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 
     @Operation(summary = "mypage of tenent", description = "세입자모드 목록")

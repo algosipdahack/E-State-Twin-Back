@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
     UserResponseDto getUserbyId(Long id);
-    UserResponseDto getUserbyEmail(String email);
+    UserInfoDto getUserbyEmail(String email);
     UserInfoDto signUp(String email, UserSignUpDto userSignUpDto);
     Long deleteUser(String email);
     List<AssetResponseDto> getTenentAsset(Long userId, Option option);

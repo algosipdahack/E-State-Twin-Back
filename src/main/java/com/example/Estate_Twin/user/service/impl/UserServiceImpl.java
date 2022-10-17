@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto getUserbyEmail(String email) {
-        return new UserResponseDto(userDAO.findUserByEmail(email));
+    public UserInfoDto getUserbyEmail(String email) {
+        return new UserInfoDto(userDAO.findUserByEmail(email));
     }
 
     @Override
