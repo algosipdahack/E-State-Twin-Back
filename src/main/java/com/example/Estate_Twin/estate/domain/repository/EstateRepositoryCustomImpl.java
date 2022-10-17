@@ -47,6 +47,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .leftJoin(estate.house, house)
                 .leftJoin(estate.estateHit, estateHit)
                 .where(estate.address.borough.eq(borough))
+                .where(estate.isPosted.eq(true))
                 .orderBy(estate.estateHit.weeklyHit.desc())
                 .limit(6) //6개씩 잘라서 주기
                 .fetchResults();
@@ -78,6 +79,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 ))
                 .from(estate)
                 .where(ltEstateId(estateId))
+                .where(estate.isPosted.eq(true))
                 .orderBy(estate.id.desc())
                 .limit(pageSize)
                 .fetchResults();

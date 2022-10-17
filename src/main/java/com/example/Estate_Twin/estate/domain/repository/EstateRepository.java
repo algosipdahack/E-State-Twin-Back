@@ -20,11 +20,11 @@ public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepo
     List<BrokerEstateDto> findEstateBybrokerIdAndState(@Param("brokerId") Long brokerId, @Param("state") State state);
 
     @Query("select new com.example.Estate_Twin.estate.web.dto.EstateListResponseDto(e.id, e.transactionType, e.estateThumbNail, e.address.town, h.estateType, e.address.buildingName, h.currentFloors, h.rentableArea, e.state, h.sellingFee) " +
-            "from Estate e inner join House h ON e.house.id = h.id where e.address.borough = :borough")
+            "from Estate e inner join House h ON e.house.id = h.id where e.address.borough = :borough and e.isPosted = true")
     List<EstateListResponseDto> findEstateByBorough(@Param("borough") String borough, Pageable pageable);
 
     @Query("select new com.example.Estate_Twin.estate.web.dto.EstateListResponseDto(e.id, e.transactionType, e.estateThumbNail, e.address.town, h.estateType, e.address.buildingName, h.currentFloors, h.rentableArea, e.state, h.sellingFee) " +
-            "from Estate e inner join House h ON e.house.id = h.id where e.address.town = :town")
+            "from Estate e inner join House h ON e.house.id = h.id where e.address.town = :town and e.isPosted = true")
     List<EstateListResponseDto> findEstateByTown(@Param("town") String town, Pageable pageable);
 
 }
