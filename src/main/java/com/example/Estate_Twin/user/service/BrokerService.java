@@ -9,6 +9,6 @@ import java.util.List;
 public interface BrokerService {
     BrokerResponseDto getBroker(String userEmail);
     BrokerResponseDto signUpBroker(String userEmail, BrokerSignUpDto brokerSignUpDto);
-    List<BrokerListDto> getBrokerList(int pageSize);
+    List<BrokerListDto> getBrokerList();
     List<BrokerEstateDto> getbrokerEstate(String email, State state);
 }

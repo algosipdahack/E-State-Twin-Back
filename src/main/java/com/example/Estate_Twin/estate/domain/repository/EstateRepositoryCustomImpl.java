@@ -8,6 +8,9 @@ import com.example.Estate_Twin.house.domain.entity.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -44,8 +47,6 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         house.estateType
                 ))
                 .from(estate)
-                .leftJoin(estate.house, house)
-                .leftJoin(estate.estateHit, estateHit)
                 .where(estate.address.borough.eq(borough))
                 .where(estate.isPosted.eq(true))
                 .orderBy(estate.estateHit.weeklyHit.desc())
@@ -63,7 +64,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public List<EstateListResponseDto> findEstateList(Long estateId, int pageSize) {
+    public Page<EstateListResponseDto> findEstateList(Long estateId, Pageable pageable) {
         QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
                 .select(new QEstateListResponseDto(
                         estate.id,
@@ -81,10 +82,11 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .where(ltEstateId(estateId))
                 .where(estate.isPosted.eq(true))
                 .orderBy(estate.id.desc())
-                .limit(pageSize)
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .fetchResults();
-        List<EstateListResponseDto> result = queryResults.getResults();
-        return result;
+
+        return new PageImpl<>(queryResults.getResults(), pageable, queryResults.getTotal());
     }
 
 
@@ -93,7 +95,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         QueryResults<AssetResponseDto> queryResults = jpaQueryFactory
                 .select(new QAssetResponseDto(asset))
                 .from(asset)
-                .leftJoin(asset.estate, estate)
+                .join(asset.estate, estate).fetchJoin()
                 .where(asset.estate.id.eq(estateId))
                 .fetchResults();
         return queryResults.getResults();
@@ -122,7 +124,6 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     public EstateHit findEstateHit(Long estateId) {
         return jpaQueryFactory.select(estateHit)
                 .from(estate)
-                .leftJoin(estate.estateHit, estateHit)
                 .where(estate.id.eq(estateId))
                 .fetchOne();
     }
@@ -131,7 +132,6 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     public House findHouse(Long estateId) {
         return jpaQueryFactory.select(new QHouse(house))
                 .from(estate)
-                .leftJoin(estate.house, house)
                 .where(estate.id.eq(estateId))
                 .fetchOne();
     }

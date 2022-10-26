@@ -3,6 +3,7 @@ package com.example.Estate_Twin.estate.service;
 import com.example.Estate_Twin.address.*;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.web.dto.*;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface EstateService {
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
     Long saveFirst(Address address, Long brokerId, String email);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
-    List<EstateListResponseDto> getAllEstate(Long estateId, int pageSize);
+    Page<EstateListResponseDto> getAllEstate(Long estateId, Pageable pageable);
     List<EstateMainDto> getEstateCustomized(String borough);
     EstateResponseDto allowPost(Long estateId, String userEmail);
     ContractStateResponseDto startContract(Long estateId, String email);

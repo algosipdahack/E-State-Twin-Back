@@ -48,8 +48,8 @@ public class BrokerController {
     @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
     @GetMapping("/list")
-    public ResponseEntity<List<BrokerListDto>> getBrokerList(@RequestParam int pageSize) {
-        List<BrokerListDto> brokerListDto = brokerService.getBrokerList(pageSize);
+    public ResponseEntity<List<BrokerListDto>> getBrokerList() {
+        List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
         return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
     }
 

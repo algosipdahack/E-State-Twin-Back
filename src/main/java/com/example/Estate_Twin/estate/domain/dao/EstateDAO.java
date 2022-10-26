@@ -6,7 +6,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface EstateDAO {
     Estate findEstate(Long id);
     Estate updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     List<EstateMainDto> findEstateCustomized(String borough);
-    List<EstateListResponseDto> findAllEstateList(Long estateId, int pageSize);
+    Page<EstateListResponseDto> findAllEstateList(Long estateId, Pageable pageable);
     Estate allowBroker(Estate estate, Broker broker);
     Estate allowOwner(Estate estate, User owner);
     Estate getEstate(Long id);

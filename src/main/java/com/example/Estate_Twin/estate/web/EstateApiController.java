@@ -13,11 +13,15 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 //TODO 조회될때 isposted된 애들만 조회하기
@@ -34,8 +38,9 @@ public class EstateApiController {
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @GetMapping("list")
-    public ResponseEntity<List<EstateListResponseDto>> getList(@RequestParam Long estateId, @RequestParam int size) {
-        List<EstateListResponseDto> estateListResponseDtos = estateService.getAllEstate(estateId,size);
+    public ResponseEntity<Page<EstateListResponseDto>> getList(@RequestParam(required = false) Long estateId,
+                                                               @PageableDefault(size = 10, sort = "estateId", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<EstateListResponseDto> estateListResponseDtos = estateService.getAllEstate(estateId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
@@ -131,7 +136,7 @@ public class EstateApiController {
     // 최근 검색 추가
     @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
-    @PostMapping(value = "list/search")
+    @PostMapping(value = "search/list")
     public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user,
                                                                           @RequestBody AddressSearchDto addressSearchDto,
                                                                           Pageable pageable) {

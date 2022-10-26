@@ -36,8 +36,8 @@ public class BrokerDAOImpl implements BrokerDAO {
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList(int pageSize) {
-        return brokerRepository.getBrokerList(pageSize);
+    public List<BrokerListDto> getBrokerList() {
+        return brokerRepository.getBrokerList();
     }
 
     @Override

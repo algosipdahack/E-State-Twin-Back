@@ -23,7 +23,6 @@ public class CheckListRepositoryCustomImpl extends QuerydslRepositorySupport imp
         this.checkList = QCheckList.checkList;
     }
 
-
     @Override
     public List<CheckListResponseDto> findCheckListbyAssetId(Long assetId) {
         QueryResults<CheckListResponseDto> queryResults = jpaQueryFactory

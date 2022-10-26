@@ -29,8 +29,8 @@ public class BrokerServiceImpl implements BrokerService {
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList(int pageSize) {
-        return brokerDAO.getBrokerList(pageSize);
+    public List<BrokerListDto> getBrokerList() {
+        return brokerDAO.getBrokerList();
     }
 
     @Override

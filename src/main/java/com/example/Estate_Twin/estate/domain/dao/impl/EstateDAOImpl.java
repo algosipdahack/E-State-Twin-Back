@@ -10,6 +10,7 @@ import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,8 +87,8 @@ public class EstateDAOImpl implements EstateDAO {
 
 
     @Override
-    public List<EstateListResponseDto> findAllEstateList(Long estateId, int pageSize) {
-        return estateRepository.findEstateList(estateId, pageSize);
+    public Page<EstateListResponseDto> findAllEstateList(Long estateId, Pageable pageable) {
+        return estateRepository.findEstateList(estateId, pageable);
     }
 
     @Override

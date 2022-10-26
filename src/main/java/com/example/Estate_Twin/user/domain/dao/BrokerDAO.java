@@ -10,7 +10,7 @@ import java.util.List;
 public interface BrokerDAO {
     Broker findBrokerByEmail(String Email);
     Broker signUp(Broker broker, User user);
-    List<BrokerListDto> getBrokerList(int pageSize);
+    List<BrokerListDto> getBrokerList();
     Broker findBrokerFetchJoinById(Long id);
     Broker findBrokerById(Long id);
     List<BrokerEstateDto> getBrokerEstate(Long brokerId, State state);

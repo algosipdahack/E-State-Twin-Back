@@ -15,10 +15,9 @@ import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.dao.impl.*;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 
 @Service
@@ -75,8 +74,8 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public List<EstateListResponseDto> getAllEstate(Long estateId, int pageSize) {
-        return estateDAO.findAllEstateList(estateId, pageSize);
+    public Page<EstateListResponseDto> getAllEstate(Long estateId, Pageable pageable) {
+        return estateDAO.findAllEstateList(estateId, pageable);
     }
 
     @Override

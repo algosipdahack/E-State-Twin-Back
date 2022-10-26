@@ -6,6 +6,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.*;
 @Getter
@@ -23,6 +24,7 @@ public class User extends BaseTimeEntity {
     private String phone;
     //OAuth
     private String name;
+    @Email
     private String email;
     private String refreshToken;
     private boolean isBroker;

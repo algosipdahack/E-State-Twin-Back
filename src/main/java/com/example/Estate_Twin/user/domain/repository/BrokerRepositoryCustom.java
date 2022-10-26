@@ -5,5 +5,5 @@ import com.example.Estate_Twin.user.web.dto.BrokerListDto;
 import java.util.List;
 
 public interface BrokerRepositoryCustom {
-    List<BrokerListDto> getBrokerList(int pageSize);
+    List<BrokerListDto> getBrokerList();
 }

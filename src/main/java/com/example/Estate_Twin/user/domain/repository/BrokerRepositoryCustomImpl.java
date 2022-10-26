@@ -27,7 +27,7 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public List<BrokerListDto> getBrokerList(int pageSize) {
+    public List<BrokerListDto> getBrokerList() {
         QueryResults<BrokerListDto> queryResults = jpaQueryFactory
                 .select(new QBrokerListDto(
                         broker.id,
@@ -39,7 +39,6 @@ public class BrokerRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         broker.brokerPhoto
                 ))
                 .from(broker)
-                .limit(pageSize)
                 .fetchResults();
         List<BrokerListDto> result = queryResults.getResults();
         return result;
