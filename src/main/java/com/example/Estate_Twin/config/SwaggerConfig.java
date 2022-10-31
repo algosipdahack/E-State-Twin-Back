@@ -23,9 +23,10 @@ public class SwaggerConfig {
     io.swagger.v3.oas.models.security.SecurityScheme securityScheme =
             new io.swagger.v3.oas.models.security.SecurityScheme()
                     .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
+                    .scheme("")
                     .bearerFormat("JWT")
                     .in(io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER)
-                    .name("X-AUTH-TOKEN");
+                    .name("Authorization");
     SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
 
     @Bean
