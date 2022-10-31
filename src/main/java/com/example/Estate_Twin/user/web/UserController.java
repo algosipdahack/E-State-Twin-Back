@@ -78,8 +78,7 @@ public class UserController {
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {
-        UserInfoDto userInfoDto = userService.signUp(user.getEmail(), userSignUpDto);
+    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, @RequestBody UserSignUpDto userSignUpDto) {UserInfoDto userInfoDto = userService.signUp(user.getEmail(), userSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 

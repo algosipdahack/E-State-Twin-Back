@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class UserInfoDto {
     @Schema(description = "유저 지위", example = "USER")
     private final String role;
 
+    @Builder
     public UserInfoDto(User user) {
         this.id = user.getId();
         this.birthday = user.getBirthday();
