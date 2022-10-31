@@ -43,8 +43,6 @@ public class QHouse extends EntityPathBase<House> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final BooleanPath isOfficetel = createBoolean("isOfficetel");
-
     public final StringPath itemsIncludedMaintenanceFee = createString("itemsIncludedMaintenanceFee");
 
     public final NumberPath<Long> maintenanceFee = createNumber("maintenanceFee", Long.class);
