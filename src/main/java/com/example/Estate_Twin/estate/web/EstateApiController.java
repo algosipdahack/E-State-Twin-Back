@@ -7,6 +7,8 @@ import com.example.Estate_Twin.estate.service.impl.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.util.CurrentUser;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -52,6 +54,7 @@ public class EstateApiController {
     }
 
     //상세 페이지
+    @ApiImplicitParams({@ApiImplicitParam(name= "X-AUTH-TOKEN", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @Operation(summary = "get detail of Estate", description = "매물에 대한 상세정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})

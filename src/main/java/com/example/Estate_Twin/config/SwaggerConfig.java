@@ -10,6 +10,7 @@ import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.*;
 
 import java.util.Arrays;
+
 @Configuration
 public class SwaggerConfig {
 
@@ -23,8 +24,8 @@ public class SwaggerConfig {
 
     io.swagger.v3.oas.models.security.SecurityScheme securityScheme =
             new io.swagger.v3.oas.models.security.SecurityScheme()
-                    .type(SecurityScheme.Type.APIKEY)
-                    .scheme("apikey")
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
                     .bearerFormat("JWT")
                     .in(io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER)
                     .name("Authorization");

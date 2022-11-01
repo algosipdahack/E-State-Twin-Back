@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -104,5 +105,28 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("X-AUTH-TOKEN");
+    }
+
+    public String parseJwtToken(HttpServletRequest servletRequest) {
+        if (servletRequest.getHeader(HttpHeaders.AUTHORIZATION) != null) {
+            String authorizationHeader = servletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+            validationAuthorizationHeader(authorizationHeader); // (1)
+            return extractToken(authorizationHeader); // (2)
+        }
+        return null;
+    }
+
+
+    private void validationAuthorizationHeader(String header) {
+        if (header == null) {
+            return;
+        }
+        if (!header.startsWith("Bearer ")) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private String extractToken(String authorizationHeader) {
+        return authorizationHeader.substring("Bearer ".length());
     }
 }

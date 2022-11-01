@@ -1,21 +1,14 @@
 package com.example.Estate_Twin.user.controller;
 
 import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.redis.RedisService;
-import com.example.Estate_Twin.user.domain.entity.AuthProvider;
-import com.example.Estate_Twin.user.domain.entity.Role;
-import com.example.Estate_Twin.user.domain.entity.User;
-import com.example.Estate_Twin.user.service.impl.OAuthService;
-import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.UserController;
-import com.example.Estate_Twin.user.web.dto.UserInfoDto;
-import com.example.Estate_Twin.user.web.dto.UserSignUpDto;
+import com.example.Estate_Twin.user.web.dto.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
