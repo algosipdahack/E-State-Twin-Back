@@ -22,28 +22,28 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {UserController.class})
-@ActiveProfiles("server")
+@ActiveProfiles("test")
 @MockBean(JpaMetamodelMappingContext.class)
 public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
     JwtTokenProvider tokenProvider;
-
     @MockBean
     UserServiceImpl userService;
 
@@ -76,6 +76,7 @@ public class UserControllerTest {
     }
 
     @DisplayName("[Post] 집주인/세입자 회원가입")
+    @WithMockUser(username = "sophia5460@naver.com", roles = {"USER","ADMIN"})
     @Test
     void 회원가입() throws Exception{
         UserSignUpDto userSignUpDto = UserSignUpDto.builder()
@@ -86,7 +87,7 @@ public class UserControllerTest {
                 .build();
 
         //given
-        given(userService.signUp(user.getEmail(), userSignUpDto))
+        given(userService.signUp(user, userSignUpDto))
                 .willReturn(UserInfoDto.builder()
                         .user(user)
                         .build());
@@ -94,7 +95,8 @@ public class UserControllerTest {
         String content = objectMapper.writeValueAsString(userSignUpDto);
         //when
         mockMvc.perform(
-                post("/api/user/signup")
+                        MockMvcRequestBuilders
+                                .post("/api/user/signup")
                         .header("X-AUTH-TOKEN", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW93bGxAbmF2ZXIuY29tIiwidXNlcm5hbWUiOiJkYW93bGxAbmF2ZXIuY29tIiwiaWF0IjoxNjY1NTkwOTc4LCJleHAiOjE2NjkxOTA5Nzh9.aJx3mqsB-3MwzayYDtqtjEgGlvfMF4cbVZAcdzVBdT6KX3mVuX78UR5ohC8fKgODeC-foOZk4tyBBkJZUQmDJQ")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)

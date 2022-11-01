@@ -25,22 +25,20 @@ import java.util.*;
 public class EstateServiceImpl implements EstateService {
     private final EstateDAOImpl estateDAO;
     private final HouseDAOImpl houseDAO;
-    private final UserDAOImpl userDAO;
     private final BrokerDAOImpl brokerDAO;
     private final AssetDAOImpl assetDAO;
     private final ContractStateDAOImpl contractStateDAO;
     private final PreferEstateDAOImpl preferEstateDAO;
 
     @Override
-    public Long saveFirst(Address address, Long brokerId, String email) {
+    public Long saveFirst(Address address, Long brokerId, User user) {
         //owner 매핑, estate 생성, broker한테 알림
-        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), userDAO.findUserByEmail(email) ,address).getId();
+        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), user ,address).getId();
     }
 
     //조회수 증가시키기 + 최근 본 매물에 포함
     @Override
-    public EstateDetailDto getEstate(Long id, String email) {
-        User user = userDAO.findUserByEmail(email);
+    public EstateDetailDto getEstate(Long id, User user) {
         Estate estate = estateDAO.getEstate(id);
         // 최근 본 매물에 포함
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
@@ -86,20 +84,19 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public List<EstateMainDto> getEstateCustomized(String email) {
+    public List<EstateMainDto> getEstateCustomized(User user) {
         //유저가 선호하는 지역 보여줌
-        String borough = userDAO.findUserByEmail(email).getBorough();
+        String borough = user.getBorough();
         return estateDAO.findEstateCustomized(borough);
     }
 
     @Override
-    public EstateResponseDto allowPost(Long estateId, String email) {
-        User user = userDAO.findUserByEmail(email);
+    public EstateResponseDto allowPost(Long estateId, User user) {
         Estate estate = estateDAO.findEstate(estateId);
         Estate newEstate;
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
-            Broker broker = brokerDAO.findBrokerByEmail(email);
+            Broker broker = brokerDAO.findBrokerByEmail(user.getEmail());
             newEstate = estateDAO.allowBroker(estate, broker);
         } else { // 집주인이라면
             newEstate = estateDAO.allowOwner(estate, user);
@@ -112,16 +109,16 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     @Transactional
-    public ContractStateResponseDto startContract(Long estateId, String email) {
-        Estate estate = estateDAO.matchTenent(estateId,userDAO.findUserByEmail(email));
+    public ContractStateResponseDto startContract(Long estateId, User user) {
+        Estate estate = estateDAO.matchTenent(estateId,user);
         ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
         return new ContractStateResponseDto(contractState);
     }
 
     // 사용자 최근 검색 변화
     @Override
-    public List<EstateListResponseDto> searchEstate(String email, AddressSearchDto addressSearchDto, Pageable pageable) {
-        estateDAO.updateBorough(userDAO.findUserByEmail(email), addressSearchDto.getBorough());
+    public List<EstateListResponseDto> searchEstate(User user, AddressSearchDto addressSearchDto, Pageable pageable) {
+        estateDAO.updateBorough(user, addressSearchDto.getBorough());
         if (addressSearchDto.getTown() != null) {
             return estateDAO.findEstateListByTown(addressSearchDto.getTown(), pageable);
         }

@@ -16,15 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAOImpl brokerDAO;
-    private final UserDAOImpl userDAO;
     @Override
     public BrokerResponseDto getBroker(String userEmail) {
         return new BrokerResponseDto(brokerDAO.findBrokerByEmail(userEmail));
     }
 
     @Override
-    public BrokerResponseDto signUpBroker(String userEmail, BrokerSignUpDto brokerSignUpDto) {
-        User user = userDAO.findUserByEmail(userEmail);
+    public BrokerResponseDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto) {
         return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
     }
 

@@ -11,14 +11,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 @Transactional(readOnly = true)
 @Component
 @AllArgsConstructor
 public class BrokerDAOImpl implements BrokerDAO {
     BrokerRepository brokerRepository;
-    UserRepository userRepository;
     EstateRepository estateRepository;
 
     @Override

@@ -10,17 +10,19 @@ import java.util.*;
 
 @Getter
 public class CustomUserDetails implements UserDetails, OAuth2User {
+    private User user;
     private Long id;
     private String email;
     private String name;
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
-    public CustomUserDetails(Long id, String email, String name, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(Long id, String email, String name, Collection<? extends GrantedAuthority> authorities, User user) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.authorities = authorities;
+        this.user = user;
     }
 
     public static CustomUserDetails create(User user) {
@@ -30,7 +32,8 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
                 user.getId(),
                 user.getEmail(),
                 user.getName(),
-                authorities
+                authorities,
+                user
         );
     }
 

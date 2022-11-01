@@ -33,14 +33,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     @Transactional
-    public User signUp(String email, UserSignUpDto dto) {
-        return findUserByEmail(email).signup(dto);
+    public User signUp(User user, UserSignUpDto dto) {
+        return user.signup(dto);
     }
 
     @Override
     @Transactional
-    public User deleteMember(String email) {
-        return findUserByEmail(email).delUser();
+    public User deleteMember(User user) {
+        return user.delUser();
     }
 
     @Override

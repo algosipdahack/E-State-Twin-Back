@@ -9,7 +9,6 @@ import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImp
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.user.domain.dao.impl.UserDAOImpl;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import java.util.*;
 public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
     private final AssetDAOImpl assetDAO;
-    private final UserDAOImpl userDAO;
     private final EstateDAOImpl estateDAO;
     private final ContractStateDAOImpl contractStateDAO;
 
@@ -49,8 +47,7 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     // 상태 -> CheckList_Doing -> contract_done
-    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, String email) {
-        User user = userDAO.findUserByEmail(email);
+    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
         CheckList checkList = checkListDAO.findCheckList(checklistId);
         Estate estate = estateDAO.findEstate(estateId);
         CheckList newCheckList;

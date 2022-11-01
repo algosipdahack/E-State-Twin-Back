@@ -10,8 +10,8 @@ import java.util.List;
 public interface UserDAO {
     User findUserById(Long id);
     User findUserByEmail(String email);
-    User signUp(String email, UserSignUpDto dto);
-    User deleteMember(String email);
+    User signUp(User user, UserSignUpDto dto);
+    User deleteMember(User user);
     List<Asset> getTenentAsset(Long userId, Option option);
     EstateModeDto getTenentAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);

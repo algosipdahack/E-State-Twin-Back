@@ -1,10 +1,10 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.PreferEstateServiceImpl;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
-import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
+import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.util.CurrentUser;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -12,9 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,24 +28,24 @@ public class PreferEstateApiController {
     @Operation(summary = "get list of Estate", description = "최근 본 방 목록 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @GetMapping("list/recent")
-    public ResponseEntity<List<EstateListResponseDto>> getRecentList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, Pageable pageable) {
-        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user.getEmail(), Preference.RECENT, pageable);
+    public ResponseEntity<List<EstateListResponseDto>> getRecentList(@Parameter(hidden = true) @CurrentUser User user, Pageable pageable) {
+        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user, Preference.RECENT, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
     @Operation(summary = "get list of Estate", description = "찜한 방 목록 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @GetMapping("list/dip")
-    public ResponseEntity<List<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, Pageable pageable) {
-        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user.getEmail(), Preference.DIP, pageable);
+    public ResponseEntity<List<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @CurrentUser User user, Pageable pageable) {
+        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user, Preference.DIP, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
     @Operation(summary = "get list of Estate", description = "문의한 방 목록 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
     @GetMapping("list/inquiry")
-    public ResponseEntity<List<EstateListResponseDto>> getInquireList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails user, Pageable pageable) {
-        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user.getEmail(), Preference.INQUIRY, pageable);
+    public ResponseEntity<List<EstateListResponseDto>> getInquireList(@Parameter(hidden = true) @CurrentUser User user, Pageable pageable) {
+        List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(user, Preference.INQUIRY, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 

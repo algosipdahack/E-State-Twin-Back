@@ -5,6 +5,7 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.*;
 
@@ -22,8 +23,8 @@ public class SwaggerConfig {
 
     io.swagger.v3.oas.models.security.SecurityScheme securityScheme =
             new io.swagger.v3.oas.models.security.SecurityScheme()
-                    .type(io.swagger.v3.oas.models.security.SecurityScheme.Type.HTTP)
-                    .scheme("")
+                    .type(SecurityScheme.Type.APIKEY)
+                    .scheme("apikey")
                     .bearerFormat("JWT")
                     .in(io.swagger.v3.oas.models.security.SecurityScheme.In.HEADER)
                     .name("Authorization");
