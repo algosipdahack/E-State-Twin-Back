@@ -42,7 +42,7 @@ public class Broker {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker", orphanRemoval = true)
+    @OneToMany(mappedBy = "broker", orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Estate> tradeEstates;
 
     @Builder

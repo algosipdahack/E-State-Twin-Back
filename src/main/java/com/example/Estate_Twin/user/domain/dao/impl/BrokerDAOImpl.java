@@ -18,6 +18,7 @@ import java.util.List;
 public class BrokerDAOImpl implements BrokerDAO {
     BrokerRepository brokerRepository;
     EstateRepository estateRepository;
+    UserRepository userRepository;
 
     @Override
     public Broker findBrokerByEmail(String email) {
@@ -49,6 +50,7 @@ public class BrokerDAOImpl implements BrokerDAO {
     public Broker signUp(Broker broker, User user) {
         //broker로 설정
         user.setIsBroker();
+        userRepository.save(user);
         broker.setUser(user);
         return brokerRepository.save(broker);
     }

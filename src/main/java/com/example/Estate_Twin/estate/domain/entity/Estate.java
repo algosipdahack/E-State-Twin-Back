@@ -10,6 +10,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.*;
@@ -28,6 +29,8 @@ public class Estate extends BaseTimeEntity {
     private String estateThumbNail;
     @Column(columnDefinition = "TEXT")
     private String content;
+    //2D 도면
+    private String floorplan;
     //s3에 올려진 model src
     private String model;
     //s3에 올려진 3D 모델의 썸네일 -> 자동으로 업로드 되게끔(lambda -> s3)
@@ -61,10 +64,10 @@ public class Estate extends BaseTimeEntity {
     private User owner;
     @OneToOne(mappedBy = "tenentEstate")
     private User tenent;
-    @OneToMany(mappedBy = "estate", orphanRemoval = true)
+    @OneToMany(mappedBy = "estate", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Asset> assets;
     //찜한 * 최근 * 문의한 매물
-    @OneToMany(mappedBy = "estate", orphanRemoval = true)
+    @OneToMany(mappedBy = "estate", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<PreferEstate> preferEstates;
 
     @Builder // 빌더 형태로 만들어줌
@@ -76,9 +79,9 @@ public class Estate extends BaseTimeEntity {
 
     public Estate detailUpdate(EstateSaveRequestDto dto) {
         this.content = dto.getContent();
-        this.estateThumbNail = dto.getEstateThumbNail();
+        this.estateThumbNail = dto.getEstatePhotos().get(0);
         this.transactionType = TransactionType.of(dto.getTransactionType());
-        this.model = dto.getModel();
+        this.floorplan = dto.getFloorplan();
         this.arCam = dto.getArCam();
         this.estateMedia.clear();
         this.estateMedia.addAll(dto.getEstatePhotos());

@@ -32,7 +32,7 @@ public class Asset extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
-    @OneToMany(mappedBy = "asset", orphanRemoval = true)
+    @OneToMany(mappedBy = "asset", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CheckList> checkLists;
 
     @Builder // 빌더 형태로 만들어줌

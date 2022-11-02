@@ -32,6 +32,7 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
+    @Transactional
     public Estate saveFirst(Broker broker, User owner, Address address) {
         return estateRepository.save(new Estate(broker, owner, address));
     }

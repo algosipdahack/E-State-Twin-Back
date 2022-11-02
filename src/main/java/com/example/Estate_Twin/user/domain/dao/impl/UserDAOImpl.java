@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public User signUp(User user, UserSignUpDto dto) {
-        return user.signup(dto);
+        return userRepository.save(user.signup(dto));
     }
 
     @Override

@@ -45,6 +45,8 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final StringPath estateThumbNail = createString("estateThumbNail");
 
+    public final StringPath floorplan = createString("floorplan");
+
     public final EnumPath<Grade> grade = createEnum("grade", Grade.class);
 
     public final com.example.Estate_Twin.house.domain.entity.QHouse house;

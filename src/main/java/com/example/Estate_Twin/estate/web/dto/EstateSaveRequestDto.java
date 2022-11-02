@@ -10,12 +10,12 @@ import java.util.List;
 @NoArgsConstructor
 public class EstateSaveRequestDto {
     private Long id;
-    private String estateThumbNail;
     private String content;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
     private String transactionType;
     //2차원 도면 사진
-    private String model;
+    private String floorplan;
+    //TODO arCam도 필요한가? -> ar 동영상
     private String arCam;
     private HouseSaveRequestDto house;
     private List<String> estatePhotos;

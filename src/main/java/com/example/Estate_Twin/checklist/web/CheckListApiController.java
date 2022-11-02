@@ -3,14 +3,15 @@ package com.example.Estate_Twin.checklist.web;
 import com.example.Estate_Twin.checklist.service.impl.CheckListServiceImpl;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
+import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.domain.entity.User;
-import com.example.Estate_Twin.util.CurrentUser;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.*;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,8 +63,8 @@ public class CheckListApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("/{checklistId}/estate/{estateId}/confirm")
-    public ResponseEntity<CheckListResponseDto> confirmCheckList(@Parameter(hidden = true) @CurrentUser User user , @PathVariable Long checklistId, @PathVariable Long estateId) {
-        CheckListResponseDto checkListResponseDto = checkListService.confirmCheckList(estateId, checklistId, user);
+    public ResponseEntity<CheckListResponseDto> confirmCheckList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails , @PathVariable Long checklistId, @PathVariable Long estateId) {
+        CheckListResponseDto checkListResponseDto = checkListService.confirmCheckList(estateId, checklistId, customUserDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 

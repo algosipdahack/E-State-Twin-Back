@@ -8,7 +8,6 @@ import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
-import com.example.Estate_Twin.util.CurrentUser;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -16,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +34,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @CurrentUser User user) {
-        UserInfoDto userInfoDto = userService.getUser(user);
+    public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        UserInfoDto userInfoDto = userService.getUser(customUserDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 
@@ -43,8 +43,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
     @GetMapping("/tenent/list")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @CurrentUser User user) {
-        EstateModeDto estate = userService.getTenentAssetList(user.getId());
+    public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        EstateModeDto estate = userService.getTenentAssetList(customUserDetails.getUser().getId());
         return ResponseEntity.status(HttpStatus.OK).body(estate);
     }
 
@@ -52,8 +52,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @GetMapping("/tenent/detail")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @CurrentUser User user, @RequestParam(name = "option") String option) {
-        List<AssetResponseDto> assets = userService.getTenentAsset(user.getId(), Option.of(option));
+    public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
+        List<AssetResponseDto> assets = userService.getTenentAsset(customUserDetails.getUser().getId(), Option.of(option));
         return ResponseEntity.status(HttpStatus.OK).body(assets);
     }
 
@@ -61,8 +61,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
     @GetMapping("/owner/list")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @CurrentUser User user) {
-        List<EstateModeDto> assetList = userService.getOwnerAssetList(user.getId());
+    public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        List<EstateModeDto> assetList = userService.getOwnerAssetList(customUserDetails.getUser().getId());
         return ResponseEntity.status(HttpStatus.OK).body(assetList);
     }
 
@@ -70,15 +70,16 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @GetMapping("/owner/detail")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @CurrentUser User user, @RequestParam(name = "option") String option) {
-        List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(user.getId(), Option.of(option));
+    public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
+        List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(customUserDetails.getUser().getId(), Option.of(option));
         return ResponseEntity.status(HttpStatus.OK).body(ownerAsset);
     }
 
     @Operation(summary = "signup of user", description = "회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user, @RequestBody UserSignUpDto userSignUpDto) {UserInfoDto userInfoDto = userService.signUp(user, userSignUpDto);
+    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody UserSignUpDto userSignUpDto) {
+        UserInfoDto userInfoDto = userService.signUp(customUserDetails.getUser(), userSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 
@@ -94,9 +95,9 @@ public class UserController {
     @Operation(summary = "logout of user", description = "로그아웃")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))})
     @GetMapping("/logout")
-    public ResponseEntity logout(@Parameter(hidden = true) @CurrentUser User user) {
+    public ResponseEntity logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         // refresh Token 삭제
-        redisService.delValues(user.getEmail());
+        redisService.delValues(customUserDetails.getEmail());
         // 세션 삭제
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃 성공!");
@@ -105,8 +106,8 @@ public class UserController {
     @Operation(summary = "Membership Withdrawal", description = "회원탈퇴")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
     @DeleteMapping("")
-    public ResponseEntity<Long> withdrawal(@Parameter(hidden = true) @CurrentUser User user) {
-        Long userId = userService.deleteUser(user);
+    public ResponseEntity<Long> withdrawal(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        Long userId = userService.deleteUser(customUserDetails.getUser());
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body(userId);
     }

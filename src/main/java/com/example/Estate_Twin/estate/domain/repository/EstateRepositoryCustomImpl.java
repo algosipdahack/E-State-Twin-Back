@@ -43,8 +43,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.address.town,
                         estate.thumbnail3D,
                         estate.transactionType,
-                        house.sellingFee,
-                        house.estateType
+                        estate.house.sellingFee,
+                        estate.house.estateType
                 ))
                 .from(estate)
                 .where(estate.address.borough.eq(borough))
