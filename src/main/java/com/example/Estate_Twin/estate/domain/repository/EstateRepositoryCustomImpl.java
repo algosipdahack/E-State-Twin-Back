@@ -122,7 +122,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
     @Override
     public EstateHit findEstateHit(Long estateId) {
-        return jpaQueryFactory.select(estateHit)
+        return jpaQueryFactory.select(estate.estateHit)
                 .from(estate)
                 .where(estate.id.eq(estateId))
                 .fetchOne();
@@ -130,7 +130,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
     @Override
     public House findHouse(Long estateId) {
-        return jpaQueryFactory.select(new QHouse(house))
+        return jpaQueryFactory.select(new QHouse(estate.house))
                 .from(estate)
                 .where(estate.id.eq(estateId))
                 .fetchOne();

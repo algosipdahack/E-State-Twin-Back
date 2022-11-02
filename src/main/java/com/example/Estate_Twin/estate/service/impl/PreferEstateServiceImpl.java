@@ -25,7 +25,6 @@ public class PreferEstateServiceImpl implements PreferEstateService {
 
     @Override
     public List<EstateListResponseDto> getPreferEstate(User user, Preference prefer, Pageable pageable) {
-        Long userId = user.getId();
-        return preferEstateDAO.findPreferEstate(userId, prefer, pageable);
+        return preferEstateDAO.findPreferEstate(user.getId(), prefer, pageable);
     }
 }

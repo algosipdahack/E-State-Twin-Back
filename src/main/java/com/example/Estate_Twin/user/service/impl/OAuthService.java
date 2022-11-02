@@ -116,7 +116,6 @@ public class OAuthService {
     @Transactional
     public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
-
         // kakao로부터 유저정보 받아서 db에 저장
         return getUserProfile(providerName.toUpperCase(), accessToken, provider);
     }

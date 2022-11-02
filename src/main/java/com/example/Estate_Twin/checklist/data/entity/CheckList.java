@@ -28,7 +28,7 @@ public class CheckList extends BaseTimeEntity {
     private Boolean brokerConfirmYN;
     private Boolean tenentConfirmYN;
     private Boolean ownerConfirmYN;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
 

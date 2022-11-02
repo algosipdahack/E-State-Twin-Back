@@ -62,7 +62,7 @@ public class Asset extends BaseTimeEntity {
             this.estate.getAssets().remove(this);
         }
         this.estate = estate;
-        this.estate.getAssets().add(this);
+        estate.getAssets().add(this);
     }
 
     @PrePersist

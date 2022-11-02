@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public User deleteMember(User user) {
-        return user.delUser();
+        return userRepository.save(user.delUser());
     }
 
     @Override

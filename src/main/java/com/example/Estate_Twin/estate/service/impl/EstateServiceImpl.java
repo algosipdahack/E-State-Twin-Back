@@ -44,6 +44,7 @@ public class EstateServiceImpl implements EstateService {
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
         EstateDetailDto detail = new EstateDetailDto(estate);
+
         // 사용자가 문의했는지 확인 -> arCam 활성화
         detail.setIsInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
         return detail;
@@ -78,8 +79,10 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto) {
+        //house 값 수정
         houseDAO.updateHouse(estateDAO.findHouse(id), estateUpdateRequestDto.getHouse());
 
+        //estate 값 수정
         return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto));
     }
 
@@ -94,6 +97,7 @@ public class EstateServiceImpl implements EstateService {
     public EstateResponseDto allowPost(Long estateId, User user) {
         Estate estate = estateDAO.findEstate(estateId);
         Estate newEstate;
+
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
             Broker broker = brokerDAO.findBrokerByEmail(user.getEmail());
@@ -101,6 +105,7 @@ public class EstateServiceImpl implements EstateService {
         } else { // 집주인이라면
             newEstate = estateDAO.allowOwner(estate, user);
         }
+
         if (estateDAO.checkEnroll(newEstate)) {
             contractStateDAO.updateState(newEstate, State.POST_DONE);
         }
@@ -110,7 +115,7 @@ public class EstateServiceImpl implements EstateService {
     @Override
     @Transactional
     public ContractStateResponseDto startContract(Long estateId, User user) {
-        Estate estate = estateDAO.matchTenent(estateId,user);
+        Estate estate = estateDAO.matchTenent(estateId, user);
         ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
         return new ContractStateResponseDto(contractState);
     }

@@ -16,7 +16,6 @@ public class EstateDetailDto {
     private final String state;
     private final String transactionType;
     private final String estateThumbNail;
-    private final String content;
     private final String model;
     private final LocalDateTime createdAt;
     private boolean isPosted;
@@ -35,7 +34,6 @@ public class EstateDetailDto {
         this.state = estate.getState().toString();
         this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();
-        this.content = estate.getContent();
         this.model = estate.getModel();
         this.createdAt = estate.getCreatedDate();
         this.isPosted = estate.isPosted();

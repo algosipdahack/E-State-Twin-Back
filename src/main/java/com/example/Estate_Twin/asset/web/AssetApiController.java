@@ -31,7 +31,7 @@ public class AssetApiController {
     @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @PutMapping("/{assetId}")
     public ResponseEntity<AssetResponseDto> updateAsset(@PathVariable Long assetId, @RequestBody AssetUpdateRequestDto assetUpdateRequestDto){
-        AssetResponseDto assetResponseDto = assetService.updateAsset(assetId,assetUpdateRequestDto);
+        AssetResponseDto assetResponseDto = assetService.updateAsset(assetId, assetUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 

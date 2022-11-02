@@ -21,6 +21,7 @@ public class CheckListDAOImpl implements CheckListDAO {
     private AssetRepository assetRepository;
 
     @Override
+    @Transactional
     public CheckList saveCheckList(CheckList checkList, Asset asset) {
         checkList.setAsset(asset);
         return checkListRepository.save(checkList);

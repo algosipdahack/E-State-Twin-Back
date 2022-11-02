@@ -30,6 +30,7 @@ public class AssetDAOImpl implements AssetDAO {
     }
 
     @Override
+    @Transactional
     public Asset saveAsset(Estate estate, Asset asset) {
         asset.setEstate(estate);
         return assetRepository.save(asset);

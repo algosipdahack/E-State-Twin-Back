@@ -34,8 +34,6 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final BooleanPath brokerConfirmYN = createBoolean("brokerConfirmYN");
 
-    public final StringPath content = createString("content");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 

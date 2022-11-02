@@ -30,7 +30,7 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(),assetDAO.findAsset(assetId)));
+        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(), assetDAO.findAsset(assetId)));
     }
 
     @Override
@@ -50,6 +50,7 @@ public class CheckListServiceImpl implements CheckListService {
     public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
         CheckList checkList = checkListDAO.findCheckList(checklistId);
         Estate estate = estateDAO.findEstate(estateId);
+
         CheckList newCheckList;
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면

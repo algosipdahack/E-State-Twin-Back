@@ -4,7 +4,6 @@ import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.PreferEstateServiceImpl;
 import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
-import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;

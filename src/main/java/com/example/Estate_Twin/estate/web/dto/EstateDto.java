@@ -14,7 +14,6 @@ import java.util.*;
 @Getter
 public class EstateDto {
     private final String estateThumbNail;
-    private final String content;
     private final String model;
     private final String thumbnail3D;
     private final String arCam;
@@ -36,7 +35,6 @@ public class EstateDto {
     @QueryProjection
     public EstateDto(Estate estate) {
         this.estateThumbNail = estate.getEstateThumbNail();
-        this.content = estate.getContent();
         this.model = estate.getModel();
         this.thumbnail3D = estate.getThumbnail3D();
         this.arCam = estate.getArCam();

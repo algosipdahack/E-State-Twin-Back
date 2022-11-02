@@ -9,6 +9,7 @@ import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.util.List;
 public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
+    private UserRepository userRepository;
 
     @Override
     @Transactional
@@ -150,6 +152,6 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public User updateBorough(User user, String borough) {
-        return user.setBorough(borough);
+        return userRepository.save(user.setBorough(borough));
     }
 }

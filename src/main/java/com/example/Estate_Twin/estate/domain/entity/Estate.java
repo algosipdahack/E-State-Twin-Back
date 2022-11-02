@@ -27,8 +27,6 @@ public class Estate extends BaseTimeEntity {
     private Long id;
     //리스트에서 보여줄 썸네일
     private String estateThumbNail;
-    @Column(columnDefinition = "TEXT")
-    private String content;
     //2D 도면
     private String floorplan;
     //s3에 올려진 model src
@@ -78,7 +76,6 @@ public class Estate extends BaseTimeEntity {
     }
 
     public Estate detailUpdate(EstateSaveRequestDto dto) {
-        this.content = dto.getContent();
         this.estateThumbNail = dto.getEstatePhotos().get(0);
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.floorplan = dto.getFloorplan();
@@ -89,7 +86,6 @@ public class Estate extends BaseTimeEntity {
     }
 
     public Estate update(EstateUpdateRequestDto dto) {
-        this.content = dto.getContent();
         this.model = dto.getModel();
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.estateThumbNail = dto.getEstateThumbNail();
