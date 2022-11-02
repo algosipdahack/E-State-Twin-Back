@@ -32,13 +32,12 @@ public class House extends BaseTimeEntity {
     private boolean parking;
     private Long parkingFee;
     private LocalDateTime moveInAvailableDate;
-    private Long size;
     private String heatType;
-    private Long household;
-    private LocalDateTime usageAvailableDate;
-    private Long roomCount;
-    private Long bathCount;
     private EstateType estateType;
+    private boolean elevator;
+    private boolean duplex;
+    private Structure structure;
+    private Extra veranda;
     @OneToOne(mappedBy = "house")
     private Estate estate;
 
@@ -46,14 +45,11 @@ public class House extends BaseTimeEntity {
     public House(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
                  Long totalFloors, boolean shortTermRent, Long maintenanceFee,
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
-                 Long rentableArea,boolean parking,Long parkingFee,LocalDateTime moveInAvailableDate,
-                 Long size,String heatType,EstateType estateType,Long household,Long roomCount,
-                 LocalDateTime usageAvailableDate,Long bathCount)
-    {
+                 Long rentableArea, boolean parking, Long parkingFee, LocalDateTime moveInAvailableDate,
+                 String heatType, EstateType estateType, boolean elevator, boolean duplex,
+                 Structure structure, Extra veranda) {
         this.deposit = deposit;
         this.totalFloors = totalFloors;
-        this.size = size;
-        this.usageAvailableDate = usageAvailableDate;
         this.itemsIncludedMaintenanceFee = itemsIncludedMaintenanceFee;
         this.rentableArea = rentableArea;
         this.parking = parking;
@@ -64,12 +60,13 @@ public class House extends BaseTimeEntity {
         this.moveInAvailableDate = moveInAvailableDate;
         this.maintenanceFee = maintenanceFee;
         this.currentFloors = currentFloors;
-        this.roomCount = roomCount;
         this.estateType = estateType;
-        this.bathCount = bathCount;
-        this.household = household;
         this.parkingFee = parkingFee;
         this.sellingFee = sellingFee;
+        this.elevator = elevator;
+        this.duplex = duplex;
+        this.structure = structure;
+        this.veranda = veranda;
     }
 
     public House update(HouseUpdateRequestDto dto) {
@@ -86,13 +83,12 @@ public class House extends BaseTimeEntity {
         this.parking = dto.isParking();
         this.parkingFee = dto.getParkingFee();
         this.moveInAvailableDate = dto.getMoveInAvailableDate();
-        this.size = dto.getSize();
         this.heatType = dto.getHeatType();
         this.estateType = dto.getEstateType();
-        this.household = dto.getHousehold();
-        this.usageAvailableDate = dto.getUsageAvailableDate();
-        this.roomCount = dto.getRoomCount();
-        this.bathCount = dto.getBathCount();
+        this.elevator = dto.isElevator();
+        this.duplex = dto.isDuplex();
+        this.structure = Structure.of(dto.getStructure());
+        this.veranda = Extra.of(dto.getVeranda());
         return this;
     }
 

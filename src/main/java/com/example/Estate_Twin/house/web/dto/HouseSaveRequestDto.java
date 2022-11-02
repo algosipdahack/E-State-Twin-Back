@@ -1,7 +1,10 @@
 package com.example.Estate_Twin.house.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.house.domain.entity.Extra;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.house.domain.entity.Structure;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,22 +25,20 @@ public class HouseSaveRequestDto {
     private boolean parking;
     private Long parkingFee;
     private LocalDateTime moveInAvailableDate;
-    private Long size;
     private String heatType;
     private EstateType estateType;
-    private Long household;
-    private LocalDateTime usageAvailableDate;
-    private Long roomCount;
-    private Long bathCount;
-
+    private boolean elevator;
+    private boolean duplex;
+    @Schema(description = "방구조", example = "LOFT, SEPERATED_KITCHEN")
+    private String structure;
+    @Schema(description = "베란다", example = "VERANDA, BALCONY")
+    private String veranda;
     public House toEntity() {
         return House.builder()
-                .bathCount(bathCount)
                 .currentFloors(currentFloors)
                 .deposit(deposit)
                 .estateType(estateType)
                 .heatType(heatType)
-                .household(household)
                 .itemsIncludedMaintenanceFee(itemsIncludedMaintenanceFee)
                 .maintenanceFee(maintenanceFee)
                 .monthlyRent(monthlyRent)
@@ -46,12 +47,13 @@ public class HouseSaveRequestDto {
                 .parking(parking)
                 .parkingFee(parkingFee)
                 .rentableArea(rentableArea)
-                .roomCount(roomCount)
                 .sellingFee(sellingFee)
                 .totalFloors(totalFloors)
                 .shortTermRent(shortTermRent)
-                .size(size)
-                .usageAvailableDate(usageAvailableDate)
+                .elevator(elevator)
+                .duplex(duplex)
+                .structure(Structure.of(structure))
+                .veranda(Extra.of(veranda))
                 .build();
     }
 }

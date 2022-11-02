@@ -21,13 +21,12 @@ public class HouseDto {
     private final boolean parking;
     private final Long parkingFee;
     private final LocalDateTime moveInAvailableDate;
-    private final Long size;
     private final String heatType;
     private final EstateType estateType;
-    private final Long household;
-    private final LocalDateTime usageAvailableDate;
-    private final Long roomCount;
-    private final Long bathCount;
+    private final boolean elevator;
+    private final boolean duplex;
+    private final String structure;
+    private final String veranda;
 
     @QueryProjection
     public HouseDto(House house) {
@@ -44,12 +43,11 @@ public class HouseDto {
         this.parking = house.isParking();
         this.parkingFee = house.getParkingFee();
         this.moveInAvailableDate = house.getMoveInAvailableDate();
-        this.size = house.getSize();
         this.heatType = house.getHeatType();
         this.estateType = house.getEstateType();
-        this.household = house.getHousehold();
-        this.usageAvailableDate = house.getUsageAvailableDate();
-        this.roomCount = house.getRoomCount();
-        this.bathCount = house.getBathCount();
+        this.elevator = house.isElevator();
+        this.duplex = house.isDuplex();
+        this.structure = house.getStructure().toString();
+        this.veranda = house.getVeranda().toString();
     }
 }

@@ -20,11 +20,10 @@ public class HouseUpdateRequestDto {
     private boolean parking;
     private Long parkingFee;
     private LocalDateTime moveInAvailableDate;
-    private Long size;
     private String heatType;
     private EstateType estateType;
-    private Long household;
-    private LocalDateTime usageAvailableDate;
-    private Long roomCount;
-    private Long bathCount;
+    private boolean elevator;
+    private boolean duplex;
+    private String structure;
+    private String veranda;
 }

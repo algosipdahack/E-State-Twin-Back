@@ -52,7 +52,7 @@ public class EstateDto {
         this.tenent = new UserDto(estate.getTenent());
 
         this.estateMedia = new ArrayList<>();
-        estate.getEstateMedia().forEach(media -> this.estateMedia.add(media));
+        estate.getEstatePhoto().forEach(media -> this.estateMedia.add(media));
         this.assets = new ArrayList<>();
         estate.getAssets().forEach(asset -> this.assets.add(asset));
         this.preferEstates = new ArrayList<>();

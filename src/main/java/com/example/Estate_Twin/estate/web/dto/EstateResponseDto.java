@@ -44,7 +44,7 @@ public class EstateResponseDto {
         this.estatehit = new EstateHitDto(estate.getEstateHit());
 
         this.estatePhotos = new ArrayList<>();
-        estate.getEstateMedia().forEach(eMedia -> this.estatePhotos.add(eMedia));
+        estate.getEstatePhoto().forEach(eMedia -> this.estatePhotos.add(eMedia));
 
 
         this.assets = new ArrayList<>();

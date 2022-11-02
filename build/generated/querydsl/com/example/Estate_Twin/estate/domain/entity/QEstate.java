@@ -39,9 +39,11 @@ public class QEstate extends EntityPathBase<Estate> {
 
     public final QEstateHit estateHit;
 
-    public final ListPath<String, StringPath> estateMedia = this.<String, StringPath>createList("estateMedia", String.class, StringPath.class, PathInits.DIRECT2);
+    public final ListPath<String, StringPath> estatePhoto = this.<String, StringPath>createList("estatePhoto", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final StringPath estateThumbNail = createString("estateThumbNail");
+
+    public final ListPath<String, StringPath> estateVideo = this.<String, StringPath>createList("estateVideo", String.class, StringPath.class, PathInits.DIRECT2);
 
     public final StringPath floorplan = createString("floorplan");
 

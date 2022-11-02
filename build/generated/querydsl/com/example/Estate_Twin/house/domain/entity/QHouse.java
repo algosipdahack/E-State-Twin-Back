@@ -24,8 +24,6 @@ public class QHouse extends EntityPathBase<House> {
 
     public final com.example.Estate_Twin.util.QBaseTimeEntity _super = new com.example.Estate_Twin.util.QBaseTimeEntity(this);
 
-    public final NumberPath<Long> bathCount = createNumber("bathCount", Long.class);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
@@ -33,13 +31,15 @@ public class QHouse extends EntityPathBase<House> {
 
     public final NumberPath<Long> deposit = createNumber("deposit", Long.class);
 
+    public final BooleanPath duplex = createBoolean("duplex");
+
+    public final BooleanPath elevator = createBoolean("elevator");
+
     public final com.example.Estate_Twin.estate.domain.entity.QEstate estate;
 
     public final EnumPath<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType = createEnum("estateType", com.example.Estate_Twin.estate.domain.entity.EstateType.class);
 
     public final StringPath heatType = createString("heatType");
-
-    public final NumberPath<Long> household = createNumber("household", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -62,17 +62,15 @@ public class QHouse extends EntityPathBase<House> {
 
     public final NumberPath<Long> rentableArea = createNumber("rentableArea", Long.class);
 
-    public final NumberPath<Long> roomCount = createNumber("roomCount", Long.class);
-
     public final NumberPath<Long> sellingFee = createNumber("sellingFee", Long.class);
 
     public final BooleanPath shortTermRent = createBoolean("shortTermRent");
 
-    public final NumberPath<Long> size = createNumber("size", Long.class);
+    public final EnumPath<Structure> structure = createEnum("structure", Structure.class);
 
     public final NumberPath<Long> totalFloors = createNumber("totalFloors", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> usageAvailableDate = createDateTime("usageAvailableDate", java.time.LocalDateTime.class);
+    public final EnumPath<Extra> veranda = createEnum("veranda", Extra.class);
 
     public QHouse(String variable) {
         this(House.class, forVariable(variable), INITS);

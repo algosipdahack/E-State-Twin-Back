@@ -23,13 +23,8 @@ public class HouseRepositoryTest {
     void saveTest() {
         //given
         House givenHouse = new House().builder()
-                .bathCount(1L)
-                .usageAvailableDate(LocalDateTime.now())
-                .roomCount(1L)
-                .household(1L)
                 .estateType(EstateType.APARTMENT)
                 .heatType("heattype")
-                .size(1L)
                 .moveInAvailableDate(LocalDateTime.now())
                 .parkingFee(1L)
                 .parking(true)
@@ -48,6 +43,5 @@ public class HouseRepositoryTest {
         //when
         House house = houseRepository.save(givenHouse);
         //then
-        assertEquals(house.getBathCount(),givenHouse.getBathCount());
     }
 }

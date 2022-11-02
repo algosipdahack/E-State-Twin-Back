@@ -10,7 +10,6 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import lombok.*;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.*;
@@ -41,7 +40,9 @@ public class Estate extends BaseTimeEntity {
     @Embedded
     private Address address;
     @ElementCollection
-    private List<String> estateMedia;
+    private List<String> estatePhoto;
+    @ElementCollection
+    private List<String> estateVideo;
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
@@ -80,8 +81,10 @@ public class Estate extends BaseTimeEntity {
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.floorplan = dto.getFloorplan();
         this.arCam = dto.getArCam();
-        this.estateMedia.clear();
-        this.estateMedia.addAll(dto.getEstatePhotos());
+        this.estatePhoto.clear();
+        this.estatePhoto.addAll(dto.getEstatePhotos());
+        this.estateVideo.clear();
+        this.estateVideo.addAll(dto.getEstateVideos());
         return this;
     }
 
@@ -162,7 +165,7 @@ public class Estate extends BaseTimeEntity {
     //insert 되기 전 실행된다
     @PrePersist
     public void prePersist() {
-        this.estateMedia = new ArrayList<>();
+        this.estatePhoto = new ArrayList<>();
         this.assets = new ArrayList<>();
         this.preferEstates = new ArrayList<>();
         this.state = this.state == null ? State.BROKER_BEFORE : this.state;
