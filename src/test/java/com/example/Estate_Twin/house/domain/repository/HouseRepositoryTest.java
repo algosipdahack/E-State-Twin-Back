@@ -10,7 +10,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application.yml")

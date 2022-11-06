@@ -2,6 +2,7 @@ package com.example.Estate_Twin.house.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
@@ -22,6 +23,7 @@ public class HouseResponseDto {
     private final Long rentableArea;
     private final boolean parking;
     private final Long parkingFee;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime moveInAvailableDate;
     private final String heatType;
     private final EstateType estateType;

@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -17,5 +18,6 @@ public class CheckListUpdateRequestDto {
     private Boolean brokerConfirmYN;
     private Boolean ownerConfirmYN;
     private Boolean tenentConfirmYN;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime repairDate;
 }

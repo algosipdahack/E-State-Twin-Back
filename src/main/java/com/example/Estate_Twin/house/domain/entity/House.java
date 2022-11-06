@@ -5,6 +5,7 @@ import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class House extends BaseTimeEntity {
     private Long rentableArea;
     private boolean parking;
     private Long parkingFee;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime moveInAvailableDate;
     private String heatType;
     private boolean elevator;

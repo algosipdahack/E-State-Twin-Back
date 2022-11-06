@@ -2,6 +2,7 @@ package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.checklist.web.dto.CheckListDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
@@ -16,6 +17,7 @@ public class AssetDto {
     private final String productName;
     private final String manufacturer;
     private final String anchorId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime repairDate;
     private final List<CheckListDto> checkLists;
 

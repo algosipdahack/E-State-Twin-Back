@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class EstateResponseDto {
     private final String transactionType;
     private final String estateThumbNail;
     private final String model;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdAt;
     private boolean isPosted;
     private boolean ownerConfirmYN;

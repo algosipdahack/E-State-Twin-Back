@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.asset.web.dto;
 
 import com.example.Estate_Twin.asset.data.entity.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class AssetSaveRequestDto {
     private String manufacturer;
     private String anchorId;
     private String assetPhoto;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime repairDate;
 
     public Asset toEntity() {

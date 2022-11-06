@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.checklist.web.dto;
 
 import com.example.Estate_Twin.checklist.data.entity.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -18,7 +19,9 @@ public class CheckListResponseDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
     private final Boolean tenentConfirmYN;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime repairDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdAt;
 
     @QueryProjection
