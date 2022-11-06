@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -11,6 +12,7 @@ import java.util.*;
 @Getter
 public class UserResponseDto {
     private final Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private final LocalDate birthday;
     private final String phone;
     private final String name;

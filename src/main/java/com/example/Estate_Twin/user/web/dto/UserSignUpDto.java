@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class UserSignUpDto {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate birthday;
     private String phone;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")

@@ -3,6 +3,7 @@ package com.example.Estate_Twin.checklist.data.entity;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class CheckList extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
     private String checkListPhoto;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate repairDate;
     @Enumerated(EnumType.STRING)
     private RepairType repairType;

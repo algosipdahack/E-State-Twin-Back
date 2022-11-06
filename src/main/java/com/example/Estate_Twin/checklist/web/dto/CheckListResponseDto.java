@@ -19,6 +19,7 @@ public class CheckListResponseDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
     private final Boolean tenantConfirmYN;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private final LocalDate repairDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdAt;
