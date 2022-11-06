@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @DataJpaTest
@@ -24,7 +24,7 @@ public class HouseRepositoryTest {
         House givenHouse = new House().builder()
                 .estateType(EstateType.APARTMENT)
                 .heatType("heattype")
-                .moveInAvailableDate(LocalDateTime.now())
+                .moveInAvailableDate(LocalDate.now())
                 .parkingFee(1L)
                 .parking(true)
                 .rentableArea(1L)

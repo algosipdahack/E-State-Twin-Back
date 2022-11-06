@@ -48,8 +48,6 @@ public class QAsset extends EntityPathBase<Asset> {
 
     public final StringPath productName = createString("productName");
 
-    public final DateTimePath<java.time.LocalDateTime> repairDate = createDateTime("repairDate", java.time.LocalDateTime.class);
-
     public QAsset(String variable) {
         this(Asset.class, forVariable(variable), INITS);
     }

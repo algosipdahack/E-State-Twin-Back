@@ -6,7 +6,7 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Getter
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class CheckList extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String checkListContent;
     private String checkListPhoto;
-    private LocalDateTime repairDate;
+    private LocalDate repairDate;
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
     private Boolean brokerConfirmYN;
@@ -34,7 +34,7 @@ public class CheckList extends BaseTimeEntity {
 
     @Builder
     public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     String checkListContent, LocalDateTime repairDate, String checkListPhoto,
+                     String checkListContent, LocalDate repairDate, String checkListPhoto,
                      RepairType repairType, Boolean tenantConfirmYN) {
         this.flawPart = flawPart;
         this.brokerConfirmYN = brokerConfirmYN;

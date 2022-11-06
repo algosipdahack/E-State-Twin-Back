@@ -5,11 +5,10 @@ import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -32,8 +31,7 @@ public class House extends BaseTimeEntity {
     private Long rentableArea;
     private boolean parking;
     private Long parkingFee;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime moveInAvailableDate;
+    private LocalDate moveInAvailableDate;
     private String heatType;
     private boolean elevator;
     private boolean duplex;
@@ -49,7 +47,7 @@ public class House extends BaseTimeEntity {
     public House(Long deposit, Long monthlyRent, Long sellingFee, Long currentFloors,
                  Long totalFloors, boolean shortTermRent, Long maintenanceFee,
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
-                 Long rentableArea, boolean parking, Long parkingFee, LocalDateTime moveInAvailableDate,
+                 Long rentableArea, boolean parking, Long parkingFee, LocalDate moveInAvailableDate,
                  String heatType, EstateType estateType, boolean elevator, boolean duplex,
                  Structure structure, boolean veranda) {
         this.deposit = deposit;

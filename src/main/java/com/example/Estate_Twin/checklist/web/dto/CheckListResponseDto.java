@@ -6,7 +6,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Getter
 public class CheckListResponseDto {
@@ -19,8 +19,7 @@ public class CheckListResponseDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
     private final Boolean tenantConfirmYN;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private final LocalDateTime repairDate;
+    private final LocalDate repairDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime createdAt;
 

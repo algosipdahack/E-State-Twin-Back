@@ -44,7 +44,7 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final BooleanPath ownerConfirmYN = createBoolean("ownerConfirmYN");
 
-    public final DateTimePath<java.time.LocalDateTime> repairDate = createDateTime("repairDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> repairDate = createDate("repairDate", java.time.LocalDate.class);
 
     public final EnumPath<RepairType> repairType = createEnum("repairType", RepairType.class);
 

@@ -146,7 +146,9 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate matchTenant(Long estateId, User user) {
-        return findEstate(estateId).setTenant(user);
+        Estate estate = findEstate(estateId);
+        userRepository.save(user.setTenantEstate(findEstate(estateId)));
+        return estate;
     }
 
     @Override

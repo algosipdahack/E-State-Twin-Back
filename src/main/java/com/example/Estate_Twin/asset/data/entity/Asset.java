@@ -7,7 +7,6 @@ import com.example.Estate_Twin.util.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -24,7 +23,6 @@ public class Asset extends BaseTimeEntity {
     //AR Camera에서 각 앵커마다 에셋이 존재하기 때문
     private String anchorId;
     private String assetPhoto;
-    private LocalDateTime repairDate;
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)
@@ -36,13 +34,12 @@ public class Asset extends BaseTimeEntity {
     private List<CheckList> checkLists;
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, String assetPhoto, Option option, String productName, String manufacturer, String anchorId, LocalDateTime repairDate) {
+    public Asset(Category category, String assetPhoto, Option option, String productName, String manufacturer, String anchorId) {
         this.category = category;
         this.option = option;
         this.productName = productName;
         this.manufacturer = manufacturer;
         this.anchorId = anchorId;
-        this.repairDate = repairDate;
         this.assetPhoto = assetPhoto;
     }
 
@@ -52,7 +49,6 @@ public class Asset extends BaseTimeEntity {
         this.productName = dto.getProductName();
         this.manufacturer = dto.getManufacturer();
         this.anchorId = dto.getAnchorId();
-        this.repairDate = dto.getRepairDate();
         this.assetPhoto = dto.getAssetPhoto();
         return this;
     }

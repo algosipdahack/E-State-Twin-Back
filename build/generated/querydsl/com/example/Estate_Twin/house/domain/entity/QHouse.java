@@ -52,7 +52,7 @@ public class QHouse extends EntityPathBase<House> {
 
     public final NumberPath<Long> monthlyRent = createNumber("monthlyRent", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> moveInAvailableDate = createDateTime("moveInAvailableDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> moveInAvailableDate = createDate("moveInAvailableDate", java.time.LocalDate.class);
 
     public final NumberPath<Long> netRentableArea = createNumber("netRentableArea", Long.class);
 

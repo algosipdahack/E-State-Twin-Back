@@ -32,7 +32,7 @@ public class AssetRepositoryCustomImpl extends QuerydslRepositorySupport impleme
                 .from(estate)
                 .where(asset.option.eq(option))
                 .where(estate.tenant.id.eq(userId))
-                .join(estate.assets, asset).fetchJoin()
+                .join(estate.assets, asset)
                 .fetchResults();
         List<Asset> result = queryResults.getResults();
         return result;
@@ -45,7 +45,7 @@ public class AssetRepositoryCustomImpl extends QuerydslRepositorySupport impleme
                 .from(estate)
                 .where(asset.option.eq(option))
                 .where(estate.owner.id.eq(userId))
-                .join(estate.assets, asset).fetchJoin()
+                .join(estate.assets, asset)
                 .fetchResults();
         List<Asset> result = queryResults.getResults();
         return result;
