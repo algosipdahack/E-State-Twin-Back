@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.house.web.dto;
 
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.house.domain.entity.Extra;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.entity.Structure;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,8 +30,7 @@ public class HouseSaveRequestDto {
     private boolean duplex;
     @Schema(description = "방구조", example = "LOFT, SEPERATED_KITCHEN")
     private String structure;
-    @Schema(description = "베란다", example = "VERANDA, BALCONY")
-    private String veranda;
+    private boolean veranda;
     public House toEntity() {
         return House.builder()
                 .currentFloors(currentFloors)
@@ -53,7 +51,7 @@ public class HouseSaveRequestDto {
                 .elevator(elevator)
                 .duplex(duplex)
                 .structure(Structure.of(structure))
-                .veranda(Extra.of(veranda))
+                .veranda(veranda)
                 .build();
     }
 }

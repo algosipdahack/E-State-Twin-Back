@@ -70,7 +70,7 @@ public class QHouse extends EntityPathBase<House> {
 
     public final NumberPath<Long> totalFloors = createNumber("totalFloors", Long.class);
 
-    public final EnumPath<Extra> veranda = createEnum("veranda", Extra.class);
+    public final BooleanPath veranda = createBoolean("veranda");
 
     public QHouse(String variable) {
         this(House.class, forVariable(variable), INITS);

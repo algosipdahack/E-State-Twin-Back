@@ -26,7 +26,7 @@ public class HouseDto {
     private final boolean elevator;
     private final boolean duplex;
     private final String structure;
-    private final String veranda;
+    private final boolean veranda;
 
     @QueryProjection
     public HouseDto(House house) {
@@ -48,6 +48,6 @@ public class HouseDto {
         this.elevator = house.isElevator();
         this.duplex = house.isDuplex();
         this.structure = house.getStructure().toString();
-        this.veranda = house.getVeranda().toString();
+        this.veranda = house.isVeranda();
     }
 }

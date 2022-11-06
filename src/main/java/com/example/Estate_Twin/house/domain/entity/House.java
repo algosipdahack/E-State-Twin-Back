@@ -33,11 +33,13 @@ public class House extends BaseTimeEntity {
     private Long parkingFee;
     private LocalDateTime moveInAvailableDate;
     private String heatType;
-    private EstateType estateType;
     private boolean elevator;
     private boolean duplex;
+    private boolean veranda;
+    @Enumerated(EnumType.STRING)
+    private EstateType estateType;
+    @Enumerated(EnumType.STRING)
     private Structure structure;
-    private Extra veranda;
     @OneToOne(mappedBy = "house")
     private Estate estate;
 
@@ -47,7 +49,7 @@ public class House extends BaseTimeEntity {
                  String itemsIncludedMaintenanceFee, Long netRentableArea,
                  Long rentableArea, boolean parking, Long parkingFee, LocalDateTime moveInAvailableDate,
                  String heatType, EstateType estateType, boolean elevator, boolean duplex,
-                 Structure structure, Extra veranda) {
+                 Structure structure, boolean veranda) {
         this.deposit = deposit;
         this.totalFloors = totalFloors;
         this.itemsIncludedMaintenanceFee = itemsIncludedMaintenanceFee;
@@ -88,7 +90,7 @@ public class House extends BaseTimeEntity {
         this.elevator = dto.isElevator();
         this.duplex = dto.isDuplex();
         this.structure = Structure.of(dto.getStructure());
-        this.veranda = Extra.of(dto.getVeranda());
+        this.veranda = dto.isVeranda();
         return this;
     }
 

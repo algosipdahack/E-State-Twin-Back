@@ -166,6 +166,7 @@ public class Estate extends BaseTimeEntity {
     @PrePersist
     public void prePersist() {
         this.estatePhoto = new ArrayList<>();
+        this.estateVideo = new ArrayList<>();
         this.assets = new ArrayList<>();
         this.preferEstates = new ArrayList<>();
         this.state = this.state == null ? State.BROKER_BEFORE : this.state;

@@ -25,5 +25,5 @@ public class HouseUpdateRequestDto {
     private boolean elevator;
     private boolean duplex;
     private String structure;
-    private String veranda;
+    private boolean veranda;
 }

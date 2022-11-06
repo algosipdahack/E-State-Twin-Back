@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 @Getter
 public enum Structure {
-    LOFT("LOFT"), SEPERATED_KITCHEN("SEPERATED_KITCHEN");
+    LOFT("LOFT"), SEPERATE_KITCHEN("SEPERATE_KITCHEN");
     private final String structure;
     Structure(String structure) { this.structure = structure; }
 

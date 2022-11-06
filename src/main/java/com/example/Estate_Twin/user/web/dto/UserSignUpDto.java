@@ -16,12 +16,4 @@ public class UserSignUpDto {
     private String estateType;
     @Schema(description = "선호 지역", example = "강남구")
     private String borough;
-    @Builder
-    public UserSignUpDto(LocalDate birthday, String phone, String transactionType, String estateType, String borough) {
-        this.birthday = birthday;
-        this.phone = phone;
-        this.transactionType = transactionType;
-        this.estateType = estateType;
-        this.borough = borough;
-    }
 }
