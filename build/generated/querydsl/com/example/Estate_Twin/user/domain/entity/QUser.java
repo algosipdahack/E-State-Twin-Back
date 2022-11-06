@@ -56,7 +56,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
 
-    public final com.example.Estate_Twin.estate.domain.entity.QEstate tenentEstate;
+    public final com.example.Estate_Twin.estate.domain.entity.QEstate tenantEstate;
 
     public final EnumPath<com.example.Estate_Twin.estate.domain.entity.TransactionType> transactionType = createEnum("transactionType", com.example.Estate_Twin.estate.domain.entity.TransactionType.class);
 
@@ -80,7 +80,7 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.tenentEstate = inits.isInitialized("tenentEstate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("tenentEstate"), inits.get("tenentEstate")) : null;
+        this.tenantEstate = inits.isInitialized("tenantEstate") ? new com.example.Estate_Twin.estate.domain.entity.QEstate(forProperty("tenantEstate"), inits.get("tenantEstate")) : null;
     }
 
 }

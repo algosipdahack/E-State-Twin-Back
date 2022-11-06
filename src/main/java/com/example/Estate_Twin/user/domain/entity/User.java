@@ -42,7 +42,7 @@ public class User extends BaseTimeEntity {
     //세입중인 매물
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
-    private Estate tenentEstate;
+    private Estate tenantEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -77,9 +77,9 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public void setTenentEstate(Estate estate) {
-        this.tenentEstate = estate;
-        estate.setTenent(this);
+    public void setTenantEstate(Estate estate) {
+        this.tenantEstate = estate;
+        estate.setTenant(this);
     }
 
     public void setRefreshToken(String refreshToken) {

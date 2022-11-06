@@ -112,11 +112,11 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public EstateModeDto findTenentEstateList(Long userId) {
+    public EstateModeDto findTenantEstateList(Long userId) {
         return jpaQueryFactory
                 .select(new QEstateModeDto(estate.address, estate.house.estateType))
                 .from(estate)
-                .where(estate.tenent.id.eq(userId))
+                .where(estate.tenant.id.eq(userId))
                 .fetchOne();
     }
 

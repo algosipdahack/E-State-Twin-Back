@@ -16,5 +16,5 @@ public interface EstateRepositoryCustom {
     EstateHit findEstateHit(Long estateId);
     House findHouse(Long estateId);
     List<EstateModeDto> findOwnerEstateList(Long userId);
-    EstateModeDto findTenentEstateList(Long userId);
+    EstateModeDto findTenantEstateList(Long userId);
 }

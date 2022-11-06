@@ -48,7 +48,7 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final EnumPath<RepairType> repairType = createEnum("repairType", RepairType.class);
 
-    public final BooleanPath tenentConfirmYN = createBoolean("tenentConfirmYN");
+    public final BooleanPath tenantConfirmYN = createBoolean("tenantConfirmYN");
 
     public QCheckList(String variable) {
         this(CheckList.class, forVariable(variable), INITS);

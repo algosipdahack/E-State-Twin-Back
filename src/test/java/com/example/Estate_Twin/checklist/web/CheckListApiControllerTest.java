@@ -59,7 +59,7 @@ public class CheckListApiControllerTest {
                 .repairDate(dateTime)
                 .repairType("REPAIR")
                 .brokerConfirmYN(false)
-                .tenentConfirmYN(false)
+                .tenantConfirmYN(false)
                 .ownerConfirmYN(false)
                 .checkListPhotos(mediaSaveMultipartRequestDtos)
                 .build();

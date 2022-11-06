@@ -123,7 +123,7 @@ public class EstateApiController {
     }
 
 
-    @Operation(summary = "enroll tenent of estate", description = "계약 진행 버튼 클릭 -> 세입자 등록")
+    @Operation(summary = "enroll tenant of estate", description = "계약 진행 버튼 클릭 -> 세입자 등록")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/contract")

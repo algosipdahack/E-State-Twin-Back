@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<AssetResponseDto> getTenentAsset(Long userId, Option option) {
+    public List<AssetResponseDto> getTenantAsset(Long userId, Option option) {
         List<AssetResponseDto> assets = new ArrayList<>();
-        userDAO.getTenentAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset)));
+        userDAO.getTenantAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset)));
         return assets;
     }
 
@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public EstateModeDto getTenentAssetList(Long userId) {
-        return userDAO.getTenentAssetList(userId);
+    public EstateModeDto getTenantAssetList(Long userId) {
+        return userDAO.getTenantAssetList(userId);
     }
 
     @Override

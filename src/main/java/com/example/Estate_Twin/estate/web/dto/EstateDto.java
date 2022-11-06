@@ -28,7 +28,7 @@ public class EstateDto {
     private final HouseDto house;
     private final BrokerDto broker;
     private final UserDto owner;
-    private final UserDto tenent;
+    private final UserDto tenant;
     private final List<String> estateMedia;
     private final List<Asset> assets;
     private final List<PreferEstate> preferEstates;
@@ -49,7 +49,7 @@ public class EstateDto {
         this.house = new HouseDto(estate.getHouse());
         this.broker = new BrokerDto(estate.getBroker());
         this.owner = new UserDto(estate.getOwner());
-        this.tenent = new UserDto(estate.getTenent());
+        this.tenant = new UserDto(estate.getTenant());
 
         this.estateMedia = new ArrayList<>();
         estate.getEstatePhoto().forEach(media -> this.estateMedia.add(media));

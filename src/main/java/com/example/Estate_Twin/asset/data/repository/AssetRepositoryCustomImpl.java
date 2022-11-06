@@ -26,12 +26,12 @@ public class AssetRepositoryCustomImpl extends QuerydslRepositorySupport impleme
     }
 
     @Override
-    public List<Asset> findTenentAsset(Long userId, Option option) {
+    public List<Asset> findTenantAsset(Long userId, Option option) {
         QueryResults<Asset> queryResults = jpaQueryFactory
                 .select(asset)
                 .from(estate)
                 .where(asset.option.eq(option))
-                .where(estate.tenent.id.eq(userId))
+                .where(estate.tenant.id.eq(userId))
                 .join(estate.assets, asset).fetchJoin()
                 .fetchResults();
         List<Asset> result = queryResults.getResults();

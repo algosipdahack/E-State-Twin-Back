@@ -115,7 +115,7 @@ public class EstateServiceImpl implements EstateService {
     @Override
     @Transactional
     public ContractStateResponseDto startContract(Long estateId, User user) {
-        Estate estate = estateDAO.matchTenent(estateId, user);
+        Estate estate = estateDAO.matchTenant(estateId, user);
         ContractState contractState = contractStateDAO.updateState(estate,State.CONTRACT_REQUEST);
         return new ContractStateResponseDto(contractState);
     }

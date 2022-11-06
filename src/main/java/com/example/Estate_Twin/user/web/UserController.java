@@ -39,21 +39,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
     }
 
-    @Operation(summary = "mypage of tenent", description = "세입자모드 목록")
+    @Operation(summary = "mypage of tenant", description = "세입자모드 목록")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
-    @GetMapping("/tenent/list")
+    @GetMapping("/tenant/list")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        EstateModeDto estate = userService.getTenentAssetList(customUserDetails.getUser().getId());
+        EstateModeDto estate = userService.getTenantAssetList(customUserDetails.getUser().getId());
         return ResponseEntity.status(HttpStatus.OK).body(estate);
     }
 
-    @Operation(summary = "mypage detail of tenent", description = "세입자모드 상세")
+    @Operation(summary = "mypage detail of tenant", description = "세입자모드 상세")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
-    @GetMapping("/tenent/detail")
+    @GetMapping("/tenant/detail")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
-        List<AssetResponseDto> assets = userService.getTenentAsset(customUserDetails.getUser().getId(), Option.of(option));
+        List<AssetResponseDto> assets = userService.getTenantAsset(customUserDetails.getUser().getId(), Option.of(option));
         return ResponseEntity.status(HttpStatus.OK).body(assets);
     }
 

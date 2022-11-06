@@ -44,8 +44,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Asset> getTenentAsset(Long userId, Option option) {
-        return assetRepository.findTenentAsset(userId, option);
+    public List<Asset> getTenantAsset(Long userId, Option option) {
+        return assetRepository.findTenantAsset(userId, option);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public EstateModeDto getTenentAssetList(Long userId) {
-        return estateRepository.findTenentEstateList(userId);
+    public EstateModeDto getTenantAssetList(Long userId) {
+        return estateRepository.findTenantEstateList(userId);
     }
 
     @Override

@@ -12,8 +12,8 @@ public interface UserDAO {
     User findUserByEmail(String email);
     User signUp(User user, UserSignUpDto dto);
     User deleteMember(User user);
-    List<Asset> getTenentAsset(Long userId, Option option);
-    EstateModeDto getTenentAssetList(Long userId);
+    List<Asset> getTenantAsset(Long userId, Option option);
+    EstateModeDto getTenantAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);
     List<Asset> getOwnerAsset(Long userId, Option option);
 }
