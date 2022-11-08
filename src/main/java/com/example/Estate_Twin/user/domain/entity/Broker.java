@@ -39,10 +39,10 @@ public class Broker {
     @Embedded
     private Address address;
     //단방향
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "broker", orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "broker", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Estate> tradeEstates;
 
     @Builder

@@ -44,12 +44,10 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "estate_id")
     private Estate tenantEstate;
     //소유한 매물
-    @OneToMany(mappedBy = "owner", orphanRemoval = true,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Estate> ownEstates;
     //찜한 매물
-    @OneToMany(mappedBy = "user", orphanRemoval = true,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<PreferEstate> preferEstates;
 
     @Builder

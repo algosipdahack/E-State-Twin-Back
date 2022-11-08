@@ -18,7 +18,7 @@ public class Officetel {
     private Boolean loft;
     private Boolean builtIn;
     private Boolean veranda;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="house_id")
     private House house;
 

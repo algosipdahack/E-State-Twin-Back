@@ -23,7 +23,7 @@ public class BrokerServiceImpl implements BrokerService {
 
     @Override
     public BrokerResponseDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto) {
-        return new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
+        BrokerResponseDto brokerResponseDto = new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
     }
 
     @Override

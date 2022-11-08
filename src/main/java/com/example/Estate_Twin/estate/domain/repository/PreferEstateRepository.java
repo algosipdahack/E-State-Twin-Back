@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PreferEstateRepository extends JpaRepository<PreferEstate, Long>, PreferEstateRepositoryCustom {
     @Query("select new com.example.Estate_Twin.estate.web.dto.EstateListResponseDto" +
@@ -17,4 +18,5 @@ public interface PreferEstateRepository extends JpaRepository<PreferEstate, Long
             "inner join House h ON h.id = e.house.id " +
             "where p.user.id = :userId and p.preference = :prefer")
     List<EstateListResponseDto> findByUserIdAndPrefer(@Param("userId") Long userId, @Param("prefer") Preference prefer, Pageable pageable);
+    Optional<List<PreferEstate>> findPreferEstatesByEstate_Id(Long estateId);
 }

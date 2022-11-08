@@ -49,10 +49,10 @@ public class Estate extends BaseTimeEntity {
     private State state;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estatehit_id")
     private EstateHit estateHit;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id")
     private House house;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +61,7 @@ public class Estate extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
-    @OneToOne(mappedBy = "tenantEstate")
+    @OneToOne(mappedBy = "tenantEstate", fetch = FetchType.LAZY)
     private User tenant;
     @OneToMany(mappedBy = "estate", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Asset> assets;

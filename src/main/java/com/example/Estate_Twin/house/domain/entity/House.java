@@ -42,7 +42,7 @@ public class House extends BaseTimeEntity {
     private EstateType estateType;
     @Enumerated(EnumType.STRING)
     private Structure structure;
-    @OneToOne(mappedBy = "house")
+    @OneToOne(mappedBy = "house", fetch = FetchType.LAZY)
     private Estate estate;
 
     @Builder // 빌더 형태로 만들어줌

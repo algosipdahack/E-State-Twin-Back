@@ -13,5 +13,5 @@ public interface AssetRepository extends JpaRepository<Asset,Long>, AssetReposit
     List<Asset> findAllUsingFetchJoin();
     @Query("select a from Asset a join fetch a.checkLists where a.id = :id")
     Optional<Asset> findByIdUsingFetchJoin(Long id);
-
+    Optional<List<Asset>> findAssetsByEstate_Id(Long estateId);
 }

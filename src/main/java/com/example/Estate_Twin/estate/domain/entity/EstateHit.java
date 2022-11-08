@@ -14,7 +14,7 @@ public class EstateHit extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "estatehit_id")
     private Long id;
-    @OneToOne(mappedBy = "estateHit")
+    @OneToOne(mappedBy = "estateHit", fetch = FetchType.LAZY)
     private Estate estate;
     @Column
     private Long totalHit;

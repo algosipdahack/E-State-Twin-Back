@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepositoryCustom {
     @Query("select new com.example.Estate_Twin.estate.web.dto.BrokerEstateDto(e.id, u.name, u.phone, e.address) " +
@@ -26,5 +27,9 @@ public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepo
     @Query("select new com.example.Estate_Twin.estate.web.dto.EstateListResponseDto(e.id, e.transactionType, e.estateThumbNail, e.address.town, h.estateType, e.address.buildingName, h.currentFloors, h.rentableArea, e.state, h.sellingFee) " +
             "from Estate e inner join House h ON e.house.id = h.id where e.address.town = :town and e.isPosted = true")
     List<EstateListResponseDto> findEstateByTown(@Param("town") String town, Pageable pageable);
+    Optional<List<Estate>> findEstatesByBroker_Id(Long brokerId);
+    Optional<Estate> findEstateByHouse_Id(Long houseId);
+    Optional<Estate> findEstateByEstateHit_Id(Long estatehitId);
+    Optional<List<Estate>> findEstatesByOwner_Id(Long ownerId);
 
 }

@@ -5,6 +5,7 @@ import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.*;
+import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
