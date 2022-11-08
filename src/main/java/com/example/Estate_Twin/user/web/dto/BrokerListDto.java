@@ -10,7 +10,7 @@ public class BrokerListDto {
     private final Long id;
     @Schema(description = "상호명")
     private final String businessName;
-    @Schema(description = "거래 완증 건수")
+    @Schema(description = "거래 완료 건수")
     private final Long countOfTransactionCompletion;
     private final String content;
     private final Address address;

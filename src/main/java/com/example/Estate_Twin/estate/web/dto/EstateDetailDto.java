@@ -4,6 +4,8 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
+import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.web.dto.BrokerDetailDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -28,6 +30,7 @@ public class EstateDetailDto {
     @Schema(description = "문의한 매물인지 아닌지")
     private boolean isInquiry;
     private HouseResponseDto house;
+    private BrokerDetailDto broker;
     private EstateHitDto estatehit;
     private List<AssetResponseDto> assets;
 
@@ -42,13 +45,19 @@ public class EstateDetailDto {
         this.ownerConfirmYN = estate.isOwnerConfirmYN();
         this.brokerConfirmYN = estate.isBrokerConfirmYN();
         this.address = estate.getAddress();
+
         this.house = new HouseResponseDto(estate.getHouse());
         this.estatehit = new EstateHitDto(estate.getEstateHit());
+
         this.estatePhotos = new ArrayList<>();
         estate.getEstatePhoto().forEach(eMedia -> this.estatePhotos.add(eMedia));
 
         this.assets = new ArrayList<>();
         estate.getAssets().forEach(asset -> this.assets.add(new AssetResponseDto(asset)));
+    }
+
+    public void setBroker(Broker broker) {
+        this.broker = new BrokerDetailDto(broker);
     }
 
     public void setIsInquiry(boolean isInquiry) {

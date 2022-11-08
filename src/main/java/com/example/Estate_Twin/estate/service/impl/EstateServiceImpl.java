@@ -44,6 +44,8 @@ public class EstateServiceImpl implements EstateService {
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
         EstateDetailDto detail = new EstateDetailDto(estate);
+        // 브로커 정보 가져오기
+        detail.setBroker(brokerDAO.findBrokerById(estate.getBroker().getId()));
 
         // 사용자가 문의했는지 확인 -> arCam 활성화
         detail.setIsInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
