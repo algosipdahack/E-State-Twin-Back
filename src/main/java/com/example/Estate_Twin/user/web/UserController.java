@@ -31,7 +31,7 @@ public class UserController {
     private final RedisService redisService;
 
     @Operation(summary = "mypage of user", description = "마이페이지")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @Operation(summary = "mypage detail of owner", description = "집주인 모드 상세")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @GetMapping("/owner/detail")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @Operation(summary = "signup of user", description = "회원가입")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
     @PostMapping("/signup")
     public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody UserSignUpDto userSignUpDto) {
         UserInfoDto userInfoDto = userService.signUp(customUserDetails.getUser(), userSignUpDto);

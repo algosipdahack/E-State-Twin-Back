@@ -54,7 +54,7 @@ public class EstateApiController {
     //상세 페이지
     @ApiImplicitParams({@ApiImplicitParam(name= "X-AUTH-TOKEN", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @Operation(summary = "get detail of Estate", description = "매물에 대한 상세정보들 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateDetailDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @GetMapping("detail/{estateId}")
     public ResponseEntity<EstateDetailDto> getEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
@@ -64,7 +64,7 @@ public class EstateApiController {
 
     //집주인이
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
     @PostMapping("detail/owner")
     public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                 @RequestBody Address address,
@@ -114,7 +114,7 @@ public class EstateApiController {
 
     //문의하기
     @Operation(summary = "Inquiry of estate", description = "매물 문의하기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = PreferEstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/inquiry")
     public ResponseEntity<PreferEstateResponseDto> inquireEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
@@ -124,7 +124,7 @@ public class EstateApiController {
 
 
     @Operation(summary = "enroll tenant of estate", description = "계약 진행 버튼 클릭 -> 세입자 등록")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/contract")
     public ResponseEntity<ContractStateResponseDto> startContract(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
