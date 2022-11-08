@@ -13,8 +13,8 @@ public interface UserService {
     UserInfoDto getUser(User user);
     UserInfoDto signUp(User user, UserSignUpDto userSignUpDto);
     Long deleteUser(User user);
-    List<AssetResponseDto> getTenantAsset(Long userId, Option option);
+    List<AssetResponseDto> getTenantAsset(Long userId, Category category);
     EstateModeDto getTenantAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);
-    List<AssetResponseDto> getOwnerAsset(Long userId, Option option);
+    List<AssetResponseDto> getOwnerAsset(Long userId, Category category);
 }

@@ -49,13 +49,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Asset> getTenantAsset(Long userId, Option option) {
-        return assetRepository.findTenantAsset(userId, option);
+    public List<Asset> getTenantAsset(Long userId, Category category) {
+        return assetRepository.findTenantAsset(userId, category);
     }
 
     @Override
-    public List<Asset> getOwnerAsset(Long userId, Option option) {
-        return assetRepository.findOwnerAsset(userId, option);
+    public List<Asset> getOwnerAsset(Long userId, Category category) {
+        return assetRepository.findOwnerAsset(userId, category);
     }
 
     @Override

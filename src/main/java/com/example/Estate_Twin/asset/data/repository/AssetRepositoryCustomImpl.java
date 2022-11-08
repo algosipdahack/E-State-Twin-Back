@@ -26,11 +26,11 @@ public class AssetRepositoryCustomImpl extends QuerydslRepositorySupport impleme
     }
 
     @Override
-    public List<Asset> findTenantAsset(Long userId, Option option) {
+    public List<Asset> findTenantAsset(Long userId, Category category) {
         QueryResults<Asset> queryResults = jpaQueryFactory
                 .select(asset)
                 .from(estate)
-                .where(asset.option.eq(option))
+                .where(asset.category.eq(category))
                 .where(estate.tenant.id.eq(userId))
                 .join(estate.assets, asset)
                 .fetchResults();
@@ -39,11 +39,11 @@ public class AssetRepositoryCustomImpl extends QuerydslRepositorySupport impleme
     }
 
     @Override
-    public List<Asset> findOwnerAsset(Long userId, Option option) {
+    public List<Asset> findOwnerAsset(Long userId, Category category) {
         QueryResults<Asset> queryResults = jpaQueryFactory
                 .select(asset)
                 .from(estate)
-                .where(asset.option.eq(option))
+                .where(asset.category.eq(category))
                 .where(estate.owner.id.eq(userId))
                 .join(estate.assets, asset)
                 .fetchResults();

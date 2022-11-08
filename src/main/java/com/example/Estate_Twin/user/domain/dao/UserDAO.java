@@ -12,9 +12,9 @@ public interface UserDAO {
     User findUserByEmail(String email);
     User signUp(User user, UserSignUpDto dto);
     User deleteMember(User user);
-    List<Asset> getTenantAsset(Long userId, Option option);
+    List<Asset> getTenantAsset(Long userId, Category category);
     EstateModeDto getTenantAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);
-    List<Asset> getOwnerAsset(Long userId, Option option);
+    List<Asset> getOwnerAsset(Long userId, Category category);
     User findUserByTenantEstateId(Long tenantId);
 }

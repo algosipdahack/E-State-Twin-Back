@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.user.web;
 
+import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
@@ -52,8 +53,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @GetMapping("/tenant/detail")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
-        List<AssetResponseDto> assets = userService.getTenantAsset(customUserDetails.getUser().getId(), Option.of(option));
+    public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "category") String category) {
+        List<AssetResponseDto> assets = userService.getTenantAsset(customUserDetails.getUser().getId(), Category.of(category));
         return ResponseEntity.status(HttpStatus.OK).body(assets);
     }
 
@@ -70,8 +71,8 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @GetMapping("/owner/detail")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "option") String option) {
-        List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(customUserDetails.getUser().getId(), Option.of(option));
+    public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "category") String category) {
+        List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(customUserDetails.getUser().getId(), Category.of(category));
         return ResponseEntity.status(HttpStatus.OK).body(ownerAsset);
     }
 
