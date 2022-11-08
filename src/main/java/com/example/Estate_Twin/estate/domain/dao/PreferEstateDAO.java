@@ -11,4 +11,5 @@ public interface PreferEstateDAO {
     PreferEstate savePreferEstate(Estate estate, User user, Preference prefer);
     boolean existPreferEstate(Long estateId, Long userId, Preference prefer);
     List<EstateListResponseDto> findPreferEstate(Long userId, Preference prefer, Pageable pageable);
+    List<PreferEstate> findPreferEstatesByEstateId(Long estateId);
 }

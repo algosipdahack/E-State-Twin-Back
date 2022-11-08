@@ -26,6 +26,11 @@ public class CheckListDAOImpl implements CheckListDAO {
         checkList.setAsset(asset);
         return checkListRepository.save(checkList);
     }
+    @Override
+    public List<CheckList> findCheckListsByAssetId(Long assetId) {
+        return checkListRepository.findCheckListsByAsset_Id(assetId)
+                .orElseThrow(()->new IllegalArgumentException("해당 에셋아이디를 가진 체크리스트가 없습니다. id = "+assetId));
+    }
 
     @Override
     public CheckList findCheckList(Long id) {

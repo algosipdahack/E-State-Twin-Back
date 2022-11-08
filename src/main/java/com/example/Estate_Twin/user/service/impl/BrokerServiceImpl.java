@@ -3,13 +3,12 @@ package com.example.Estate_Twin.user.service.impl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.dao.impl.*;
-import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.BrokerService;
 import com.example.Estate_Twin.user.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -17,13 +16,15 @@ import java.util.List;
 public class BrokerServiceImpl implements BrokerService {
     private final BrokerDAOImpl brokerDAO;
     @Override
-    public BrokerResponseDto getBroker(String userEmail) {
-        return new BrokerResponseDto(brokerDAO.findBrokerByEmail(userEmail));
+    public BrokerSummaryDto getBroker(String userEmail) {
+        Broker broker = brokerDAO.findBrokerByEmail(userEmail);
+        return new BrokerSummaryDto(broker);
     }
 
     @Override
-    public BrokerResponseDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto) {
-        BrokerResponseDto brokerResponseDto = new BrokerResponseDto(brokerDAO.signUp(brokerSignUpDto.toEntity(), user));
+    public BrokerSummaryDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto) {
+        Broker broker = brokerDAO.signUp(brokerSignUpDto.toEntity(), user);
+        return new BrokerSummaryDto(broker);
     }
 
     @Override

@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Component
 @AllArgsConstructor
@@ -34,5 +36,10 @@ public class AssetDAOImpl implements AssetDAO {
     public Asset saveAsset(Estate estate, Asset asset) {
         asset.setEstate(estate);
         return assetRepository.save(asset);
+    }
+
+    @Override
+    public List<Asset> findAssetsByEstateId(Long estateId) {
+        return assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new IllegalArgumentException("해당 Asset이 존재하지 않습니다!"));
     }
 }

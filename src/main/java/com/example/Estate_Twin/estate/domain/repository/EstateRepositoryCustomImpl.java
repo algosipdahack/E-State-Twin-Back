@@ -2,10 +2,12 @@ package com.example.Estate_Twin.estate.domain.repository;
 
 import com.example.Estate_Twin.asset.data.entity.QAsset;
 import com.example.Estate_Twin.asset.web.dto.*;
+import com.example.Estate_Twin.checklist.data.entity.QCheckList;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.*;
 import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.QBroker;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,6 +27,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     private QHouse house;
     private QEstateHit estateHit;
     private QAsset asset;
+    private QBroker broker;
+    private QCheckList checkList;
     public EstateRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
         super(Estate.class);
         this.jpaQueryFactory = jpaQueryFactory;
@@ -32,6 +36,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         this.house = QHouse.house;
         this.estateHit = QEstateHit.estateHit;
         this.asset = QAsset.asset;
+        this.checkList = QCheckList.checkList;
+        this.broker = QBroker.broker;
     }
 
     @Override
@@ -90,13 +96,27 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         return new PageImpl<>(queryResults.getResults(), pageable, queryResults.getTotal());
     }
 
+    @Override
+    public EstateDetailDto findEstateDetail(Long estateId) {
+        return jpaQueryFactory
+                .select(new QEstateDetailDto(estate, estate.house, estate.broker, estate.estateHit, estate.assets))
+                .from(estate)
+                .join(estate.house, house)
+                .join(estate.broker, broker)
+                .join(estate.estateHit, estateHit)
+                .join(estate.assets, asset)
+                .where(estate.id.eq(estateId))
+                .fetchOne();
+    }
+
 
     @Override
     public List<AssetResponseDto> findAssetList(Long estateId) {
         QueryResults<AssetResponseDto> queryResults = jpaQueryFactory
-                .select(new QAssetResponseDto(asset))
+                .select(new QAssetResponseDto(asset, asset.checkLists))
                 .from(asset)
-                .join(asset.estate, estate).fetchJoin()
+                .join(asset.estate, estate)
+                .join(asset.checkLists, checkList)
                 .where(asset.estate.id.eq(estateId))
                 .fetchResults();
         return queryResults.getResults();

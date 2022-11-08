@@ -15,4 +15,5 @@ public interface CheckListDAO {
     CheckList confirmUser(Long estateId, CheckList checkList, User user);
     boolean checkDone(CheckList checkList);
     List<CheckList> findAllCheckList(Long assetId);
+    List<CheckList> findCheckListsByAssetId(Long assetId);
 }

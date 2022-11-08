@@ -1,15 +1,10 @@
 package com.example.Estate_Twin.asset.web.dto;
 
-import com.example.Estate_Twin.asset.data.entity.*;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
+import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import java.util.*;
 
-@Getter
-public class AssetResponseDto {
+public class AssetSummaryDto {
     private final Long id;
     @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
     private final String category;
@@ -19,10 +14,9 @@ public class AssetResponseDto {
     private final String productName;
     private final String manufacturer;
     private final String anchorId;
-    private final List<CheckListResponseDto> checkLists;
 
     @QueryProjection
-    public AssetResponseDto(Asset asset, List<CheckList> checkLists) {
+    public AssetSummaryDto(Asset asset) {
         this.id = asset.getId();
         this.category = asset.getCategory().toString();
         this.assetPhoto = asset.getAssetPhoto();
@@ -30,9 +24,5 @@ public class AssetResponseDto {
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();
-        this.checkLists = new ArrayList<>();
-        checkLists.forEach(checkList -> this.checkLists.add(new CheckListResponseDto(checkList)));
-
     }
-
 }

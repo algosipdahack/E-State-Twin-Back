@@ -7,4 +7,5 @@ public interface HouseDAO {
     House saveHouse(House house);
     House findHouse(Long id);
     House updateHouse(House house, HouseUpdateRequestDto dto);
+    House findHouseByEstateId(Long estateId);
 }

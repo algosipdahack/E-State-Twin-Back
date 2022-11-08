@@ -1,13 +1,11 @@
 package com.example.Estate_Twin.user.web.dto;
 
-import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.*;
 
 @Getter
 public class UserResponseDto {
@@ -28,9 +26,6 @@ public class UserResponseDto {
     private final String estateType;
     @Schema(description = "유저 지위", example = "USER")
     private final String role;
-    private final EstateDto tenantEstate;
-    private final Set<EstateDto> ownEstate;
-    private final Set<PreferEstateDto> dipEstates;
 
     public UserResponseDto(User user) {
         this.id = user.getId();
@@ -44,10 +39,5 @@ public class UserResponseDto {
         this.role = user.getRole().toString();
         this.borough = user.getBorough();
         this.isBroker = user.isBroker();
-        this.tenantEstate = new EstateDto(user.getTenantEstate());
-        this.ownEstate = new HashSet<>();
-        user.getOwnEstates().forEach(ownEstate -> this.ownEstate.add(new EstateDto(ownEstate)));
-        this.dipEstates = new HashSet<>();
-        user.getPreferEstates().forEach(dipEstate -> this.dipEstates.add(new PreferEstateDto(dipEstate)));
     }
 }

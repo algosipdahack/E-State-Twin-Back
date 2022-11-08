@@ -30,4 +30,9 @@ public class HouseDAOImpl implements HouseDAO {
     public House updateHouse(House house, HouseUpdateRequestDto dto) {
         return house.update(dto);
     }
+
+    @Override
+    public House findHouseByEstateId(Long estateId) {
+        return houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new IllegalArgumentException("해당 아이디를 가진 estate가 없습니다!!"+estateId));
+    }
 }

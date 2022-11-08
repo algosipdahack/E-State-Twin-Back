@@ -13,6 +13,10 @@ import java.util.List;
 public interface EstateDAO {
     Estate saveEstate(Estate estate, House house);
     Estate findEstate(Long id);
+    List<Estate> findEstatesByBrokerId(Long brokerId);
+    List<Estate> findEstatesByOwnerId(Long ownerId);
+    Estate findEstateByHouseId(Long houseId);
+    Estate findEstateByEstateHitId(Long estatehitId);
     Estate updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     List<EstateMainDto> findEstateCustomized(String borough);
     Page<EstateListResponseDto> findAllEstateList(Long estateId, Pageable pageable);
@@ -20,6 +24,7 @@ public interface EstateDAO {
     Estate allowOwner(Estate estate, User owner);
     Estate getEstate(Long id);
     House findHouse(Long id);
+    EstateDetailDto getEstateDetail(Long estateId);
     EstateHit findEstateHit(Long id);
     List<AssetResponseDto> findAssets(Long id);
     boolean checkEnroll(Estate estate);

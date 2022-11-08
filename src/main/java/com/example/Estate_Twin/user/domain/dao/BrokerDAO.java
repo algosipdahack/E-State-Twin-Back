@@ -14,4 +14,5 @@ public interface BrokerDAO {
     Broker findBrokerFetchJoinById(Long id);
     Broker findBrokerById(Long id);
     List<BrokerEstateDto> getBrokerEstate(Long brokerId, State state);
+    Broker findBrokerByUserId(Long userId);
 }

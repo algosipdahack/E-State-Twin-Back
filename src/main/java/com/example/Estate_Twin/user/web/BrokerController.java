@@ -30,16 +30,16 @@ public class BrokerController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<BrokerResponseDto> getCurrentBroker(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        BrokerResponseDto brokerResponseDto = brokerService.getBroker(customUserDetails.getEmail());
+    public ResponseEntity<BrokerSummaryDto> getCurrentBroker(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        BrokerSummaryDto brokerResponseDto = brokerService.getBroker(customUserDetails.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
     @Operation(summary = "signup of broker", description = "브로커 회원가입")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
     @PostMapping("/signup")
-    public ResponseEntity<BrokerResponseDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BrokerSignUpDto brokerSignUpDto) {
-        BrokerResponseDto brokerResponseDto = brokerService.signUpBroker(customUserDetails.getUser(), brokerSignUpDto);
+    public ResponseEntity<BrokerSummaryDto> signup(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BrokerSignUpDto brokerSignUpDto) {
+        BrokerSummaryDto brokerResponseDto = brokerService.signUpBroker(customUserDetails.getUser(), brokerSignUpDto);
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 

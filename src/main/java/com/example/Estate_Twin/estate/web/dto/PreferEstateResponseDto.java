@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.web.dto;
 
-import com.example.Estate_Twin.estate.domain.entity.PreferEstate;
+import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.web.dto.UserInfoDto;
 import lombok.Getter;
 
@@ -10,9 +11,9 @@ public class PreferEstateResponseDto {
     private UserInfoDto user;
     private EstateListResponseDto estate;
 
-    public PreferEstateResponseDto(PreferEstate preferEstate) {
+    public PreferEstateResponseDto(PreferEstate preferEstate, Estate estate, House house) {
         this.id = preferEstate.getId();
         this.user = new UserInfoDto(preferEstate.getUser());
-        this.estate = new EstateListResponseDto(preferEstate.getEstate());
+        this.estate = new EstateListResponseDto(estate, house);
     }
 }

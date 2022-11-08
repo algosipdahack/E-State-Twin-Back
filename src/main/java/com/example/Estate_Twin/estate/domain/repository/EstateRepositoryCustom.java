@@ -17,4 +17,5 @@ public interface EstateRepositoryCustom {
     House findHouse(Long estateId);
     List<EstateModeDto> findOwnerEstateList(Long userId);
     EstateModeDto findTenantEstateList(Long userId);
+    EstateDetailDto findEstateDetail(Long estateId);
 }

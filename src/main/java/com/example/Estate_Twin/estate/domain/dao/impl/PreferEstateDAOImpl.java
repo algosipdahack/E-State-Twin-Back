@@ -36,4 +36,9 @@ public class PreferEstateDAOImpl implements PreferEstateDAO {
     public List<EstateListResponseDto> findPreferEstate(Long userId, Preference prefer, Pageable pageable) {
         return preferEstateRepository.findByUserIdAndPrefer(userId, prefer, pageable);
     }
+
+    @Override
+    public List<PreferEstate> findPreferEstatesByEstateId(Long estateId) {
+        return preferEstateRepository.findPreferEstatesByEstate_Id(estateId).orElseThrow(()-> new IllegalArgumentException("해당 estateId를 가진 preferestate를 찾을 수 없습니다!"+ estateId));
+    }
 }

@@ -27,6 +27,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User findUserByTenantEstateId(Long tenantId) {
+        return userRepository.findUserByTenantEstate_Id(tenantId).orElseThrow(() -> new IllegalArgumentException("해당 tenantId를 가진 유저가 없습니다. id = "+tenantId));
+    }
+
+    @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email));
     }

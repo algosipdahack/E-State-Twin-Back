@@ -6,8 +6,10 @@ import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
+import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.dao.impl.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.domain.repository.EstateHitRepository;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
@@ -29,12 +31,15 @@ public class EstateServiceImpl implements EstateService {
     private final AssetDAOImpl assetDAO;
     private final ContractStateDAOImpl contractStateDAO;
     private final PreferEstateDAOImpl preferEstateDAO;
+    private final EstateHitDAO estateHitDAO;
+
 
     @Override
     public Long saveFirst(Address address, Long brokerId, User user) {
         //owner 매핑, estate 생성, broker한테 알림
         return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), user ,address).getId();
     }
+
 
     //조회수 증가시키기 + 최근 본 매물에 포함
     @Override
@@ -43,12 +48,11 @@ public class EstateServiceImpl implements EstateService {
         // 최근 본 매물에 포함
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
-        EstateDetailDto detail = new EstateDetailDto(estate);
-        // 브로커 정보 가져오기
-        detail.setBroker(brokerDAO.findBrokerById(estate.getBroker().getId()));
+        EstateDetailDto detail = estateDAO.getEstateDetail(id);
+
 
         // 사용자가 문의했는지 확인 -> arCam 활성화
-        detail.setIsInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
+        detail.setInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
         return detail;
     }
 
@@ -71,7 +75,7 @@ public class EstateServiceImpl implements EstateService {
 
         contractStateDAO.updateState(estate,State.POST_DOING);
 
-        return new EstateResponseDto(estateDAO.saveEstate(estate,house));
+        return new EstateResponseDto(estateDAO.saveEstate(estate,house), house, estateHitDAO.getEstateHit(estate.getId()), assets);
     }
 
     @Override
@@ -80,12 +84,12 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
-    public EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto) {
+    public EstateResponseDto updateEstate(Long estateId, EstateUpdateRequestDto estateUpdateRequestDto) {
         //house 값 수정
-        houseDAO.updateHouse(estateDAO.findHouse(id), estateUpdateRequestDto.getHouse());
+        House house = houseDAO.updateHouse(estateDAO.findHouse(estateId), estateUpdateRequestDto.getHouse());
 
         //estate 값 수정
-        return new EstateResponseDto(estateDAO.updateEstate(id, estateUpdateRequestDto));
+        return new EstateResponseDto(estateDAO.updateEstate(estateId, estateUpdateRequestDto), house, estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId));
     }
 
     @Override
@@ -111,7 +115,8 @@ public class EstateServiceImpl implements EstateService {
         if (estateDAO.checkEnroll(newEstate)) {
             contractStateDAO.updateState(newEstate, State.POST_DONE);
         }
-        return new EstateResponseDto(newEstate);
+
+        return new EstateResponseDto(newEstate, houseDAO.findHouseByEstateId(estateId), estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId));
     }
 
     @Override

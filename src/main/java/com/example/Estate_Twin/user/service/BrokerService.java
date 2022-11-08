@@ -8,8 +8,8 @@ import com.example.Estate_Twin.user.web.dto.*;
 import java.util.List;
 
 public interface BrokerService {
-    BrokerResponseDto getBroker(String userEmail);
-    BrokerResponseDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto);
+    BrokerSummaryDto getBroker(String userEmail);
+    BrokerSummaryDto signUpBroker(User user, BrokerSignUpDto brokerSignUpDto);
     List<BrokerListDto> getBrokerList();
     List<BrokerEstateDto> getbrokerEstate(String email, State state);
 }

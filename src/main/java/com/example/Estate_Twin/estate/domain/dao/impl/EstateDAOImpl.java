@@ -34,6 +34,39 @@ public class EstateDAOImpl implements EstateDAO {
     }
 
     @Override
+    public EstateDetailDto getEstateDetail(Long estateId) {
+        return estateRepository.findEstateDetail(estateId);
+    }
+
+    @Override
+    public List<Estate> findEstatesByBrokerId(Long brokerId) {
+        return estateRepository.findEstatesByBroker_Id(brokerId)
+                .orElseThrow(()->new IllegalArgumentException("해당 브로커아이디를 가진 매물을 찾을 수 없습니다. id = "+brokerId));
+
+    }
+
+    @Override
+    public List<Estate> findEstatesByOwnerId(Long ownerId) {
+        return estateRepository.findEstatesByOwner_Id(ownerId)
+                .orElseThrow(()->new IllegalArgumentException("해당 오너아이디를 가진 매물을 찾을 수 없습니다. id = "+ownerId));
+
+    }
+
+    @Override
+    public Estate findEstateByHouseId(Long houseId) {
+        return estateRepository.findEstateByHouse_Id(houseId)
+                .orElseThrow(()->new IllegalArgumentException("해당 하우스아이디를 가진 매물을 찾을 수 없습니다. id = "+houseId));
+
+    }
+
+    @Override
+    public Estate findEstateByEstateHitId(Long estatehitId) {
+        return estateRepository.findEstateByEstateHit_Id(estatehitId)
+                .orElseThrow(()->new IllegalArgumentException("해당 estateHitId를 가진 매물을 찾을 수 없습니다. id = "+estatehitId));
+
+    }
+
+    @Override
     @Transactional
     public Estate saveFirst(Broker broker, User owner, Address address) {
         return estateRepository.save(new Estate(broker, owner, address));

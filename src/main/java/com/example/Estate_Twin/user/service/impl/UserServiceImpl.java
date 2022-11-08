@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.service.impl;
 
 import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
+import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
 import com.example.Estate_Twin.user.domain.dao.impl.UserDAOImpl;
 import com.example.Estate_Twin.user.domain.entity.User;
@@ -16,6 +17,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDAOImpl userDAO;
+    private final CheckListDAOImpl checkListDAO;
     @Override
     public UserResponseDto getUserbyId(Long id) {
         return new UserResponseDto(userDAO.findUserById(id));
@@ -38,14 +40,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<AssetResponseDto> getTenantAsset(Long userId, Option option) {
         List<AssetResponseDto> assets = new ArrayList<>();
-        userDAO.getTenantAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset)));
+        userDAO.getTenantAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()))));
         return assets;
     }
 
     @Override
     public List<AssetResponseDto> getOwnerAsset(Long userId, Option option) {
         List<AssetResponseDto> assets = new ArrayList<>();
-        userDAO.getOwnerAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset)));
+        userDAO.getOwnerAsset(userId, option).forEach(asset -> assets.add(new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()))));
         return assets;
     }
 

@@ -37,8 +37,7 @@ public class EstateListResponseDto {
         this.sellingFee = sellingFee;
     }
 
-    public EstateListResponseDto(Estate estate) {
-        House house = estate.getHouse();
+    public EstateListResponseDto(Estate estate, House house) {
         this.id = estate.getId();
         this.transactionType = estate.getTransactionType().toString();
         this.estateThumbNail = estate.getEstateThumbNail();
