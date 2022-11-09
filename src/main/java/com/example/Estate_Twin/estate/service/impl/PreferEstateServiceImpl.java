@@ -7,6 +7,7 @@ import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class PreferEstateServiceImpl implements PreferEstateService {
     }
 
     @Override
-    public List<EstateListResponseDto> getPreferEstate(User user, Preference prefer, Pageable pageable) {
+    public Page<EstateListResponseDto> getPreferEstate(User user, Preference prefer, Pageable pageable) {
         return preferEstateDAO.findPreferEstate(user.getId(), prefer, pageable);
     }
 }

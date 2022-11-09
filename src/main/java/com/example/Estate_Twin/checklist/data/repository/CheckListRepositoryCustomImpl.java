@@ -29,6 +29,7 @@ public class CheckListRepositoryCustomImpl extends QuerydslRepositorySupport imp
                 .select(new QCheckListResponseDto(checkList))
                 .from(checkList)
                 .where(checkList.asset.id.eq(assetId))
+                .orderBy(checkList.repairDate.desc())
                 .fetchResults();
         List<CheckListResponseDto> result = queryResults.getResults();
         return result;

@@ -13,6 +13,10 @@ public class QEstateListResponseDto extends ConstructorExpression<EstateListResp
 
     private static final long serialVersionUID = -1898909907L;
 
+    public QEstateListResponseDto(com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.estate.domain.entity.Estate> estate, com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.house.domain.entity.House> house) {
+        super(EstateListResponseDto.class, new Class<?>[]{com.example.Estate_Twin.estate.domain.entity.Estate.class, com.example.Estate_Twin.house.domain.entity.House.class}, estate, house);
+    }
+
     public QEstateListResponseDto(com.querydsl.core.types.Expression<Long> id, com.querydsl.core.types.Expression<com.example.Estate_Twin.estate.domain.entity.TransactionType> transactionType, com.querydsl.core.types.Expression<String> estateThumbNail, com.querydsl.core.types.Expression<String> town, com.querydsl.core.types.Expression<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType, com.querydsl.core.types.Expression<String> buildingName, com.querydsl.core.types.Expression<Long> currentFloors, com.querydsl.core.types.Expression<Long> rentableArea, com.querydsl.core.types.Expression<com.example.Estate_Twin.contractstate.domain.entity.State> state, com.querydsl.core.types.Expression<Long> sellingFee) {
         super(EstateListResponseDto.class, new Class<?>[]{long.class, com.example.Estate_Twin.estate.domain.entity.TransactionType.class, String.class, String.class, com.example.Estate_Twin.estate.domain.entity.EstateType.class, String.class, long.class, long.class, com.example.Estate_Twin.contractstate.domain.entity.State.class, long.class}, id, transactionType, estateThumbNail, town, estateType, buildingName, currentFloors, rentableArea, state, sellingFee);
     }

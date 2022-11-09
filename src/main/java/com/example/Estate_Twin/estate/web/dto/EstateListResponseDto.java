@@ -36,7 +36,7 @@ public class EstateListResponseDto {
         this.rentableArea = rentableArea;
         this.sellingFee = sellingFee;
     }
-
+    @QueryProjection
     public EstateListResponseDto(Estate estate, House house) {
         this.id = estate.getId();
         this.transactionType = estate.getTransactionType().toString();

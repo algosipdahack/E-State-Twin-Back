@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.*;
 
 public interface CheckListRepository extends JpaRepository<CheckList,Long> , CheckListRepositoryCustom{
-    Optional<List<CheckList>> findCheckListsByAsset_Id(Long assetId);
+    Optional<List<CheckList>> findCheckListsByAsset_IdOrderByRepairDateDesc(Long assetId);
 }

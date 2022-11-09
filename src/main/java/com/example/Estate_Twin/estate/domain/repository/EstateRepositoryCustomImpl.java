@@ -125,6 +125,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         return jpaQueryFactory
                 .select(new QEstateModeDto(estate.address, estate.house.estateType))
                 .from(estate)
+                .join(estate.house, house)
                 .where(estate.tenant.id.eq(userId))
                 .fetchOne();
     }

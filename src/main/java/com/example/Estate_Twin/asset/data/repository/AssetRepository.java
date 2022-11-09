@@ -12,7 +12,7 @@ public interface AssetRepository extends JpaRepository<Asset,Long>, AssetReposit
     List<Asset> findAllByOrderByIdDesc();
     @Query("select a from Asset a join fetch a.checkLists")
     List<Asset> findAllUsingFetchJoin();
-    @Query("select a from Asset a join fetch a.checkLists where a.id = :id")
+    @Query("select a from Asset a join fetch a.checkLists as checklists where a.id = :id order by checklists.repairDate desc")
     Optional<Asset> findByIdUsingFetchJoin(@Param("id") Long id);
     Optional<List<Asset>> findAssetsByEstate_Id(Long estateId);
 }
