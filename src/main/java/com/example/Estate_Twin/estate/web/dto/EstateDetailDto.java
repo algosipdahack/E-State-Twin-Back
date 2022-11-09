@@ -32,6 +32,7 @@ public class EstateDetailDto {
     private final boolean ownerConfirmYN;
     private final boolean brokerConfirmYN;
     private final List<String> estatePhotos;
+    private final List<String> estateVideos;
     private final Address address;
     @Setter
     @Schema(description = "문의한 매물인지 아닌지")
@@ -61,6 +62,9 @@ public class EstateDetailDto {
 
         this.estatePhotos = new ArrayList<>();
         estate.getEstatePhoto().forEach(eMedia -> this.estatePhotos.add(eMedia));
+
+        this.estateVideos = new ArrayList<>();
+        estate.getEstateVideo().forEach(video -> this.estateVideos.add(video));
 
         this.assets = new ArrayList<>();
         assets.forEach(asset -> this.assets.add(new AssetSummaryDto(asset)));
