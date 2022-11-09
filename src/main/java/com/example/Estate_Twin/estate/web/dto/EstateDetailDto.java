@@ -40,6 +40,7 @@ public class EstateDetailDto {
     private BrokerDetailDto broker;
     private EstateHitDto estatehit;
     private List<AssetSummaryDto> assets;
+
     @QueryProjection
     public EstateDetailDto(Estate estate, House house, Broker broker, EstateHit estateHit, List<Asset> assets) {
         this.id = estate.getId();

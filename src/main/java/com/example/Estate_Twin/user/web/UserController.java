@@ -4,6 +4,7 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
+import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
 import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @Operation(summary = "mypage detail of tenant", description = "세입자모드 상세")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AssetResponseDto.class)))})})
     @GetMapping("/tenant/detail")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "category") String category) {
@@ -59,7 +60,7 @@ public class UserController {
     }
 
     @Operation(summary = "mypage of owner", description = "집주인 모드 목록")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateModeDto.class)))})})
     @GetMapping("/owner/list")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -68,7 +69,7 @@ public class UserController {
     }
 
     @Operation(summary = "mypage detail of owner", description = "집주인 모드 상세")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AssetResponseDto.class)))})})
     @GetMapping("/owner/detail")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam(name = "category") String category) {

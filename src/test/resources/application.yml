@@ -55,3 +55,46 @@ server:
   error:
     whitelabel:
       enabled: false
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://idiot-root.c35pvkgak4n8.ap-northeast-2.rds.amazonaws.com:3306/idiot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: h13001212!
+  jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+  batch:
+    job:
+      enabled: false #시작과 동시에 실행되는 건 방지
+    jdbc:
+      initialize-schema: always
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  cache:
+    type: redis
+  redis:
+    port: 6379
+    host: localhost
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true

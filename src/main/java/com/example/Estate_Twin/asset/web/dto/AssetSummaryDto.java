@@ -3,7 +3,9 @@ package com.example.Estate_Twin.asset.web.dto;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 
+@Getter
 public class AssetSummaryDto {
     private final Long id;
     @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")

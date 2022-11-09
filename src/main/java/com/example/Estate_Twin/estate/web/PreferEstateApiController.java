@@ -26,7 +26,7 @@ public class PreferEstateApiController {
     private final PreferEstateServiceImpl preferEstateService;
 
     @Operation(summary = "get list of Estate", description = "최근 본 방 목록 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/recent")
     public ResponseEntity<List<EstateListResponseDto>> getRecentList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable) {
         List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(customUserDetails.getUser(), Preference.RECENT, pageable);
@@ -34,7 +34,7 @@ public class PreferEstateApiController {
     }
 
     @Operation(summary = "get list of Estate", description = "찜한 방 목록 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/dip")
     public ResponseEntity<List<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails , Pageable pageable) {
         List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(customUserDetails.getUser(), Preference.DIP, pageable);
@@ -42,7 +42,7 @@ public class PreferEstateApiController {
     }
 
     @Operation(summary = "get list of Estate", description = "문의한 방 목록 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/inquiry")
     public ResponseEntity<List<EstateListResponseDto>> getInquireList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable) {
         List<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(customUserDetails.getUser(), Preference.INQUIRY, pageable);

@@ -24,7 +24,7 @@ public class CheckListApiController {
     private final CheckListServiceImpl checkListService;
 
     @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CheckListResponseDto.class)))})})
     @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @GetMapping("/asset/{assetId}")
     public ResponseEntity<List<CheckListResponseDto>> getCheckListbyAsset(@PathVariable Long assetId) {

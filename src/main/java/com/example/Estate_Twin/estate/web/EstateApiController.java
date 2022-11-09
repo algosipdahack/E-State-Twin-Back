@@ -34,7 +34,7 @@ public class EstateApiController {
 
     //리스트
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list")
     public ResponseEntity<Page<EstateListResponseDto>> getList(@RequestParam(required = false) Long estateId,
                                                                @PageableDefault(size = 10, sort = "estateId", direction = Sort.Direction.ASC) Pageable pageable) {
@@ -44,7 +44,7 @@ public class EstateApiController {
 
     //추천매물 보여주기 -> 조회수에 따라 정렬
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateMainDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateMainDto.class)))})})
     @GetMapping("main")
     public ResponseEntity<List<EstateMainDto>> getMainPage(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(customUserDetails.getUser());
@@ -134,7 +134,7 @@ public class EstateApiController {
 
     // 최근 검색 추가
     @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateListResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @PostMapping(value = "search/list")
     public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                                           @RequestBody AddressSearchDto addressSearchDto,

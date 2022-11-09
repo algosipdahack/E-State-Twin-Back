@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
+import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.impl.BrokerServiceImpl;
@@ -45,7 +46,7 @@ public class BrokerController {
 
 
     @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerListDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerListDto.class)))})})
     @GetMapping("/list")
     public ResponseEntity<List<BrokerListDto>> getBrokerList() {
         List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
@@ -54,7 +55,7 @@ public class BrokerController {
 
 
     @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerEstateDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerEstateDto.class)))})})
     @GetMapping("/estate")
     public ResponseEntity<List<BrokerEstateDto>> getEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                            @ApiParam(value = "state", required = true, example = "BROKER_BEFORE, POST_DOING, POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")

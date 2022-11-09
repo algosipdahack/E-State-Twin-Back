@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
+import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.entity.QAsset;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.checklist.data.entity.QCheckList;
@@ -94,19 +95,6 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .fetchResults();
 
         return new PageImpl<>(queryResults.getResults(), pageable, queryResults.getTotal());
-    }
-
-    @Override
-    public EstateDetailDto findEstateDetail(Long estateId) {
-        return jpaQueryFactory
-                .select(new QEstateDetailDto(estate, estate.house, estate.broker, estate.estateHit, estate.assets))
-                .from(estate)
-                .join(estate.house, house)
-                .join(estate.broker, broker)
-                .join(estate.estateHit, estateHit)
-                .join(estate.assets, asset)
-                .where(estate.id.eq(estateId))
-                .fetchOne();
     }
 
 

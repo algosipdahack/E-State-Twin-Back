@@ -1,5 +1,6 @@
 package com.example.Estate_Twin.contractstate.web;
 
+import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.contractstate.service.impl.ContractStateServiceImpl;
 import com.example.Estate_Twin.contractstate.web.dto.*;
@@ -30,7 +31,7 @@ public class ContractStateController {
     }
 
     @Operation(summary = "get ContractState", description = "매물에 따른 상태 정보들 리스트로 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
+    @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ContractStateResponseDto.class)))})})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @GetMapping("/estate/{estateId}")
     public ResponseEntity<List<ContractStateResponseDto>> getContractStateList(@PathVariable Long estateId) {

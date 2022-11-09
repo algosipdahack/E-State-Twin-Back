@@ -2,9 +2,7 @@ package com.example.Estate_Twin.estate.web.dto;
 
 import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.asset.web.dto.AssetSummaryDto;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.domain.entity.EstateHit;
 import com.example.Estate_Twin.house.domain.entity.House;

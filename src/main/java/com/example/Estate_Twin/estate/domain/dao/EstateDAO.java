@@ -24,7 +24,6 @@ public interface EstateDAO {
     Estate allowOwner(Estate estate, User owner);
     Estate getEstate(Long id);
     House findHouse(Long id);
-    EstateDetailDto getEstateDetail(Long estateId);
     EstateHit findEstateHit(Long id);
     List<AssetResponseDto> findAssets(Long id);
     boolean checkEnroll(Estate estate);
@@ -33,5 +32,6 @@ public interface EstateDAO {
     List<EstateListResponseDto> findEstateListByBorough(String borough, Pageable pageable);
     List<EstateListResponseDto> findEstateListByTown(String town, Pageable pageable);
     User updateBorough(User user, String region);
+    Broker findBrokerbyEstateId(Long estateId);
 
 }

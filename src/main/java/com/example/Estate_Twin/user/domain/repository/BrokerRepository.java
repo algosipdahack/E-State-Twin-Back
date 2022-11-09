@@ -14,5 +14,7 @@ public interface BrokerRepository extends JpaRepository<Broker,Long> ,BrokerRepo
     Optional<Broker> findByIdUsingFetchJoin(@Param("id") Long id);
 
     Optional<Broker> findBrokerByUser_Id(Long userId);
+
+
 }
 

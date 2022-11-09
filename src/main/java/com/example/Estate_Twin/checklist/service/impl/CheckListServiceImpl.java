@@ -41,7 +41,7 @@ public class CheckListServiceImpl implements CheckListService {
     @Override
     public List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId) {
         List<CheckListResponseDto> dtos = new ArrayList<>();
-        checkListDAO.findAllCheckList(assetId).forEach(checkList -> new CheckListResponseDto(checkList));
+        checkListDAO.findCheckListsByAssetId(assetId).forEach(checkList -> dtos.add(new CheckListResponseDto(checkList)));
         return dtos;
     }
 

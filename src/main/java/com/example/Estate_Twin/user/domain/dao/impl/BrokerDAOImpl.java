@@ -39,6 +39,7 @@ public class BrokerDAOImpl implements BrokerDAO {
         return brokerRepository.findBrokerByUser_Id(userId).orElseThrow(()-> new IllegalArgumentException("해당 userid를 가진 broker가 존재하지 않습니다. id = " + userId));
     }
 
+
     @Override
     public List<BrokerListDto> getBrokerList() {
         return brokerRepository.getBrokerList();

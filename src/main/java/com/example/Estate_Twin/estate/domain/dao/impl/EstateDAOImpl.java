@@ -1,6 +1,7 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.Address;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
@@ -8,7 +9,10 @@ import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.Exception;
 import com.example.Estate_Twin.house.domain.entity.House;
+import com.example.Estate_Twin.house.domain.repository.HouseRepository;
+import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.domain.repository.BrokerRepository;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +29,9 @@ public class EstateDAOImpl implements EstateDAO {
     private EstateRepository estateRepository;
     private EstateHitRepository estateHitRepository;
     private UserRepository userRepository;
+    private HouseRepository houseRepository;
+    private BrokerRepository brokerRepository;
+    private AssetRepository assetRepository;
 
     @Override
     @Transactional
@@ -33,9 +40,11 @@ public class EstateDAOImpl implements EstateDAO {
         return findEstate(id).updateEstateHit();
     }
 
+
     @Override
-    public EstateDetailDto getEstateDetail(Long estateId) {
-        return estateRepository.findEstateDetail(estateId);
+    public Broker findBrokerbyEstateId(Long estateId) {
+        return estateRepository.findBrokerByEstate_Id(estateId)
+                .orElseThrow(()->new IllegalArgumentException("해당 estateId를 가진 브로커를 찾을 수 없습니다. id = "+estateId));
     }
 
     @Override
