@@ -12,7 +12,7 @@ import java.util.List;
 public interface EstateService {
     EstateDetailDto getEstate(Long id, User user);
     EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto);
-    Long saveFirst(Address address, Long brokerId, User user);
+    Long saveFirst(Address address, Long brokerId, Long userId);
     EstateResponseDto updateEstate(Long id, EstateUpdateRequestDto estateUpdateRequestDto);
     Page<EstateListResponseDto> getAllEstate(Long estateId, Pageable pageable);
     List<EstateMainDto> getEstateCustomized(User user);

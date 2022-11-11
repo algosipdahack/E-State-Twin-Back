@@ -50,6 +50,8 @@ public class QCheckList extends EntityPathBase<CheckList> {
 
     public final BooleanPath tenantConfirmYN = createBoolean("tenantConfirmYN");
 
+    public final BooleanPath totalConfirmYN = createBoolean("totalConfirmYN");
+
     public QCheckList(String variable) {
         this(CheckList.class, forVariable(variable), INITS);
     }

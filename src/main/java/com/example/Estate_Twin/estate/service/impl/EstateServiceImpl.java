@@ -32,12 +32,13 @@ public class EstateServiceImpl implements EstateService {
     private final ContractStateDAOImpl contractStateDAO;
     private final PreferEstateDAOImpl preferEstateDAO;
     private final EstateHitDAO estateHitDAO;
+    private final UserDAOImpl userDAO;
 
 
     @Override
-    public Long saveFirst(Address address, Long brokerId, User user) {
+    public Long saveFirst(Address address, Long brokerId, Long ownerId) {
         //owner 매핑, estate 생성, broker한테 알림
-        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), user ,address).getId();
+        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), userDAO.findUserById(ownerId), address).getId();
     }
 
 

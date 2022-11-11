@@ -71,7 +71,7 @@ public class EstateApiController {
                                                 @ApiParam(value = "Broker Id", required = true, example = "1")
                                                 @RequestParam(name = "brokerId") Long brokerId) {
         //owner 매핑, estate 생성, broker매핑
-        Long estateId = estateService.saveFirst(address, brokerId, customUserDetails.getUser());
+        Long estateId = estateService.saveFirst(address, brokerId, customUserDetails.getUser().getId());
         return ResponseEntity.status(HttpStatus.OK).body(estateId);
     }
 
