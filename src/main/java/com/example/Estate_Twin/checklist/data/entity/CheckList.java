@@ -2,6 +2,7 @@ package com.example.Estate_Twin.checklist.data.entity;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
+import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -30,6 +31,7 @@ public class CheckList extends BaseTimeEntity {
     private Boolean brokerConfirmYN;
     private Boolean tenantConfirmYN;
     private Boolean ownerConfirmYN;
+    private Boolean totalConfirmYN;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
@@ -50,12 +52,9 @@ public class CheckList extends BaseTimeEntity {
 
     public CheckList update(CheckListUpdateRequestDto dto) {
         this.flawPart = dto.getFlawPart();
-        this.brokerConfirmYN = dto.getBrokerConfirmYN();
         this.repairDate = dto.getRepairDate();
-        this.ownerConfirmYN = dto.getOwnerConfirmYN();
         this.checkListContent = dto.getCheckListContent();
         this.repairType = RepairType.of(dto.getRepairType());
-        this.tenantConfirmYN = dto.getTenantConfirmYN();
         this.checkListPhoto = dto.getCheckListPhoto();
         return this;
     }
@@ -74,6 +73,10 @@ public class CheckList extends BaseTimeEntity {
         this.tenantConfirmYN = true;
         return this;
     }
+    public CheckList setTotalConfirmY() {
+        this.totalConfirmYN = true;
+        return this;
+    }
 
     public void setAsset(Asset asset) {
         if(this.asset != null) {
@@ -82,5 +85,14 @@ public class CheckList extends BaseTimeEntity {
         this.asset = asset;
         asset.getCheckLists().add(this);
     }
+
+    @PrePersist
+    public void prePersist() {
+        this.brokerConfirmYN = false;
+        this.totalConfirmYN = false;
+        this.ownerConfirmYN = false;
+        this.tenantConfirmYN = true;
+    }
+
 
 }

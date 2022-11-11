@@ -19,6 +19,7 @@ public class CheckListResponseDto {
     private final Boolean brokerConfirmYN;
     private final Boolean ownerConfirmYN;
     private final Boolean tenantConfirmYN;
+    private final Boolean totalConfirmYN;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private final LocalDate repairDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
@@ -35,6 +36,7 @@ public class CheckListResponseDto {
         this.brokerConfirmYN = checkList.getBrokerConfirmYN();
         this.ownerConfirmYN = checkList.getOwnerConfirmYN();
         this.tenantConfirmYN = checkList.getTenantConfirmYN();
+        this.totalConfirmYN = checkList.getTotalConfirmYN();
         this.createdAt = checkList.getCreatedDate();
     }
 

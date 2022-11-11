@@ -41,12 +41,14 @@ public class CheckListApiController {
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 
+    // 만약 집주인이 등록 -> 세입자는 없는 상태이므로 tenantY 까지 해주기
+    // 세입자가 등록 -> 세입자만 tenantY해주기
     @Operation(summary = "post checklist", description = "체크리스트 등록하기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
     @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
-    @PostMapping("/asset/{assetId}")
-    public ResponseEntity<CheckListResponseDto> saveCheckList(@PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
-        CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(checkListSaveRequestDto,assetId);
+    @PostMapping("/estate/{estateId}/asset/{assetId}")
+    public ResponseEntity<CheckListResponseDto> saveCheckList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId, @PathVariable Long assetId, @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+        CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(customUserDetails.getUser(),checkListSaveRequestDto,estateId,assetId);
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 

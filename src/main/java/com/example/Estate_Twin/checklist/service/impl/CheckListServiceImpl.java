@@ -21,7 +21,6 @@ public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
     private final AssetDAOImpl assetDAO;
     private final EstateDAOImpl estateDAO;
-    private final ContractStateDAOImpl contractStateDAO;
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
@@ -29,8 +28,8 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckListResponseDto saveCheckList(CheckListSaveRequestDto checkListSaveRequestDto, Long assetId) {
-        return new CheckListResponseDto(checkListDAO.saveCheckList(checkListSaveRequestDto.toEntity(), assetDAO.findAsset(assetId)));
+    public CheckListResponseDto saveCheckList(User user, CheckListSaveRequestDto checkListSaveRequestDto, Long estateId, Long assetId) {
+        return new CheckListResponseDto(checkListDAO.saveCheckList(user, checkListSaveRequestDto.toEntity(), estateDAO.getEstate(estateId), assetDAO.findAsset(assetId)));
     }
 
     @Override
@@ -49,18 +48,17 @@ public class CheckListServiceImpl implements CheckListService {
     // 상태 -> CheckList_Doing -> contract_done
     public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
         CheckList checkList = checkListDAO.findCheckList(checklistId);
-        Estate estate = estateDAO.findEstate(estateId);
 
         CheckList newCheckList;
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
             newCheckList = checkListDAO.confirmBroker(checkList);
-        } else { // 집주인 or 세입자라면
-            newCheckList = checkListDAO.confirmUser(estateId, checkList, user);
+        } else { // 집주인이라면
+            newCheckList = checkListDAO.confirmOwner(checkList);
         }
-        //체크리스트 등록 끝났다면 계약 완료 상태
+        //체크리스트 등록 끝 -> totalConfirmY
         if (checkListDAO.checkDone(newCheckList)) {
-            contractStateDAO.updateState(estate, State.CONTRACT_DONE);
+            newCheckList = checkListDAO.confirmTotal(checkList);
         }
         return new CheckListResponseDto(newCheckList);
     }

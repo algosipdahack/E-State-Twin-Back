@@ -15,9 +15,6 @@ public class CheckListUpdateRequestDto {
     private String repairType;
     private String manufacturer;
     private String checkListPhoto;
-    private Boolean brokerConfirmYN;
-    private Boolean ownerConfirmYN;
-    private Boolean tenantConfirmYN;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate repairDate;
 }

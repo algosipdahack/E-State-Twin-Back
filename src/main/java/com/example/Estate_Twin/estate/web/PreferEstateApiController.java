@@ -10,13 +10,10 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Tag(name = "PreferEstate", description = "즐겨찾기 매물 API")
 @RequiredArgsConstructor
@@ -37,7 +34,7 @@ public class PreferEstateApiController {
     @Operation(summary = "get list of Estate", description = "찜한 방 목록 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/dip")
-    public ResponseEntity<Page<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails , Pageable pageable) {
+    public ResponseEntity<Page<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable) {
         Page<EstateListResponseDto> estateListResponseDtos = preferEstateService.getPreferEstate(customUserDetails.getUser(), Preference.DIP, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }

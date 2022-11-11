@@ -1,20 +1,16 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
-import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.entity.QAsset;
 import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.checklist.data.entity.QCheckList;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.*;
-import com.example.Estate_Twin.user.domain.entity.Broker;
 import com.example.Estate_Twin.user.domain.entity.QBroker;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -113,7 +109,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public List<EstateModeDto> findOwnerEstateList(Long userId) {
         QueryResults<EstateModeDto> queryResults = jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.estateType))
+                .select(new QEstateModeDto(estate.address, estate.house.estateType, estate.state))
                 .from(estate)
                 .where(estate.owner.id.eq(userId))
                 .fetchResults();
@@ -123,7 +119,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public EstateModeDto findTenantEstateList(Long userId) {
         return jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.estateType))
+                .select(new QEstateModeDto(estate.address, estate.house.estateType, estate.state))
                 .from(estate)
                 .join(estate.house, house)
                 .where(estate.tenant.id.eq(userId))

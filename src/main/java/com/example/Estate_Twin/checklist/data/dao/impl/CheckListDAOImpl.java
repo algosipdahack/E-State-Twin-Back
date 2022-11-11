@@ -6,6 +6,7 @@ import com.example.Estate_Twin.checklist.data.dao.CheckListDAO;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,16 @@ public class CheckListDAOImpl implements CheckListDAO {
 
     @Override
     @Transactional
-    public CheckList saveCheckList(CheckList checkList, Asset asset) {
+    public CheckList saveCheckList(User user, CheckList checkList, Estate estate, Asset asset) {
+        checkList.setTenantConfirmY();
+        // 집주인이면
+        if (estate.getOwner().getId() == user.getId()) {
+            checkList.setOwnerConfirmY();
+        }
         checkList.setAsset(asset);
         return checkListRepository.save(checkList);
     }
+
     @Override
     public List<CheckList> findCheckListsByAssetId(Long assetId) {
         return checkListRepository.findCheckListsByAsset_IdOrderByRepairDateDesc(assetId)
@@ -58,20 +65,14 @@ public class CheckListDAOImpl implements CheckListDAO {
 
     @Override
     @Transactional
-    public CheckList confirmUser(Long estateId, CheckList checkList, User user) {
-        // 집주인인지 세입자인지 검증
-        if(checkUser(estateId,user)) { // 집주인이면
-            return checkList.setOwnerConfirmY();
-        } else{ // 세입자라면
-            return checkList.setTenantConfirmY();
-        }
+    public CheckList confirmTotal(CheckList checkList) {
+        return checkList.setTotalConfirmY();
     }
 
-    public boolean checkUser(Long estateId, User user) {
-        if(user.getOwnEstates() != null && user.getOwnEstates().contains(estateId)) { //집주인이라면
-                return true;
-        }
-        return false;
+    @Override
+    @Transactional
+    public CheckList confirmOwner(CheckList checkList) {
+        return checkList.setOwnerConfirmY();
     }
 
     @Override

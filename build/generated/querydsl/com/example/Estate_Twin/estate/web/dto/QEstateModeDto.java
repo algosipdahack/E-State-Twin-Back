@@ -13,8 +13,8 @@ public class QEstateModeDto extends ConstructorExpression<EstateModeDto> {
 
     private static final long serialVersionUID = -1610200311L;
 
-    public QEstateModeDto(com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.address.Address> address, com.querydsl.core.types.Expression<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType) {
-        super(EstateModeDto.class, new Class<?>[]{com.example.Estate_Twin.address.Address.class, com.example.Estate_Twin.estate.domain.entity.EstateType.class}, address, estateType);
+    public QEstateModeDto(com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.address.Address> address, com.querydsl.core.types.Expression<com.example.Estate_Twin.estate.domain.entity.EstateType> estateType, com.querydsl.core.types.Expression<com.example.Estate_Twin.contractstate.domain.entity.State> state) {
+        super(EstateModeDto.class, new Class<?>[]{com.example.Estate_Twin.address.Address.class, com.example.Estate_Twin.estate.domain.entity.EstateType.class, com.example.Estate_Twin.contractstate.domain.entity.State.class}, address, estateType, state);
     }
 
 }

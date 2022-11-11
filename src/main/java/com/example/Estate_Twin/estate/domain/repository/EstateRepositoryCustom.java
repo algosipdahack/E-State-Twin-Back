@@ -4,9 +4,7 @@ import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.EstateHit;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.user.domain.entity.Broker;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 
 import java.util.List;
 

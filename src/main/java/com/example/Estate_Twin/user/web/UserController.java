@@ -1,10 +1,8 @@
 package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
-import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
 import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;

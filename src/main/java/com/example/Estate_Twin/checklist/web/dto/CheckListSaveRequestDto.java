@@ -16,17 +16,11 @@ public class CheckListSaveRequestDto {
     private LocalDate repairDate;
     @Schema(description = "구매/수리", example = "PURCHASE, REPAIR")
     private String repairType;
-    private Boolean brokerConfirmYN;
-    private Boolean ownerConfirmYN;
-    private Boolean tenantConfirmYN;
     private String checkListPhoto;
 
     public CheckList toEntity() {
         return CheckList.builder()
                 .checkListContent(checkListContent)
-                .ownerConfirmYN(ownerConfirmYN)
-                .brokerConfirmYN(brokerConfirmYN)
-                .tenantConfirmYN(tenantConfirmYN)
                 .flawPart(flawPart)
                 .repairDate(repairDate)
                 .checkListPhoto(checkListPhoto)
