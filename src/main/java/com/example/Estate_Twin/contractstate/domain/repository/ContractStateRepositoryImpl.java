@@ -26,4 +26,12 @@ public class ContractStateRepositoryImpl extends QuerydslRepositorySupport imple
                 .orderBy(contractState.createdDate.asc())
                 .fetch();
     }
+
+    @Override
+    public ContractState findByEstateIdAndState(Long estateId, State state) {
+        return jpaQueryFactory.select(contractState)
+                .from(contractState)
+                .where(contractState.estate.id.eq(estateId), contractState.state.eq(state))
+                .fetchOne();
+    }
 }
