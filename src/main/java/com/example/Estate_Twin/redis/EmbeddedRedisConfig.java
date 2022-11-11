@@ -11,7 +11,7 @@ import java.util.Objects;
 import redis.embedded.RedisServer;
 
 @Configuration
-@Profile("prod")
+@Profile("server")
 public class EmbeddedRedisConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
