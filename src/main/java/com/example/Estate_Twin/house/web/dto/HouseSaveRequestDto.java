@@ -29,7 +29,7 @@ public class HouseSaveRequestDto {
     private EstateType estateType;
     private boolean elevator;
     private boolean duplex;
-    @Schema(description = "방구조", example = "LOFT, SEPERATED_KITCHEN")
+    @Schema(description = "방구조", example = "LOFT, SEPARATE_KITCHEN")
     private String structure;
     private boolean veranda;
     public House toEntity() {
