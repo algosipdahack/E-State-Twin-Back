@@ -1,10 +1,8 @@
 package com.example.Estate_Twin.config;
 
-import com.example.Estate_Twin.auth.jwt.JwtAuthenticationFilter;
-import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
+import com.example.Estate_Twin.auth.jwt.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.*;

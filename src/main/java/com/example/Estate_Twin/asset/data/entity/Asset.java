@@ -30,8 +30,9 @@ public class Asset extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
+
     @OneToMany(mappedBy = "asset", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<CheckList> checkLists;
+    private List<CheckList> checkLists = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
     public Asset(Category category, String assetPhoto, Option option, String productName, String manufacturer, String anchorId) {
@@ -59,11 +60,6 @@ public class Asset extends BaseTimeEntity {
         }
         this.estate = estate;
         estate.getAssets().add(this);
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.checkLists = new ArrayList<>();
     }
 
 }

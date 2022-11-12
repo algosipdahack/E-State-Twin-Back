@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.house.domain.entity;
 
-
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import com.example.Estate_Twin.util.BaseTimeEntity;

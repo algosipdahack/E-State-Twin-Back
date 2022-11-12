@@ -2,9 +2,7 @@ package com.example.Estate_Twin.checklist.web;
 
 import com.example.Estate_Twin.checklist.service.impl.CheckListServiceImpl;
 import com.example.Estate_Twin.checklist.web.dto.*;
-import com.example.Estate_Twin.estate.web.dto.EstateResponseDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
-import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;

@@ -27,8 +27,8 @@ public class User extends BaseTimeEntity {
     @Email
     private String email;
     private String refreshToken;
-    private boolean isBroker;
-    private boolean userDel;
+    private boolean isBroker = false;
+    private boolean userDel = false;
     //선호 지역
     private String borough;
     @Enumerated(EnumType.STRING)
@@ -45,10 +45,10 @@ public class User extends BaseTimeEntity {
     private Estate tenantEstate;
     //소유한 매물
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
-    private Set<Estate> ownEstates;
+    private Set<Estate> ownEstates = new HashSet<>();
     //찜한 매물
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private Set<PreferEstate> preferEstates;
+    private Set<PreferEstate> preferEstates = new HashSet<>();
 
     @Builder
     public User(LocalDate birthday, String phone, String name, String email,
@@ -103,11 +103,4 @@ public class User extends BaseTimeEntity {
         this.userDel = false;
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.isBroker = false;
-        this.userDel = false;
-        this.ownEstates = new HashSet<>();
-        this.preferEstates = new HashSet<>();
-    }
 }

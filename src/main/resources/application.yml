@@ -93,7 +93,10 @@ cloud:
       auto: false
     credentials:
       instanceProfile: true
-
+logging:
+  file:
+    name: mylog.log
+    path: /server/myapp/logs
 ---
 spring:
   config:

@@ -1,12 +1,10 @@
 package com.example.Estate_Twin.asset.data.repository;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Option;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
 import java.util.*;
-
 
 public interface AssetRepository extends JpaRepository<Asset,Long>, AssetRepositoryCustom {
     List<Asset> findAllByOrderByIdDesc();

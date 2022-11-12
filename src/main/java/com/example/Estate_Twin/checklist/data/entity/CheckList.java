@@ -2,7 +2,6 @@ package com.example.Estate_Twin.checklist.data.entity;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
-import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -28,10 +27,10 @@ public class CheckList extends BaseTimeEntity {
     private LocalDate repairDate;
     @Enumerated(EnumType.STRING)
     private RepairType repairType;
-    private Boolean brokerConfirmYN;
-    private Boolean tenantConfirmYN;
-    private Boolean ownerConfirmYN;
-    private Boolean totalConfirmYN;
+    private Boolean brokerConfirmYN = false;
+    private Boolean tenantConfirmYN = false;
+    private Boolean ownerConfirmYN = false;
+    private Boolean totalConfirmYN = false;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
@@ -85,14 +84,5 @@ public class CheckList extends BaseTimeEntity {
         this.asset = asset;
         asset.getCheckLists().add(this);
     }
-
-    @PrePersist
-    public void prePersist() {
-        this.brokerConfirmYN = false;
-        this.totalConfirmYN = false;
-        this.ownerConfirmYN = false;
-        this.tenantConfirmYN = true;
-    }
-
 
 }

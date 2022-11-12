@@ -30,7 +30,7 @@ public class Broker {
     //중개등록증(src)
     private String brokerageRegistrationLicense;
     //거래 완료 건 수
-    private Long countOfTransactionCompletion;
+    private Long countOfTransactionCompletion = 0L;
     private String brokerPhoto;
     //소개글
     @Column(columnDefinition = "TEXT")
@@ -43,7 +43,7 @@ public class Broker {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "broker", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Estate> tradeEstates;
+    private List<Estate> tradeEstates = new ArrayList<>();
 
     @Builder
     public Broker(String businessName, String agentName, String brokerageRegistrationNumber, String businessRegistrationNumber,
@@ -63,12 +63,6 @@ public class Broker {
     public void setUser(User user) {
         this.user = user;
         user.setIsBroker();
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.tradeEstates = new ArrayList<>();
-        this.countOfTransactionCompletion = 0L;
     }
 
     public void setAddress(Address address) {

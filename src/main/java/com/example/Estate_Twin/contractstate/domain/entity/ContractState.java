@@ -16,7 +16,7 @@ public class ContractState extends BaseTimeEntity {
     @Column(name = "contractstate_id")
     private Long id;
     @Enumerated(value = EnumType.STRING)
-    private State state;
+    private State state = State.BROKER_BEFORE;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
@@ -25,11 +25,6 @@ public class ContractState extends BaseTimeEntity {
     public ContractState(State state, Estate estate) {
         this.estate = estate;
         this.state = state;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.state = this.state == null ? State.BROKER_BEFORE : this.state;
     }
 
     public void setEstate(Estate estate) {

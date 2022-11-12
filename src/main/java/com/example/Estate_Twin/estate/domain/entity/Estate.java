@@ -14,9 +14,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "estate")
 public class Estate extends BaseTimeEntity {
@@ -34,19 +34,19 @@ public class Estate extends BaseTimeEntity {
     private String thumbnail3D;
     //매물 영상 동영상
     private String arCam;
-    private boolean isPosted;
-    private boolean ownerConfirmYN;
-    private boolean brokerConfirmYN;
+    private boolean isPosted = false;
+    private boolean ownerConfirmYN = false;
+    private boolean brokerConfirmYN = false;
     @Embedded
     private Address address;
     @ElementCollection
-    private List<String> estatePhoto;
+    private List<String> estatePhoto = new ArrayList<>();
     @ElementCollection
-    private List<String> estateVideo;
+    private List<String> estateVideo = new ArrayList<>();
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
     @Enumerated(EnumType.STRING)
-    private State state;
+    private State state = State.BROKER_BEFORE;
     @Enumerated(EnumType.STRING)
     private Grade grade;
     @OneToOne(fetch = FetchType.LAZY)
@@ -64,10 +64,10 @@ public class Estate extends BaseTimeEntity {
     @OneToOne(mappedBy = "tenantEstate", fetch = FetchType.LAZY)
     private User tenant;
     @OneToMany(mappedBy = "estate", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Asset> assets;
+    private List<Asset> assets = new ArrayList<>();
     //찜한 * 최근 * 문의한 매물
     @OneToMany(mappedBy = "estate", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<PreferEstate> preferEstates;
+    private List<PreferEstate> preferEstates = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
     public Estate(Broker broker, User owner, Address address) {
@@ -160,19 +160,6 @@ public class Estate extends BaseTimeEntity {
 
     public void setState(State state) {
         this.state = state;
-    }
-
-    //insert 되기 전 실행된다
-    @PrePersist
-    public void prePersist() {
-        this.estatePhoto = new ArrayList<>();
-        this.estateVideo = new ArrayList<>();
-        this.assets = new ArrayList<>();
-        this.preferEstates = new ArrayList<>();
-        this.state = this.state == null ? State.BROKER_BEFORE : this.state;
-        this.isPosted = false;
-        this.ownerConfirmYN = false;
-        this.brokerConfirmYN = false;
     }
 
 }
