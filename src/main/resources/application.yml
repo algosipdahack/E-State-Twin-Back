@@ -32,9 +32,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  redis:
-    port: 6379
-    host: localhost
 aws:
   paramstore:
     enabled: true
@@ -80,11 +77,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  cache:
-    type: redis
-  redis:
-    port: 6379
-    host: localhost
 cloud:
   aws:
     region:
@@ -127,11 +119,6 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  cache:
-    type: redis
-  redis:
-    port: 6379
-    host: localhost
 cloud:
   aws:
     region:
