@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.auth.jwt;
 
 import com.example.Estate_Twin.auth.service.CustomUserDetailService;
-import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -32,7 +31,6 @@ public class JwtTokenProvider {
     private Long ACCESS_TOKEN_EXPIRE_LENGTH = 1000L*60*60000;
     private Long REFRESH_TOKEN_EXPIRE_LENGTH = 1000L*60*60*24*7000;
     private final CustomUserDetailService userDetailsService;
-    private final RedisService redisService;
     @PostConstruct
     protected void init() {
         this.SECRET_KEY = Base64.getEncoder().encodeToString(SECRET_KEY.getBytes());
@@ -44,8 +42,6 @@ public class JwtTokenProvider {
 
     public String createRefreshToken(User user) {
         String refreshToken = createToken(user, REFRESH_TOKEN_EXPIRE_LENGTH);
-        // Redis 인메모리에 리프레시 토큰 저장
-        redisService.setValues(refreshToken, user.getEmail());
         return refreshToken;
     }
 

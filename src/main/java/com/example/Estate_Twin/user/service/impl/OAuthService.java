@@ -107,7 +107,6 @@ public class OAuthService {
         String jAccessToken = tokenProvider.createAccessToken(user);
         String jRefreshToken = tokenProvider.createRefreshToken(user);
 
-
         user.setRefreshToken(jRefreshToken);
         return new Token(jAccessToken,jRefreshToken,isMember);
     }

@@ -4,7 +4,6 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
-import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -28,7 +27,6 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
     private final OAuthService oAuthService;
-    private final RedisService redisService;
 
     @Operation(summary = "mypage of user", description = "마이페이지")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
@@ -96,8 +94,6 @@ public class UserController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))})
     @GetMapping("/logout")
     public ResponseEntity logout(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        // refresh Token 삭제
-        redisService.delValues(customUserDetails.getEmail());
         // 세션 삭제
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃 성공!");

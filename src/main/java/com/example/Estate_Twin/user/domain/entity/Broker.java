@@ -42,6 +42,7 @@ public class Broker {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(mappedBy = "broker", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Estate> tradeEstates = new ArrayList<>();
 

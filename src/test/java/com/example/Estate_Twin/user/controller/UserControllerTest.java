@@ -2,7 +2,6 @@ package com.example.Estate_Twin.user.controller;
 
 import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.redis.RedisService;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.UserController;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -43,8 +43,6 @@ public class UserControllerTest {
     @MockBean
     OAuthService oAuthService;
 
-    @MockBean
-    RedisService redisService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -64,7 +62,7 @@ public class UserControllerTest {
                 .role(Role.USER)
                 .authProvider(AuthProvider.KAKAO)
                 .email("sophia5460@gmail.com")
-                .refreshToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW93bGxAbmF2ZXIuY29tIiwidXNlcm5hbWUiOiJkYW93bGxAbmF2ZXIuY29tIiwiaWF0IjoxNjY1NTkwOTc4LCJleHAiOjIyNzAzOTA5Nzh9.Fp0SBQbHo5Uz5WRmazWBPg3vLH30YmOEqn6bHc06m3w6gEQZfpXyizT0PSDJXQRSAv8pU_LzbYyvlquBmDkTog")
+                .refreshToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzb3BoaWE1NDYwQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoic29waGlhNTQ2MEBuYXZlci5jb20iLCJpYXQiOjE2Njc3MzE5NTIsImV4cCI6MjI3MjUzMTk1Mn0.ryVrNvH5pxToayF_4qkpYXIDRd13KxDEBQR6hW7hZg-d3juGj18Ps4LEJzCg-HX58Xqth_0FVYTpVkoG_kcuQg")
                 .build();
     }
 
@@ -90,13 +88,12 @@ public class UserControllerTest {
         mockMvc.perform(
                         MockMvcRequestBuilders
                                 .post("/api/user/signup")
-                        .header("X-AUTH-TOKEN", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW93bGxAbmF2ZXIuY29tIiwidXNlcm5hbWUiOiJkYW93bGxAbmF2ZXIuY29tIiwiaWF0IjoxNjY1NTkwOTc4LCJleHAiOjE2NjkxOTA5Nzh9.aJx3mqsB-3MwzayYDtqtjEgGlvfMF4cbVZAcdzVBdT6KX3mVuX78UR5ohC8fKgODeC-foOZk4tyBBkJZUQmDJQ")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer ", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzb3BoaWE1NDYwQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoic29waGlhNTQ2MEBuYXZlci5jb20iLCJpYXQiOjE2Njc3MzE5NTIsImV4cCI6MTY3MTMzMTk1Mn0.sBmyVuAneEXf4g9vHKVn8KOOfTi0SrKQAWTR_qNdt0PkRdd4VPMMDMIDyAqBIOW6eYEiQwppE8bQeL9eV3-5eQ")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
 
 }
