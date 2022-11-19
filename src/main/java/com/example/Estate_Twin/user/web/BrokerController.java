@@ -5,6 +5,7 @@ import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.service.impl.BrokerServiceImpl;
 import com.example.Estate_Twin.user.web.dto.*;
+import com.example.Estate_Twin.util.ExeTimer;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
@@ -42,7 +43,6 @@ public class BrokerController {
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
-
     @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerListDto.class)))})})
     @GetMapping("/list")
@@ -50,7 +50,6 @@ public class BrokerController {
         List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
         return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
     }
-
 
     @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerEstateDto.class)))})})

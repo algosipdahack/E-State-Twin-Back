@@ -16,5 +16,5 @@ public interface UserService {
     List<AssetResponseDto> getTenantAsset(Long userId, Category category);
     EstateModeDto getTenantAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);
-    List<AssetResponseDto> getOwnerAsset(Long userId, Category category);
+    List<AssetResponseDto> getOwnerAsset(Long userId, Long estateId);
 }

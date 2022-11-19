@@ -43,11 +43,12 @@ public class PreferEstateRepositoryCustomImpl  extends QuerydslRepositorySupport
     public Page<EstateListResponseDto> findByUserIdAndPrefer(Long userId, Preference prefer, Pageable pageable) {
         QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
                 .select(new QEstateListResponseDto(
-                        preferEstate.estate, preferEstate.estate.house
+                        estate,
+                        estate.house
                 ))
                 .from(preferEstate)
-                .join(preferEstate.estate, estate)
-                .join(preferEstate.estate.house, house)
+                .leftJoin(preferEstate.estate, estate)
+                .leftJoin(estate.house, house)
                 .where(preferEstate.preference.eq(prefer))
                 .where(preferEstate.user.id.eq(userId))
                 .limit(pageable.getPageSize())

@@ -45,9 +45,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<AssetResponseDto> getOwnerAsset(Long userId, Category category) {
+    public List<AssetResponseDto> getOwnerAsset(Long userId, Long estateId) {
         List<AssetResponseDto> assets = new ArrayList<>();
-        userDAO.getOwnerAsset(userId, category).forEach(asset -> assets.add(new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()))));
+        userDAO.getOwnerAsset(userId, estateId).forEach(asset -> assets.add(new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()))));
         return assets;
     }
 

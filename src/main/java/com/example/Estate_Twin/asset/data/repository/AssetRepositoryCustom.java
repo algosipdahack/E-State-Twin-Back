@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AssetRepositoryCustom {
     List<Asset> findTenantAsset(Long userId, Category category);
-    List<Asset> findOwnerAsset(Long userId, Category category);
+    List<Asset> findOwnerAsset(Long userId, Long estateId);
 }

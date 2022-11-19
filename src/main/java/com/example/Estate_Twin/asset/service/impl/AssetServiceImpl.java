@@ -31,6 +31,5 @@ public class AssetServiceImpl implements AssetService {
     public AssetResponseDto updateAsset(Long assetId, AssetUpdateRequestDto assetUpdateRequestDto) {
         Asset asset = assetDAO.updateAsset(assetId, assetUpdateRequestDto);
         return new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()));
-
     }
 }

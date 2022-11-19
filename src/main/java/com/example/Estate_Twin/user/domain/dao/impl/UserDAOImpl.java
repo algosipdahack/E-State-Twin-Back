@@ -54,8 +54,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Asset> getOwnerAsset(Long userId, Category category) {
-        return assetRepository.findOwnerAsset(userId, category);
+    public List<Asset> getOwnerAsset(Long userId, Long estateId) {
+        return assetRepository.findOwnerAsset(userId, estateId);
     }
 
     @Override

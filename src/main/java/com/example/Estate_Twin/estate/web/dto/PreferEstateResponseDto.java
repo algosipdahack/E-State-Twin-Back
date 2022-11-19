@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Getter
 public class PreferEstateResponseDto {
-    private Long id;
+    private Long estateId;
     private UserInfoDto user;
     private EstateListResponseDto estate;
 
     public PreferEstateResponseDto(PreferEstate preferEstate, Estate estate, House house) {
-        this.id = preferEstate.getId();
+        this.estateId = preferEstate.getId();
         this.user = new UserInfoDto(preferEstate.getUser());
         this.estate = new EstateListResponseDto(estate, house);
     }

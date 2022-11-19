@@ -6,6 +6,7 @@ import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
+import com.example.Estate_Twin.util.ExeTimer;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiParam;
@@ -33,6 +34,7 @@ public class EstateApiController {
     private final PreferEstateServiceImpl preferEstateService;
 
     //리스트
+    //@ExeTimer
     @Operation(summary = "get list of Estate", description = "매물 목록 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list")
@@ -52,7 +54,6 @@ public class EstateApiController {
     }
 
     //상세 페이지
-    @ApiImplicitParams({@ApiImplicitParam(name= "X-AUTH-TOKEN", value = "JWT Token", required = true, dataType = "string", paramType = "header")})
     @Operation(summary = "get detail of Estate", description = "매물에 대한 상세정보들 가져오기")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateDetailDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})

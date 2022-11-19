@@ -14,6 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
@@ -24,16 +28,19 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/*
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 @Slf4j
 public class EstateApiControllerTest {
     @Autowired
     private EstateApiController estateApiController;
-    AddressSaveRequestDto addressSaveRequestDto;
+    @Autowired
+    private PreferEstateApiController preferEstateApiController;
+
+    /*AddressSaveRequestDto addressSaveRequestDto;
     HouseSaveRequestDto houseSaveRequestDto;
     @BeforeEach
     public void setUp() throws Exception {
@@ -119,14 +126,14 @@ public class EstateApiControllerTest {
                 .build();
         ResponseEntity<EstateResponseDto> responseEntity = estateApiController.saveEstate(estateSaveRequestDto);
         log.info(responseEntity.getBody().toString());
-    }
+    }*/
 
     @Test
-    public void getEstate() throws Exception {
-        ResponseEntity<List<EstateListResponseDto>> responseEntity = estateApiController.getList();
-        log.info(responseEntity.getBody().toString());
+    public void getlistEstate() throws Exception {
+        //ResponseEntity<Page<EstateListResponseDto>> responseEntity = estateApiController.getList(null, PageRequest.of(0,5));
+        //log.info(responseEntity.getBody().toString());
     }
-
+ /*
     @Test
     public void getEstateOne() throws Exception {
         ResponseEntity<EstateResponseDto> responseEntity = estateApiController.getEstate(1L);
@@ -138,6 +145,6 @@ public class EstateApiControllerTest {
         log.info(responseEntity.getBody().toString());
     }
 
-
-}*/
+*/
+}
 

@@ -8,12 +8,14 @@ import lombok.Getter;
 
 @Getter
 public class EstateModeDto {
+    private final Long estateId;
     private final Address address;
     private final String estateType;
     private final State state;
 
     @QueryProjection
-    public EstateModeDto(Address address, EstateType estateType, State state) {
+    public EstateModeDto(Long estateId, Address address, EstateType estateType, State state) {
+        this.estateId = estateId;
         this.address = address;
         this.estateType = estateType.toString();
         this.state = state;

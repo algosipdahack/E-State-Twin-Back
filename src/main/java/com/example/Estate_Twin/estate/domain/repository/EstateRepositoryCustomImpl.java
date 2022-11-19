@@ -47,10 +47,11 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.address.town,
                         estate.thumbnail3D,
                         estate.transactionType,
-                        estate.house.sellingFee,
-                        estate.house.estateType
+                        house.sellingFee,
+                        house.estateType
                 ))
                 .from(estate)
+                .leftJoin(estate.house, house)
                 .where(estate.address.borough.eq(borough))
                 .where(estate.isPosted.eq(true))
                 .orderBy(estate.estateHit.weeklyHit.desc())
@@ -75,14 +76,15 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.transactionType,
                         estate.estateThumbNail,
                         estate.address.town,
-                        estate.house.estateType,
+                        house.estateType,
                         estate.address.buildingName,
-                        estate.house.currentFloors,
-                        estate.house.rentableArea,
+                        house.currentFloors,
+                        house.rentableArea,
                         estate.state,
-                        estate.house.sellingFee
+                        house.sellingFee
                 ))
                 .from(estate)
+                .leftJoin(estate.house, house)
                 .where(ltEstateId(estateId))
                 .where(estate.isPosted.eq(true))
                 .orderBy(estate.id.desc())
@@ -109,8 +111,14 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public List<EstateModeDto> findOwnerEstateList(Long userId) {
         QueryResults<EstateModeDto> queryResults = jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.estateType, estate.state))
+                .select(new QEstateModeDto(
+                        estate.id,
+                        estate.address,
+                        house.estateType,
+                        estate.state
+                ))
                 .from(estate)
+                .leftJoin(estate.house,house)
                 .where(estate.owner.id.eq(userId))
                 .fetchResults();
         return queryResults.getResults();
@@ -119,7 +127,12 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public EstateModeDto findTenantEstateList(Long userId) {
         return jpaQueryFactory
-                .select(new QEstateModeDto(estate.address, estate.house.estateType, estate.state))
+                .select(new QEstateModeDto(
+                        estate.id,
+                        estate.address,
+                        house.estateType,
+                        estate.state
+                ))
                 .from(estate)
                 .join(estate.house, house)
                 .where(estate.tenant.id.eq(userId))
@@ -136,7 +149,8 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
 
     @Override
     public House findHouse(Long estateId) {
-        return jpaQueryFactory.select(new QHouse(estate.house))
+        return jpaQueryFactory.select(new QHouse(house))
+                .leftJoin(estate.house, house)
                 .from(estate)
                 .where(estate.id.eq(estateId))
                 .fetchOne();

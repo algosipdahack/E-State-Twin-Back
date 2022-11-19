@@ -15,6 +15,6 @@ public interface UserDAO {
     List<Asset> getTenantAsset(Long userId, Category category);
     EstateModeDto getTenantAssetList(Long userId);
     List<EstateModeDto> getOwnerAssetList(Long userId);
-    List<Asset> getOwnerAsset(Long userId, Category category);
+    List<Asset> getOwnerAsset(Long userId, Long estateId);
     User findUserByTenantEstateId(Long tenantId);
 }
