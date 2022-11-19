@@ -6,6 +6,8 @@ import com.example.Estate_Twin.estate.domain.entity.Preference;
 import com.example.Estate_Twin.estate.service.impl.*;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
+import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.util.CurrentUser;
 import com.example.Estate_Twin.util.ExeTimer;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -19,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,8 +49,8 @@ public class EstateApiController {
     @Operation(summary = "get Recommendation of Estate", description = "00구 추천매물 정보 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateMainDto.class)))})})
     @GetMapping("main")
-    public ResponseEntity<List<EstateMainDto>> getMainPage(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(customUserDetails.getUser());
+    public ResponseEntity<List<EstateMainDto>> getMainPage(@Parameter(hidden = true) @CurrentUser User user) {
+        List<EstateMainDto> estateListResponseDtos = estateService.getEstateCustomized(user);
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
@@ -58,8 +59,9 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateDetailDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @GetMapping("detail/{estateId}")
-    public ResponseEntity<EstateDetailDto> getEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
-        EstateDetailDto estateDetailDto = estateService.getEstate(estateId, customUserDetails.getUser());
+    public ResponseEntity<EstateDetailDto> getEstate(@Parameter(hidden = true) @CurrentUser User user,
+                                                     @PathVariable Long estateId) {
+        EstateDetailDto estateDetailDto = estateService.getEstate(estateId, user);
         return ResponseEntity.status(HttpStatus.OK).body(estateDetailDto);
     }
 
@@ -67,12 +69,12 @@ public class EstateApiController {
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
     @PostMapping("detail/owner")
-    public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails,
+    public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @CurrentUser User user,
                                                 @RequestBody Address address,
                                                 @ApiParam(value = "Broker Id", required = true, example = "1")
                                                 @RequestParam(name = "brokerId") Long brokerId) {
         //owner 매핑, estate 생성, broker매핑
-        Long estateId = estateService.saveFirst(address, brokerId, customUserDetails.getUser().getId());
+        Long estateId = estateService.saveFirst(address, brokerId, user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(estateId);
     }
 
@@ -89,7 +91,8 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PutMapping("detail/{estateId}")
-    public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId, @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
+    public ResponseEntity<EstateResponseDto> updateEstate(@PathVariable Long estateId,
+                                                          @RequestBody EstateUpdateRequestDto estateUpdateRequestDto) {
         EstateResponseDto estateResponseDto = estateService.updateEstate(estateId, estateUpdateRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
@@ -98,8 +101,9 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/allowPost")
-    public ResponseEntity<EstateResponseDto> allowPost(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
-        EstateResponseDto estateResponseDto = estateService.allowPost(estateId, customUserDetails.getUser());
+    public ResponseEntity<EstateResponseDto> allowPost(@Parameter(hidden = true) @CurrentUser User user,
+                                                       @PathVariable Long estateId) {
+        EstateResponseDto estateResponseDto = estateService.allowPost(estateId, user);
         return ResponseEntity.status(HttpStatus.OK).body(estateResponseDto);
     }
 
@@ -108,8 +112,9 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/dip")
-    public ResponseEntity<PreferEstateResponseDto> dipEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
-        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId, customUserDetails.getUser(), Preference.DIP);
+    public ResponseEntity<PreferEstateResponseDto> dipEstate(@Parameter(hidden = true) @CurrentUser User user,
+                                                             @PathVariable Long estateId) {
+        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId, user, Preference.DIP);
         return ResponseEntity.status(HttpStatus.OK).body(preferEstateResponseDto);
     }
 
@@ -118,8 +123,9 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = PreferEstateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/inquiry")
-    public ResponseEntity<PreferEstateResponseDto> inquireEstate(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
-        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId, customUserDetails.getUser(), Preference.INQUIRY);
+    public ResponseEntity<PreferEstateResponseDto> inquireEstate(@Parameter(hidden = true) @CurrentUser User user,
+                                                                 @PathVariable Long estateId) {
+        PreferEstateResponseDto preferEstateResponseDto = preferEstateService.savePreferEstate(estateId, user, Preference.INQUIRY);
         return ResponseEntity.status(HttpStatus.OK).body(preferEstateResponseDto);
     }
 
@@ -128,8 +134,9 @@ public class EstateApiController {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))})
     @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
     @PatchMapping("detail/{estateId}/contract")
-    public ResponseEntity<ContractStateResponseDto> startContract(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long estateId) {
-        ContractStateResponseDto contractStateResponseDto = estateService.startContract(estateId, customUserDetails.getUser());
+    public ResponseEntity<ContractStateResponseDto> startContract(@Parameter(hidden = true) @CurrentUser User user,
+                                                                  @PathVariable Long estateId) {
+        ContractStateResponseDto contractStateResponseDto = estateService.startContract(estateId, user);
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
     }
 
@@ -137,10 +144,10 @@ public class EstateApiController {
     @Operation(summary = "show listings by search", description = "검색에 따른 매물 리스트 보여주기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @PostMapping(value = "search/list")
-    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails customUserDetails,
+    public ResponseEntity<List<EstateListResponseDto>> findEstateBySearch(@Parameter(hidden = true) @CurrentUser User user,
                                                                           @RequestBody AddressSearchDto addressSearchDto,
                                                                           Pageable pageable) {
-        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(customUserDetails.getUser(), addressSearchDto, pageable);
+        List<EstateListResponseDto> estateListResponseDtos = estateService.searchEstate(user, addressSearchDto, pageable);
         // 최근 본 매물에 추가 -> batch 적용
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
