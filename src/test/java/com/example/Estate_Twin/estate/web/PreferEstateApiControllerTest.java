@@ -1,57 +1,79 @@
-package com.example.Estate_Twin.user.controller;
+package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.asset.data.entity.*;
+import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.entity.Category;
+import com.example.Estate_Twin.asset.data.entity.Option;
 import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
-import com.example.Estate_Twin.checklist.data.entity.*;
+import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.checklist.data.entity.RepairType;
 import com.example.Estate_Twin.config.WithMockCustomUser;
-import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.estate.domain.entity.EstateType;
+import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.service.impl.PreferEstateServiceImpl;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.user.domain.entity.*;
-import com.example.Estate_Twin.user.service.impl.*;
-import com.example.Estate_Twin.user.web.BrokerController;
-import com.example.Estate_Twin.user.web.dto.*;
+import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
+import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
+import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
+import com.example.Estate_Twin.user.domain.entity.AuthProvider;
+import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.Role;
+import com.example.Estate_Twin.user.domain.entity.User;
+import com.example.Estate_Twin.user.service.impl.OAuthService;
+import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.web.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {BrokerController.class})
+@WebMvcTest(controllers = {UserController.class})
 @MockBean(JpaMetamodelMappingContext.class)
-public class BrokerControllerTest {
+public class PreferEstateApiControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
     JwtTokenProvider tokenProvider;
     @MockBean
-    BrokerServiceImpl brokerService;
+    PreferEstateServiceImpl preferEstateService;
+    @MockBean
+    UserServiceImpl userService;
     @MockBean
     OAuthService oAuthService;
     @Autowired
     private ObjectMapper objectMapper;
-    User user;
+
     Asset asset;
     CheckList checkList;
+    Estate estate;
+    User user;
     Broker broker;
     Address address;
+    HouseUpdateRequestDto house;
     @BeforeEach
     void setting() {
         String date = "2022-10-22";
@@ -67,6 +89,7 @@ public class BrokerControllerTest {
                 .email("sophia5460@gmail.com")
                 .refreshToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzb3BoaWE1NDYwQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoic29waGlhNTQ2MEBuYXZlci5jb20iLCJpYXQiOjE2Njc3MzE5NTIsImV4cCI6MjI3MjUzMTk1Mn0.ryVrNvH5pxToayF_4qkpYXIDRd13KxDEBQR6hW7hZg-d3juGj18Ps4LEJzCg-HX58Xqth_0FVYTpVkoG_kcuQg")
                 .build();
+
         asset = Asset.builder()
                 .assetPhoto("asset_photo")
                 .anchorId("anchor_id")
@@ -75,6 +98,7 @@ public class BrokerControllerTest {
                 .category(Category.BATHROOM)
                 .option(Option.AIRCONDITIONER)
                 .build();
+
         checkList = CheckList.builder()
                 .checkListPhoto("checklist_photo")
                 .repairType(RepairType.REPAIR)
@@ -85,6 +109,7 @@ public class BrokerControllerTest {
                 .repairDate(LocalDate.of(2022,06,12))
                 .tenantConfirmYN(false)
                 .build();
+
         address = Address.builder()
                 .unit("5호")
                 .town("화정동")
@@ -109,101 +134,35 @@ public class BrokerControllerTest {
                 .businessName("000공인중개소")
                 .businessRegistrationNumber("business_number")
                 .build();
-    }
-
-    @DisplayName("[get] /api/user/me")
-    @Test
-    @WithMockCustomUser
-    void 마이페이지() throws Exception{
-        BrokerSummaryDto brokerSummaryDto = BrokerSummaryDto.builder()
-                .broker(broker)
-                .user(user)
-                .build();
-
-        //given
-        given(brokerService.getBroker(any()))
-                .willReturn(brokerSummaryDto);
-
-        //when
-        mockMvc.perform(get("/api/broker/me"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @DisplayName("[post] /api/broker/signup")
-    @Test
-    @WithMockCustomUser
-    void 회원가입() throws Exception{
-        BrokerSummaryDto brokerSummaryDto = BrokerSummaryDto.builder()
-                .broker(broker)
-                .user(user)
-                .build();
-        BrokerSignUpDto brokerSignUpDto = new BrokerSignUpDto("000공인중개소","000공인중개사","brokerage_number","business_license","business_license","registration_license","broker_photo","내용",address);
-
-        //given
-        given(brokerService.signUpBroker(any(), any()))
-                .willReturn(brokerSummaryDto);
-
-        String content = objectMapper.writeValueAsString(brokerSignUpDto);
-        //when
-        mockMvc.perform(post("/api/broker/signup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(content))
-                .andDo(print())
-                .andExpect(status().isCreated());
-    }
-
-    @DisplayName("[get] /api/broker/list")
-    @Test
-    @WithMockCustomUser
-    void 브로커_리스트() throws Exception{
-        List<BrokerListDto> brokerListDtoList = new ArrayList<>();
-        BrokerListDto brokerListDto = BrokerListDto.builder()
-                .brokerPhoto(broker.getBrokerPhoto())
+        estate = Estate.builder()
                 .address(address)
-                .id(broker.getId())
-                .businessName(broker.getBusinessName())
-                .content(broker.getContent())
-                .countOfTransactionCompletion(broker.getCountOfTransactionCompletion())
+                .broker(broker)
+                .owner(user)
                 .build();
-        brokerListDtoList.add(brokerListDto);
-
-        //given
-        given(brokerService.getBrokerList())
-                .willReturn(brokerListDtoList);
-
-        //when
-        mockMvc.perform(get("/api/broker/list"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].id").value(broker.getId()));
+        house =  new HouseUpdateRequestDto(1L,1L,1L,1L,1L,false,1L,"fee",1L,1L,false,1L,LocalDate.now(),"heattype",EstateType.OFFICETELS,false,false,"LOFT",true);
+        EstateUpdateRequestDto estateUpdateRequestDto = new EstateUpdateRequestDto("MONTHLYRENT","thumbnail","content","model", Arrays.asList("photo"),address,house);
+        estate.update(estateUpdateRequestDto);
     }
-
-    @DisplayName("[get] /api/broker/estate")
+    @DisplayName("[get] /api/preferestate/list/recent")
     @Test
     @WithMockCustomUser
-    void 브로커_매물_리스트() throws Exception{
-        List<BrokerEstateDto> brokerEstateDtos = new ArrayList<>();
-        BrokerEstateDto brokerEstateDto = BrokerEstateDto.builder()
-                .estateAddress(address)
-                .estateId(1L)
-                .ownerName(user.getName())
-                .ownerPhone(user.getPhone())
-                .build();
-        brokerEstateDtos.add(brokerEstateDto);
+    void 최근본방_가져오기() throws Exception{
+        List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
+        EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
+                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
+        estateListResponseDtos.add(estateListResponseDto);
+
 
         //given
-        given(brokerService.getbrokerEstate(any(),any()))
-                .willReturn(brokerEstateDtos);
+        given(preferEstateService.getPreferEstate(any(),any(),any()))
+                .willReturn((Page<EstateListResponseDto>) estateListResponseDtos);
 
         //when
-        mockMvc.perform(get("/api/broker/estate")
-                        .param("state", "BROKER_BEFORE"))
+        mockMvc.perform(get("/api/preferestate/list/recent"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].estateId").value(1L));
+                .andExpect(jsonPath("$[0].estateType").value(house.getEstateType()));
     }
 }

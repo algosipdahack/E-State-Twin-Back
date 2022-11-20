@@ -7,6 +7,7 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class BrokerSignUpDto {
     @Schema(description = "상호명")
     private String businessName;

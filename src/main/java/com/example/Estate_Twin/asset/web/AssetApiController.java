@@ -37,7 +37,7 @@ public class AssetApiController {
     }
 
     @Operation(summary = "post assets", description = "에셋 등록하기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))})
     @PostMapping("/estate/{estateId}")
     public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long estateId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
         AssetResponseDto assetDto = assetService.saveAsset(estateId, assetSaveRequestDto);

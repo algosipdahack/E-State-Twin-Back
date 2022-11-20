@@ -5,6 +5,7 @@ import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -21,8 +22,8 @@ public class EstateListResponseDto {
     private final String transactionType;
     @Schema(description = "매물 거래 종류", example = "APARTMENT, OFFICETELS")
     private final String estateType;
-
     @QueryProjection
+    @Builder
     public EstateListResponseDto(Long id, TransactionType transactionType, String estateThumbNail, String town, EstateType estateType,
                                  String buildingName, Long currentFloors, Long rentableArea, State state, Long sellingFee) {
         this.id = id;

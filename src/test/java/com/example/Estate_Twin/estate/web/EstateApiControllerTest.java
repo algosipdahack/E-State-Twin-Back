@@ -1,6 +1,11 @@
 package com.example.Estate_Twin.estate.web;
 
+import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
 import com.example.Estate_Twin.config.WithMockCustomUser;
+import com.example.Estate_Twin.user.service.impl.OAuthService;
+import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.web.UserController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -11,23 +16,32 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = {UserController.class})
+@MockBean(JpaMetamodelMappingContext.class)
 public class EstateApiControllerTest {
-    @LocalServerPort
-    int port;
     @Autowired
-    private EstateApiController estateApiController;
+    MockMvc mockMvc;
+    @MockBean
+    JwtTokenProvider tokenProvider;
+    @MockBean
+    UserServiceImpl userService;
+    @MockBean
+    OAuthService oAuthService;
     @Autowired
-    private PreferEstateApiController preferEstateApiController;
+    private ObjectMapper objectMapper;
 
     /*AddressSaveRequestDto addressSaveRequestDto;
     HouseSaveRequestDto houseSaveRequestDto;

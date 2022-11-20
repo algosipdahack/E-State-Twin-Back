@@ -67,7 +67,7 @@ public class EstateApiController {
 
     //집주인이
     @Operation(summary = "Enroll estate", description = "매물 등록하기(Owner)")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = Long.class)))})
     @PostMapping("detail/owner")
     public ResponseEntity<Long> postEstateOwner(@Parameter(hidden = true) @CurrentUser User user,
                                                 @RequestBody Address address,
@@ -80,7 +80,7 @@ public class EstateApiController {
 
     //브로커가
     @Operation(summary = "post detail of Estate", description = "매물에 대한 상세정보들 등록하기(임시저장) - broker")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = EstateResponseDto.class)))})
     @PostMapping(value = "detail/broker")
     public ResponseEntity<EstateResponseDto> saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);

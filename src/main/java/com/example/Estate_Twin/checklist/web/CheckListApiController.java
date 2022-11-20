@@ -43,7 +43,7 @@ public class CheckListApiController {
     // 만약 집주인이 등록 -> 세입자는 없는 상태이므로 tenantY 까지 해주기
     // 세입자가 등록 -> 세입자만 tenantY해주기
     @Operation(summary = "post checklist", description = "체크리스트 등록하기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
     @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
     @PostMapping("/estate/{estateId}/asset/{assetId}")
     public ResponseEntity<CheckListResponseDto> saveCheckList(@Parameter(hidden = true) @CurrentUser User user,

@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class EstateUpdateRequestDto {
     private String transactionType;
     private String estateThumbNail;

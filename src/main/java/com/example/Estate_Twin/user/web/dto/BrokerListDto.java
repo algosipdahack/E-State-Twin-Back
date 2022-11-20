@@ -3,6 +3,7 @@ package com.example.Estate_Twin.user.web.dto;
 import com.example.Estate_Twin.address.Address;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -16,7 +17,7 @@ public class BrokerListDto {
     private final Address address;
     private final String phone;
     private final String brokerPhoto;
-
+    @Builder
     @QueryProjection
     public BrokerListDto(Long id, String businessName, Long countOfTransactionCompletion, String content, Address address, String phone, String brokerPhoto) {
         this.id = id;

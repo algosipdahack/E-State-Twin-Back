@@ -27,16 +27,15 @@ public class BrokerController {
     private final BrokerServiceImpl brokerService;
 
     @Operation(summary = "mypage of broker", description = "브로커 마이페이지")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))})
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<BrokerSummaryDto> getCurrentBroker(@Parameter(hidden = true) @CurrentUser User user) {
-        BrokerSummaryDto brokerResponseDto = brokerService.getBroker(user.getEmail());
+        BrokerSummaryDto brokerResponseDto = brokerService.getBroker(user);
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
     @Operation(summary = "signup of broker", description = "브로커 회원가입")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerResponseDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))})
     @PostMapping("/signup")
     public ResponseEntity<BrokerSummaryDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                                    @RequestBody BrokerSignUpDto brokerSignUpDto) {

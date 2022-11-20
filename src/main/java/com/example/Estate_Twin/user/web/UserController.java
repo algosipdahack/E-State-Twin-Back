@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @Operation(summary = "signup of user", description = "회원가입")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
     @PostMapping("/signup")
     public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                               @RequestBody UserSignUpDto userSignUpDto) {

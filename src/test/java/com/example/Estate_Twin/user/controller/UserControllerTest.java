@@ -21,7 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {UserController.class})
-@ActiveProfiles("test")
 @MockBean(JpaMetamodelMappingContext.class)
 public class UserControllerTest {
     @Autowired
@@ -46,18 +44,15 @@ public class UserControllerTest {
     JwtTokenProvider tokenProvider;
     @MockBean
     UserServiceImpl userService;
-
     @MockBean
     OAuthService oAuthService;
-
-
     @Autowired
     private ObjectMapper objectMapper;
 
     User user;
     Asset asset;
     CheckList checkList;
-
+    Address address;
     @BeforeEach
     void setting() {
         String date = "2022-10-22";
@@ -90,6 +85,18 @@ public class UserControllerTest {
                 .flawPart("하자부위")
                 .repairDate(LocalDate.of(2022,06,12))
                 .tenantConfirmYN(false)
+                .build();
+        address = Address.builder()
+                .unit("5호")
+                .town("화정동")
+                .subBuildingNumber(1234)
+                .mainBuildingNumber(2345)
+                .complexName("벽산아파트")
+                .buildingName("빌딩빌딩")
+                .roadName("화정로")
+                .city("고양시")
+                .borough("화정동")
+                .block("623동")
                 .build();
     }
 
@@ -180,18 +187,7 @@ public class UserControllerTest {
         List<EstateModeDto> estateModeDtos = new ArrayList<>();
         EstateModeDto estateModeDto = EstateModeDto.builder()
                 .estateId(1L)
-                .address(Address.builder()
-                        .unit("5호")
-                        .town("화정동")
-                        .subBuildingNumber(1234)
-                        .mainBuildingNumber(2345)
-                        .complexName("벽산아파트")
-                        .buildingName("빌딩빌딩")
-                        .roadName("화정로")
-                        .city("고양시")
-                        .borough("화정동")
-                        .block("623동")
-                        .build())
+                .address(address)
                 .estateType(EstateType.OFFICETELS)
                 .state(State.BROKER_BEFORE)
                 .build();

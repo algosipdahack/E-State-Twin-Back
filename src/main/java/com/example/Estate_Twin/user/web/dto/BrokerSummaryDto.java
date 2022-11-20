@@ -2,7 +2,9 @@ package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.address.AddressResponseDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -25,8 +27,8 @@ public class BrokerSummaryDto {
     private final AddressResponseDto address;
     private final String phone;
     private final String brokerPhoto;
-
-    public BrokerSummaryDto(Broker broker) {
+    @Builder
+    public BrokerSummaryDto(Broker broker, User user) {
         this.id = broker.getId();
         this.businessName = broker.getBusinessName();
         this.agentName = broker.getAgentName();
@@ -37,7 +39,7 @@ public class BrokerSummaryDto {
         this.countOfTransactionCompletion = broker.getCountOfTransactionCompletion();
         this.content = broker.getContent();
         this.address = new AddressResponseDto(broker.getAddress());
-        this.phone = broker.getUser().getPhone();
+        this.phone = user.getPhone();
         this.brokerPhoto = broker.getBrokerPhoto();
     }
 }
