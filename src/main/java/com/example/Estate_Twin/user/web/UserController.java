@@ -78,7 +78,7 @@ public class UserController {
     public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                               @RequestBody UserSignUpDto userSignUpDto) {
         UserInfoDto userInfoDto = userService.signUp(user, userSignUpDto);
-        return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDto);
     }
 
     @Operation(summary = "login of user", description = "로그인")

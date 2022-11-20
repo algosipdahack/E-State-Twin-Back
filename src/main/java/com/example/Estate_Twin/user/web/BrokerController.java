@@ -41,7 +41,7 @@ public class BrokerController {
     public ResponseEntity<BrokerSummaryDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                                    @RequestBody BrokerSignUpDto brokerSignUpDto) {
         BrokerSummaryDto brokerResponseDto = brokerService.signUpBroker(user, brokerSignUpDto);
-        return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(brokerResponseDto);
     }
 
     @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")

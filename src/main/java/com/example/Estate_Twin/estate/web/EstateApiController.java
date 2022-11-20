@@ -75,7 +75,7 @@ public class EstateApiController {
                                                 @RequestParam(name = "brokerId") Long brokerId) {
         //owner 매핑, estate 생성, broker매핑
         Long estateId = estateService.saveFirst(address, brokerId, user.getId());
-        return ResponseEntity.status(HttpStatus.OK).body(estateId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(estateId);
     }
 
     //브로커가
@@ -84,7 +84,7 @@ public class EstateApiController {
     @PostMapping(value = "detail/broker")
     public ResponseEntity<EstateResponseDto> saveEstate(@RequestBody EstateSaveRequestDto estateSaveRequestDto) {
         EstateResponseDto estateDto = estateService.saveEstate(estateSaveRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(estateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(estateDto);
     }
 
     @Operation(summary = "put detail of Estate", description = "매물에 대한 상세정보들 수정하기")

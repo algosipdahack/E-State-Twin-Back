@@ -41,6 +41,6 @@ public class AssetApiController {
     @PostMapping("/estate/{estateId}")
     public ResponseEntity<AssetResponseDto> saveAsset(@PathVariable Long estateId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {
         AssetResponseDto assetDto = assetService.saveAsset(estateId, assetSaveRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(assetDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(assetDto);
     }
 }

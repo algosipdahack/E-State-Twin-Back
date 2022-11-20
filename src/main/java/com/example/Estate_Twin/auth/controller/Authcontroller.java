@@ -20,7 +20,7 @@ public class Authcontroller {
     @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))})
     @PostMapping("refresh")
     public ResponseEntity<String> refreshToken(@RequestParam(name = "refresh_token") String refreshToken, @RequestParam(name = "access_token") String accessToken) {
-        return ResponseEntity.status(HttpStatus.OK).body(jwtService.refreshToken(refreshToken, accessToken));
+        return ResponseEntity.status(HttpStatus.CREATED).body(jwtService.refreshToken(refreshToken, accessToken));
     }
 
 }

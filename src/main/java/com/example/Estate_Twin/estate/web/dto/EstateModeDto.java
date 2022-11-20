@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -13,6 +14,7 @@ public class EstateModeDto {
     private final String estateType;
     private final State state;
 
+    @Builder
     @QueryProjection
     public EstateModeDto(Long estateId, Address address, EstateType estateType, State state) {
         this.estateId = estateId;

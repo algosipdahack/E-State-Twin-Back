@@ -5,6 +5,7 @@ import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class AssetResponseDto {
     private final String anchorId;
     private final List<CheckListResponseDto> checkLists;
 
+    @Builder
     @QueryProjection
     public AssetResponseDto(Asset asset, List<CheckList> checkLists) {
         this.id = asset.getId();

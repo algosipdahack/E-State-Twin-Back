@@ -1,40 +1,29 @@
 package com.example.Estate_Twin.estate.web;
 
-import com.amazonaws.util.IOUtils;
-import com.example.Estate_Twin.asset.data.entity.Option;
-import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
-import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
+import com.example.Estate_Twin.config.WithMockCustomUser;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.time.LocalDateTime;
-import java.util.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles("prod")
-@Slf4j
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class EstateApiControllerTest {
+    @LocalServerPort
+    int port;
     @Autowired
     private EstateApiController estateApiController;
     @Autowired
@@ -127,11 +116,11 @@ public class EstateApiControllerTest {
         ResponseEntity<EstateResponseDto> responseEntity = estateApiController.saveEstate(estateSaveRequestDto);
         log.info(responseEntity.getBody().toString());
     }*/
-
     @Test
-    public void getlistEstate() throws Exception {
-        //ResponseEntity<Page<EstateListResponseDto>> responseEntity = estateApiController.getList(null, PageRequest.of(0,5));
-        //log.info(responseEntity.getBody().toString());
+    @WithMockCustomUser
+    @DisplayName("메인페이지를 호출한다.")
+    public void 메인페이지(){
+
     }
  /*
     @Test

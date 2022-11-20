@@ -51,7 +51,7 @@ public class CheckListApiController {
                                                               @PathVariable Long assetId,
                                                               @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(user,checkListSaveRequestDto,estateId,assetId);
-        return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(checkListResponseDto);
     }
 
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")
