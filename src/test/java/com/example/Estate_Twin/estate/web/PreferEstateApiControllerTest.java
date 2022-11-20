@@ -1,50 +1,36 @@
 package com.example.Estate_Twin.estate.web;
 
 import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.asset.data.entity.Asset;
-import com.example.Estate_Twin.asset.data.entity.Category;
-import com.example.Estate_Twin.asset.data.entity.Option;
+import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
-import com.example.Estate_Twin.checklist.data.entity.RepairType;
+import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.config.WithMockCustomUser;
-import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.estate.domain.entity.TransactionType;
+import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.service.impl.PreferEstateServiceImpl;
-import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.estate.web.dto.EstateListResponseDto;
-import com.example.Estate_Twin.estate.web.dto.EstateUpdateRequestDto;
+import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
-import com.example.Estate_Twin.user.domain.entity.AuthProvider;
-import com.example.Estate_Twin.user.domain.entity.Broker;
-import com.example.Estate_Twin.user.domain.entity.Role;
-import com.example.Estate_Twin.user.domain.entity.User;
-import com.example.Estate_Twin.user.service.impl.OAuthService;
-import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -142,6 +128,9 @@ public class PreferEstateApiControllerTest {
         house =  new HouseUpdateRequestDto(1L,1L,1L,1L,1L,false,1L,"fee",1L,1L,false,1L,LocalDate.now(),"heattype",EstateType.OFFICETELS,false,false,"LOFT",true);
         EstateUpdateRequestDto estateUpdateRequestDto = new EstateUpdateRequestDto("MONTHLYRENT","thumbnail","content","model", Arrays.asList("photo"),address,house);
         estate.update(estateUpdateRequestDto);
+        this.mockMvc= MockMvcBuilders.standaloneSetup(new PreferEstateApiController(preferEstateService))
+                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                .build();
     }
     @DisplayName("[get] /api/preferestate/list/recent")
     @Test
@@ -152,17 +141,60 @@ public class PreferEstateApiControllerTest {
                 estate.getAddress().getTown(),house.getEstateType(),
                 estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
         estateListResponseDtos.add(estateListResponseDto);
-
+        Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);
 
         //given
-        given(preferEstateService.getPreferEstate(any(),any(),any()))
-                .willReturn((Page<EstateListResponseDto>) estateListResponseDtos);
+        given(preferEstateService.getPreferEstate(any(),eq(Preference.RECENT),any()))
+                .willReturn((estateListResponsePageDtos));
 
         //when
         mockMvc.perform(get("/api/preferestate/list/recent"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].estateType").value(house.getEstateType()));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @DisplayName("[get] /api/preferestate/list/dip")
+    @Test
+    @WithMockCustomUser
+    void 찜한방_가져오기() throws Exception{
+        List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
+        EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
+                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
+        estateListResponseDtos.add(estateListResponseDto);
+        Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);
+
+        //given
+        given(preferEstateService.getPreferEstate(any(),eq(Preference.DIP),any()))
+                .willReturn((estateListResponsePageDtos));
+
+        //when
+        mockMvc.perform(get("/api/preferestate/list/dip"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @DisplayName("[get] /api/preferestate/list/inquiry")
+    @Test
+    @WithMockCustomUser
+    void 문의한방_가져오기() throws Exception{
+        List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
+        EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
+                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
+        estateListResponseDtos.add(estateListResponseDto);
+        Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);
+
+        //given
+        given(preferEstateService.getPreferEstate(any(),eq(Preference.INQUIRY),any()))
+                .willReturn((estateListResponsePageDtos));
+
+        //when
+        mockMvc.perform(get("/api/preferestate/list/inquiry"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }
