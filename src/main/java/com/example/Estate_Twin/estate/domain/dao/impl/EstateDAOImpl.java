@@ -139,7 +139,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate allowBroker(Estate estate, Broker broker) {
-        if (checkRoleBroker(estate, broker) == null) {
+        if (Boolean.FALSE.equals(checkRoleBroker(estate, broker))) {
             throw new Exception("해당 매물의 broker가 아닙니다!");
         }
         return estate.setBrokerConfirmY();
@@ -148,22 +148,20 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate allowOwner(Estate estate, User owner) {
-        if (checkRoleOwner(estate, owner) == null) {
+        if (Boolean.FALSE.equals(checkRoleOwner(estate, owner))) {
             throw new Exception("해당 매물의 owner가 아닙니다!");
         }
         return estate.setOwnerConfirmY();
     }
 
     // 해당 매물의 브로커인지 확인
-    public Estate checkRoleBroker(Estate estate, Broker broker) {
-        return broker.getTradeEstates().stream().filter(trade -> trade.equals(estate))
-                .findAny().orElse(null);
+    public Boolean checkRoleBroker(Estate estate, Broker broker) {
+        return estate.getBroker().getId().equals(broker.getId());
     }
 
     //해당 매물의 소유주인지 확인
-    public Estate checkRoleOwner(Estate estate, User owner) {
-        return owner.getOwnEstates().stream().filter(own -> own.equals(estate))
-                .findAny().orElse(null);
+    public Boolean checkRoleOwner(Estate estate, User owner) {
+        return estate.getOwner().getId().equals(owner.getId());
     }
 
     // 해당 매물이 올릴 수 있는 상태인지 확인

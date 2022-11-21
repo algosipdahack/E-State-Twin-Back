@@ -1,84 +1,83 @@
 package com.example.Estate_Twin.checklist.web;
 
-import com.amazonaws.util.IOUtils;
+import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
+import com.example.Estate_Twin.checklist.data.entity.*;
+import com.example.Estate_Twin.checklist.service.impl.CheckListServiceImpl;
 import com.example.Estate_Twin.checklist.web.dto.CheckListResponseDto;
-import com.example.Estate_Twin.checklist.web.dto.CheckListSaveRequestDto;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import com.example.Estate_Twin.config.WithMockCustomUser;
+import com.example.Estate_Twin.user.service.impl.OAuthService;
+import com.example.Estate_Twin.user.service.impl.UserServiceImpl;
+import com.example.Estate_Twin.user.web.UserController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.test.web.servlet.MockMvc;
+import java.time.LocalDate;
+import java.util.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-/*
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@Slf4j
+@WebMvcTest(controllers = {UserController.class})
+@MockBean(JpaMetamodelMappingContext.class)
 public class CheckListApiControllerTest {
     @Autowired
-    private CheckListApiController checkListApiController;
-    @Test
-    public void uploadFile() throws Exception {
+    MockMvc mockMvc;
+    @MockBean
+    JwtTokenProvider tokenProvider;
+    @MockBean
+    CheckListServiceImpl checkListService;
+    @MockBean
+    UserServiceImpl userService;
+    @MockBean
+    OAuthService oAuthService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-        //DTO 생성
-        List<MediaSaveMultipartRequestDto> mediaSaveMultipartRequestDtos = new ArrayList<>();
-        // Images
-        String[] ImageFiles = {"/Users/mincho/Downloads/photo.png", "/Users/mincho/Downloads/image.png"};
-
-        // Image 생성
-        for (int i = 0; i < ImageFiles.length; i++) {
-            File imageFile = new File(ImageFiles[i]);
-            FileInputStream inputStream = new FileInputStream(imageFile);
-            MultipartFile multipartFile = new MockMultipartFile(imageFile.getName(), imageFile.getName(), "image/jpg", IOUtils.toByteArray(inputStream));
-
-            MediaSaveMultipartRequestDto mediaSaveMultipartRequestDto = new MediaSaveMultipartRequestDto();
-            mediaSaveMultipartRequestDto.setImageFile(multipartFile);
-
-            mediaSaveMultipartRequestDtos.add(mediaSaveMultipartRequestDto);
-        }
-
-        String str = "2022-06-12 23:44:54.247";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime dateTime = LocalDateTime.parse(str,formatter);
-        CheckListSaveRequestDto checkListSaveRequestDto = new CheckListSaveRequestDto().builder()
-                .flawPart("1하자부위")
-                .checkListContent("1")
-                .repairDate(dateTime)
-                .repairType("REPAIR")
-                .brokerConfirmYN(false)
-                .tenantConfirmYN(false)
+    CheckList checkList;
+    @BeforeEach
+    void setting() {
+        checkList = CheckList.builder()
+                .checkListPhoto("checklist_photo")
+                .repairType(RepairType.REPAIR)
+                .checkListContent("content")
                 .ownerConfirmYN(false)
-                .checkListPhotos(mediaSaveMultipartRequestDtos)
+                .brokerConfirmYN(false)
+                .flawPart("하자부위")
+                .repairDate(LocalDate.of(2022,06,12))
+                .tenantConfirmYN(false)
                 .build();
-        ResponseEntity<CheckListResponseDto> responseEntity = checkListApiController.saveCheckList(1L,checkListSaveRequestDto);
-        log.info(responseEntity.getBody().toString());
     }
 
+    @DisplayName("[get] /api/checklist/asset/{assetId}")
     @Test
-    public void getChecklist() {
-        ResponseEntity<CheckListResponseDto> responseEntity = checkListApiController.getCheckList(1L);
-        log.info(responseEntity.getBody().toString());
+    @WithMockCustomUser
+    void 체크리스트_가져오기() throws Exception{
+        List<CheckListResponseDto> checkListResponseDtos = new ArrayList<>();
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
+        checkListResponseDtos.add(checkListResponseDto);
 
+        given(checkListService.getAllCheckListByAssetId(any()))
+                .willReturn((checkListResponseDtos));
+        Long assetId = 1L;
+        //when
+        mockMvc.perform(get("/api/checklist/asset/{assetId}",assetId))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    public void getChecklistbyAsset() {
-        ResponseEntity<List<CheckListResponseDto>> responseEntity = checkListApiController.getCheckListbyAsset(1L);
-        log.info(responseEntity.getBody().toString());
 
-    }
 
-*/
+}

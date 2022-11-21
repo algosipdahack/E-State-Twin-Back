@@ -154,7 +154,6 @@ public class Estate extends BaseTimeEntity {
             throw new Exception("브로커와 집주인 모두 confirm을 해야 합니다.");
         }
         this.isPosted = true;
-        this.state = State.POST_DONE;
         return this;
     }
 
