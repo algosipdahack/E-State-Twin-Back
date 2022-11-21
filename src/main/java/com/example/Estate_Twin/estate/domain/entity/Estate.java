@@ -134,7 +134,7 @@ public class Estate extends BaseTimeEntity {
     }
 
     public void setGrade(Grade grade) {
-        if(this.isPosted == false) {
+        if(!this.isPosted) {
             throw new BadRequestException("게시되지 않은 매물은 뱃지를 가질 수 없습니다!");
         }
         this.grade = grade;

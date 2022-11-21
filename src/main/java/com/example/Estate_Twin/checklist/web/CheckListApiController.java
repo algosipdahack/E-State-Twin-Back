@@ -24,7 +24,7 @@ public class CheckListApiController {
 
     @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CheckListResponseDto.class)))})})
-    @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
+    @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @GetMapping("/asset/{assetId}")
     public ResponseEntity<List<CheckListResponseDto>> getCheckListbyAsset(@PathVariable Long assetId) {
         List<CheckListResponseDto> checkListResponseDtos = checkListService.getAllCheckListByAssetId(assetId);
@@ -32,8 +32,8 @@ public class CheckListApiController {
     }
 
     @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
-    @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
+    @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
     @GetMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> getCheckList(@PathVariable Long checklistId) {
         CheckListResponseDto checkListResponseDto = checkListService.getCheckList(checklistId);
@@ -43,8 +43,8 @@ public class CheckListApiController {
     // 만약 집주인이 등록 -> 세입자는 없는 상태이므로 tenantY 까지 해주기
     // 세입자가 등록 -> 세입자만 tenantY해주기
     @Operation(summary = "post checklist", description = "체크리스트 등록하기")
-    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
-    @Parameters({@Parameter(name = "assetId", description = "Asset Id", example = "1")})
+    @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
+    @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @PostMapping("/estate/{estateId}/asset/{assetId}")
     public ResponseEntity<CheckListResponseDto> saveCheckList(@Parameter(hidden = true) @CurrentUser User user,
                                                               @PathVariable Long estateId,
@@ -55,8 +55,8 @@ public class CheckListApiController {
     }
 
     @Operation(summary = "put checklist", description = "체크리스트 수정하기")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
-    @Parameters({@Parameter(name = "checklistId", description = "Checklist Id", example = "1")})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
+    @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
     @PutMapping("/{checklistId}")
     public ResponseEntity<CheckListResponseDto> updateCheckList(@PathVariable Long checklistId, @RequestBody CheckListUpdateRequestDto checkListUpdateRequestDto){
         CheckListResponseDto checkListResponseDto = checkListService.updateCheckList(checklistId,checkListUpdateRequestDto);
@@ -64,8 +64,8 @@ public class CheckListApiController {
     }
 
     @Operation(summary = "Confirm of checklist post", description = "중개인/집주인의 체크리스트 승인")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))})
-    @Parameters({@Parameter(name = "estateId", description = "Estate Id", example = "1")})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
+    @Parameter(name = "estateId", description = "Estate Id", example = "1")
     @PatchMapping("/{checklistId}/estate/{estateId}/confirm")
     public ResponseEntity<CheckListResponseDto> confirmCheckList(@Parameter(hidden = true) @CurrentUser User user,
                                                                  @PathVariable Long checklistId,

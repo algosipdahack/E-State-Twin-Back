@@ -2,7 +2,6 @@ package com.example.Estate_Twin.user.web;
 
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
-import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.impl.BrokerServiceImpl;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -14,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class BrokerController {
     private final BrokerServiceImpl brokerService;
 
     @Operation(summary = "mypage of broker", description = "브로커 마이페이지")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))
     @GetMapping("/me")
     public ResponseEntity<BrokerSummaryDto> getCurrentBroker(@Parameter(hidden = true) @CurrentUser User user) {
         BrokerSummaryDto brokerResponseDto = brokerService.getBroker(user);
@@ -35,7 +33,7 @@ public class BrokerController {
     }
 
     @Operation(summary = "signup of broker", description = "브로커 회원가입")
-    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))})
+    @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))
     @PostMapping("/signup")
     public ResponseEntity<BrokerSummaryDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                                    @RequestBody BrokerSignUpDto brokerSignUpDto) {

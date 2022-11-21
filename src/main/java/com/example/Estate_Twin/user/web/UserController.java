@@ -29,7 +29,7 @@ public class UserController {
     private final OAuthService oAuthService;
 
     @Operation(summary = "mypage of user", description = "마이페이지")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @CurrentUser User user) {
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @Operation(summary = "mypage of tenant", description = "세입자모드 목록")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))
     @GetMapping("/tenant/list")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @CurrentUser User user) {
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @Operation(summary = "signup of user", description = "회원가입")
-    @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))})
+    @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
     @PostMapping("/signup")
     public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
                                               @RequestBody UserSignUpDto userSignUpDto) {
@@ -82,8 +82,8 @@ public class UserController {
     }
 
     @Operation(summary = "login of user", description = "로그인")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))})
-    @Parameters({@Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))
+    @Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")
     @PostMapping("/login/oauth/{provider}")
     public ResponseEntity<Token> login(@PathVariable String provider, @RequestBody String code) {
         Token token = oAuthService.login(provider, code);
@@ -91,16 +91,16 @@ public class UserController {
     }
 
     @Operation(summary = "logout of user", description = "로그아웃")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))
     @GetMapping("/logout")
-    public ResponseEntity logout() {
+    public ResponseEntity<String> logout() {
         // 세션 삭제
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(HttpStatus.OK).body("로그아웃 성공!");
     }
 
     @Operation(summary = "Membership Withdrawal", description = "회원탈퇴")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))})
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Long.class)))
     @DeleteMapping("")
     public ResponseEntity<Long> withdrawal(@Parameter(hidden = true) @CurrentUser User user) {
         Long userId = userService.deleteUser(user);
