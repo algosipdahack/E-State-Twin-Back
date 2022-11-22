@@ -95,6 +95,60 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         return new PageImpl<>(queryResults.getResults(), pageable, queryResults.getTotal());
     }
 
+    @Override
+    public List<EstateListResponseDto> findEstateByBorough(String borough, Pageable pageable) {
+        QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
+                .select(new QEstateListResponseDto(
+                        estate.id,
+                        estate.transactionType,
+                        estate.estateThumbNail,
+                        estate.address.town,
+                        house.estateType,
+                        estate.address.buildingName,
+                        house.currentFloors,
+                        house.rentableArea,
+                        estate.state,
+                        house.sellingFee
+                ))
+                .from(estate)
+                .leftJoin(estate.house, house)
+                .where(estate.address.borough.eq(borough))
+                .where(estate.isPosted.eq(true))
+                .orderBy(estate.id.desc())
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchResults();
+
+        return queryResults.getResults();
+    }
+
+    @Override
+    public List<EstateListResponseDto> findEstateByTown(String town, Pageable pageable) {
+        QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory
+                .select(new QEstateListResponseDto(
+                        estate.id,
+                        estate.transactionType,
+                        estate.estateThumbNail,
+                        estate.address.town,
+                        house.estateType,
+                        estate.address.buildingName,
+                        house.currentFloors,
+                        house.rentableArea,
+                        estate.state,
+                        house.sellingFee
+                ))
+                .from(estate)
+                .leftJoin(estate.house, house)
+                .where(estate.address.town.eq(town))
+                .where(estate.isPosted.eq(true))
+                .orderBy(estate.id.desc())
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchResults();
+
+        return queryResults.getResults();
+    }
+
 
     @Override
     public List<AssetResponseDto> findAssetList(Long estateId) {

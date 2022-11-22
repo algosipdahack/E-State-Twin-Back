@@ -5,6 +5,7 @@ import com.example.Estate_Twin.estate.domain.entity.EstateHit;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.house.domain.entity.House;
 import org.springframework.data.domain.*;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface EstateRepositoryCustom {
     House findHouse(Long estateId);
     List<EstateModeDto> findOwnerEstateList(Long userId);
     EstateModeDto findTenantEstateList(Long userId);
+    List<EstateListResponseDto> findEstateByBorough(@Param("borough") String borough, Pageable pageable);
+    List<EstateListResponseDto> findEstateByTown(@Param("town") String town, Pageable pageable);
+
 }
