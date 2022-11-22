@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CheckListUpdateRequestDto {
     private String flawPart;
     private String checkListContent;
     @Schema(description = "구매/수리", example = "PURCHASE, REPAIR")
     private String repairType;
-    private String manufacturer;
     private String checkListPhoto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate repairDate;

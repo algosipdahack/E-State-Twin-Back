@@ -23,6 +23,8 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -48,6 +50,8 @@ public class UserControllerTest {
     OAuthService oAuthService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     User user;
     Asset asset;
@@ -95,6 +99,7 @@ public class UserControllerTest {
                 .borough("화정동")
                 .block("623동")
                 .build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @DisplayName("[get] /api/user/me")
@@ -199,7 +204,7 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.estateId").value(1L));
+                .andExpect(jsonPath("$[0].estateId").value(1L));
     }
 
     @DisplayName("[get] /api/user/owner/detail")

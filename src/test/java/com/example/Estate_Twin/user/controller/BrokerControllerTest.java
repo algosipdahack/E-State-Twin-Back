@@ -21,6 +21,8 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -47,6 +49,8 @@ public class BrokerControllerTest {
     OAuthService oAuthService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
     User user;
     Asset asset;
     CheckList checkList;
@@ -106,6 +110,7 @@ public class BrokerControllerTest {
                 .businessName("000공인중개소")
                 .businessRegistrationNumber("business_number")
                 .build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @DisplayName("[get] /api/user/me")

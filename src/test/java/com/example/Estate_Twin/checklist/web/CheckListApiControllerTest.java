@@ -16,6 +16,9 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -41,6 +44,8 @@ public class CheckListApiControllerTest {
     OAuthService oAuthService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     CheckList checkList;
     @BeforeEach
@@ -52,6 +57,7 @@ public class CheckListApiControllerTest {
                 .flawPart("하자부위")
                 .repairDate(LocalDate.of(2022,06,12))
                 .build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
     @DisplayName("[get] /api/checklist/asset/{assetId}")
@@ -92,12 +98,12 @@ public class CheckListApiControllerTest {
     @Test
     @WithMockCustomUser
     void 체크리스트_등록하기() throws Exception{
-        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
         Long estateId = 1L;
         Long assetId = 1L;
 
         CheckListSaveRequestDto checkListSaveRequestDto = new CheckListSaveRequestDto("flawPart","content",LocalDate.now(),"PURCHASE","checklist_photo");
-
+        CheckList checkList1 = checkListSaveRequestDto.toEntity();
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList1);
         //given
         given(checkListService.saveCheckList(any(), any(),any(),any()))
                 .willReturn(checkListResponseDto);
@@ -110,6 +116,49 @@ public class CheckListApiControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.flawPart").value("flawPart"));
+    }
+
+    @DisplayName("[put] /api/checklist/{checklistId}")
+    @Test
+    @WithMockCustomUser
+    void 체크리스트_수정하기() throws Exception{
+        Long checklistId = 1L;
+
+        CheckListUpdateRequestDto checkListUpdateRequestDto = new CheckListUpdateRequestDto("flawPart","content","PURCHASE","checklist_photo",LocalDate.now());
+        checkList.update(checkListUpdateRequestDto);
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
+        //given
+        given(checkListService.updateCheckList(any(), any()))
+                .willReturn(checkListResponseDto);
+
+        String content = objectMapper.writeValueAsString(checkListUpdateRequestDto);
+        //when
+        mockMvc.perform(put("/api/checklist/{checklistId}",checklistId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.flawPart").value("flawPart"));
+    }
+
+    @DisplayName("[patch] /api/checklist/{checklistId}/estate/{estateId}/confirm")
+    @Test
+    @WithMockCustomUser
+    void 체크리스트_컨펌하기() throws Exception{
+        Long checklistId = 1L;
+        Long estateId = 1L;
+
+        CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
+
+        //given
+        given(checkListService.confirmCheckList(any(), any(), any()))
+                .willReturn(checkListResponseDto);
+
+        //when
+        mockMvc.perform(patch("/api/checklist/{checklistId}/estate/{estateId}/confirm",checklistId, estateId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
 

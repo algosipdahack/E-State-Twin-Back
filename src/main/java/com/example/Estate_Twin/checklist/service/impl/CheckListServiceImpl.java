@@ -48,11 +48,15 @@ public class CheckListServiceImpl implements CheckListService {
 
         CheckList newCheckList;
         // 유저 role 검증
-        if (user.isBroker()) { // Broker라면
+        if (user.isBroker()) // Broker라면
+        {
             newCheckList = checkListDAO.confirmBroker(checkList);
-        } else { // 집주인이라면
+        }
+        else // 집주인이라면
+        {
             newCheckList = checkListDAO.confirmOwner(checkList);
         }
+
         //체크리스트 등록 끝 -> totalConfirmY
         if (checkListDAO.checkDone(newCheckList)) {
             newCheckList = checkListDAO.confirmTotal(checkList);
