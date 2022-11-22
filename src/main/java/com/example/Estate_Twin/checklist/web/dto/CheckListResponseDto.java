@@ -28,7 +28,7 @@ public class CheckListResponseDto {
     @QueryProjection
     public CheckListResponseDto(CheckList checkList) {
         this.id = checkList.getId();
-        this.checkListPhoto = this.getCheckListPhoto();
+        this.checkListPhoto = checkList.getCheckListPhoto();
         this.flawPart = checkList.getFlawPart();
         this.checkListContent = checkList.getCheckListContent();
         this.repairDate = checkList.getRepairDate();

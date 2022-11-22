@@ -80,11 +80,8 @@ public class UserControllerTest {
                 .checkListPhoto("checklist_photo")
                 .repairType(RepairType.REPAIR)
                 .checkListContent("content")
-                .ownerConfirmYN(false)
-                .brokerConfirmYN(false)
                 .flawPart("하자부위")
                 .repairDate(LocalDate.of(2022,06,12))
-                .tenantConfirmYN(false)
                 .build();
         address = Address.builder()
                 .unit("5호")

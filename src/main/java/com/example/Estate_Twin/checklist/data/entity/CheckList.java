@@ -36,16 +36,11 @@ public class CheckList extends BaseTimeEntity {
     private Asset asset;
 
     @Builder
-    public CheckList(String flawPart, Boolean brokerConfirmYN, Boolean ownerConfirmYN,
-                     String checkListContent, LocalDate repairDate, String checkListPhoto,
-                     RepairType repairType, Boolean tenantConfirmYN) {
+    public CheckList(String flawPart,String checkListContent, LocalDate repairDate, String checkListPhoto,RepairType repairType) {
         this.flawPart = flawPart;
-        this.brokerConfirmYN = brokerConfirmYN;
         this.repairDate = repairDate;
-        this.ownerConfirmYN = ownerConfirmYN;
         this.checkListContent = checkListContent;
         this.repairType = repairType;
-        this.tenantConfirmYN = tenantConfirmYN;
         this.checkListPhoto = checkListPhoto;
     }
 

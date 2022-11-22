@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CheckListSaveRequestDto {
     private String flawPart;
     private String checkListContent;
