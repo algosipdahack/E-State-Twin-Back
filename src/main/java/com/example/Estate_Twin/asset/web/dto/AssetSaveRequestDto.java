@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AssetSaveRequestDto {
     @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
     private String category;
