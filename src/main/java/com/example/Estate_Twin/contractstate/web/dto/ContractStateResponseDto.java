@@ -4,6 +4,7 @@ import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class ContractStateResponseDto {
     private final Long estateId;
 
     @QueryProjection
+    @Builder
     public ContractStateResponseDto(ContractState contractState) {
         this.id = contractState.getId();
         this.state = contractState.getState().toString();
