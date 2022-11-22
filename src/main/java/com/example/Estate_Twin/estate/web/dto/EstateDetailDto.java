@@ -10,6 +10,7 @@ import com.example.Estate_Twin.estate.domain.entity.EstateHit;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.web.dto.BrokerDetailDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
@@ -43,7 +44,8 @@ public class EstateDetailDto {
     private List<AssetSummaryDto> assets;
 
     @QueryProjection
-    public EstateDetailDto(Estate estate, House house, Broker broker, EstateHit estateHit, List<Asset> assets) {
+    @Builder
+    public EstateDetailDto(Estate estate, House house, Broker broker, EstateHit estateHit, List<Asset> assets, User user) {
         this.id = estate.getId();
         this.state = estate.getState().toString();
         this.transactionType = estate.getTransactionType().toString();
@@ -58,7 +60,7 @@ public class EstateDetailDto {
         this.house = new HouseResponseDto(house);
         this.estatehit = new EstateHitDto(estateHit);
 
-        this.broker = new BrokerDetailDto(broker);
+        this.broker = new BrokerDetailDto(broker, user);
 
         this.estatePhotos = new ArrayList<>();
         estate.getEstatePhoto().forEach(eMedia -> this.estatePhotos.add(eMedia));

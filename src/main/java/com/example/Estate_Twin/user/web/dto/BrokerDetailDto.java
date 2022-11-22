@@ -2,6 +2,7 @@ package com.example.Estate_Twin.user.web.dto;
 
 import com.example.Estate_Twin.address.AddressResponseDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
+import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -16,12 +17,12 @@ public class BrokerDetailDto {
     private final String phone;
     private final String brokerPhoto;
 
-    public BrokerDetailDto(Broker broker) {
+    public BrokerDetailDto(Broker broker, User user) {
         this.id = broker.getId();
         this.businessName = broker.getBusinessName();
         this.agentName = broker.getAgentName();
         this.address = new AddressResponseDto(broker.getAddress());
-        this.phone = broker.getUser().getPhone();
+        this.phone = user.getPhone();
         this.brokerPhoto = broker.getBrokerPhoto();
     }
 }

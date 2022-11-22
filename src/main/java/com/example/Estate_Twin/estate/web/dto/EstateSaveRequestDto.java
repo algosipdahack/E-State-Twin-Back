@@ -8,6 +8,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class EstateSaveRequestDto {
     private Long id;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")

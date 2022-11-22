@@ -9,6 +9,7 @@ import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.web.dto.HouseResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class EstateResponseDto {
     private List<AssetSummaryDto> assets;
 
     @QueryProjection
+    @Builder
     public EstateResponseDto(Estate estate, House house, EstateHit estateHit, List<Asset> assets) {
         this.id = estate.getId();
         this.state = estate.getState().toString();

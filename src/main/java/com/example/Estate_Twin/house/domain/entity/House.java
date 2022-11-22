@@ -87,7 +87,7 @@ public class House extends BaseTimeEntity {
         this.parkingFee = dto.getParkingFee();
         this.moveInAvailableDate = dto.getMoveInAvailableDate();
         this.heatType = dto.getHeatType();
-        this.estateType = dto.getEstateType();
+        this.estateType = EstateType.of(dto.getEstateType());
         this.elevator = dto.isElevator();
         this.duplex = dto.isDuplex();
         this.structure = Structure.of(dto.getStructure());

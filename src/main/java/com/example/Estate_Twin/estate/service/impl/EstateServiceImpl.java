@@ -50,7 +50,7 @@ public class EstateServiceImpl implements EstateService {
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
         EstateDetailDto detail = new EstateDetailDto(estateDAO.getEstate(estateId), houseDAO.findHouseByEstateId(estateId),
-                estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId));
+                estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId), user);
 
         // 사용자가 문의했는지 확인 -> arCam 활성화
         detail.setInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));

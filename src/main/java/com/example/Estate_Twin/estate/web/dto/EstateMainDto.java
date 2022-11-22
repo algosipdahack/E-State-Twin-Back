@@ -3,6 +3,7 @@ package com.example.Estate_Twin.estate.web.dto;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -19,6 +20,7 @@ public class EstateMainDto {
     private final String estateType;
 
     @QueryProjection
+    @Builder
     public EstateMainDto(Long id, String userBorough, String estateThumbNail, String town, String thumbnail3D, TransactionType transactionType, Long sellingFee, EstateType estateType) {
         this.id = id;
         this.userBorough = userBorough;

@@ -122,7 +122,7 @@ public class PreferEstateApiControllerTest {
                 .broker(broker)
                 .owner(user)
                 .build();
-        house =  new HouseUpdateRequestDto(1L,1L,1L,1L,1L,false,1L,"fee",1L,1L,false,1L,LocalDate.now(),"heattype",EstateType.OFFICETELS,false,false,"LOFT",true);
+        house =  new HouseUpdateRequestDto(1L,1L,1L,1L,1L,false,1L,"fee",1L,1L,false,1L,LocalDate.now(),"heattype","OFFICETELS",false,false,"LOFT",true);
         EstateUpdateRequestDto estateUpdateRequestDto = new EstateUpdateRequestDto("MONTHLYRENT","thumbnail","content","model", Arrays.asList("photo"),address,house);
         estate.update(estateUpdateRequestDto);
         this.mockMvc= MockMvcBuilders.standaloneSetup(new PreferEstateApiController(preferEstateService))
@@ -135,7 +135,7 @@ public class PreferEstateApiControllerTest {
     void 최근본방_가져오기() throws Exception{
         List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
         EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
-                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getTown(),EstateType.of(house.getEstateType()),
                 estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
         estateListResponseDtos.add(estateListResponseDto);
         Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);
@@ -157,7 +157,7 @@ public class PreferEstateApiControllerTest {
     void 찜한방_가져오기() throws Exception{
         List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
         EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
-                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getTown(),EstateType.of(house.getEstateType()),
                 estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
         estateListResponseDtos.add(estateListResponseDto);
         Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);
@@ -179,7 +179,7 @@ public class PreferEstateApiControllerTest {
     void 문의한방_가져오기() throws Exception{
         List<EstateListResponseDto> estateListResponseDtos = new ArrayList<>();
         EstateListResponseDto estateListResponseDto = new EstateListResponseDto(estate.getId(),estate.getTransactionType(),estate.getEstateThumbNail(),
-                estate.getAddress().getTown(),house.getEstateType(),
+                estate.getAddress().getTown(),EstateType.of(house.getEstateType()),
                 estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
         estateListResponseDtos.add(estateListResponseDto);
         Page<EstateListResponseDto> estateListResponsePageDtos = new PageImpl<EstateListResponseDto>(estateListResponseDtos, PageRequest.of(0, 3, Sort.unsorted()), 5);

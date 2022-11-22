@@ -23,7 +23,8 @@ public class PreferEstateServiceImpl implements PreferEstateService {
     @Override
     public PreferEstateResponseDto savePreferEstate(Long estateId, User user, Preference prefer) {
         Estate estate = estateDAO.findEstate(estateId);
-        return new PreferEstateResponseDto(preferEstateDAO.savePreferEstate(estate, user, prefer), estate, houseDAO.findHouseByEstateId(estateId));
+        preferEstateDAO.savePreferEstate(estate, user, prefer);
+        return new PreferEstateResponseDto(user, estate, houseDAO.findHouseByEstateId(estateId));
     }
 
     @Override

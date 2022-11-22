@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class HouseSaveRequestDto {
     private Long deposit;
     private Long monthlyRent;
