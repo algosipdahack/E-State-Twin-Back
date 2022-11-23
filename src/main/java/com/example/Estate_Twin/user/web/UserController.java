@@ -4,7 +4,6 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
-import com.example.Estate_Twin.estate.web.dto.EstateOwnerDto;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -59,8 +58,8 @@ public class UserController {
     @Operation(summary = "mypage of owner", description = "집주인 모드 목록")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateModeDto.class)))})})
     @GetMapping("/owner/list")
-    public ResponseEntity<List<EstateOwnerDto>> getOwnerHouseList(@Parameter(hidden = true) @CurrentUser User user) {
-        List<EstateOwnerDto> assetList = userService.getOwnerAssetList(user.getId());
+    public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @CurrentUser User user) {
+        List<EstateModeDto> assetList = userService.getOwnerAssetList(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(assetList);
     }
 

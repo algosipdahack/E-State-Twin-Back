@@ -4,7 +4,6 @@ import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
-import com.example.Estate_Twin.estate.web.dto.EstateOwnerDto;
 import com.example.Estate_Twin.user.domain.dao.UserDAO;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
@@ -66,7 +65,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<EstateOwnerDto> getOwnerAssetList(Long userId) {
-        return estateRepository.findOwnerEstateList(userId).orElseThrow(()->new IllegalArgumentException("해당 userId가 owner가 아닙니다"+userId));
+    public List<EstateModeDto> getOwnerAssetList(Long userId) {
+        return estateRepository.findOwnerEstateList(userId);
     }
 }
