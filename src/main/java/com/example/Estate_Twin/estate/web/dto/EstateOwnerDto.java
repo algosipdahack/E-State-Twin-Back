@@ -4,7 +4,7 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
-
+// 집주인 모드에서 사용
 @Getter
 public class EstateOwnerDto {
     private final Long estateId;
