@@ -131,7 +131,7 @@ public class EstateServiceImpl implements EstateService {
     // 사용자 최근 검색 변화
     @Override
     public List<EstateListResponseDto> searchEstate(User user, AddressSearchDto addressSearchDto, Pageable pageable) {
-        estateDAO.updateBorough(user, addressSearchDto.getBorough());
+        estateDAO.updateBorough(userDAO.findUserById(user.getId()), addressSearchDto.getBorough());
         if (addressSearchDto.getTown() != null) {
             return estateDAO.findEstateListByTown(addressSearchDto.getTown(), pageable);
         }

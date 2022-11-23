@@ -9,6 +9,7 @@ import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import com.example.Estate_Twin.user.web.dto.UserSignUpDto;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
     public User findUserByTenantEstateId(Long tenantId) {
         return userRepository.findUserByTenantEstate_Id(tenantId).orElseThrow(() -> new IllegalArgumentException("해당 tenantId를 가진 유저가 없습니다. id = "+tenantId));
     }
-
+    @Cacheable(value = "user", key = "#email")
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. email = "+email));

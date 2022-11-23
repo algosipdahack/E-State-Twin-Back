@@ -186,6 +186,6 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public User updateBorough(User user, String borough) {
-        return userRepository.save(user.setBorough(borough));
+        return user.setBorough(borough);
     }
 }

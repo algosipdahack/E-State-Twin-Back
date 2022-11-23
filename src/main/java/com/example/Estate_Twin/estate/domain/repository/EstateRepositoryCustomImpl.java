@@ -176,6 +176,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 .from(estate)
                 .leftJoin(estate.house,house)
                 .where(estate.owner.id.eq(userId))
+                .where(estate.isPosted.eq(true))
                 .fetchResults();
         return queryResults.getResults();
     }
@@ -191,6 +192,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                 ))
                 .from(estate)
                 .join(estate.house, house)
+                .where(estate.isPosted.eq(true))
                 .where(estate.tenant.id.eq(userId))
                 .fetchOne();
     }
