@@ -3,6 +3,7 @@ package com.example.Estate_Twin.estate.domain.repository;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
+import com.example.Estate_Twin.estate.web.dto.EstateOwnerDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +20,8 @@ public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepo
 
     @Query("select e.broker from Estate e where e.id = :estateId")
     Optional<Broker> findBrokerByEstate_Id(@Param("estateId") Long estateId);
-
+    @Query("select new com.example.Estate_Twin.estate.web.dto.EstateOwnerDto(e.id,e.address,e.state) from Estate e where e.owner.id = :userId")
+    Optional<List<EstateOwnerDto>> findOwnerEstateList(@Param("userId") Long userId);
     Optional<List<Estate>> findEstatesByBroker_Id(Long brokerId);
     Optional<Estate> findEstateByHouse_Id(Long houseId);
     Optional<Estate> findEstateByEstateHit_Id(Long estatehitId);

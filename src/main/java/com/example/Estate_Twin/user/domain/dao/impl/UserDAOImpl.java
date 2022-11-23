@@ -67,6 +67,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<EstateOwnerDto> getOwnerAssetList(Long userId) {
-        return estateRepository.findOwnerEstateList(userId);
+        return estateRepository.findOwnerEstateList(userId).orElseThrow(()->new IllegalArgumentException("해당 userId가 owner가 아닙니다"+userId));
     }
 }
