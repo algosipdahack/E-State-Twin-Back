@@ -165,18 +165,15 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public List<EstateModeDto> findOwnerEstateList(Long userId) {
-        QueryResults<EstateModeDto> queryResults = jpaQueryFactory
-                .select(new QEstateModeDto(
+    public List<EstateOwnerDto> findOwnerEstateList(Long userId) {
+        QueryResults<EstateOwnerDto> queryResults = jpaQueryFactory
+                .select(new QEstateOwnerDto(
                         estate.id,
                         estate.address,
-                        house.estateType,
                         estate.state
                 ))
                 .from(estate)
-                .leftJoin(estate.house,house)
                 .where(estate.owner.id.eq(userId))
-                .where(estate.isPosted.eq(true))
                 .fetchResults();
         return queryResults.getResults();
     }

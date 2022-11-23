@@ -9,6 +9,7 @@ import com.example.Estate_Twin.config.WithMockCustomUser;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
+import com.example.Estate_Twin.estate.web.dto.EstateOwnerDto;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.UserController;
@@ -186,14 +187,13 @@ public class UserControllerTest {
     @Test
     @WithMockCustomUser
     void 집주인_매물_리스트() throws Exception{
-        List<EstateModeDto> estateModeDtos = new ArrayList<>();
-        EstateModeDto estateModeDto = EstateModeDto.builder()
+        List<EstateOwnerDto> estateModeDtos = new ArrayList<>();
+        EstateOwnerDto estateOwnerDto = EstateOwnerDto.builder()
                 .estateId(1L)
                 .address(address)
-                .estateType(EstateType.OFFICETELS)
                 .state(State.BROKER_BEFORE)
                 .build();
-        estateModeDtos.add(estateModeDto);
+        estateModeDtos.add(estateOwnerDto);
 
         //given
         given(userService.getOwnerAssetList(any()))

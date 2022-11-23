@@ -4,6 +4,7 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
+import com.example.Estate_Twin.estate.web.dto.EstateOwnerDto;
 import com.example.Estate_Twin.user.domain.dao.impl.UserDAOImpl;
 import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.user.service.UserService;
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<EstateModeDto> getOwnerAssetList(Long userId) {
+    public List<EstateOwnerDto> getOwnerAssetList(Long userId) {
         return userDAO.getOwnerAssetList(userId);
     }
 
