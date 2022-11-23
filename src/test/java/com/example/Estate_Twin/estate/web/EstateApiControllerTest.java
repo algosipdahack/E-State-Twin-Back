@@ -162,6 +162,8 @@ public class EstateApiControllerTest {
                 .town("동동")
                 .transactionType(TransactionType.LEASE)
                 .userBorough("강남구")
+                .deposit(123L)
+                .monthlyRent(2332L)
                 .build();
         mainDtos.add(estateMainDto);
 

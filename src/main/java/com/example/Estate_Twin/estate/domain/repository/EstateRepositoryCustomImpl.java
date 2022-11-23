@@ -48,7 +48,9 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
                         estate.thumbnail3D,
                         estate.transactionType,
                         house.sellingFee,
-                        house.estateType
+                        house.estateType,
+                        house.deposit,
+                        house.monthlyRent
                 ))
                 .from(estate)
                 .leftJoin(estate.house, house)
