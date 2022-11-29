@@ -13,7 +13,7 @@
 ▷ 집 내부공간의 360도 view 제공
 
 ## Swagger
-https://www.estatetwin.net/swagger-ui/index.html
+http://43.200.91.232:8080/swagger-ui/index.html
 
 ## [Role]
 |담당|역할|
