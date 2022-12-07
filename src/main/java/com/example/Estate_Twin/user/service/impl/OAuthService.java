@@ -2,6 +2,8 @@ package com.example.Estate_Twin.user.service.impl;
 
 import com.example.Estate_Twin.auth.dto.OAuth2UserInfo;
 import com.example.Estate_Twin.auth.jwt.*;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +80,7 @@ public class OAuthService {
         String userNameAttributeName = provider.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuth2UserInfo attributes = OAuth2UserInfo.of(providerName.toUpperCase(), userNameAttributeName, userAttributes);
         if(attributes.getEmail().isEmpty()) {
-            throw new OAuthProcessingException("Email not found from OAuth2 provider");
+            throw new CheckHouseException(ErrorCode.EMAIL_NOT_FOUND_FROM_PROVIDER);
         }
 
         Optional<User> userOptional = userRepository.findByEmail(attributes.getEmail());
@@ -94,7 +96,7 @@ public class OAuthService {
                 user.setUserDelFalse();
             }
             if(AuthProvider.valueOf(providerName) != user.getAuthProvider()) {
-                throw new OAuthProcessingException("Wrong Match Auth Provider");
+                throw new CheckHouseException(ErrorCode.NOT_MATCHED_AUTH_PROVIDER);
             }
         } else {
             //첫 로그인인 경우

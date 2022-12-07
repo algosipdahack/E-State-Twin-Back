@@ -4,6 +4,8 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
@@ -133,7 +135,7 @@ public class Estate extends BaseTimeEntity {
 
     public void setGrade(Grade grade) {
         if(!this.isPosted) {
-            throw new BadRequestException("게시되지 않은 매물은 뱃지를 가질 수 없습니다!");
+            throw new CheckHouseException(ErrorCode.GRADE_NOT_ALLOW_FOR_NOT_POSTED);
         }
         this.grade = grade;
     }
@@ -149,7 +151,7 @@ public class Estate extends BaseTimeEntity {
     }
     public Estate setIsPosted() {
         if(!this.isBrokerConfirmYN() || !this.isOwnerConfirmYN()) {
-            throw new Exception("브로커와 집주인 모두 confirm을 해야 합니다.");
+            throw new CheckHouseException(ErrorCode.BROKER_OR_OWNER_YET_CONFIRMED);
         }
         this.isPosted = true;
         return this;

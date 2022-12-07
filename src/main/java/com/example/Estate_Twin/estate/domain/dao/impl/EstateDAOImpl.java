@@ -6,6 +6,8 @@ import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
 import com.example.Estate_Twin.estate.web.dto.*;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.*;
@@ -139,7 +141,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Transactional
     public Estate allowBroker(Estate estate, Broker broker) {
         if (Boolean.FALSE.equals(checkRoleBroker(estate, broker))) {
-            throw new Exception("해당 매물의 broker가 아닙니다!");
+            throw new CheckHouseException(ErrorCode.USER_NOT_BROKER);
         }
         return estate.setBrokerConfirmY();
     }
@@ -148,7 +150,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Transactional
     public Estate allowOwner(Estate estate, User owner) {
         if (Boolean.FALSE.equals(checkRoleOwner(estate, owner))) {
-            throw new Exception("해당 매물의 owner가 아닙니다!");
+            throw new CheckHouseException(ErrorCode.USER_NOT_OWNER);
         }
         return estate.setOwnerConfirmY();
     }
