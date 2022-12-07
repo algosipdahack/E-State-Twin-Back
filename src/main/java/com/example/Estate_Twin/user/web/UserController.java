@@ -4,6 +4,8 @@ import com.example.Estate_Twin.asset.data.entity.Category;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.estate.web.dto.EstateModeDto;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.service.impl.*;
 import com.example.Estate_Twin.user.web.dto.*;
@@ -86,6 +88,9 @@ public class UserController {
     @Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")
     @PostMapping("/login/oauth/{provider}")
     public ResponseEntity<Token> login(@PathVariable String provider, @RequestBody String code) {
+        if(provider != "kakao" || provider != "naver" || provider != "google") {
+            throw new CheckHouseException(ErrorCode.PROVIDER_NOT_FOUND);
+        }
         Token token = oAuthService.login(provider, code);
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }

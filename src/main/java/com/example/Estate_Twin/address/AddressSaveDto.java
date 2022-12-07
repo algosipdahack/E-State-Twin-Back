@@ -2,11 +2,16 @@ package com.example.Estate_Twin.address;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor
 public class AddressSaveDto {
+    @NotNull
     private String city;
+    @NotNull
     private String borough;
+    @NotNull
     private String town;
     private String complexName;
     private String block;

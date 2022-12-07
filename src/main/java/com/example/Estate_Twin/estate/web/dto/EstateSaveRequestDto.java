@@ -4,12 +4,15 @@ import com.example.Estate_Twin.asset.web.dto.AssetSaveRequestDto;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class EstateSaveRequestDto {
+    @NotNull
     private Long id;
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")
     private String transactionType;

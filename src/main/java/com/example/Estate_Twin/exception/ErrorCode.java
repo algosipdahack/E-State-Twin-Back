@@ -12,7 +12,7 @@ public enum ErrorCode {
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
     INVALID_TOKEN(HttpStatus.NOT_ACCEPTABLE, "유효하지 않은 토큰입니다."),
-
+    INVALID_CODE(HttpStatus.NOT_ACCEPTABLE, "유효하지 않은 코드입니다."),
     MISSING_REQUIRED_VALUE_ERROR(HttpStatus.BAD_REQUEST, "필수 요청값이 누락되었습니다."),
     NOT_ALLOWED_PERMISSION_ERROR(HttpStatus.UNAUTHORIZED, "허용되지 않은 권한입니다."),
     NOT_MATCHED_AUTH_PROVIDER(HttpStatus.BAD_REQUEST, "Auth Provider와 매치되지 않습니다."),
@@ -25,6 +25,7 @@ public enum ErrorCode {
     PREFERENCE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 즐겨찾기 유형입니다."),
     TRANSACTION_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 매물거래 유형입니다."),
     STATE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 매물상태 유형입니다."),
+    PROVIDER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 provider입니다."),
     EMAIL_NOT_FOUND_FROM_PROVIDER(HttpStatus.NOT_FOUND, "해당 provider로는 존재하지 않는 이메일입니다."),
 
 
@@ -35,11 +36,6 @@ public enum ErrorCode {
     BROKER_OR_OWNER_YET_CONFIRMED(HttpStatus.METHOD_NOT_ALLOWED, "브로커와 집주인 모두 confirm을 해야 합니다."),
     INTER_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTER SERVER ERROR");
 
-    //Contract
-    //Estate
-    //Asset
-    //User
-    //Server
 
     private final HttpStatus errorCode;
     private final String message;

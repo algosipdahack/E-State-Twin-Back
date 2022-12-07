@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class AssetSummaryDto {
     private final Long id;
-    @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
+    @Schema(description = "에셋 카테고리", example = "AIRCONDITIONER, WASHER, BED, DESK, CLOSET, TV, REFRIGERATOR, SHOERACK, GASSTOVE, DOORLOCK, BIDET, INDUCTION, MICROWAVE, WALLPAPER, CURTAIN")
     private final String category;
     private final String assetPhoto;
     private final String productName;
