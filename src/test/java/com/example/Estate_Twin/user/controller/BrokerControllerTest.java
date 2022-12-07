@@ -76,8 +76,7 @@ public class BrokerControllerTest {
                 .anchorId("anchor_id")
                 .manufacturer("LG 가전")
                 .productName("냉장고")
-                .category(Category.BATHROOM)
-                .household(Household.AIRCONDITIONER)
+                .category(Category.AIRCONDITIONER)
                 .build();
         checkList = CheckList.builder()
                 .checkListPhoto("checklist_photo")

@@ -37,8 +37,6 @@ public class QAsset extends EntityPathBase<Asset> {
 
     public final com.example.Estate_Twin.estate.domain.entity.QEstate estate;
 
-    public final EnumPath<Household> household = createEnum("household", Household.class);
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath manufacturer = createString("manufacturer");

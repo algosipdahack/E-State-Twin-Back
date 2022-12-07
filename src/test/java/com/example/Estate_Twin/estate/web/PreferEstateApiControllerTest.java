@@ -81,8 +81,7 @@ public class PreferEstateApiControllerTest {
                 .anchorId("anchor_id")
                 .manufacturer("LG 가전")
                 .productName("냉장고")
-                .category(Category.BATHROOM)
-                .option(Household.AIRCONDITIONER)
+                .category(Category.AIRCONDITIONER)
                 .build();
 
         checkList = CheckList.builder()

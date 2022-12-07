@@ -1,24 +1,39 @@
 package com.example.Estate_Twin.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ContractStateDuplicateException.class)
-    public ResponseEntity<ErrorResponse> handleContractStateDuplicateException(ContractStateDuplicateException ex) {
-        log.error("ContractStateDuplicateException", ex);
-        ErrorResponse response = new ErrorResponse(ex.getErrorCode());
-        return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+    @ExceptionHandler(CheckHouseException.class)
+    public ResponseEntity<ExceptionResponse> handleCheckHouseException(CheckHouseException ex) {
+        return ResponseEntity.status(ex.getHttpStatus()).body(ex.getBody());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<MethodArgumentNotValidExceptionResponse> handleMethodNotValidException(MethodArgumentNotValidException ex) {
+        MethodArgumentNotValidExceptionResponse exceptionResponse = MethodArgumentNotValidExceptionResponse.of(ErrorCode.MISSING_REQUIRED_VALUE_ERROR);
+        for (FieldError fieldError : ex.getFieldErrors()) {
+            exceptionResponse.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
-        log.error("handleException", ex);
-        ErrorResponse response = new ErrorResponse(ErrorCode.INTER_SERVER_ERROR);
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    private ResponseEntity<ExceptionResponse> handleException(Exception ex) {
+        String unexpectedErrorTrace = ExceptionUtils.getStackTrace(ex);
+        log.error(unexpectedErrorTrace);
+        return ResponseEntity.internalServerError()
+                .body(
+                        new ExceptionResponse(
+                                ErrorCode.INTER_SERVER_ERROR.getErrorCode(), ErrorCode.INTER_SERVER_ERROR.getMessage()
+                        )
+                );
     }
+
 }

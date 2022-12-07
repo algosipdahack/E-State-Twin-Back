@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.auth.service;
 
 import com.example.Estate_Twin.auth.dto.OAuth2UserInfo;
-import com.example.Estate_Twin.exception.OAuthProcessingException;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

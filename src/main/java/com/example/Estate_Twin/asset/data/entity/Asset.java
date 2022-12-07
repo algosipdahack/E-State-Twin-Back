@@ -25,8 +25,6 @@ public class Asset extends BaseTimeEntity {
     private String assetPhoto;
     @Enumerated(EnumType.STRING)
     private Category category;
-    @Enumerated(EnumType.STRING)
-    private Household household;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private Estate estate;
@@ -35,9 +33,8 @@ public class Asset extends BaseTimeEntity {
     private List<CheckList> checkLists = new ArrayList<>();
 
     @Builder // 빌더 형태로 만들어줌
-    public Asset(Category category, String assetPhoto, Household household, String productName, String manufacturer, String anchorId) {
+    public Asset(Category category, String assetPhoto, String productName, String manufacturer, String anchorId) {
         this.category = category;
-        this.household = household;
         this.productName = productName;
         this.manufacturer = manufacturer;
         this.anchorId = anchorId;
@@ -46,7 +43,6 @@ public class Asset extends BaseTimeEntity {
 
     public Asset update(AssetUpdateRequestDto dto) {
         this.category = Category.of(dto.getCategory());
-        this.household = Household.of(dto.getHousehold());
         this.productName = dto.getProductName();
         this.manufacturer = dto.getManufacturer();
         this.anchorId = dto.getAnchorId();

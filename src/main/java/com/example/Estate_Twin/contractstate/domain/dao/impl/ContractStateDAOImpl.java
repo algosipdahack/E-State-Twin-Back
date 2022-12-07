@@ -5,7 +5,6 @@ import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
-import com.example.Estate_Twin.exception.ContractStateDuplicateException;
 import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.*;
 import org.springframework.stereotype.Component;

@@ -7,6 +7,8 @@ import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Getter
@@ -15,8 +17,6 @@ public class AssetResponseDto {
     @Schema(description = "에셋 큰 카테고리", example = "HOMEAPPLIANCES, FURNITURE, BATHROOM, INTERIOR")
     private final String category;
     private final String assetPhoto;
-    @Schema(description = "에셋 작은 카테고리(옵션)", example = "AIRCONDITIONER, WASHER, BED, DESK, CLOSET, TV, REFRIGERATOR, SHOERACK, GASSTOVE, DOORLOCK, BIDET, INDUCTION, MICROWAVE, WALLPAPER, CURTAIN")
-    private final String household;
     private final String productName;
     private final String manufacturer;
     private final String anchorId;
@@ -28,13 +28,11 @@ public class AssetResponseDto {
         this.id = asset.getId();
         this.category = asset.getCategory().toString();
         this.assetPhoto = asset.getAssetPhoto();
-        this.household = asset.getHousehold().toString();
         this.productName = asset.getProductName();
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();
         this.checkLists = new ArrayList<>();
         checkLists.forEach(checkList -> this.checkLists.add(new CheckListResponseDto(checkList)));
-
     }
 
 }

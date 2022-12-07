@@ -62,8 +62,7 @@ public class AssetApiControllerTest {
                 .anchorId("anchor_id")
                 .manufacturer("LG 가전")
                 .productName("냉장고")
-                .category(Category.BATHROOM)
-                .household(Household.AIRCONDITIONER)
+                .category(Category.AIRCONDITIONER)
                 .build();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
@@ -95,7 +94,7 @@ public class AssetApiControllerTest {
         List<CheckList> checkLists = new ArrayList<>();
         checkLists.add(checkList);
 
-        AssetSaveRequestDto assetSaveRequestDto = new AssetSaveRequestDto("HOMEAPPLIANCES","AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
+        AssetSaveRequestDto assetSaveRequestDto = new AssetSaveRequestDto("AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
         Asset asset1 = assetSaveRequestDto.toEntity();
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
                 .checkLists(checkLists)
@@ -122,7 +121,7 @@ public class AssetApiControllerTest {
         List<CheckList> checkLists = new ArrayList<>();
         checkLists.add(checkList);
 
-        AssetUpdateRequestDto assetUpdateRequestDto = new AssetUpdateRequestDto("HOMEAPPLIANCES","AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
+        AssetUpdateRequestDto assetUpdateRequestDto = new AssetUpdateRequestDto("AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
         asset.update(assetUpdateRequestDto);
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
                 .checkLists(checkLists)
