@@ -77,7 +77,7 @@ public class BrokerControllerTest {
                 .manufacturer("LG 가전")
                 .productName("냉장고")
                 .category(Category.BATHROOM)
-                .option(Option.AIRCONDITIONER)
+                .household(Household.AIRCONDITIONER)
                 .build();
         checkList = CheckList.builder()
                 .checkListPhoto("checklist_photo")

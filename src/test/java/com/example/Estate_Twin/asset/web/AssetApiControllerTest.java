@@ -63,7 +63,7 @@ public class AssetApiControllerTest {
                 .manufacturer("LG 가전")
                 .productName("냉장고")
                 .category(Category.BATHROOM)
-                .option(Option.AIRCONDITIONER)
+                .household(Household.AIRCONDITIONER)
                 .build();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }

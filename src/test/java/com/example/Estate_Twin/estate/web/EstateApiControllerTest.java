@@ -99,7 +99,7 @@ public class EstateApiControllerTest {
                 .manufacturer("LG 가전")
                 .productName("냉장고")
                 .category(Category.BATHROOM)
-                .option(Option.AIRCONDITIONER)
+                .option(Household.AIRCONDITIONER)
                 .build();
         broker = Broker.builder()
                 .content("내용")
@@ -232,7 +232,7 @@ public class EstateApiControllerTest {
                         house.getItemsIncludedMaintenanceFee(),house.getNetRentableArea(),house.getRentableArea(),house.isParking(),house.getParkingFee(),house.getMoveInAvailableDate(),
                         house.getHeatType(),EstateType.of(house.getEstateType()),house.isElevator(),house.isDuplex(),house.getStructure().toString(),house.isVeranda()),
                 Arrays.asList("photo1","photo2"),Arrays.asList("video1","video2"),
-                Arrays.asList(new AssetSaveRequestDto(asset.getCategory().toString(), asset.getOption().toString(),asset.getProductName(),asset.getManufacturer(),asset.getAnchorId(),asset.getAssetPhoto())));
+                Arrays.asList(new AssetSaveRequestDto(asset.getCategory().toString(), asset.getHousehold().toString(),asset.getProductName(),asset.getManufacturer(),asset.getAnchorId(),asset.getAssetPhoto())));
         EstateResponseDto estateResponseDto = EstateResponseDto.builder()
                 .assets(Arrays.asList(asset))
                 .estate(estate)
