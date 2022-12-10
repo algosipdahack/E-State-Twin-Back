@@ -20,6 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/m/**")
                 .addResourceLocations("classpath:/m/")
-                .setCachePeriod(20);
+                .setCachePeriod(20); // 캐시 설정됨
     }
 }

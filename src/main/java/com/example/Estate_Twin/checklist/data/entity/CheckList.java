@@ -53,23 +53,22 @@ public class CheckList extends BaseTimeEntity {
         return this;
     }
 
-    public CheckList setBrokerConfirmY() {
+    public void setBrokerConfirmY() {
         this.brokerConfirmYN = true;
-        return this;
     }
 
-    public CheckList setOwnerConfirmY() {
+    public void setOwnerConfirmY() {
         this.ownerConfirmYN = true;
+    }
+    public CheckList setContent(String content) {
+        this.checkListContent = content;
         return this;
     }
-
-    public CheckList setTenantConfirmY() {
+    public void setTenantConfirmY() {
         this.tenantConfirmYN = true;
-        return this;
     }
-    public CheckList setTotalConfirmY() {
+    public void setTotalConfirmY() {
         this.totalConfirmYN = true;
-        return this;
     }
 
     public void setAsset(Asset asset) {

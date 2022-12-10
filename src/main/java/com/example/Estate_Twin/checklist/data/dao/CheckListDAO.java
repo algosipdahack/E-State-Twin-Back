@@ -11,11 +11,12 @@ import java.util.List;
 public interface CheckListDAO {
     CheckList saveCheckList(User user, CheckList checkList, Estate estate, Asset asset);
     CheckList findCheckList(Long id);
+    CheckList findCheckListForUpdate(Long id);
     CheckList updateCheckList(Long id, CheckListUpdateRequestDto dto);
-    CheckList confirmBroker(CheckList checkList);
+    void confirmBroker(CheckList checkList);
     boolean checkDone(CheckList checkList);
     List<CheckList> findAllCheckList(Long assetId);
     List<CheckList> findCheckListsByAssetId(Long assetId);
-    CheckList confirmTotal(CheckList checkList);
-    CheckList confirmOwner(CheckList checkList);
+    void confirmTotal(CheckList checkList);
+    void confirmOwner(CheckList checkList);
 }

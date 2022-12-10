@@ -12,6 +12,7 @@ import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "CheckList", description = "체크리스트 API")
@@ -48,7 +49,7 @@ public class CheckListApiController {
     public ResponseEntity<CheckListResponseDto> saveCheckList(@Parameter(hidden = true) @CurrentUser User user,
                                                               @PathVariable Long estateId,
                                                               @PathVariable Long assetId,
-                                                              @RequestBody CheckListSaveRequestDto checkListSaveRequestDto) {
+                                                              @RequestBody @Valid CheckListSaveRequestDto checkListSaveRequestDto) {
         CheckListResponseDto checkListResponseDto = checkListService.saveCheckList(user,checkListSaveRequestDto,estateId,assetId);
         return ResponseEntity.status(HttpStatus.CREATED).body(checkListResponseDto);
     }

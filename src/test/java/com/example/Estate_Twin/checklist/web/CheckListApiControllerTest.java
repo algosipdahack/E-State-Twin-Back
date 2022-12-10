@@ -98,7 +98,7 @@ public class CheckListApiControllerTest {
     @DisplayName("[post] /api/checklist/estate/{estateId}/asset/{assetId}")
     @Test
     @WithMockCustomUser
-    void 체크리스트_등록하기() throws Exception{
+    void 체크리스트_등록하기_에러발생() throws Exception{
         Long estateId = 1L;
         Long assetId = 1L;
 
@@ -106,17 +106,16 @@ public class CheckListApiControllerTest {
         CheckList checkList1 = checkListSaveRequestDto.toEntity();
         CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList1);
         //given
-        given(checkListService.saveCheckList(any(), any(),any(),any()))
+        given(checkListService.saveCheckList(any(), any(),any(), any()))
                 .willReturn(checkListResponseDto);
 
         String content = objectMapper.writeValueAsString(checkListSaveRequestDto);
         //when
         mockMvc.perform(post("/api/checklist/estate/{estateId}/asset/{assetId}",estateId,assetId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content))
+                        .content("{}"))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.flawPart").value("flawPart"));
+                .andExpect(status().isBadRequest());
     }
 
     @DisplayName("[put] /api/checklist/{checklistId}")
