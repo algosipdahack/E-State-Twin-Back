@@ -13,7 +13,7 @@
 ▷ 집 내부공간의 360도 view 제공
 
 ## Swagger
-http://43.200.91.232:8080/swagger-ui/index.html
+http://alb-808333180.ap-northeast-2.elb.amazonaws.com/swagger-ui/index.html
 
 ## [Role]
 |담당|역할|
