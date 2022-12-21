@@ -21,6 +21,7 @@ public class EstateHit extends BaseTimeEntity {
     @Column
     private Long weeklyHit;
 
+
     @Builder // 빌더 형태로 만들어줌
     public EstateHit(Long totalHit, Long weeklyHit) {//생성자
         this.totalHit = totalHit;

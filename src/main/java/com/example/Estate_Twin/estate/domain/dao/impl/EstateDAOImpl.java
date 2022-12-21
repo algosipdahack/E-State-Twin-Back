@@ -30,7 +30,10 @@ public class EstateDAOImpl implements EstateDAO {
     @Transactional
     public Estate getEstate(Long id) {
         //조회수 증가
-        return findEstate(id).updateEstateHit();
+        estateHitRepository.findWithPessimisticLockById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 estateId를 가진 estateHit를 찾을 수 없습니다. id = "+id))
+                .updateHit();
+        return findEstate(id);
     }
 
 
@@ -92,6 +95,7 @@ public class EstateDAOImpl implements EstateDAO {
         return estateRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
     }
+
 
     @Override
     public House findHouse(Long id) {

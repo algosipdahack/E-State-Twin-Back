@@ -35,6 +35,9 @@ public class CheckList extends BaseTimeEntity {
     @JoinColumn(name = "ASSET_ID")
     private Asset asset;
 
+    @Version
+    private Long version;
+
     @Builder
     public CheckList(String flawPart,String checkListContent, LocalDate repairDate, String checkListPhoto,RepairType repairType) {
         this.flawPart = flawPart;

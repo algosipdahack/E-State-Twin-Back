@@ -5,9 +5,11 @@ import com.example.Estate_Twin.estate.domain.entity.Estate;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
 import com.example.Estate_Twin.user.domain.entity.Broker;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.LockModeType;
 import java.util.*;
 
 public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepositoryCustom {
@@ -23,5 +25,4 @@ public interface EstateRepository extends JpaRepository<Estate,Long>, EstateRepo
     Optional<Estate> findEstateByHouse_Id(Long houseId);
     Optional<Estate> findEstateByEstateHit_Id(Long estatehitId);
     Optional<List<Estate>> findEstatesByOwner_Id(Long ownerId);
-
 }

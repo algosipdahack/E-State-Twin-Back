@@ -11,7 +11,7 @@ import java.util.*;
 
 public interface CheckListRepository extends JpaRepository<CheckList,Long> , CheckListRepositoryCustom{
     Optional<List<CheckList>> findCheckListsByAsset_IdOrderByRepairDateDesc(Long assetId);
-    @Lock(LockModeType.PESSIMISTIC_READ) // 다른 트랜잭션에서 읽기는 가능해야 하므로
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT) // 버전을 강제로 증가시킴
     @Query(value = "select c from CheckList c where c.id = :id")
     Optional<CheckList> findByIdForUpdate(@Param("id") Long id);
 }

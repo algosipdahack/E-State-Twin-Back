@@ -25,6 +25,7 @@ public class User extends BaseTimeEntity {
     //OAuth
     private String name;
     @Email
+    @Column(unique = true) // indexing
     private String email;
     private String refreshToken;
     private boolean isBroker = false;

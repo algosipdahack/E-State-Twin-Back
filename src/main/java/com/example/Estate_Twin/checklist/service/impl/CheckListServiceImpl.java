@@ -11,6 +11,7 @@ import io.swagger.models.auth.In;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -59,15 +60,27 @@ public class CheckListServiceImpl implements CheckListService {
         log.info("포스트 조회에 걸린 시간: " + (System.currentTimeMillis() - start) + "ms");
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
-            checkListDAO.confirmBroker(checkList);
+            try {
+                checkListDAO.confirmBroker(checkList);
+            } catch (ObjectOptimisticLockingFailureException e) {
+                checkListDAO.confirmBroker(checkList);
+            }
         }
         else {// 집주인이라면
-            checkListDAO.confirmOwner(checkList);
+            try {
+                checkListDAO.confirmOwner(checkList);
+            } catch (ObjectOptimisticLockingFailureException e) {
+                checkListDAO.confirmOwner(checkList);
+            }
         }
 
         //체크리스트 등록 끝 -> totalConfirmY
         if (checkListDAO.checkDone(checkList)) {
-            checkListDAO.confirmTotal(checkList);
+            try {
+                checkListDAO.confirmTotal(checkList);
+            } catch (ObjectOptimisticLockingFailureException e) {
+                checkListDAO.confirmTotal(checkList);
+            }
         }
         log.info(waitingTime + "ms 동안 대기합니다.");
         Thread.sleep(waitingTime);

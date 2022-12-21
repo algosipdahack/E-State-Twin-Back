@@ -45,11 +45,12 @@ public class EstateServiceImpl implements EstateService {
     //조회수 증가시키기 + 최근 본 매물에 포함
     @Override
     public EstateDetailDto getEstate(Long estateId, User user) {
+        // Estate에 Lock을 걸어버림
         Estate estate = estateDAO.getEstate(estateId);
         // 최근 본 매물에 포함
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
-        EstateDetailDto detail = new EstateDetailDto(estateDAO.getEstate(estateId), houseDAO.findHouseByEstateId(estateId),
+        EstateDetailDto detail = new EstateDetailDto(estate, houseDAO.findHouseByEstateId(estateId),
                 estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId), user);
 
         // 사용자가 문의했는지 확인 -> arCam 활성화

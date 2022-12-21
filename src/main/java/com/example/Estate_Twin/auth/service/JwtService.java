@@ -1,6 +1,8 @@
 package com.example.Estate_Twin.auth.service;
 
 import com.example.Estate_Twin.auth.jwt.*;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
