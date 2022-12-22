@@ -11,6 +11,7 @@ import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -47,19 +48,6 @@ public class CheckListDAOImpl implements CheckListDAO {
         return checkListRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
     }
-    public void test(Long checklistId, int waitingTime) throws InterruptedException {
-        long start = System.currentTimeMillis();
-        Optional<CheckList> option = checkListRepository.findByIdForUpdate(2L);
-        if (!option.isPresent()) {
-            throw new RuntimeException("포스트를 찾을 수 없습니다.");
-        }
-        log.info("포스트 조회에 걸린 시간: " + (System.currentTimeMillis() - start) + "ms");
-        CheckList checkList = option.get();
-        checkList.setContent("JPA는 어떤 방식으로 Pessimitic Lock을 제공하는지 정리하였습니다. " + Thread.currentThread().getName() + "에 의해 업데이트되었습니다.");
-        checkListRepository.save(checkList);
-        log.info(waitingTime + "ms 동안 대기합니다.");
-        Thread.sleep(waitingTime);
-    }
     @Override
     public List<CheckList> findAllCheckList(Long assetId) {
         return assetRepository.findByIdUsingFetchJoin(assetId)
@@ -78,21 +66,11 @@ public class CheckListDAOImpl implements CheckListDAO {
     }
 
     @Override
-    @Transactional
-    public void confirmBroker(CheckList checkList) {
-        checkList.setBrokerConfirmY();
-    }
-
-    @Override
-    @Transactional
-    public void confirmTotal(CheckList checkList) {
-        checkList.setTotalConfirmY();
-    }
-
-    @Override
-    @Transactional
-    public void confirmOwner(CheckList checkList) {
-        checkList.setOwnerConfirmY();
+    @Transactional(propagation = Propagation.REQUIRES_NEW) //일반 트랜잭션으로 하면 try - catch가 롤백 마킹때문에 의도대로 작동하지 않음)
+    public CheckList confirm(Long checkListId, User user) {
+        CheckList checkList = findCheckListForUpdate(checkListId);
+        checkList.setConfirmY(user);
+        return checkList;
     }
 
     @Override

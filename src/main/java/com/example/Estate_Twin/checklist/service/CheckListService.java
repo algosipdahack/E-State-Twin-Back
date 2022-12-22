@@ -10,6 +10,5 @@ public interface CheckListService {
     CheckListResponseDto saveCheckList(User user, CheckListSaveRequestDto checkListSaveRequestDto, Long estateId, Long assetId);
     CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto checkListUpdateRequestDto);
     CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user);
-    CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user, Integer watingtime) throws InterruptedException;
     List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId);
 }

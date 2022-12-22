@@ -34,9 +34,8 @@ public enum ErrorCode {
     USER_NOT_BROKER(HttpStatus.METHOD_NOT_ALLOWED, "해당 매물의 브로커가 아닙니다."),
     GRADE_NOT_ALLOW_FOR_NOT_POSTED(HttpStatus.METHOD_NOT_ALLOWED, "게시되지 않은 매물은 뱃지를 가질 수 없습니다!"),
     BROKER_OR_OWNER_YET_CONFIRMED(HttpStatus.METHOD_NOT_ALLOWED, "브로커와 집주인 모두 confirm을 해야 합니다."),
-    INTER_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTER SERVER ERROR");
-
-
+    INTER_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTER SERVER ERROR"),
+    SYNCHRONIZED_ERROR(HttpStatus.CONFLICT,"동시성 문제");
     private final HttpStatus errorCode;
     private final String message;
 }

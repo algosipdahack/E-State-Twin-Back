@@ -13,10 +13,8 @@ public interface CheckListDAO {
     CheckList findCheckList(Long id);
     CheckList findCheckListForUpdate(Long id);
     CheckList updateCheckList(Long id, CheckListUpdateRequestDto dto);
-    void confirmBroker(CheckList checkList);
     boolean checkDone(CheckList checkList);
     List<CheckList> findAllCheckList(Long assetId);
     List<CheckList> findCheckListsByAssetId(Long assetId);
-    void confirmTotal(CheckList checkList);
-    void confirmOwner(CheckList checkList);
+    CheckList confirm(Long checkListId, User user);
 }

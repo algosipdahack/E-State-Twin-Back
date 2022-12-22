@@ -6,6 +6,8 @@ import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.User;
 import io.swagger.models.auth.In;
 import lombok.*;
@@ -23,11 +25,6 @@ public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
     private final AssetDAOImpl assetDAO;
     private final EstateDAOImpl estateDAO;
-
-    @Override
-    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
-        return null;
-    }
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
@@ -53,40 +50,11 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     // 상태 -> CheckList_Doing -> contract_done
-    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user, Integer waitingTime) throws InterruptedException {
-        long start = System.currentTimeMillis();
-        //Locking
-        CheckList checkList = checkListDAO.findCheckListForUpdate(checklistId);
-        log.info("포스트 조회에 걸린 시간: " + (System.currentTimeMillis() - start) + "ms");
-        // 유저 role 검증
-        if (user.isBroker()) { // Broker라면
-            try {
-                checkListDAO.confirmBroker(checkList);
-            } catch (ObjectOptimisticLockingFailureException e) {
-                checkListDAO.confirmBroker(checkList);
-            }
+    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
+        try {
+            return new CheckListResponseDto(checkListDAO.confirm(checklistId, user));
+        } catch (ObjectOptimisticLockingFailureException e) {
+            return new CheckListResponseDto(checkListDAO.confirm(checklistId, user));
         }
-        else {// 집주인이라면
-            try {
-                checkListDAO.confirmOwner(checkList);
-            } catch (ObjectOptimisticLockingFailureException e) {
-                checkListDAO.confirmOwner(checkList);
-            }
-        }
-
-        //체크리스트 등록 끝 -> totalConfirmY
-        if (checkListDAO.checkDone(checkList)) {
-            try {
-                checkListDAO.confirmTotal(checkList);
-            } catch (ObjectOptimisticLockingFailureException e) {
-                checkListDAO.confirmTotal(checkList);
-            }
-        }
-        log.info(waitingTime + "ms 동안 대기합니다.");
-        Thread.sleep(waitingTime);
-        return new CheckListResponseDto(checkList);
-
     }
-
-
 }

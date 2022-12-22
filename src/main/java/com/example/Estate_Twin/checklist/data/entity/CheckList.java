@@ -2,6 +2,7 @@ package com.example.Estate_Twin.checklist.data.entity;
 
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
+import com.example.Estate_Twin.user.domain.entity.User;
 import com.example.Estate_Twin.util.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -56,10 +57,11 @@ public class CheckList extends BaseTimeEntity {
         return this;
     }
 
-    public void setBrokerConfirmY() {
-        this.brokerConfirmYN = true;
+    public void setConfirmY(User user) {
+        if(user.isBroker()) this.brokerConfirmYN = true;
+        else this.ownerConfirmYN = true;
+        setTotalConfirmY();
     }
-
     public void setOwnerConfirmY() {
         this.ownerConfirmYN = true;
     }
@@ -71,7 +73,7 @@ public class CheckList extends BaseTimeEntity {
         this.tenantConfirmYN = true;
     }
     public void setTotalConfirmY() {
-        this.totalConfirmYN = true;
+        if(brokerConfirmYN && ownerConfirmYN) this.totalConfirmYN = true;
     }
 
     public void setAsset(Asset asset) {
