@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.contractstate.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -16,7 +18,7 @@ public enum State {
         return Arrays.stream(State.values())
                 .filter(v->v.getState().equals(state))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException(String.format("매물 상태 유형에 %s가 존재하지 않습니다",state)));
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.STATE_NOT_FOUND));
 
 
     }

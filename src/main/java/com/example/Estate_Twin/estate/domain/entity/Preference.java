@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -16,6 +18,6 @@ public enum Preference {
         return Arrays.stream(Preference.values())
                 .filter(v -> v.getPrefer().equals(prefer))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException(String.format("매물 거래 유형에 %s 가 존재하지 않습니다.",prefer)));
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.PREFERENCE_NOT_FOUND));
     }
 }

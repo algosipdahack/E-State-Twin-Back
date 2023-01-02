@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.house.domain.dao.impl;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.house.domain.dao.HouseDAO;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
@@ -21,8 +23,8 @@ public class HouseDAOImpl implements HouseDAO {
     }
 
     @Override
-    public House findHouse(Long id) {
-        return houseRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 집이 없습니다 id = "+id));
+    public House findHouse(Long houseId) {
+        return houseRepository.findById(houseId).orElseThrow(()->new CheckHouseException(ErrorCode.HOUSE_NOT_FOUND));
     }
 
     @Override
@@ -33,6 +35,6 @@ public class HouseDAOImpl implements HouseDAO {
 
     @Override
     public House findHouseByEstateId(Long estateId) {
-        return houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new IllegalArgumentException("해당 아이디를 가진 estate가 없습니다!!"+estateId));
+        return houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
     }
 }

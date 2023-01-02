@@ -7,6 +7,8 @@ import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.web.dto.CheckListUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
@@ -40,23 +42,23 @@ public class CheckListDAOImpl implements CheckListDAO {
     @Override
     public List<CheckList> findCheckListsByAssetId(Long assetId) {
         return checkListRepository.findCheckListsByAsset_IdOrderByRepairDateDesc(assetId)
-                .orElseThrow(()->new IllegalArgumentException("해당 에셋아이디를 가진 체크리스트가 없습니다. id = "+assetId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ASSET_NOT_FOUND));
     }
 
     @Override
-    public CheckList findCheckList(Long id) {
-        return checkListRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
+    public CheckList findCheckList(Long checkListId) {
+        return checkListRepository.findById(checkListId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.CHECKLIST_NOT_FOUND));
     }
     @Override
     public List<CheckList> findAllCheckList(Long assetId) {
         return assetRepository.findByIdUsingFetchJoin(assetId)
-                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+assetId)).getCheckLists();
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ASSET_NOT_FOUND)).getCheckLists();
     }
     @Override
-    public CheckList findCheckListForUpdate(Long id) {
-        return checkListRepository.findByIdForUpdate(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 체크리스트가 없습니다. id = "+id));
+    public CheckList findCheckListForUpdate(Long checkListId) {
+        return checkListRepository.findByIdForUpdate(checkListId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.CHECKLIST_NOT_FOUND));
     }
 
     @Override

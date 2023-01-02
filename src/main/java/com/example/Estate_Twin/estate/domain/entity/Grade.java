@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -15,6 +17,6 @@ public enum Grade {
         return Arrays.stream(Grade.values())
                 .filter(v->v.getRank().equals(rank))
                 .findAny()
-                .orElseThrow(()->new IllegalArgumentException(String.format("매물 뱃지 유형에 %s가 존재하지 않습니다.",rank)));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.RANK_NOT_FOUND));
     }
 }

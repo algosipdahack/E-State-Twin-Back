@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.house.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -14,6 +16,6 @@ public enum Structure {
         return Arrays.stream(Structure.values())
                 .filter(v->v.getStructure().equals(structure))
                 .findAny()
-                .orElseThrow(()->new IllegalArgumentException(String.format("방 구조에 %s가 존재하지 않습니다.",structure)));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.STRUCTURE_NOT_FOUND));
     }
 }

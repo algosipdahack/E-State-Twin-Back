@@ -5,6 +5,8 @@ import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.web.dto.AssetUpdateRequestDto;
 import com.example.Estate_Twin.estate.domain.entity.Estate;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,7 @@ public class AssetDAOImpl implements AssetDAO {
     @Override
     public Asset findAsset(Long id) {
         return assetRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 에셋이 없습니다. id = "+id));
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.ASSET_NOT_FOUND));
     }
 
     @Transactional
@@ -40,6 +42,6 @@ public class AssetDAOImpl implements AssetDAO {
 
     @Override
     public List<Asset> findAssetsByEstateId(Long estateId) {
-        return assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new IllegalArgumentException("해당 Asset이 존재하지 않습니다!"));
+        return assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
     }
 }

@@ -3,6 +3,8 @@ package com.example.Estate_Twin.user.domain.dao.impl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.BrokerEstateDto;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.dao.BrokerDAO;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.*;
@@ -22,21 +24,21 @@ public class BrokerDAOImpl implements BrokerDAO {
 
     @Override
     public Broker findBrokerByEmail(String email) {
-        return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new IllegalArgumentException("해당 email를 가진 user가 존재하지 않습니다. email = "+email));
+        return brokerRepository.findByUserEmailWithUserUsingJoin(email).orElseThrow(()-> new CheckHouseException(ErrorCode.USER_NOT_FOUND));
     }
     @Override
     public Broker findBrokerFetchJoinById(Long id) {
-        return brokerRepository.findByIdUsingFetchJoin(id).orElseThrow(() -> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
+        return brokerRepository.findByIdUsingFetchJoin(id).orElseThrow(() -> new CheckHouseException(ErrorCode.BROKER_NOT_FOUND));
     }
 
     @Override
     public Broker findBrokerById(Long id) {
-        return brokerRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 id를 가진 broker가 존재하지 않습니다. id = " + id));
+        return brokerRepository.findById(id).orElseThrow(()-> new CheckHouseException(ErrorCode.BROKER_NOT_FOUND));
     }
 
     @Override
     public Broker findBrokerByUserId(Long userId) {
-        return brokerRepository.findBrokerByUser_Id(userId).orElseThrow(()-> new IllegalArgumentException("해당 userid를 가진 broker가 존재하지 않습니다. id = " + userId));
+        return brokerRepository.findBrokerByUser_Id(userId).orElseThrow(()-> new CheckHouseException(ErrorCode.BROKER_NOT_FOUND));
     }
 
 

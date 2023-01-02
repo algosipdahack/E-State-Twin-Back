@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.user.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.*;
 
 import java.util.Arrays;
@@ -14,6 +16,6 @@ public enum Role {
         return Arrays.stream(Role.values())
                 .filter(v->v.getKey().equals(role))
                 .findAny()
-                .orElseThrow(()->new IllegalArgumentException(String.format("사용자 유형에 %s가 존재하지 않습니다.",role)));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ROLE_NOT_FOUND));
     }
 }

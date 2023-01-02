@@ -12,6 +12,8 @@ import com.example.Estate_Twin.estate.domain.entity.EstateType;
 import com.example.Estate_Twin.estate.domain.repository.EstateHitRepository;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.web.dto.EstateSaveRequestDto;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.house.web.dto.HouseSaveRequestDto;
 import com.example.Estate_Twin.house.web.dto.HouseUpdateRequestDto;
 import lombok.extern.slf4j.Slf4j;
@@ -117,7 +119,7 @@ public class EstateApiServiceTotalTest {
         }
         Thread.sleep(1000);
         //then
-        EstateHit estateHit = estateHitRepository.findEstateHitByEstate_Id(1L).orElseThrow(() ->new IllegalArgumentException("해당 id를 가진 estate가 없습니다."+1L));
+        EstateHit estateHit = estateHitRepository.findEstateHitByEstate_Id(1L).orElseThrow(() ->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
         assertThat(estateHit.getWeeklyHit()).isEqualTo(10);
     }
 

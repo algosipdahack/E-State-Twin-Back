@@ -31,7 +31,7 @@ public class EstateDAOImpl implements EstateDAO {
     public Estate getEstate(Long id) {
         //조회수 증가
         estateHitRepository.findWithPessimisticLockById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 estateId를 가진 estateHit를 찾을 수 없습니다. id = "+id))
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_HIT_NOT_FOUND))
                 .updateHit();
         return findEstate(id);
     }
@@ -40,34 +40,34 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     public Broker findBrokerbyEstateId(Long estateId) {
         return estateRepository.findBrokerByEstate_Id(estateId)
-                .orElseThrow(()->new IllegalArgumentException("해당 estateId를 가진 브로커를 찾을 수 없습니다. id = "+estateId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.BROKER_NOT_FOUND));
     }
 
     @Override
     public List<Estate> findEstatesByBrokerId(Long brokerId) {
         return estateRepository.findEstatesByBroker_Id(brokerId)
-                .orElseThrow(()->new IllegalArgumentException("해당 브로커아이디를 가진 매물을 찾을 수 없습니다. id = "+brokerId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
 
     }
 
     @Override
     public List<Estate> findEstatesByOwnerId(Long ownerId) {
         return estateRepository.findEstatesByOwner_Id(ownerId)
-                .orElseThrow(()->new IllegalArgumentException("해당 오너아이디를 가진 매물을 찾을 수 없습니다. id = "+ownerId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
 
     }
 
     @Override
     public Estate findEstateByHouseId(Long houseId) {
         return estateRepository.findEstateByHouse_Id(houseId)
-                .orElseThrow(()->new IllegalArgumentException("해당 하우스아이디를 가진 매물을 찾을 수 없습니다. id = "+houseId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.HOUSE_NOT_FOUND));
 
     }
 
     @Override
     public Estate findEstateByEstateHitId(Long estatehitId) {
         return estateRepository.findEstateByEstateHit_Id(estatehitId)
-                .orElseThrow(()->new IllegalArgumentException("해당 estateHitId를 가진 매물을 찾을 수 없습니다. id = "+estatehitId));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
 
     }
 
@@ -93,7 +93,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     public Estate findEstate(Long id) {
         return estateRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id));
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
     }
 
 
@@ -137,7 +137,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Transactional
     public Estate updateEstate(Long id, EstateUpdateRequestDto dto) {
         return estateRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 매물을 찾을 수 없습니다. id = "+id))
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND))
                 .update(dto);
     }
 

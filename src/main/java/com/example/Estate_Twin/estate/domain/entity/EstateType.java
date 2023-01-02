@@ -1,5 +1,7 @@
 package com.example.Estate_Twin.estate.domain.entity;
 
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -16,6 +18,6 @@ public enum EstateType {
         return Arrays.stream(EstateType.values())
                 .filter(v -> v.getType().equals(type))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException(String.format("매물 유형에 %s 가 존재하지 않습니다.",type)));
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_TYPE_NOT_FOUND));
     }
 }
