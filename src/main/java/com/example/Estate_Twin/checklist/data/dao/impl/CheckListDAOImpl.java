@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Component
@@ -52,7 +51,7 @@ public class CheckListDAOImpl implements CheckListDAO {
     }
     @Override
     public List<CheckList> findAllCheckList(Long assetId) {
-        return assetRepository.findByIdUsingFetchJoin(assetId)
+        return assetRepository.findByIdUsingFetchJoinCheckList(assetId)
                 .orElseThrow(()->new CheckHouseException(ErrorCode.ASSET_NOT_FOUND)).getCheckLists();
     }
     @Override

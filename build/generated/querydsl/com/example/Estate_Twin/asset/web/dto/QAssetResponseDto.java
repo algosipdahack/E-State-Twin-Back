@@ -13,8 +13,8 @@ public class QAssetResponseDto extends ConstructorExpression<AssetResponseDto> {
 
     private static final long serialVersionUID = -1587833447L;
 
-    public QAssetResponseDto(com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.asset.data.entity.Asset> asset, com.querydsl.core.types.Expression<? extends java.util.List<com.example.Estate_Twin.checklist.data.entity.CheckList>> checkLists) {
-        super(AssetResponseDto.class, new Class<?>[]{com.example.Estate_Twin.asset.data.entity.Asset.class, java.util.List.class}, asset, checkLists);
+    public QAssetResponseDto(com.querydsl.core.types.Expression<? extends com.example.Estate_Twin.asset.data.entity.Asset> asset) {
+        super(AssetResponseDto.class, new Class<?>[]{com.example.Estate_Twin.asset.data.entity.Asset.class}, asset);
     }
 
 }

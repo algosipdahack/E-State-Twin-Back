@@ -28,7 +28,7 @@ public class BrokerSummaryDto {
     private final String phone;
     private final String brokerPhoto;
     @Builder
-    public BrokerSummaryDto(Broker broker, User user) {
+    public BrokerSummaryDto(Broker broker) {
         this.id = broker.getId();
         this.businessName = broker.getBusinessName();
         this.agentName = broker.getAgentName();
@@ -39,7 +39,7 @@ public class BrokerSummaryDto {
         this.countOfTransactionCompletion = broker.getCountOfTransactionCompletion();
         this.content = broker.getContent();
         this.address = new AddressResponseDto(broker.getAddress());
-        this.phone = user.getPhone();
+        this.phone = broker.getUser().getPhone();
         this.brokerPhoto = broker.getBrokerPhoto();
     }
 }

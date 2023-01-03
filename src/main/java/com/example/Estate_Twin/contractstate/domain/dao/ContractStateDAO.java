@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface ContractStateDAO {
     ContractState updateState(Estate estate, State state);
-    List<ContractStateResponseDto> findContractState(Long estateId);
 }

@@ -17,4 +17,9 @@ public class CheckHouseException extends RuntimeException{
         this.httpStatus = errorCode.getErrorCode();
         this.body = new ExceptionResponse(errorCode.getErrorCode(), errorCode.getMessage());
     }
+    public CheckHouseException(ErrorCode errorCode, String message) {
+        super(errorCode.getMessage());
+        this.httpStatus = errorCode.getErrorCode();
+        this.body = new ExceptionResponse(errorCode.getErrorCode(), message);
+    }
 }

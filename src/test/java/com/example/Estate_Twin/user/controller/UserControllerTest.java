@@ -4,6 +4,7 @@ import com.example.Estate_Twin.address.Address;
 import com.example.Estate_Twin.asset.data.entity.*;
 import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.auth.jwt.JwtTokenProvider;
+import com.example.Estate_Twin.auth.jwt.Token;
 import com.example.Estate_Twin.checklist.data.entity.*;
 import com.example.Estate_Twin.config.WithMockCustomUser;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -39,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = {UserController.class})
 @MockBean(JpaMetamodelMappingContext.class)
+@ActiveProfiles("test")
 public class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -100,12 +103,55 @@ public class UserControllerTest {
                 .build();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
+    @DisplayName("[post] /api/user/signup")
+    @Test
+    void 회원가입() throws Exception{
+        UserInfoDto userInfoDto = UserInfoDto.builder()
+                .user(user)
+                .build();
 
+        UserSignUpDto userSignUpDto = UserSignUpDto.builder()
+                .birthday(user.getBirthday())
+                .borough(user.getBorough())
+                .estateType(user.getEstateType().toString())
+                .phone(user.getPhone())
+                .transactionType(user.getTransactionType().toString())
+                .build();
+
+        //given
+        given(userService.signUp(any(), any()))
+                .willReturn(userInfoDto);
+
+        String content = objectMapper.writeValueAsString(userSignUpDto);
+        //when
+        mockMvc.perform(post("/api/user/signup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
+                .andDo(print())
+                .andExpect(status().isCreated());
+    }
+
+    @DisplayName("[post] /api/user/signup @notnull 테스트")
+    @Test
+    void 회원가입_not_null_테스트() throws Exception{
+        UserSignUpDto userSignUpDto = UserSignUpDto.builder()
+                .birthday(user.getBirthday())
+                .borough(user.getBorough())
+                .estateType(user.getEstateType().toString())
+                .build();
+
+        String content = objectMapper.writeValueAsString(userSignUpDto);
+        //when
+        mockMvc.perform(post("/api/user/signup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
     @DisplayName("[get] /api/user/me")
     @Test
     @WithMockCustomUser
     void 마이페이지() throws Exception{
-        UserInfoDto userInfoDto = new UserInfoDto(user);
 
         //given
         given(userService.getUser(any()))
@@ -122,7 +168,27 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone").value(user.getPhone()));
     }
 
-    @DisplayName("[get] /api/user/tenant/list")
+    @DisplayName("[post] /api/user/login/oauth/{provider}")
+    @Test
+    void 로그인_토큰_NOT_FOUND() throws Exception{
+
+        //given
+        given(userService.login(any(),any()))
+                .willReturn(Token.builder()
+                        .accessToken("ASDF")
+                        .isMember(false)
+                        .refreshToken("sdf")
+                        .build());
+
+        //when
+        mockMvc.perform(post("/api/user/login/oauth/kakao")
+                        .param("code", "sdf"))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @DisplayName("[get] /api/user/tenant")
     @Test
     @WithMockCustomUser
     void 세입자_매물_리스트() throws Exception{
@@ -149,7 +215,7 @@ public class UserControllerTest {
                 .willReturn(estateModeDto);
 
         //when
-        mockMvc.perform(get("/api/user/tenant/list"))
+        mockMvc.perform(get("/api/user/tenant"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -165,7 +231,6 @@ public class UserControllerTest {
         checkLists.add(checkList);
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
                 .asset(asset)
-                .checkLists(checkLists)
                 .build();
         assetResponseDtos.add(assetResponseDto);
 
@@ -174,22 +239,24 @@ public class UserControllerTest {
                 .willReturn(assetResponseDtos);
         //when
         mockMvc.perform(get("/api/user/tenant/detail")
-                        .param("category", "BATHROOM"))
+                        .param("category", "AIRCONDITIONER"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].category").value("BATHROOM"));
+                .andExpect(jsonPath("$[0].category").value("AIRCONDITIONER"));
     }
 
-    @DisplayName("[get] /api/user/owner/list")
+
+    @DisplayName("[get] /api/user/owner")
     @Test
     @WithMockCustomUser
-    void 집주인_매물_리스트() throws Exception{
+    void 집주인_매물_리스트_() throws Exception{
         List<EstateModeDto> estateModeDtos = new ArrayList<>();
         EstateModeDto estateOwnerDto = EstateModeDto.builder()
                 .estateId(1L)
                 .address(address)
-                .state(State.BROKER_BEFORE)
+                .state(State.CONTRACT_DONE)
+                .estateType(EstateType.APARTMENT)
                 .build();
         estateModeDtos.add(estateOwnerDto);
 
@@ -198,7 +265,7 @@ public class UserControllerTest {
                 .willReturn(estateModeDtos);
 
         //when
-        mockMvc.perform(get("/api/user/owner/list"))
+        mockMvc.perform(get("/api/user/owner"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -214,7 +281,6 @@ public class UserControllerTest {
         checkLists.add(checkList);
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
                 .asset(asset)
-                .checkLists(checkLists)
                 .build();
         assetResponseDtos.add(assetResponseDto);
 
@@ -227,35 +293,8 @@ public class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].category").value("BATHROOM"));
+                .andExpect(jsonPath("$[0].category").value("AIRCONDITIONER"));
     }
 
-    @DisplayName("[post] /api/user/signup")
-    @Test
-    @WithMockCustomUser
-    void 회원가입() throws Exception{
-        UserInfoDto userInfoDto = UserInfoDto.builder()
-                .user(user)
-                .build();
-
-        UserSignUpDto userSignUpDto = UserSignUpDto.builder()
-                .birthday(user.getBirthday())
-                .borough(user.getBorough())
-                .estateType(user.getEstateType().toString())
-                .phone(user.getPhone())
-                .build();
-
-        //given
-        given(userService.signUp(any(), any()))
-                .willReturn(userInfoDto);
-
-        String content = objectMapper.writeValueAsString(userSignUpDto);
-        //when
-        mockMvc.perform(post("/api/user/signup")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content))
-                .andDo(print())
-                .andExpect(status().isCreated());
-    }
 
 }

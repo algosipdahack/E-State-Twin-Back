@@ -24,7 +24,7 @@ public class AssetResponseDto {
 
     @Builder
     @QueryProjection
-    public AssetResponseDto(Asset asset, List<CheckList> checkLists) {
+    public AssetResponseDto(Asset asset) {
         this.id = asset.getId();
         this.category = asset.getCategory().toString();
         this.assetPhoto = asset.getAssetPhoto();
@@ -32,7 +32,7 @@ public class AssetResponseDto {
         this.manufacturer = asset.getManufacturer();
         this.anchorId = asset.getAnchorId();
         this.checkLists = new ArrayList<>();
-        checkLists.forEach(checkList -> this.checkLists.add(new CheckListResponseDto(checkList)));
+        asset.getCheckLists().forEach(checkList -> this.checkLists.add(new CheckListResponseDto(checkList)));
     }
 
 }

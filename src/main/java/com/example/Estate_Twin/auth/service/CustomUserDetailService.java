@@ -1,6 +1,5 @@
 package com.example.Estate_Twin.auth.service;
 
-import com.example.Estate_Twin.user.domain.dao.impl.UserDAOImpl;
 import com.example.Estate_Twin.user.domain.entity.CustomUserDetails;
 import com.example.Estate_Twin.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;

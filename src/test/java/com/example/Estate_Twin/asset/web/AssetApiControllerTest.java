@@ -73,7 +73,6 @@ public class AssetApiControllerTest {
         List<CheckList> checkLists = new ArrayList<>();
         checkLists.add(checkList);
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
-                .checkLists(checkLists)
                 .asset(asset)
                 .build();
         given(assetService.getAsset(any()))
@@ -96,14 +95,11 @@ public class AssetApiControllerTest {
 
         AssetSaveRequestDto assetSaveRequestDto = new AssetSaveRequestDto("AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
         Asset asset1 = assetSaveRequestDto.toEntity();
-        AssetResponseDto assetResponseDto = AssetResponseDto.builder()
-                .checkLists(checkLists)
-                .asset(asset1)
-                .build();
+        AssetSummaryDto assetSummaryDto = new AssetSummaryDto(asset1);
 
         String content = objectMapper.writeValueAsString(assetSaveRequestDto);
         given(assetService.saveAsset(any(),any()))
-                .willReturn((assetResponseDto));
+                .willReturn((assetSummaryDto));
 
         Long estateId = 1L;
         //when
@@ -124,7 +120,6 @@ public class AssetApiControllerTest {
         AssetUpdateRequestDto assetUpdateRequestDto = new AssetUpdateRequestDto("AIRCONDITIONER","제품이름","제조사 삼성","1","에셋사진");
         asset.update(assetUpdateRequestDto);
         AssetResponseDto assetResponseDto = AssetResponseDto.builder()
-                .checkLists(checkLists)
                 .asset(asset)
                 .build();
 

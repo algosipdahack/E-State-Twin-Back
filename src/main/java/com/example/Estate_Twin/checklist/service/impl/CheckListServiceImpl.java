@@ -1,18 +1,15 @@
 package com.example.Estate_Twin.checklist.service.impl;
 
-import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
-import com.example.Estate_Twin.checklist.data.entity.CheckList;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
 import com.example.Estate_Twin.exception.CheckHouseException;
 import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.user.domain.entity.User;
-import io.swagger.models.auth.In;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +20,8 @@ import java.util.*;
 @Log4j2
 public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
-    private final AssetDAOImpl assetDAO;
     private final EstateDAOImpl estateDAO;
+    private final AssetRepository assetRepository;
 
     @Override
     public CheckListResponseDto getCheckList(Long id) {
@@ -33,7 +30,8 @@ public class CheckListServiceImpl implements CheckListService {
 
     @Override
     public CheckListResponseDto saveCheckList(User user, CheckListSaveRequestDto checkListSaveRequestDto, Long estateId, Long assetId) {
-        return new CheckListResponseDto(checkListDAO.saveCheckList(user, checkListSaveRequestDto.toEntity(), estateDAO.getEstate(estateId), assetDAO.findAsset(assetId)));
+        return new CheckListResponseDto(checkListDAO.saveCheckList(user, checkListSaveRequestDto.toEntity(), estateDAO.getEstate(estateId), assetRepository.findByIdUsingFetchJoinCheckList(assetId)
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.ASSET_NOT_FOUND))));
     }
 
     @Override

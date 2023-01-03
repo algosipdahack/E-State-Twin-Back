@@ -10,6 +10,7 @@ public class Token {
     private String refreshToken;
     private Boolean isMember;
 
+    @Builder
     public Token(String accessToken, String refreshToken, Boolean isMember) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;

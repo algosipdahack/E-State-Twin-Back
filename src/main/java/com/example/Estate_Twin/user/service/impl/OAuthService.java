@@ -25,7 +25,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class OAuthService {
-    private final InMemoryClientRegistrationRepository inMemoryRepository;
     private final UserRepository userRepository;
     private final JwtTokenProvider tokenProvider;
 
@@ -76,16 +75,18 @@ public class OAuthService {
 
     @Transactional
     Token getUserProfile(String providerName, String accessToken, ClientRegistration provider) {
+        //resource server로부터 유저 정보 얻어옴
         Map<String, Object> userAttributes = getUserAttributes(provider, accessToken);
         String userNameAttributeName = provider.getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuth2UserInfo attributes = OAuth2UserInfo.of(providerName.toUpperCase(), userNameAttributeName, userAttributes);
+
         if(attributes.getEmail().isEmpty()) {
             throw new CheckHouseException(ErrorCode.EMAIL_NOT_FOUND_FROM_PROVIDER);
         }
 
         Optional<User> userOptional = userRepository.findByEmail(attributes.getEmail());
         User user;
-        Boolean isMember;
+        boolean isMember;
         // 이미 가입된 경우
         if(userOptional.isPresent()) {
             user = userOptional.get();
@@ -110,13 +111,6 @@ public class OAuthService {
 
         user.setRefreshToken(jRefreshToken);
         return new Token(jAccessToken,jRefreshToken,isMember);
-    }
-
-    @Transactional
-    public Token login(String providerName, String accessToken) {
-        ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);
-        // kakao로부터 유저정보 받아서 db에 저장
-        return getUserProfile(providerName.toUpperCase(), accessToken, provider);
     }
 
 }

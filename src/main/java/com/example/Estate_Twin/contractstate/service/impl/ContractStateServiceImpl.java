@@ -2,6 +2,7 @@ package com.example.Estate_Twin.contractstate.service.impl;
 
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
+import com.example.Estate_Twin.contractstate.domain.repository.ContractStateRepository;
 import com.example.Estate_Twin.contractstate.service.ContractStateService;
 import com.example.Estate_Twin.contractstate.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
@@ -15,10 +16,11 @@ import java.util.List;
 public class ContractStateServiceImpl implements ContractStateService {
     private final ContractStateDAOImpl contractStateDAO;
     private final EstateDAOImpl estateDAO;
+    private ContractStateRepository contractStateRepository;
 
     @Override
     public List<ContractStateResponseDto> getContractState(Long estateId) {
-        return contractStateDAO.findContractState(estateId);
+        return contractStateRepository.findByEstateIdOrderByDate(estateId);
     }
 
     @Override

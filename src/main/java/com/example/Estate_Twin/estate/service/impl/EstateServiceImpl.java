@@ -3,19 +3,22 @@ package com.example.Estate_Twin.estate.service.impl;
 import com.example.Estate_Twin.address.*;
 import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
 import com.example.Estate_Twin.contractstate.domain.entity.*;
 import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.dao.impl.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
-import com.example.Estate_Twin.estate.domain.repository.EstateHitRepository;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
-import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.user.domain.dao.impl.*;
+import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import com.example.Estate_Twin.user.domain.entity.*;
+import com.example.Estate_Twin.user.domain.repository.BrokerRepository;
+import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -26,19 +29,19 @@ import java.util.*;
 @RequiredArgsConstructor
 public class EstateServiceImpl implements EstateService {
     private final EstateDAOImpl estateDAO;
-    private final HouseDAOImpl houseDAO;
-    private final BrokerDAOImpl brokerDAO;
     private final AssetDAOImpl assetDAO;
     private final ContractStateDAOImpl contractStateDAO;
     private final PreferEstateDAOImpl preferEstateDAO;
     private final EstateHitDAO estateHitDAO;
-    private final UserDAOImpl userDAO;
-
+    private final UserRepository userRepository;
+    private final HouseRepository houseRepository;
+    private final BrokerRepository brokerRepository;
+    private AssetRepository assetRepository;
 
     @Override
     public Long saveFirst(Address address, Long brokerId, Long ownerId) {
         //owner 매핑, estate 생성, broker한테 알림
-        return estateDAO.saveFirst(brokerDAO.findBrokerById(brokerId), userDAO.findUserById(ownerId), address).getId();
+        return estateDAO.saveFirst(brokerRepository.findById(brokerId).orElseThrow(()-> new CheckHouseException(ErrorCode.BROKER_NOT_FOUND)), userRepository.findById(ownerId).orElseThrow(() -> new CheckHouseException(ErrorCode.USER_NOT_FOUND)), address).getId();
     }
 
 
@@ -50,8 +53,8 @@ public class EstateServiceImpl implements EstateService {
         // 최근 본 매물에 포함
         preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
 
-        EstateDetailDto detail = new EstateDetailDto(estate, houseDAO.findHouseByEstateId(estateId),
-                estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId), user);
+        EstateDetailDto detail = new EstateDetailDto(estate, houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)),
+                estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)), user);
 
         // 사용자가 문의했는지 확인 -> arCam 활성화
         detail.setInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
@@ -66,12 +69,15 @@ public class EstateServiceImpl implements EstateService {
 
         // asset 정보 저장
         List<Asset> assets = new ArrayList<>();
-        estateSaveRequestDto.getAssets().forEach(asset -> {
-            assets.add(assetDAO.saveAsset(estate, asset.toEntity()));
+        estateSaveRequestDto.getAssets().forEach(dto -> {
+            Asset asset = dto.toEntity();
+            asset.setEstate(estate);
+
+            assets.add(assetRepository.save(asset));
         });
 
         //house 정보 저장
-        House house = houseDAO.saveHouse(estateSaveRequestDto.getHouse().toEntity());
+        House house = houseRepository.save(estateSaveRequestDto.getHouse().toEntity());
 
         estate.detailUpdate(estateSaveRequestDto);
 
@@ -88,10 +94,10 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public EstateResponseDto updateEstate(Long estateId, EstateUpdateRequestDto estateUpdateRequestDto) {
         //house 값 수정
-        House house = houseDAO.updateHouse(estateDAO.findHouse(estateId), estateUpdateRequestDto.getHouse());
+        House house = estateDAO.findHouse(estateId).update(estateUpdateRequestDto.getHouse());
 
         //estate 값 수정
-        return new EstateResponseDto(estateDAO.updateEstate(estateId, estateUpdateRequestDto), house, estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId));
+        return new EstateResponseDto(estateDAO.updateEstate(estateId, estateUpdateRequestDto), house, estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));
     }
 
     @Override
@@ -108,7 +114,7 @@ public class EstateServiceImpl implements EstateService {
 
         // 유저 role 검증
         if (user.isBroker()) { // Broker라면
-            Broker broker = brokerDAO.findBrokerByEmail(user.getEmail());
+            Broker broker = brokerRepository.findByUserEmailWithUserUsingFetchJoin(user.getEmail()).orElseThrow(()-> new CheckHouseException(ErrorCode.USER_NOT_FOUND));
             newEstate = estateDAO.allowBroker(estate, broker);
         } else { // 집주인이라면
             newEstate = estateDAO.allowOwner(estate, user);
@@ -118,7 +124,7 @@ public class EstateServiceImpl implements EstateService {
             contractStateDAO.updateState(newEstate, State.POST_DONE);
         }
 
-        return new EstateResponseDto(newEstate, houseDAO.findHouseByEstateId(estateId), estateHitDAO.getEstateHit(estateId), assetDAO.findAssetsByEstateId(estateId));
+        return new EstateResponseDto(newEstate, houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)), estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));
     }
 
     @Override
@@ -132,7 +138,7 @@ public class EstateServiceImpl implements EstateService {
     // 사용자 최근 검색 변화
     @Override
     public List<EstateListResponseDto> searchEstate(User user, AddressSearchDto addressSearchDto, Pageable pageable) {
-        estateDAO.updateBorough(userDAO.findUserById(user.getId()), addressSearchDto.getBorough());
+        estateDAO.updateBorough(userRepository.findById(user.getId()).orElseThrow(() -> new CheckHouseException(ErrorCode.USER_NOT_FOUND)), addressSearchDto.getBorough());
         if (addressSearchDto.getTown() != null) {
             return estateDAO.findEstateListByTown(addressSearchDto.getTown(), pageable);
         }

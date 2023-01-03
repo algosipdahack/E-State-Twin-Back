@@ -30,9 +30,4 @@ public class ContractStateDAOImpl implements ContractStateDAO {
         return contractStateRepository.save(new ContractState(state, estate));
     }
 
-    @Override
-    public List<ContractStateResponseDto> findContractState(Long estateId) {
-        return contractStateRepository.findByEstateIdOrderByDate(estateId);
-    }
-
 }

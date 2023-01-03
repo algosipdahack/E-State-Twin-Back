@@ -1,20 +1,5 @@
 package com.example.Estate_Twin.house.service;
 
-import com.example.Estate_Twin.estate.domain.entity.EstateType;
-import com.example.Estate_Twin.house.domain.dao.impl.HouseDAOImpl;
-import com.example.Estate_Twin.house.domain.entity.House;
-import com.example.Estate_Twin.house.domain.repository.HouseRepository;
-import com.example.Estate_Twin.house.service.impl.HouseServiceImpl;
-import com.example.Estate_Twin.house.web.dto.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 

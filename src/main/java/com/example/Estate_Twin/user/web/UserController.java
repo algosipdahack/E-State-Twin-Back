@@ -16,10 +16,10 @@ import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Tag(name = "User", description = "유저 API")
@@ -28,21 +28,38 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserServiceImpl userService;
-    private final OAuthService oAuthService;
+
+    @Operation(summary = "signup of user", description = "회원가입")
+    @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
+    @PostMapping("/signup")
+    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
+                                              @RequestBody @Valid UserSignUpDto userSignUpDto) {
+        UserInfoDto userInfoDto = userService.signUp(user, userSignUpDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDto);
+    }
 
     @Operation(summary = "mypage of user", description = "마이페이지")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
     @GetMapping("/me")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @CurrentUser User user) {
-        UserInfoDto userInfoDto = userService.getUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(userInfoDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new UserInfoDto(user));
     }
 
-    @Operation(summary = "mypage of tenant", description = "세입자모드 목록")
+    @Operation(summary = "login of user", description = "로그인")
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))
+    @Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")
+    @PostMapping("/login/oauth/{provider}")
+    public ResponseEntity<Token> login(@PathVariable String provider, @RequestParam String code) {
+        if(provider != "kakao" || provider != "naver" || provider != "google") {
+            throw new CheckHouseException(ErrorCode.PROVIDER_NOT_FOUND);
+        }
+        Token token = userService.login(provider, code);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
+    }
+
+    @Operation(summary = "mypage list of tenant", description = "세입자모드 목록")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))
-    @GetMapping("/tenant/list")
-    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/tenant")
     public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @CurrentUser User user) {
         EstateModeDto estate = userService.getTenantAssetList(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(estate);
@@ -59,7 +76,7 @@ public class UserController {
 
     @Operation(summary = "mypage of owner", description = "집주인 모드 목록")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateModeDto.class)))})})
-    @GetMapping("/owner/list")
+    @GetMapping("/owner")
     public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @CurrentUser User user) {
         List<EstateModeDto> assetList = userService.getOwnerAssetList(user.getId());
         return ResponseEntity.status(HttpStatus.OK).body(assetList);
@@ -72,27 +89,6 @@ public class UserController {
                                                                 @RequestParam(name = "estateId") Long estateId) {
         List<AssetResponseDto> ownerAsset = userService.getOwnerAsset(user.getId(), estateId);
         return ResponseEntity.status(HttpStatus.OK).body(ownerAsset);
-    }
-
-    @Operation(summary = "signup of user", description = "회원가입")
-    @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
-    @PostMapping("/signup")
-    public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
-                                              @RequestBody UserSignUpDto userSignUpDto) {
-        UserInfoDto userInfoDto = userService.signUp(user, userSignUpDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDto);
-    }
-
-    @Operation(summary = "login of user", description = "로그인")
-    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))
-    @Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")
-    @PostMapping("/login/oauth/{provider}")
-    public ResponseEntity<Token> login(@PathVariable String provider, @RequestBody String code) {
-        if(provider != "kakao" || provider != "naver" || provider != "google") {
-            throw new CheckHouseException(ErrorCode.PROVIDER_NOT_FOUND);
-        }
-        Token token = oAuthService.login(provider, code);
-        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @Operation(summary = "logout of user", description = "로그아웃")

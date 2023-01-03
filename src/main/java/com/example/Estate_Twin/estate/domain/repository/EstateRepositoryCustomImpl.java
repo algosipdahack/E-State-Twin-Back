@@ -156,7 +156,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     @Override
     public List<AssetResponseDto> findAssetList(Long estateId) {
         QueryResults<AssetResponseDto> queryResults = jpaQueryFactory
-                .select(new QAssetResponseDto(asset, asset.checkLists))
+                .select(new QAssetResponseDto(asset))
                 .from(asset)
                 .join(asset.estate, estate)
                 .join(asset.checkLists, checkList)

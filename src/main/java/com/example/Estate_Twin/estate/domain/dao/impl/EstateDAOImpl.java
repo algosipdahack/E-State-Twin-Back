@@ -184,7 +184,8 @@ public class EstateDAOImpl implements EstateDAO {
     @Transactional
     public Estate matchTenant(Long estateId, User user) {
         Estate estate = findEstate(estateId);
-        userRepository.save(user.setTenantEstate(findEstate(estateId)));
+        user.setTenantEstate(findEstate(estateId));
+        userRepository.save(user);
         return estate;
     }
 

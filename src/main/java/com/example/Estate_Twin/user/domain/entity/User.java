@@ -76,10 +76,9 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
-    public User setTenantEstate(Estate estate) {
+    public void setTenantEstate(Estate estate) {
         this.tenantEstate = estate;
         estate.setTenant(this);
-        return this;
     }
 
     public void setRefreshToken(String refreshToken) {

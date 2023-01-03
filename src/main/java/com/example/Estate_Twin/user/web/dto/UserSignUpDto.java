@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ public class UserSignUpDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate birthday;
     @NotNull
+    @Column(unique = true)
     private String phone;
     @NotNull
     @Schema(description = "매물 거래 유형", example = "MONTHLYRENT, LEASE, TRADING")

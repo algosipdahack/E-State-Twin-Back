@@ -122,7 +122,7 @@ public class BrokerControllerTest {
                 .build();
 
         //given
-        given(brokerService.getBroker(any()))
+        given(brokerService.getBrokerWithUser(any()))
                 .willReturn(brokerSummaryDto);
 
         //when
@@ -196,7 +196,7 @@ public class BrokerControllerTest {
         brokerEstateDtos.add(brokerEstateDto);
 
         //given
-        given(brokerService.getbrokerEstate(any(),any()))
+        given(brokerService.getBrokerEstate(any(),any()))
                 .willReturn(brokerEstateDtos);
 
         //when

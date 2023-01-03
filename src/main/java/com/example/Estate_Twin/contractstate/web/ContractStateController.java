@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name = "ContractState", description = "매물상태 API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/contractState")
+@RequestMapping("/api/contractstate")
 public class ContractStateController {
     private final ContractStateServiceImpl contractStateService;
 

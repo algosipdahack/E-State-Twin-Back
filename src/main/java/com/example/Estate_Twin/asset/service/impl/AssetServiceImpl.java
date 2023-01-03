@@ -1,35 +1,38 @@
 package com.example.Estate_Twin.asset.service.impl;
 
-import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
+import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 
-import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
+import com.example.Estate_Twin.exception.CheckHouseException;
+import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
-    private final AssetDAOImpl assetDAO;
     private final EstateDAOImpl estateDAO;
-    private final CheckListDAOImpl checkListDAO;
+    private AssetRepository assetRepository;
     @Override
     public AssetResponseDto getAsset(Long assetId) {
-        return new AssetResponseDto(assetDAO.findAsset(assetId),checkListDAO.findCheckListsByAssetId(assetId));
+        return new AssetResponseDto(assetRepository.findByIdUsingFetchJoinCheckList(assetId)
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.ASSET_NOT_FOUND)));
     }
 
     @Override
-    public AssetResponseDto saveAsset(Long estateId, AssetSaveRequestDto assetSaveRequestDto) {
-        Asset asset = assetDAO.saveAsset(estateDAO.findEstate(estateId), assetSaveRequestDto.toEntity());
-        return new AssetResponseDto(asset,checkListDAO.findCheckListsByAssetId(asset.getId()));
+    public AssetSummaryDto saveAsset(Long estateId, AssetSaveRequestDto assetSaveRequestDto) {
+        Asset asset = assetSaveRequestDto.toEntity();
+        asset.setEstate(estateDAO.findEstate(estateId));
+        return new AssetSummaryDto(assetRepository.save(asset));
     }
 
     @Override
     public AssetResponseDto updateAsset(Long assetId, AssetUpdateRequestDto assetUpdateRequestDto) {
-        Asset asset = assetDAO.updateAsset(assetId, assetUpdateRequestDto);
-        return new AssetResponseDto(asset, checkListDAO.findCheckListsByAssetId(asset.getId()));
+        Asset asset = assetRepository.findByIdUsingFetchJoinCheckList(assetId)
+                .orElseThrow(()-> new CheckHouseException(ErrorCode.ASSET_NOT_FOUND)).update(assetUpdateRequestDto);
+        return new AssetResponseDto(asset);
     }
 }
