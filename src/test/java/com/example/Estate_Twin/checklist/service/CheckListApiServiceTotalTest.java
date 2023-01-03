@@ -30,8 +30,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -48,8 +46,6 @@ public class CheckListApiServiceTotalTest {
     private CheckListRepository checkListRepository;
     @Autowired
     private CheckListService checkListService;
-    @Autowired
-    private UserDAO userDAO;
     User owner;
     User broker;
     CheckListSaveRequestDto saveRequestDto;

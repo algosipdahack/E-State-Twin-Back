@@ -118,7 +118,6 @@ public class BrokerControllerTest {
     void 마이페이지() throws Exception{
         BrokerSummaryDto brokerSummaryDto = BrokerSummaryDto.builder()
                 .broker(broker)
-                .user(user)
                 .build();
 
         //given
@@ -138,7 +137,6 @@ public class BrokerControllerTest {
     void 회원가입() throws Exception{
         BrokerSummaryDto brokerSummaryDto = BrokerSummaryDto.builder()
                 .broker(broker)
-                .user(user)
                 .build();
         BrokerSignUpDto brokerSignUpDto = new BrokerSignUpDto("000공인중개소","000공인중개사","brokerage_number","business_license","business_license","registration_license","broker_photo","내용",address);
 

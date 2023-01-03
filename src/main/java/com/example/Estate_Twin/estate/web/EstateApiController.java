@@ -24,7 +24,6 @@ import java.util.List;
 @Tag(name = "Estate", description = "매물 API")
 @RequiredArgsConstructor
 @RestController
-@Slf4j
 @RequestMapping("/api/estate/")
 public class EstateApiController {
     private final EstateServiceImpl estateService;

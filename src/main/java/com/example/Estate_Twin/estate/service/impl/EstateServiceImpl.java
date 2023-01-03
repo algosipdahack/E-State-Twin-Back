@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.service.impl;
 
 import com.example.Estate_Twin.address.*;
-import com.example.Estate_Twin.asset.data.dao.impl.AssetDAOImpl;
 import com.example.Estate_Twin.asset.data.entity.Asset;
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.contractstate.domain.dao.impl.ContractStateDAOImpl;
@@ -10,6 +9,7 @@ import com.example.Estate_Twin.contractstate.web.dto.ContractStateResponseDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.dao.impl.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
+import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.CheckHouseException;
@@ -29,14 +29,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class EstateServiceImpl implements EstateService {
     private final EstateDAOImpl estateDAO;
-    private final AssetDAOImpl assetDAO;
     private final ContractStateDAOImpl contractStateDAO;
     private final PreferEstateDAOImpl preferEstateDAO;
     private final EstateHitDAO estateHitDAO;
     private final UserRepository userRepository;
     private final HouseRepository houseRepository;
     private final BrokerRepository brokerRepository;
-    private AssetRepository assetRepository;
+    private final AssetRepository assetRepository;
+    private final EstateRepository estateRepository;
 
     @Override
     public Long saveFirst(Address address, Long brokerId, Long ownerId) {
@@ -94,7 +94,7 @@ public class EstateServiceImpl implements EstateService {
     @Override
     public EstateResponseDto updateEstate(Long estateId, EstateUpdateRequestDto estateUpdateRequestDto) {
         //house 값 수정
-        House house = estateDAO.findHouse(estateId).update(estateUpdateRequestDto.getHouse());
+        House house = estateRepository.findHouseByEstateId(estateId).update(estateUpdateRequestDto.getHouse());
 
         //estate 값 수정
         return new EstateResponseDto(estateDAO.updateEstate(estateId, estateUpdateRequestDto), house, estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));

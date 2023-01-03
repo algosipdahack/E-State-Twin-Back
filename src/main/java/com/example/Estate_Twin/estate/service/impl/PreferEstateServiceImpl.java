@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class PreferEstateServiceImpl implements PreferEstateService {
     private final PreferEstateDAOImpl preferEstateDAO;
     private final EstateDAOImpl estateDAO;
-    private final HouseDAOImpl houseDAO;
     private final HouseRepository houseRepository;
 
     @Override

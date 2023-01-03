@@ -14,7 +14,7 @@ public interface EstateRepositoryCustom {
     Page<EstateListResponseDto> findEstateList(Long estateId, Pageable pageable);
     List<AssetResponseDto> findAssetList(Long estateId);
     EstateHit findEstateHit(Long estateId);
-    House findHouse(Long estateId);
+    House findHouseByEstateId(Long estateId);
     EstateModeDto findTenantEstateList(Long userId);
     List<EstateListResponseDto> findEstateByBorough(@Param("borough") String borough, Pageable pageable);
     List<EstateListResponseDto> findEstateByTown(@Param("town") String town, Pageable pageable);

@@ -43,7 +43,7 @@ public class BrokerController {
 
     @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerListDto.class)))})})
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<List<BrokerListDto>> getBrokerList() {
         List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
         return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
@@ -51,7 +51,7 @@ public class BrokerController {
 
     @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerEstateDto.class)))})})
-    @GetMapping("/estate")
+    @GetMapping("/estates")
     public ResponseEntity<List<BrokerEstateDto>> getEstate(@Parameter(hidden = true) @CurrentUser User user,
                                                            @ApiParam(value = "state", required = true, example = "BROKER_BEFORE, POST_DOING, POST_DONE, CONTRACT_REQUEST, CONFIRM_BROKER, CONFIRM_OWNER, CHECKLIST_DOING, CONTRACT_DONE")
                                                             @RequestParam(name = "state") String state) {

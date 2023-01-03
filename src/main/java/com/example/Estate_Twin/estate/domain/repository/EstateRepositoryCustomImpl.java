@@ -190,7 +190,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public House findHouse(Long estateId) {
+    public House findHouseByEstateId(Long estateId) {
         return jpaQueryFactory.select(new QHouse(house))
                 .leftJoin(estate.house, house)
                 .from(estate)

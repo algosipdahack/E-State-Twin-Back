@@ -99,7 +99,7 @@ public class EstateDAOImpl implements EstateDAO {
 
     @Override
     public House findHouse(Long id) {
-        return estateRepository.findHouse(id);
+        return estateRepository.findHouseByEstateId(id);
     }
 
     @Override

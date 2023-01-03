@@ -153,11 +153,6 @@ public class UserControllerTest {
     @WithMockCustomUser
     void 마이페이지() throws Exception{
 
-        //given
-        given(userService.getUser(any()))
-                .willReturn(UserInfoDto.builder()
-                        .user(user)
-                        .build());
 
         //when
         mockMvc.perform(get("/api/user/me"))
