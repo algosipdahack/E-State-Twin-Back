@@ -105,24 +105,16 @@ public class Estate extends BaseTimeEntity {
         estateHit.setEstate(this);
     }
 
-    public Estate updateEstateHit() {
-        this.estateHit.updateHit();
-        return this;
-    }
-
-    //TODO Optional 적용
     public void setOwner(User owner) {
-        if(this.owner != null ){
-            this.owner.getOwnEstates().remove(this);
-        }
+        Optional<User> user = Optional.of(this.owner);
+        user.ifPresent(it -> it.getOwnEstates().remove(this));
         this.owner = owner;
         owner.getOwnEstates().add(this);
     }
 
     public void setBroker(Broker broker) {
-        if(this.broker != null ){
-            this.broker.getTradeEstates().remove(this);
-        }
+        Optional<Broker> user = Optional.of(this.broker);
+        user.ifPresent(it -> it.getTradeEstates().remove(this));
         this.broker = broker;
         broker.getTradeEstates().add(this);
     }
@@ -149,7 +141,7 @@ public class Estate extends BaseTimeEntity {
         return this;
     }
     public Estate setIsPosted() {
-        if(!this.isBrokerConfirmYN() || !this.isOwnerConfirmYN()) {
+        if(!(this.isBrokerConfirmYN() && this.isOwnerConfirmYN())) {
             throw new CheckHouseException(ErrorCode.BROKER_OR_OWNER_YET_CONFIRMED);
         }
         this.isPosted = true;

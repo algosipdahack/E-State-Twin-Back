@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 @Log4j2
@@ -104,12 +105,13 @@ public class JwtTokenProvider {
     }
 
     public String parseJwtToken(HttpServletRequest servletRequest) {
-        if (servletRequest.getHeader(HttpHeaders.AUTHORIZATION) != null) {
-            String authorizationHeader = servletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-            validationAuthorizationHeader(authorizationHeader); // (1)
-            return extractToken(authorizationHeader); // (2)
-        }
-        return null;
+        Optional<String> header = Optional.of(servletRequest.getHeader(HttpHeaders.AUTHORIZATION));
+        AtomicReference<String> token = null;
+        header.ifPresent(it -> {
+            validationAuthorizationHeader(it);
+            token.set(extractToken(it));
+        });
+        return token.get();
     }
 
 

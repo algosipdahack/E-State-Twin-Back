@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.*;
+import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
@@ -76,9 +77,8 @@ public class CheckList extends BaseTimeEntity {
     }
 
     public void setAsset(Asset asset) {
-        if(this.asset != null) {
-            this.asset.getCheckLists().remove(this);
-        }
+        Optional<Asset> asset1 = Optional.of(this.asset);
+        asset1.ifPresent(it -> it.getCheckLists().remove(this));
         this.asset = asset;
         asset.getCheckLists().add(this);
     }

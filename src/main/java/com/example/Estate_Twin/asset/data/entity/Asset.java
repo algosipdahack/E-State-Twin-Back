@@ -51,9 +51,8 @@ public class Asset extends BaseTimeEntity {
     }
 
     public void setEstate(Estate estate) {
-        if(this.estate != null) {
-            this.estate.getAssets().remove(this);
-        }
+        Optional<Estate> estate1 = Optional.of(this.estate);
+        estate1.ifPresent(it -> it.getAssets().remove(this));
         this.estate = estate;
         estate.getAssets().add(this);
     }

@@ -55,7 +55,7 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate allowBroker(Estate estate, Broker broker) {
-        if (Boolean.FALSE.equals(checkRoleBroker(estate, broker))) {
+        if (!checkRoleBroker(estate, broker)) {
             throw new CheckHouseException(ErrorCode.USER_NOT_BROKER);
         }
         return estate.setBrokerConfirmY();
@@ -64,19 +64,19 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate allowOwner(Estate estate, User owner) {
-        if (Boolean.FALSE.equals(checkRoleOwner(estate, owner))) {
+        if (!checkRoleOwner(estate, owner)) {
             throw new CheckHouseException(ErrorCode.USER_NOT_OWNER);
         }
         return estate.setOwnerConfirmY();
     }
 
     // 해당 매물의 브로커인지 확인
-    public Boolean checkRoleBroker(Estate estate, Broker broker) {
+    public boolean checkRoleBroker(Estate estate, Broker broker) {
         return estate.getBroker().getId().equals(broker.getId());
     }
 
     //해당 매물의 소유주인지 확인
-    public Boolean checkRoleOwner(Estate estate, User owner) {
+    public boolean checkRoleOwner(Estate estate, User owner) {
         return estate.getOwner().getId().equals(owner.getId());
     }
 
