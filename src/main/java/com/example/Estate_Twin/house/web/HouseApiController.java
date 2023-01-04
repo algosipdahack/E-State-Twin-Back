@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class HouseApiController {
     private final HouseServiceImpl houseService;
 
-    @Operation(summary = "get House", description = "집에 대한 정보들 가져오기")
+    @Operation(summary = "Get House", description = "집에 대한 정보들 가져오기")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HouseResponseDto.class)))
     @GetMapping("/{houseId}")
     public ResponseEntity<HouseResponseDto> getHouse(@ApiParam(value = "house Id") @PathVariable Long houseId) {

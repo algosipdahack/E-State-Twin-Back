@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "PreferEstate", description = "즐겨찾기 매물 API")
 @RequiredArgsConstructor
 @RestController
-@Slf4j
 @RequestMapping("/api/preferestate/")
 public class PreferEstateApiController {
     private final PreferEstateServiceImpl preferEstateService;
 
-    @Operation(summary = "get list of Estate", description = "최근 본 방 목록 가져오기")
+    @Operation(summary = "Get List of Recent Estate", description = "최근 본 방 목록 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/recent")
     public ResponseEntity<Page<EstateListResponseDto>> getRecentList(@Parameter(hidden = true) @CurrentUser User user,
@@ -32,7 +30,7 @@ public class PreferEstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
-    @Operation(summary = "get list of Estate", description = "찜한 방 목록 가져오기")
+    @Operation(summary = "Get List of Dip Estate", description = "찜한 방 목록 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/dip")
     public ResponseEntity<Page<EstateListResponseDto>> getDipList(@Parameter(hidden = true) @CurrentUser User user,
@@ -41,7 +39,7 @@ public class PreferEstateApiController {
         return ResponseEntity.status(HttpStatus.OK).body(estateListResponseDtos);
     }
 
-    @Operation(summary = "get list of Estate", description = "문의한 방 목록 가져오기")
+    @Operation(summary = "Get List of Inquiry Estate", description = "문의한 방 목록 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateListResponseDto.class)))})})
     @GetMapping("list/inquiry")
     public ResponseEntity<Page<EstateListResponseDto>> getInquireList(@Parameter(hidden = true) @CurrentUser User user,

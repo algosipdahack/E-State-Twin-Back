@@ -10,6 +10,7 @@ import com.example.Estate_Twin.estate.domain.dao.EstateHitDAO;
 import com.example.Estate_Twin.estate.domain.dao.impl.*;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
+import com.example.Estate_Twin.estate.domain.repository.PreferEstateRepository;
 import com.example.Estate_Twin.estate.service.EstateService;
 import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.CheckHouseException;
@@ -30,13 +31,13 @@ import java.util.*;
 public class EstateServiceImpl implements EstateService {
     private final EstateDAOImpl estateDAO;
     private final ContractStateDAOImpl contractStateDAO;
-    private final PreferEstateDAOImpl preferEstateDAO;
     private final EstateHitDAO estateHitDAO;
     private final UserRepository userRepository;
     private final HouseRepository houseRepository;
     private final BrokerRepository brokerRepository;
     private final AssetRepository assetRepository;
     private final EstateRepository estateRepository;
+    private final PreferEstateRepository preferEstateRepository;
 
     @Override
     public Long saveFirst(Address address, Long brokerId, Long ownerId) {
@@ -50,14 +51,20 @@ public class EstateServiceImpl implements EstateService {
     public EstateDetailDto getEstate(Long estateId, User user) {
         // Estate에 Lock을 걸어버림
         Estate estate = estateDAO.getEstate(estateId);
+
         // 최근 본 매물에 포함
-        preferEstateDAO.savePreferEstate(estate, user, Preference.RECENT);
+        preferEstateRepository.save(PreferEstate.builder()
+                .preference(Preference.RECENT)
+                .estate(estate)
+                .user(user)
+                .build());
 
         EstateDetailDto detail = new EstateDetailDto(estate, houseRepository.findHouseByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)),
-                estateDAO.findBrokerbyEstateId(estateId),estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)), user);
+                estateRepository.findBrokerByEstate_Id(estateId)
+                        .orElseThrow(()->new CheckHouseException(ErrorCode.BROKER_NOT_FOUND)),estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)), user);
 
         // 사용자가 문의했는지 확인 -> arCam 활성화
-        detail.setInquiry(preferEstateDAO.existPreferEstate(estate.getId(), user.getId(), Preference.INQUIRY));
+        detail.setInquiry(preferEstateRepository.existsByEstateIdAndUserIdAndPrefer(estate.getId(), user.getId(), Preference.INQUIRY));
         return detail;
     }
 
@@ -65,7 +72,8 @@ public class EstateServiceImpl implements EstateService {
     // state, estatehit
     public EstateResponseDto saveEstate(EstateSaveRequestDto estateSaveRequestDto) {
         // 기본 정보 저장
-        Estate estate = estateDAO.findEstate(estateSaveRequestDto.getId());
+        Estate estate = estateRepository.findById(estateSaveRequestDto.getId())
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
 
         // asset 정보 저장
         List<Asset> assets = new ArrayList<>();
@@ -88,28 +96,34 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     public Page<EstateListResponseDto> getAllEstate(Long estateId, Pageable pageable) {
-        return estateDAO.findAllEstateList(estateId, pageable);
+        return estateRepository.findEstateList(estateId, pageable);
     }
 
     @Override
     public EstateResponseDto updateEstate(Long estateId, EstateUpdateRequestDto estateUpdateRequestDto) {
         //house 값 수정
-        House house = estateRepository.findHouseByEstateId(estateId).update(estateUpdateRequestDto.getHouse());
+        House house = estateRepository.findHouseByEstateId(estateId);
+        house.update(estateUpdateRequestDto.getHouse());
 
         //estate 값 수정
-        return new EstateResponseDto(estateDAO.updateEstate(estateId, estateUpdateRequestDto), house, estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));
+        Estate estate = estateRepository.findById(estateId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
+        estate.update(estateUpdateRequestDto);
+        return new EstateResponseDto(estate, house, estateHitDAO.getEstateHit(estateId), assetRepository.findAssetsByEstate_Id(estateId).orElseThrow(()-> new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));
     }
 
     @Override
     public List<EstateMainDto> getEstateCustomized(User user) {
         //유저가 선호하는 지역 보여줌
         String borough = user.getBorough();
-        return estateDAO.findEstateCustomized(borough);
+        return estateRepository.findByBoroughOrderByWeeklyHit(borough);
     }
 
     @Override
     public EstateResponseDto allowPost(Long estateId, User user) {
-        Estate estate = estateDAO.findEstate(estateId);
+        Estate estate = estateRepository.findById(estateId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
+
         Estate newEstate;
 
         // 유저 role 검증
@@ -137,11 +151,12 @@ public class EstateServiceImpl implements EstateService {
 
     // 사용자 최근 검색 변화
     @Override
-    public List<EstateListResponseDto> searchEstate(User user, AddressSearchDto addressSearchDto, Pageable pageable) {
-        estateDAO.updateBorough(userRepository.findById(user.getId()).orElseThrow(() -> new CheckHouseException(ErrorCode.USER_NOT_FOUND)), addressSearchDto.getBorough());
-        if (addressSearchDto.getTown() != null) {
-            return estateDAO.findEstateListByTown(addressSearchDto.getTown(), pageable);
+    public List<EstateListResponseDto> searchEstate(User user, String borough, String town, Pageable pageable) {
+        // 더티체킹을 위함 + 검색한 구 이름 바꿈
+        userRepository.findById(user.getId()).orElseThrow(() -> new CheckHouseException(ErrorCode.USER_NOT_FOUND)).setBorough(borough);
+        if (town != null) {
+            return estateRepository.findEstateByTown(town, pageable);
         }
-        return estateDAO.findEstateListByBorough(addressSearchDto.getBorough(), pageable);
+        return estateRepository.findEstateByBorough(borough, pageable);
     }
 }

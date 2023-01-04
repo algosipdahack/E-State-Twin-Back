@@ -5,7 +5,7 @@ import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.asset.service.AssetService;
 import com.example.Estate_Twin.asset.web.dto.*;
 
-import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
+import com.example.Estate_Twin.estate.domain.repository.EstateRepository;
 import com.example.Estate_Twin.exception.CheckHouseException;
 import com.example.Estate_Twin.exception.ErrorCode;
 import lombok.*;
@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AssetServiceImpl implements AssetService {
-    private final EstateDAOImpl estateDAO;
     private AssetRepository assetRepository;
+    private EstateRepository estateRepository;
+
     @Override
     public AssetResponseDto getAsset(Long assetId) {
         return new AssetResponseDto(assetRepository.findByIdUsingFetchJoinCheckList(assetId)
@@ -25,7 +26,8 @@ public class AssetServiceImpl implements AssetService {
     @Override
     public AssetSummaryDto saveAsset(Long estateId, AssetSaveRequestDto assetSaveRequestDto) {
         Asset asset = assetSaveRequestDto.toEntity();
-        asset.setEstate(estateDAO.findEstate(estateId));
+        asset.setEstate(estateRepository.findById(estateId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND)));
         return new AssetSummaryDto(assetRepository.save(asset));
     }
 

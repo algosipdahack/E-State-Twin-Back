@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class Authcontroller {
     private final JwtService jwtService;
 
-    @Operation(summary = "refresh of token", description = "Access/Refresh token 재발급")
+    @Operation(summary = "Refresh of Token", description = "Access/Refresh token 재발급")
     @ApiResponses({@ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = String.class)))})
     @PostMapping("refresh")
     public ResponseEntity<String> refreshToken(@RequestParam(name = "refresh_token") String refreshToken, @RequestParam(name = "access_token") String accessToken) {

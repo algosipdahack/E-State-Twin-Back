@@ -151,7 +151,7 @@ public class CheckListApiControllerTest {
         CheckListResponseDto checkListResponseDto = new CheckListResponseDto(checkList);
 
         //given
-        given(checkListService.confirmCheckList(any(), any(), any()))
+        given(checkListService.confirmCheckList(any(), any()))
                 .willReturn(checkListResponseDto);
 
         //when

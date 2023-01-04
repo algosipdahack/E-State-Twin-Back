@@ -2,6 +2,7 @@ package com.example.Estate_Twin.house.service.impl;
 
 import com.example.Estate_Twin.exception.CheckHouseException;
 import com.example.Estate_Twin.exception.ErrorCode;
+import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.house.domain.repository.HouseRepository;
 import com.example.Estate_Twin.house.service.HouseService;
 import com.example.Estate_Twin.house.web.dto.*;
@@ -25,6 +26,8 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public HouseResponseDto updateHouse(Long houseId, HouseUpdateRequestDto houseUpdateRequestDto) {
-        return new HouseResponseDto(houseRepository.findById(houseId).orElseThrow(()->new CheckHouseException(ErrorCode.HOUSE_NOT_FOUND)).update(houseUpdateRequestDto));
+        House house = houseRepository.findById(houseId).orElseThrow(()->new CheckHouseException(ErrorCode.HOUSE_NOT_FOUND));
+        house.update(houseUpdateRequestDto);
+        return new HouseResponseDto(house);
     }
 }

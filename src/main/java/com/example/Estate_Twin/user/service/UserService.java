@@ -10,7 +10,6 @@ import com.example.Estate_Twin.user.web.dto.*;
 import java.util.List;
 
 public interface UserService {
-    UserResponseDto getUserById(Long id);
     UserInfoDto signUp(User user, UserSignUpDto userSignUpDto);
     Long deleteUser(User user);
     List<AssetResponseDto> getTenantAsset(Long userId, Category category);

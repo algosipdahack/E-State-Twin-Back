@@ -29,5 +29,4 @@ public class ContractStateDAOImpl implements ContractStateDAO {
         estate.setState(state);
         return contractStateRepository.save(new ContractState(state, estate));
     }
-
 }

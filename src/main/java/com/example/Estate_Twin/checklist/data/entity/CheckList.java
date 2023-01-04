@@ -48,13 +48,12 @@ public class CheckList extends BaseTimeEntity {
         this.checkListPhoto = checkListPhoto;
     }
 
-    public CheckList update(CheckListUpdateRequestDto dto) {
+    public void update(CheckListUpdateRequestDto dto) {
         this.flawPart = dto.getFlawPart();
         this.repairDate = dto.getRepairDate();
         this.checkListContent = dto.getCheckListContent();
         this.repairType = RepairType.of(dto.getRepairType());
         this.checkListPhoto = dto.getCheckListPhoto();
-        return this;
     }
 
     public void setConfirmY(User user) {

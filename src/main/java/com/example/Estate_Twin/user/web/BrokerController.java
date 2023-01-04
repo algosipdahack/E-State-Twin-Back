@@ -24,7 +24,7 @@ import java.util.List;
 public class BrokerController {
     private final BrokerServiceImpl brokerService;
 
-    @Operation(summary = "mypage of broker", description = "브로커 마이페이지")
+    @Operation(summary = "My Page of Broker", description = "브로커 마이페이지")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))
     @GetMapping("/me")
     public ResponseEntity<BrokerSummaryDto> getCurrentBroker(@Parameter(hidden = true) @CurrentUser User user) {
@@ -32,7 +32,7 @@ public class BrokerController {
         return ResponseEntity.status(HttpStatus.OK).body(brokerResponseDto);
     }
 
-    @Operation(summary = "signup of broker", description = "브로커 회원가입")
+    @Operation(summary = "Signup of Broker", description = "브로커 회원가입")
     @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = BrokerSummaryDto.class)))
     @PostMapping("/signup")
     public ResponseEntity<BrokerSummaryDto> signup(@Parameter(hidden = true) @CurrentUser User user,
@@ -41,15 +41,15 @@ public class BrokerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(brokerResponseDto);
     }
 
-    @Operation(summary = "show broker list", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
+    @Operation(summary = "Show Broker List", description = "매물의 거리에 따른 공인중개사 리스트 보여주기(전체 다 넘겨줌)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerListDto.class)))})})
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseEntity<List<BrokerListDto>> getBrokerList() {
         List<BrokerListDto> brokerListDto = brokerService.getBrokerList();
         return ResponseEntity.status(HttpStatus.OK).body(brokerListDto);
     }
 
-    @Operation(summary = "show EstateList based on the state of estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
+    @Operation(summary = "Show Estate List Based on the State of Estate(broker)", description = "매물 등록 상태에 따른 매물 리스트 보여주기(broker)")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BrokerEstateDto.class)))})})
     @GetMapping("/estates")
     public ResponseEntity<List<BrokerEstateDto>> getEstate(@Parameter(hidden = true) @CurrentUser User user,

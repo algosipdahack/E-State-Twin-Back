@@ -88,12 +88,11 @@ public class Estate extends BaseTimeEntity {
         return this;
     }
 
-    public Estate update(EstateUpdateRequestDto dto) {
+    public void update(EstateUpdateRequestDto dto) {
         this.model = dto.getModel();
         this.transactionType = TransactionType.of(dto.getTransactionType());
         this.estateThumbNail = dto.getEstateThumbNail();
         this.address = dto.getAddress();
-        return this;
     }
 
     public void setHouse(House house) {

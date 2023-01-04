@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AssetApiController {
     private final AssetServiceImpl assetService;
 
-    @Operation(summary = "get assets", description = "에셋에 대한 정보들 가져오기(매물 등록 후)")
+    @Operation(summary = "Get Assets", description = "에셋에 대한 정보들 가져오기(매물 등록 후)")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
     @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @GetMapping("/{assetId}")
@@ -26,7 +26,7 @@ public class AssetApiController {
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
-    @Operation(summary = "put assets", description = "에셋에 대한 정보들 수정하기")
+    @Operation(summary = "Put Asset", description = "에셋에 대한 정보들 수정하기")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
     @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @PutMapping("/{assetId}")
@@ -35,7 +35,7 @@ public class AssetApiController {
         return ResponseEntity.status(HttpStatus.OK).body(assetResponseDto);
     }
 
-    @Operation(summary = "post assets", description = "에셋 등록하기")
+    @Operation(summary = "Post Asset", description = "에셋 등록하기")
     @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = AssetResponseDto.class)))
     @PostMapping("/estate/{estateId}")
     public ResponseEntity<AssetSummaryDto> saveAsset(@PathVariable Long estateId, @RequestBody AssetSaveRequestDto assetSaveRequestDto) {

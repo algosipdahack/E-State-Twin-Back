@@ -2,6 +2,8 @@ package com.example.Estate_Twin.checklist.service.impl;
 
 import com.example.Estate_Twin.asset.data.repository.AssetRepository;
 import com.example.Estate_Twin.checklist.data.dao.impl.CheckListDAOImpl;
+import com.example.Estate_Twin.checklist.data.entity.CheckList;
+import com.example.Estate_Twin.checklist.data.repository.CheckListRepository;
 import com.example.Estate_Twin.checklist.service.CheckListService;
 import com.example.Estate_Twin.checklist.web.dto.*;
 import com.example.Estate_Twin.estate.domain.dao.impl.EstateDAOImpl;
@@ -17,15 +19,16 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
-@Log4j2
 public class CheckListServiceImpl implements CheckListService {
     private final CheckListDAOImpl checkListDAO;
     private final EstateDAOImpl estateDAO;
     private final AssetRepository assetRepository;
+    private final CheckListRepository checkListRepository;
 
     @Override
-    public CheckListResponseDto getCheckList(Long id) {
-        return new CheckListResponseDto(checkListDAO.findCheckList(id));
+    public CheckListResponseDto getCheckList(Long checkListId) {
+        return new CheckListResponseDto(checkListRepository.findById(checkListId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.CHECKLIST_NOT_FOUND)));
     }
 
     @Override
@@ -35,20 +38,24 @@ public class CheckListServiceImpl implements CheckListService {
     }
 
     @Override
-    public CheckListResponseDto updateCheckList(Long id, CheckListUpdateRequestDto dto) {
-        return new CheckListResponseDto(checkListDAO.updateCheckList(id, dto));
+    public CheckListResponseDto updateCheckList(Long checkListId, CheckListUpdateRequestDto dto) {
+        CheckList checkList = checkListRepository.findById(checkListId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.CHECKLIST_NOT_FOUND));
+        checkList.update(dto);
+        return new CheckListResponseDto(checkList);
     }
 
     @Override
     public List<CheckListResponseDto> getAllCheckListByAssetId(Long assetId) {
         List<CheckListResponseDto> dtos = new ArrayList<>();
-        checkListDAO.findCheckListsByAssetId(assetId).forEach(checkList -> dtos.add(new CheckListResponseDto(checkList)));
+        checkListRepository.findCheckListsByAsset_IdOrderByRepairDateDesc(assetId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ASSET_NOT_FOUND)).forEach(checkList -> dtos.add(new CheckListResponseDto(checkList)));
         return dtos;
     }
 
     @Override
     // 상태 -> CheckList_Doing -> contract_done
-    public CheckListResponseDto confirmCheckList(Long estateId, Long checklistId, User user) {
+    public CheckListResponseDto confirmCheckList(Long checklistId, User user) {
         try {
             return new CheckListResponseDto(checkListDAO.confirm(checklistId, user));
         } catch (ObjectOptimisticLockingFailureException e) {

@@ -20,7 +20,7 @@ import java.util.List;
 public class ContractStateController {
     private final ContractStateServiceImpl contractStateService;
 
-    @Operation(summary = "update ContractState", description = "매물 상태 수정하기 ex) 브로커가 매물 등록 승인 한 상황 : state = POST_DOING 요청")
+    @Operation(summary = "Update ContractState", description = "매물 상태 수정하기 ex) 브로커가 매물 등록 승인 한 상황 : state = POST_DOING 요청")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ContractStateResponseDto.class)))
     @Parameter(name = "estateId", description = "Estate Id", example = "1")
     @PutMapping("/estate/{estateId}")
@@ -29,7 +29,7 @@ public class ContractStateController {
         return ResponseEntity.status(HttpStatus.OK).body(contractStateResponseDto);
     }
 
-    @Operation(summary = "get ContractState", description = "매물에 따른 상태 정보들 리스트로 가져오기")
+    @Operation(summary = "Get ContractState", description = "매물에 따른 상태 정보들 리스트로 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ContractStateResponseDto.class)))})})
     @Parameter(name = "estateId", description = "Estate Id", example = "1")
     @GetMapping("/estate/{estateId}")

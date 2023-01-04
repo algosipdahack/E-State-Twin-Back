@@ -29,7 +29,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
 
-    @Operation(summary = "signup of user", description = "회원가입")
+    @Operation(summary = "Signup of User", description = "회원가입")
     @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
     @PostMapping("/signup")
     public ResponseEntity<UserInfoDto> signup(@Parameter(hidden = true) @CurrentUser User user,
@@ -38,14 +38,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userInfoDto);
     }
 
-    @Operation(summary = "mypage of user", description = "마이페이지")
+    @Operation(summary = "My Page of User", description = "마이페이지")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoDto.class)))
     @GetMapping("/me")
     public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @CurrentUser User user) {
         return ResponseEntity.status(HttpStatus.OK).body(new UserInfoDto(user));
     }
 
-    @Operation(summary = "login of user", description = "로그인")
+    @Operation(summary = "Login of User", description = "로그인")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = Token.class)))
     @Parameter(name = "provider", description = "Name of provider", example = "kakao, naver, google")
     @PostMapping("/login/oauth/{provider}")
@@ -57,7 +57,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
-    @Operation(summary = "mypage list of tenant", description = "세입자모드 목록")
+    @Operation(summary = "My Page List of Tenant", description = "세입자모드 목록")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EstateModeDto.class)))
     @GetMapping("/tenant")
     public ResponseEntity<EstateModeDto> getUserAssetList(@Parameter(hidden = true) @CurrentUser User user) {
@@ -65,7 +65,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(estate);
     }
 
-    @Operation(summary = "mypage detail of tenant", description = "세입자모드 상세")
+    @Operation(summary = "My Page Detail of Tenant", description = "세입자모드 상세")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AssetResponseDto.class)))})})
     @GetMapping("/tenant/detail")
     public ResponseEntity<List<AssetResponseDto>> getUserAsset(@Parameter(hidden = true) @CurrentUser User user,
@@ -74,7 +74,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(assets);
     }
 
-    @Operation(summary = "mypage of owner", description = "집주인 모드 목록")
+    @Operation(summary = "My Page of Owner", description = "집주인 모드 목록")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EstateModeDto.class)))})})
     @GetMapping("/owner")
     public ResponseEntity<List<EstateModeDto>> getOwnerHouseList(@Parameter(hidden = true) @CurrentUser User user) {
@@ -82,7 +82,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(assetList);
     }
 
-    @Operation(summary = "mypage detail of owner", description = "집주인 모드 상세")
+    @Operation(summary = "My Page Detail of Owner", description = "집주인 모드 상세")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = AssetResponseDto.class)))})})
     @GetMapping("/owner/detail")
     public ResponseEntity<List<AssetResponseDto>> getOwnerHouse(@Parameter(hidden = true) @CurrentUser User user,
@@ -91,7 +91,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(ownerAsset);
     }
 
-    @Operation(summary = "logout of user", description = "로그아웃")
+    @Operation(summary = "Logout of User", description = "로그아웃")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class)))
     @GetMapping("/logout")
     public ResponseEntity<String> logout() {

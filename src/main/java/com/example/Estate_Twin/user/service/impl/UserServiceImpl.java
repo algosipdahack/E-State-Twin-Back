@@ -29,11 +29,6 @@ public class UserServiceImpl implements UserService {
     private final OAuthService oAuthService;
     private final InMemoryClientRegistrationRepository inMemoryRepository;
 
-    @Override
-    public UserResponseDto getUserById(Long id) {
-        return new UserResponseDto(userRepository.findById(id).orElseThrow(() -> new CheckHouseException(ErrorCode.USER_NOT_FOUND)));
-    }
-
     @Transactional
     public Token login(String providerName, String accessToken) {
         ClientRegistration provider = inMemoryRepository.findByRegistrationId(providerName);

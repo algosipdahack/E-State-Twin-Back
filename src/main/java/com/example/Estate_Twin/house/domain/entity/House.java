@@ -72,7 +72,7 @@ public class House extends BaseTimeEntity {
         this.veranda = veranda;
     }
 
-    public House update(HouseUpdateRequestDto dto) {
+    public void update(HouseUpdateRequestDto dto) {
         this.deposit = dto.getDeposit();
         this.monthlyRent = dto.getMonthlyRent();
         this.sellingFee = dto.getSellingFee();
@@ -92,7 +92,6 @@ public class House extends BaseTimeEntity {
         this.duplex = dto.isDuplex();
         this.structure = Structure.of(dto.getStructure());
         this.veranda = dto.isVeranda();
-        return this;
     }
 
     public void setEstate(Estate estate) {

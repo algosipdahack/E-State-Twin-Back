@@ -375,15 +375,12 @@ public class EstateApiControllerTest {
                 estate.getAddress().getBuildingName(),house.getCurrentFloors(),house.getRentableArea(),estate.getState(),house.getSellingFee());
         estateListResponseDtos.add(estateListResponseDto);
 
-        AddressSearchDto addressSearchDto = new AddressSearchDto("강남구","동동");
-        String content = objectMapper.writeValueAsString(addressSearchDto);
-        given(estateService.searchEstate(any(),any(),any()))
+        given(estateService.searchEstate(any(),any(),any(),any()))
                 .willReturn(estateListResponseDtos);
 
         //when
-        mockMvc.perform(post("/api/estate/search/list")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(content))
+        mockMvc.perform(get("/api/estate/search/list")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

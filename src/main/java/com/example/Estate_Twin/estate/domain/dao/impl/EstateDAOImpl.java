@@ -1,22 +1,17 @@
 package com.example.Estate_Twin.estate.domain.dao.impl;
 
 import com.example.Estate_Twin.address.Address;
-import com.example.Estate_Twin.asset.web.dto.AssetResponseDto;
 import com.example.Estate_Twin.estate.domain.dao.EstateDAO;
 import com.example.Estate_Twin.estate.domain.entity.*;
 import com.example.Estate_Twin.estate.domain.repository.*;
-import com.example.Estate_Twin.estate.web.dto.*;
 import com.example.Estate_Twin.exception.CheckHouseException;
 import com.example.Estate_Twin.exception.ErrorCode;
 import com.example.Estate_Twin.house.domain.entity.House;
 import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.*;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -33,42 +28,8 @@ public class EstateDAOImpl implements EstateDAO {
         estateHitRepository.findWithPessimisticLockById(id)
                 .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_HIT_NOT_FOUND))
                 .updateHit();
-        return findEstate(id);
-    }
-
-
-    @Override
-    public Broker findBrokerbyEstateId(Long estateId) {
-        return estateRepository.findBrokerByEstate_Id(estateId)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.BROKER_NOT_FOUND));
-    }
-
-    @Override
-    public List<Estate> findEstatesByBrokerId(Long brokerId) {
-        return estateRepository.findEstatesByBroker_Id(brokerId)
+        return estateRepository.findById(id)
                 .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
-
-    }
-
-    @Override
-    public List<Estate> findEstatesByOwnerId(Long ownerId) {
-        return estateRepository.findEstatesByOwner_Id(ownerId)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
-
-    }
-
-    @Override
-    public Estate findEstateByHouseId(Long houseId) {
-        return estateRepository.findEstateByHouse_Id(houseId)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.HOUSE_NOT_FOUND));
-
-    }
-
-    @Override
-    public Estate findEstateByEstateHitId(Long estatehitId) {
-        return estateRepository.findEstateByEstateHit_Id(estatehitId)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
-
     }
 
     @Override
@@ -90,56 +51,6 @@ public class EstateDAOImpl implements EstateDAO {
         return estate;
     }
 
-    @Override
-    public Estate findEstate(Long id) {
-        return estateRepository.findById(id)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
-    }
-
-
-    @Override
-    public House findHouse(Long id) {
-        return estateRepository.findHouseByEstateId(id);
-    }
-
-    @Override
-    public EstateHit findEstateHit(Long id) {
-        return estateRepository.findEstateHit(id);
-    }
-
-    @Override
-    public List<AssetResponseDto> findAssets(Long id) {
-        return estateRepository.findAssetList(id);
-    }
-
-    @Override
-    public List<EstateMainDto> findEstateCustomized(String borough) {
-        return estateRepository.findByBoroughOrderByWeeklyHit(borough);
-    }
-
-    @Override
-    public List<EstateListResponseDto> findEstateListByBorough(String borough, Pageable pageable) {
-        return estateRepository.findEstateByBorough(borough, pageable);
-    }
-
-    @Override
-    public List<EstateListResponseDto> findEstateListByTown(String town, Pageable pageable) {
-        return estateRepository.findEstateByTown(town, pageable);
-    }
-
-
-    @Override
-    public Page<EstateListResponseDto> findAllEstateList(Long estateId, Pageable pageable) {
-        return estateRepository.findEstateList(estateId, pageable);
-    }
-
-    @Override
-    @Transactional
-    public Estate updateEstate(Long id, EstateUpdateRequestDto dto) {
-        return estateRepository.findById(id)
-                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND))
-                .update(dto);
-    }
 
     @Override
     @Transactional
@@ -183,15 +94,10 @@ public class EstateDAOImpl implements EstateDAO {
     @Override
     @Transactional
     public Estate matchTenant(Long estateId, User user) {
-        Estate estate = findEstate(estateId);
-        user.setTenantEstate(findEstate(estateId));
+        Estate estate = estateRepository.findById(estateId)
+                .orElseThrow(()->new CheckHouseException(ErrorCode.ESTATE_NOT_FOUND));
+        user.setTenantEstate(estate);
         userRepository.save(user);
         return estate;
-    }
-
-    @Override
-    @Transactional
-    public User updateBorough(User user, String borough) {
-        return user.setBorough(borough);
     }
 }

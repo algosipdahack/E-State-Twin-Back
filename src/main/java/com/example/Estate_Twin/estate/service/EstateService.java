@@ -18,5 +18,5 @@ public interface EstateService {
     List<EstateMainDto> getEstateCustomized(User user);
     EstateResponseDto allowPost(Long estateId, User user);
     ContractStateResponseDto startContract(Long estateId, User user);
-    List<EstateListResponseDto> searchEstate(User user, AddressSearchDto addressSearchDto, Pageable pageable);
+    List<EstateListResponseDto> searchEstate(User user, String borough, String town, Pageable pageable);
 }

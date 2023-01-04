@@ -22,16 +22,16 @@ import java.util.List;
 public class CheckListApiController {
     private final CheckListServiceImpl checkListService;
 
-    @Operation(summary = "get checklists by asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
+    @Operation(summary = "Get checklists in Asset", description = "에셋에 대한 체크리스트 정보들 가져오기")
     @ApiResponses(value = { @ApiResponse(content = { @Content( mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CheckListResponseDto.class)))})})
     @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @GetMapping("/asset/{assetId}")
-    public ResponseEntity<List<CheckListResponseDto>> getCheckListbyAsset(@PathVariable Long assetId) {
+    public ResponseEntity<List<CheckListResponseDto>> getCheckListByAsset(@PathVariable Long assetId) {
         List<CheckListResponseDto> checkListResponseDtos = checkListService.getAllCheckListByAssetId(assetId);
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDtos);
     }
 
-    @Operation(summary = "get checklist", description = "체크리스트에 대한 정보들 가져오기")
+    @Operation(summary = "Get Checklist", description = "체크리스트에 대한 정보들 가져오기")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
     @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
     @GetMapping("/{checklistId}")
@@ -42,7 +42,7 @@ public class CheckListApiController {
 
     // 만약 집주인이 등록 -> 세입자는 없는 상태이므로 tenantY 까지 해주기
     // 세입자가 등록 -> 세입자만 tenantY해주기
-    @Operation(summary = "post checklist", description = "체크리스트 등록하기")
+    @Operation(summary = "Post Checklist", description = "체크리스트 등록하기")
     @ApiResponse(responseCode = "201", description = "CREATED", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
     @Parameter(name = "assetId", description = "Asset Id", example = "1")
     @PostMapping("/estate/{estateId}/asset/{assetId}")
@@ -54,7 +54,7 @@ public class CheckListApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(checkListResponseDto);
     }
 
-    @Operation(summary = "put checklist", description = "체크리스트 수정하기")
+    @Operation(summary = "Put Checklist", description = "체크리스트 수정하기")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
     @Parameter(name = "checklistId", description = "Checklist Id", example = "1")
     @PutMapping("/{checklistId}")
@@ -63,14 +63,13 @@ public class CheckListApiController {
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 
-    @Operation(summary = "Confirm of checklist post", description = "중개인/집주인의 체크리스트 승인")
+    @Operation(summary = "Confirm of Checklist Post", description = "중개인/집주인의 체크리스트 승인")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CheckListResponseDto.class)))
-    @Parameter(name = "estateId", description = "Estate Id", example = "1")
-    @PatchMapping("/{checklistId}/estate/{estateId}")
+    @Parameter(name = "checklistId", description = "CheckList Id", example = "1")
+    @PatchMapping("/{checklistId}/confirm")
     public ResponseEntity<CheckListResponseDto> confirmCheckList(@Parameter(hidden = true) @CurrentUser User user,
-                                                                 @PathVariable Long checklistId,
-                                                                 @PathVariable Long estateId) {
-        CheckListResponseDto checkListResponseDto = checkListService.confirmCheckList(estateId, checklistId, user);
+                                                                 @PathVariable Long checklistId) {
+        CheckListResponseDto checkListResponseDto = checkListService.confirmCheckList(checklistId, user);
         return ResponseEntity.status(HttpStatus.OK).body(checkListResponseDto);
     }
 

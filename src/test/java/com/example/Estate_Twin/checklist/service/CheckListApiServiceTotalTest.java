@@ -99,7 +99,7 @@ public class CheckListApiServiceTotalTest {
     @Transactional
     @Rollback(value = false)
     public void 체크리스트_컨펌() throws InterruptedException {
-        checkListService.confirmCheckList(1L,2L,owner);
+        checkListService.confirmCheckList(1L,owner);
     }
 
     @Test
@@ -111,14 +111,14 @@ public class CheckListApiServiceTotalTest {
         //when
         service.execute(() -> {
             try {
-                checkListService.confirmCheckList(1L,7L, owner);
+                checkListService.confirmCheckList(1L, owner);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
         service.execute(() -> {
             try {
-                checkListService.confirmCheckList(1L,7L, broker);
+                checkListService.confirmCheckList(1L, broker);
             } catch (Exception e) {
                 e.printStackTrace();
             }
