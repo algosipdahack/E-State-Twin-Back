@@ -1,7 +1,6 @@
 package com.example.Estate_Twin.estate.domain.repository;
 
 import com.example.Estate_Twin.asset.data.entity.QAsset;
-import com.example.Estate_Twin.asset.web.dto.*;
 import com.example.Estate_Twin.checklist.data.entity.QCheckList;
 import com.example.Estate_Twin.contractstate.domain.entity.State;
 import com.example.Estate_Twin.estate.domain.entity.*;
@@ -11,6 +10,7 @@ import com.example.Estate_Twin.user.domain.entity.QBroker;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
@@ -70,7 +70,7 @@ public class EstateRepositoryCustomImpl extends QuerydslRepositorySupport implem
         }
         return estate.id.lt(estateId);
     }
-
+    @Cacheable(value = "main", key = "#estateId")
     @Override
     public Page<EstateListResponseDto> findEstateList(Long estateId, Pageable pageable) {
         QueryResults<EstateListResponseDto> queryResults = jpaQueryFactory

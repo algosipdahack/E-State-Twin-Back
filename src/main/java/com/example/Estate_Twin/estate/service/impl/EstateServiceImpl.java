@@ -21,10 +21,14 @@ import com.example.Estate_Twin.user.domain.entity.*;
 import com.example.Estate_Twin.user.domain.repository.BrokerRepository;
 import com.example.Estate_Twin.user.domain.repository.UserRepository;
 import lombok.*;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
+
+import static javax.management.timer.Timer.ONE_DAY;
 
 @Service
 @RequiredArgsConstructor
@@ -98,7 +102,12 @@ public class EstateServiceImpl implements EstateService {
     public Page<EstateListResponseDto> getAllEstate(Long estateId, Pageable pageable) {
         return estateRepository.findEstateList(estateId, pageable);
     }
+    //매일 오후 자정에 실행
+    @Scheduled(cron = "0 0 0 * * *")
+    @CacheEvict(value = "main")
+    public void clearCache() {
 
+    }
     @Override
     public EstateResponseDto updateEstate(Long estateId, EstateUpdateRequestDto estateUpdateRequestDto) {
         //house 값 수정

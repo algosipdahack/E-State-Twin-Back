@@ -15,6 +15,7 @@ public class ContractState extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contractstate_id")
     private Long id;
+    @Column(unique = true)
     @Enumerated(value = EnumType.STRING)
     private State state = State.BROKER_BEFORE;
     @OneToOne(fetch = FetchType.LAZY)
