@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Profile({"prod","server"})
+@Profile({"test"})
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -35,14 +35,8 @@ public class SecurityConfig {
 
     @Order(0)
     @Bean
-    public SecurityFilterChain resources(HttpSecurity http) throws Exception {
-        http.requestMatchers(matchers -> matchers.antMatchers(ignores))
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-                .csrf().disable()
-                .requestCache().disable()
-                .securityContext().disable()
-                .sessionManagement().disable();
-        return http.build();
+    public WebSecurityCustomizer configure() {
+        return (web) -> web.ignoring().antMatchers(ignores);
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,7 +45,11 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .httpBasic().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 

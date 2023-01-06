@@ -4,7 +4,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Profile("test")
+@Profile("server")
 @Configuration
 public class ApplicationSecurity {
     @Bean
