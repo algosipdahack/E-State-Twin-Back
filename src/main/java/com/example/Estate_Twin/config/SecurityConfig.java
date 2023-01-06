@@ -4,45 +4,58 @@ import com.example.Estate_Twin.auth.jwt.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @Slf4j
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Profile({"prod","server"})
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private static final String[] ignores = {
+            "/favicon.ico",
+            "/error",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/v3/api-docs",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/api/home/**",
+            "/api/user-auth/**"
+    };
 
-    @Override
-    public void configure(WebSecurity webSecurity) throws Exception{
-        webSecurity.ignoring().antMatchers("/swagger-ui/**", "/swagger-ui/index.html");
+    @Order(0)
+    @Bean
+    public SecurityFilterChain resources(HttpSecurity http) throws Exception {
+        http.requestMatchers(matchers -> matchers.antMatchers(ignores))
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .csrf().disable()
+                .requestCache().disable()
+                .securityContext().disable()
+                .sessionManagement().disable();
+        return http.build();
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors()
                 .and()
-
                 .csrf().disable()
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-
-                .authorizeRequests()
-                .antMatchers("/oauth2/**","/auth/**").permitAll()
-                .antMatchers("/**","/static/**").permitAll()
-                .anyRequest().permitAll()
-                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 
 }
